@@ -689,30 +689,58 @@
   .quiz-lead-input::placeholder { color: var(--muted); }
 
   /* INSTAGRAM CAROUSEL */
+  /* iPhone mockup */
+  .iphone-mockup-wrap {
+    display: flex; align-items: center; justify-content: center; gap: 32px;
+    position: relative; padding: 20px 0;
+  }
+  .iphone-frame {
+    width: 340px;
+    background: linear-gradient(160deg, #2a2a2a 0%, #111 100%);
+    border-radius: 50px;
+    border: 2px solid #3a3a3a;
+    box-shadow: 0 0 0 1px #555, 0 40px 100px rgba(0,0,0,0.7), inset 0 0 0 1px #000,
+                4px 0 8px rgba(200,169,110,0.06), -4px 0 8px rgba(200,169,110,0.06);
+    padding: 14px 10px 20px;
+    position: relative;
+  }
+  .iphone-notch {
+    width: 110px; height: 28px;
+    background: #111; border-radius: 0 0 20px 20px;
+    margin: 0 auto 6px; position: relative; z-index: 2;
+  }
+  .iphone-notch::before {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #1c1c1e; border: 1px solid #333;
+  }
+  .iphone-screen {
+    border-radius: 6px; overflow: hidden;
+    background: #000;
+  }
+  .iphone-home-bar {
+    width: 100px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.25); margin: 12px auto 0;
+  }
   .ig-carousel-wrap {
-    position: relative; overflow: hidden;
-    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    position: relative; overflow: hidden; width: 320px;
   }
   .ig-track {
-    display: flex; gap: 20px; padding: 12px 0;
+    display: flex; gap: 0; padding: 0;
     transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
     will-change: transform;
   }
   .ig-slide {
-    flex: 0 0 320px; border-radius: 20px; overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: grab;
+    flex: 0 0 320px; overflow: hidden; cursor: grab;
   }
-  .ig-slide:hover { transform: translateY(-4px); box-shadow: 0 16px 56px rgba(200,169,110,0.15); }
   .ig-slide .instagram-media {
-    border-radius: 20px !important; min-width: 0 !important;
-    width: 320px !important; margin: 0 !important;
-    background: #111 !important; border: none !important;
+    min-width: 0 !important; width: 320px !important;
+    margin: 0 !important; background: #111 !important; border: none !important;
   }
   .ig-nav {
     display: flex; justify-content: center; align-items: center;
-    gap: 8px; margin-top: 28px;
+    gap: 8px; margin-top: 20px;
   }
   .ig-dot {
     width: 8px; height: 8px; border-radius: 50%;
@@ -721,16 +749,13 @@
   }
   .ig-dot.active { background: var(--accent); transform: scale(1.3); }
   .ig-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%);
     background: rgba(10,10,10,0.8); border: 1px solid rgba(200,169,110,0.3);
-    color: var(--accent); width: 44px; height: 44px; border-radius: 50%;
-    cursor: pointer; font-size: 1.1rem; z-index: 2;
+    color: var(--accent); width: 48px; height: 48px; border-radius: 50%;
+    cursor: pointer; font-size: 1.2rem; z-index: 2; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     transition: background 0.2s, border-color 0.2s; backdrop-filter: blur(4px);
   }
   .ig-arrow:hover { background: rgba(200,169,110,0.15); border-color: var(--accent); }
-  .ig-arrow.prev { left: 0; }
-  .ig-arrow.next { right: 0; }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
@@ -1007,17 +1032,23 @@
     <h2 class="section-title" style="margin-inline:auto" data-i18n="test.title">Antes e Depois</h2>
     <p style="color:var(--muted);font-family:sans-serif;font-size:0.85rem;margin-top:12px" data-i18n="test.sub">Procedimentos realizados pela Dra. Carol Mafra</p>
   </div>
-  <div class="reveal" style="position:relative;padding:0 52px;">
+  <div class="reveal iphone-mockup-wrap">
     <button class="ig-arrow prev" id="igPrev">&#8592;</button>
-    <div class="ig-carousel-wrap" id="igCarouselWrap">
-      <div class="ig-track" id="igTrack">
-        <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C0CkMrvAumO/" data-instgrm-version="14"></blockquote></div>
-        <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Cz345m8AAwW/" data-instgrm-version="14"></blockquote></div>
-        <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DH9b8NGy_qR/" data-instgrm-version="14"></blockquote></div>
-        <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DKQNxCuva-p/" data-instgrm-version="14"></blockquote></div>
-        <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C_d_Vl8vwK2/" data-instgrm-version="14"></blockquote></div>
-        <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C48yv1TPsh9/" data-instgrm-version="14"></blockquote></div>
+    <div class="iphone-frame">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <div class="ig-carousel-wrap" id="igCarouselWrap">
+          <div class="ig-track" id="igTrack">
+            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C0CkMrvAumO/" data-instgrm-version="14"></blockquote></div>
+            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Cz345m8AAwW/" data-instgrm-version="14"></blockquote></div>
+            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DH9b8NGy_qR/" data-instgrm-version="14"></blockquote></div>
+            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DKQNxCuva-p/" data-instgrm-version="14"></blockquote></div>
+            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C_d_Vl8vwK2/" data-instgrm-version="14"></blockquote></div>
+            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C48yv1TPsh9/" data-instgrm-version="14"></blockquote></div>
+          </div>
+        </div>
       </div>
+      <div class="iphone-home-bar"></div>
     </div>
     <button class="ig-arrow next" id="igNext">&#8594;</button>
   </div>
@@ -1882,21 +1913,19 @@ document.querySelectorAll('.quiz-opt').forEach(btn =>
   btn.addEventListener('click', () => selectQOpt(Number(btn.dataset.step), btn.dataset.val))
 );
 
-// ─── INSTAGRAM CAROUSEL ──────────────────────────────────────────────────────
+// ─── INSTAGRAM CAROUSEL (infinite) ───────────────────────────────────────────
 (function() {
   const track = document.getElementById('igTrack');
   const dotsEl = document.getElementById('igDots');
   if (!track) return;
 
   const slides = track.querySelectorAll('.ig-slide');
-  const SLIDE_W = 320 + 20; // width + gap
-  const VISIBLE = () => Math.max(1, Math.floor(document.getElementById('igCarouselWrap').offsetWidth / SLIDE_W));
-  const MAX = () => Math.max(0, slides.length - VISIBLE());
+  const TOTAL = slides.length;
+  const SLIDE_W = 320;
 
   let cur = 0, timer, isDragging = false, startX = 0, startOffset = 0;
 
-  // build dots
-  for (let i = 0; i <= MAX(); i++) {
+  for (let i = 0; i < TOTAL; i++) {
     const d = document.createElement('button');
     d.className = 'ig-dot' + (i === 0 ? ' active' : '');
     d.addEventListener('click', () => goTo(i));
@@ -1904,18 +1933,19 @@ document.querySelectorAll('.quiz-opt').forEach(btn =>
   }
 
   function goTo(n) {
-    cur = Math.max(0, Math.min(n, MAX()));
+    if (n < 0) n = TOTAL - 1;
+    if (n >= TOTAL) n = 0;
+    cur = n;
     track.style.transform = `translateX(-${cur * SLIDE_W}px)`;
     dotsEl.querySelectorAll('.ig-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
   }
 
-  function startAuto() { timer = setInterval(() => goTo(cur >= MAX() ? 0 : cur + 1), 4000); }
+  function startAuto() { timer = setInterval(() => goTo(cur + 1), 4000); }
   function stopAuto() { clearInterval(timer); }
 
   document.getElementById('igNext').addEventListener('click', () => { stopAuto(); goTo(cur + 1); startAuto(); });
   document.getElementById('igPrev').addEventListener('click', () => { stopAuto(); goTo(cur - 1); startAuto(); });
 
-  // touch/drag
   track.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; startOffset = cur * SLIDE_W; track.style.transition = 'none'; stopAuto(); });
   window.addEventListener('mousemove', e => { if (!isDragging) return; track.style.transform = `translateX(-${startOffset + startX - e.clientX}px)`; });
   window.addEventListener('mouseup', e => { if (!isDragging) return; isDragging = false; track.style.transition = ''; goTo(startX - e.clientX > SLIDE_W / 3 ? cur + 1 : startX - e.clientX < -SLIDE_W / 3 ? cur - 1 : cur); startAuto(); });
