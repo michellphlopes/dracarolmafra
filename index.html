@@ -38,12 +38,10 @@
   .nav-right { display: flex; align-items: center; gap: 16px; }
   .lang-flags { display: flex; }
   .lang-flag {
-    display: none;
-    background: none; border: 1px solid var(--border); color: var(--muted);
-    font-family: sans-serif; font-size: 0.62rem; letter-spacing: 1.5px;
-    padding: 4px 8px; text-transform: uppercase; cursor: default;
+    display: none; background: none; border: none;
+    font-size: 1.35rem; cursor: default; padding: 0; line-height: 1;
   }
-  .lang-flag.active { display: inline-block; border-color: rgba(200,169,110,0.3); color: var(--muted); }
+  .lang-flag.active { display: inline-block; }
   .hamburger {
     display: none; flex-direction: column; gap: 5px; background: none;
     border: none; cursor: pointer; padding: 4px;
@@ -330,11 +328,11 @@
   </ul>
   <div class="nav-right">
     <div class="lang-flags">
-      <button class="lang-flag active" data-lang="pt">PT</button>
-      <button class="lang-flag" data-lang="en">EN</button>
-      <button class="lang-flag" data-lang="es">ES</button>
-      <button class="lang-flag" data-lang="fr">FR</button>
-      <button class="lang-flag" data-lang="it">IT</button>
+      <button class="lang-flag active" data-lang="pt">🇧🇷</button>
+      <button class="lang-flag" data-lang="en">🇺🇸</button>
+      <button class="lang-flag" data-lang="es">🇪🇸</button>
+      <button class="lang-flag" data-lang="fr">🇫🇷</button>
+      <button class="lang-flag" data-lang="it">🇮🇹</button>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
