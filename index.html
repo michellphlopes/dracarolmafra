@@ -673,6 +673,55 @@
     border: none; width: 100%;
   }
   .quiz-see-all:hover { color: var(--text); }
+  .quiz-result-cta:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* UPLOAD STEP */
+  .quiz-upload-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;
+  }
+  .upload-slot {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; background: rgba(200,169,110,0.05);
+    border: 1.5px dashed rgba(200,169,110,0.3); border-radius: 12px;
+    padding: 18px 10px; cursor: pointer; transition: all 0.2s;
+  }
+  .upload-slot:hover { border-color: var(--accent); background: rgba(200,169,110,0.1); }
+  .upload-slot.has-file { border-color: var(--accent); border-style: solid; background: rgba(200,169,110,0.12); }
+  .upload-slot input[type="file"] { display: none; }
+  .upload-slot-icon { font-size: 1.5rem; }
+  .upload-slot-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-family: sans-serif; text-align: center; }
+  .upload-slot-check { font-size: 0.8rem; color: var(--accent); font-family: sans-serif; display: none; }
+  .upload-slot.has-file .upload-slot-check { display: block; }
+  .upload-trust {
+    background: rgba(200,169,110,0.06); border-radius: 10px;
+    padding: 14px 16px; margin: 16px 0; text-align: left;
+  }
+  .upload-trust p { font-family: sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.75); margin: 5px 0; }
+  .upload-hint { font-size: 0.73rem; color: var(--muted); font-family: sans-serif; text-align: center; margin-top: 10px; }
+
+  /* QUIZ PLANS STEP */
+  .quiz-received-msg {
+    font-family: sans-serif; font-size: 0.88rem; color: rgba(200,169,110,0.9);
+    text-align: center; margin-bottom: 10px;
+  }
+  .quiz-plan-cards { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .quiz-plan-card {
+    display: block; background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(200,169,110,0.2); border-radius: 12px;
+    padding: 16px 18px; text-decoration: none; color: inherit;
+    transition: all 0.2s; position: relative; text-align: left;
+  }
+  .quiz-plan-card:hover { border-color: var(--accent); background: rgba(200,169,110,0.08); }
+  .quiz-plan-card.qp-featured { border-color: var(--accent); background: rgba(200,169,110,0.08); }
+  .quiz-plan-medal { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+  .quiz-plan-card h3 { font-size: 0.98rem; margin: 4px 0; color: #fff; font-weight: 500; }
+  .quiz-plan-card p { font-family: sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 4px 0 0; }
+  .qp-badge {
+    position: absolute; top: -10px; right: 14px;
+    background: var(--accent); color: #000;
+    font-family: sans-serif; font-size: 0.68rem; font-weight: 700;
+    padding: 2px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
 
   /* QUIZ LEAD FORM */
   .quiz-lead-sub {
@@ -1314,15 +1363,68 @@
       </div>
     </div>
 
+    <!-- UPLOAD STEP -->
     <div id="quizStepResult" class="quiz-step" style="display:none">
-      <div class="quiz-result-box">
-        <span class="quiz-result-icon">✦</span>
-        <h2 class="quiz-result-title" data-i18n="quiz.result.title">Sua avaliação inicial foi concluída.</h2>
-        <p class="quiz-result-desc" data-i18n="quiz.result.desc">Identificamos características no seu perfil que merecem uma análise personalizada. A próxima etapa é analisar suas fotos com a Dra. Carol Mafra para entender como suas características faciais influenciam um resultado naturalmente harmonioso.</p>
-        <button class="quiz-result-cta" id="qResCTA" data-i18n="quiz.cta">Receber Minha Análise Personalizada</button>
-        <p class="quiz-social-proof" data-i18n="quiz.proof2">✦ Mais de 500 pacientes já passaram por esta avaliação</p>
+      <h2 class="quiz-result-title" data-i18n="quiz.upload.title">Encontramos características interessantes.</h2>
+      <p class="quiz-result-desc" data-i18n="quiz.upload.sub">Agora precisamos analisar suas fotos.</p>
+      <div class="quiz-upload-grid">
+        <label class="upload-slot" id="slotFront">
+          <input type="file" accept="image/*" id="photoFront">
+          <span class="upload-slot-icon">📷</span>
+          <span class="upload-slot-label" data-i18n="quiz.photo.front">Frente</span>
+          <span class="upload-slot-check">✔ Adicionada</span>
+        </label>
+        <label class="upload-slot" id="slotRight">
+          <input type="file" accept="image/*" id="photoRight">
+          <span class="upload-slot-icon">📷</span>
+          <span class="upload-slot-label" data-i18n="quiz.photo.right">Perfil Direito</span>
+          <span class="upload-slot-check">✔ Adicionada</span>
+        </label>
+        <label class="upload-slot" id="slotLeft">
+          <input type="file" accept="image/*" id="photoLeft">
+          <span class="upload-slot-icon">📷</span>
+          <span class="upload-slot-label" data-i18n="quiz.photo.left">Perfil Esquerdo</span>
+          <span class="upload-slot-check">✔ Adicionada</span>
+        </label>
+        <label class="upload-slot" id="slotSmile">
+          <input type="file" accept="image/*" id="photoSmile">
+          <span class="upload-slot-icon">📷</span>
+          <span class="upload-slot-label" data-i18n="quiz.photo.smile">Sorrindo</span>
+          <span class="upload-slot-check">✔ Adicionada</span>
+        </label>
       </div>
-      <button class="quiz-see-all" id="quizSeeAll" data-i18n="quiz.seeall">Ver planos e preços</button>
+      <div class="upload-trust">
+        <p>✔ 4.200 mulheres analisadas</p>
+        <p>✔ Especialista em resultados naturais</p>
+        <p>✔ Mais de 250 preenchimentos labiais realizados</p>
+        <p>✔ Zero intercorrências</p>
+      </div>
+      <button class="quiz-result-cta" id="qUploadBtn" disabled data-i18n="quiz.upload.btn">Enviar Fotos</button>
+      <p class="upload-hint" data-i18n="quiz.upload.hint">Sem filtros · Boa iluminação · Rosto neutro</p>
+    </div>
+
+    <!-- PLANS STEP -->
+    <div id="quizStepPlans" class="quiz-step" style="display:none">
+      <p class="quiz-received-msg" data-i18n="quiz.plans.received">✅ A Dra. Carol Mafra já recebeu suas imagens.</p>
+      <h2 class="quiz-result-title" data-i18n="quiz.plans.title">Como deseja receber sua análise?</h2>
+      <div class="quiz-plan-cards">
+        <a href="https://go.hotmart.com/N106489882S" class="quiz-plan-card" target="_blank" rel="noopener">
+          <span class="quiz-plan-medal">🥉</span>
+          <h3 data-i18n="quiz.plan1.name">Relatório Labial</h3>
+          <p data-i18n="quiz.plan1.desc">Ideal para quem quer entender exclusivamente seus lábios.</p>
+        </a>
+        <a href="#planos" class="quiz-plan-card qp-featured" onclick="closeQuiz();document.getElementById('planos').scrollIntoView({behavior:'smooth'});return false;">
+          <span class="qp-badge" data-i18n="quiz.plan.badge">Mais escolhido</span>
+          <span class="quiz-plan-medal">🥈</span>
+          <h3 data-i18n="quiz.plan2.name">Relatório Completo</h3>
+          <p data-i18n="quiz.plan2.desc">Entenda como todo o seu rosto influencia o resultado.</p>
+        </a>
+        <a href="#planos" class="quiz-plan-card" onclick="closeQuiz();document.getElementById('planos').scrollIntoView({behavior:'smooth'});return false;">
+          <span class="quiz-plan-medal">🥇</span>
+          <h3 data-i18n="quiz.plan3.name">Experiência Premium</h3>
+          <p data-i18n="quiz.plan3.desc">Receba sua análise e converse ao vivo com a Dra. Carol Mafra.</p>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -1395,7 +1497,17 @@ const T = {
     'quiz.result.desc':'Com base nas suas respostas, identificamos pontos específicos do seu rosto que influenciam diretamente um resultado de preenchimento labial. Para descobrir exatamente o que isso significa para o SEU rosto, a Dra. Carol Mafra precisa analisar suas fotos pessoalmente.',
     'quiz.cta':'Quero Descobrir o Que Isso Significa Para Mim',
     'quiz.proof2':'✦ Mais de 500 perfis analisados com olhar clínico especializado',
-    'quiz.seeall':'Ver planos e preços'
+    'quiz.seeall':'Ver planos e preços',
+    'quiz.upload.title':'Encontramos características interessantes.',
+    'quiz.upload.sub':'Agora precisamos analisar suas fotos.',
+    'quiz.photo.front':'Frente','quiz.photo.right':'Perfil Direito','quiz.photo.left':'Perfil Esquerdo','quiz.photo.smile':'Sorrindo',
+    'quiz.upload.btn':'Enviar Fotos','quiz.upload.hint':'Sem filtros · Boa iluminação · Rosto neutro',
+    'quiz.plans.received':'✅ A Dra. Carol Mafra já recebeu suas imagens.',
+    'quiz.plans.title':'Como deseja receber sua análise?','quiz.plans.label':'Sua Análise',
+    'quiz.plan1.name':'Relatório Labial','quiz.plan1.desc':'Ideal para quem quer entender exclusivamente seus lábios.',
+    'quiz.plan2.name':'Relatório Completo','quiz.plan2.desc':'Entenda como todo o seu rosto influencia o resultado.',
+    'quiz.plan3.name':'Experiência Premium','quiz.plan3.desc':'Receba sua análise e converse ao vivo com a Dra. Carol Mafra.',
+    'quiz.plan.badge':'Mais escolhido'
   },
   en: {
     'nav.works':'How It Works','nav.plans':'Plans','nav.about':'About','nav.cta':'Discover My Result',
@@ -1462,7 +1574,17 @@ const T = {
     'quiz.result.desc':'Based on your answers, we identified specific features of your face that directly influence a lip filler result. To discover exactly what this means for YOUR face, Dr. Carol Mafra needs to analyze your photos personally.',
     'quiz.cta':'I Want to Discover What This Means for Me',
     'quiz.proof2':'✦ Over 500 profiles analyzed with specialized clinical expertise',
-    'quiz.seeall':'See plans & pricing'
+    'quiz.seeall':'See plans & pricing',
+    'quiz.upload.title':'We found interesting characteristics.',
+    'quiz.upload.sub':'Now we need to analyze your photos.',
+    'quiz.photo.front':'Front','quiz.photo.right':'Right Profile','quiz.photo.left':'Left Profile','quiz.photo.smile':'Smiling',
+    'quiz.upload.btn':'Send Photos','quiz.upload.hint':'No filters · Good lighting · Neutral expression',
+    'quiz.plans.received':'✅ Dr. Carol Mafra has already received your images.',
+    'quiz.plans.title':'How would you like to receive your analysis?','quiz.plans.label':'Your Analysis',
+    'quiz.plan1.name':'Lip Report','quiz.plan1.desc':'Ideal for those who want to understand exclusively their lips.',
+    'quiz.plan2.name':'Complete Report','quiz.plan2.desc':'Understand how your entire face influences the result.',
+    'quiz.plan3.name':'Premium Experience','quiz.plan3.desc':'Receive your analysis and speak live with Dr. Carol Mafra.',
+    'quiz.plan.badge':'Most chosen'
   },
   es: {
     'nav.works':'Cómo Funciona','nav.plans':'Planes','nav.about':'Sobre mí','nav.cta':'Descubrir Mi Resultado',
@@ -1529,7 +1651,17 @@ const T = {
     'quiz.result.desc':'Con base en tus respuestas, identificamos puntos específicos de tu rostro que influyen directamente en un resultado de relleno labial. Para descubrir exactamente qué significa esto para TU rostro, la Dra. Carol Mafra necesita analizar tus fotos personalmente.',
     'quiz.cta':'Quiero Descubrir Qué Significa Esto para Mí',
     'quiz.proof2':'✦ Más de 500 perfiles analizados con experiencia clínica especializada',
-    'quiz.seeall':'Ver planes y precios'
+    'quiz.seeall':'Ver planes y precios',
+    'quiz.upload.title':'Encontramos características interesantes.',
+    'quiz.upload.sub':'Ahora necesitamos analizar tus fotos.',
+    'quiz.photo.front':'Frente','quiz.photo.right':'Perfil Derecho','quiz.photo.left':'Perfil Izquierdo','quiz.photo.smile':'Sonriendo',
+    'quiz.upload.btn':'Enviar Fotos','quiz.upload.hint':'Sin filtros · Buena iluminación · Expresión neutra',
+    'quiz.plans.received':'✅ La Dra. Carol Mafra ya recibió tus imágenes.',
+    'quiz.plans.title':'¿Cómo deseas recibir tu análisis?','quiz.plans.label':'Tu Análisis',
+    'quiz.plan1.name':'Informe Labial','quiz.plan1.desc':'Ideal para quienes quieren entender exclusivamente sus labios.',
+    'quiz.plan2.name':'Informe Completo','quiz.plan2.desc':'Entiende cómo todo tu rostro influye en el resultado.',
+    'quiz.plan3.name':'Experiencia Premium','quiz.plan3.desc':'Recibe tu análisis y habla en vivo con la Dra. Carol Mafra.',
+    'quiz.plan.badge':'Más elegido'
   },
   fr: {
     'nav.works':'Comment ça marche','nav.plans':'Formules','nav.about':'À propos','nav.cta':'Découvrir Mon Résultat',
@@ -1596,7 +1728,17 @@ const T = {
     'quiz.result.desc':'D\'après vos réponses, nous avons identifié des points spécifiques de votre visage qui influencent directement un résultat de filler labial. Pour découvrir exactement ce que cela signifie pour VOTRE visage, la Dr. Carol Mafra doit analyser vos photos personnellement.',
     'quiz.cta':'Je Veux Découvrir Ce Que Cela Signifie pour Moi',
     'quiz.proof2':'✦ Plus de 500 profils analysés avec une expertise clinique spécialisée',
-    'quiz.seeall':'Voir les formules et tarifs'
+    'quiz.seeall':'Voir les formules et tarifs',
+    'quiz.upload.title':'Nous avons trouvé des caractéristiques intéressantes.',
+    'quiz.upload.sub':'Nous avons maintenant besoin d\'analyser vos photos.',
+    'quiz.photo.front':'Face','quiz.photo.right':'Profil Droit','quiz.photo.left':'Profil Gauche','quiz.photo.smile':'En souriant',
+    'quiz.upload.btn':'Envoyer les photos','quiz.upload.hint':'Sans filtres · Bonne lumière · Expression neutre',
+    'quiz.plans.received':'✅ La Dr. Carol Mafra a déjà reçu vos images.',
+    'quiz.plans.title':'Comment souhaitez-vous recevoir votre analyse ?','quiz.plans.label':'Votre Analyse',
+    'quiz.plan1.name':'Rapport Labial','quiz.plan1.desc':'Idéal pour celles qui veulent comprendre exclusivement leurs lèvres.',
+    'quiz.plan2.name':'Rapport Complet','quiz.plan2.desc':'Comprenez comment l\'ensemble de votre visage influence le résultat.',
+    'quiz.plan3.name':'Expérience Premium','quiz.plan3.desc':'Recevez votre analyse et parlez en direct avec la Dr. Carol Mafra.',
+    'quiz.plan.badge':'Le plus choisi'
   },
   it: {
     'nav.works':'Come Funziona','nav.plans':'Piani','nav.about':'Chi sono','nav.cta':'Scoprire Il Mio Risultato',
@@ -1663,7 +1805,17 @@ const T = {
     'quiz.result.desc':'In base alle tue risposte, abbiamo identificato punti specifici del tuo viso che influenzano direttamente un risultato di filler labiale. Per scoprire esattamente cosa significa per IL TUO viso, la Dr.ssa Carol Mafra deve analizzare le tue foto personalmente.',
     'quiz.cta':'Voglio Scoprire Cosa Significa Per Me',
     'quiz.proof2':'✦ Oltre 500 profili analizzati con competenza clinica specializzata',
-    'quiz.seeall':'Vedi piani e prezzi'
+    'quiz.seeall':'Vedi piani e prezzi',
+    'quiz.upload.title':'Abbiamo trovato caratteristiche interessanti.',
+    'quiz.upload.sub':'Ora abbiamo bisogno di analizzare le tue foto.',
+    'quiz.photo.front':'Fronte','quiz.photo.right':'Profilo Destro','quiz.photo.left':'Profilo Sinistro','quiz.photo.smile':'Sorridente',
+    'quiz.upload.btn':'Invia Foto','quiz.upload.hint':'Senza filtri · Buona illuminazione · Espressione neutra',
+    'quiz.plans.received':'✅ La Dr.ssa Carol Mafra ha già ricevuto le tue immagini.',
+    'quiz.plans.title':'Come desideri ricevere la tua analisi?','quiz.plans.label':'La Tua Analisi',
+    'quiz.plan1.name':'Report Labiale','quiz.plan1.desc':'Ideale per chi vuole capire esclusivamente le proprie labbra.',
+    'quiz.plan2.name':'Report Completo','quiz.plan2.desc':'Capisci come tutto il tuo viso influenza il risultato.',
+    'quiz.plan3.name':'Esperienza Premium','quiz.plan3.desc':'Ricevi la tua analisi e parla dal vivo con la Dr.ssa Carol Mafra.',
+    'quiz.plan.badge':'Il più scelto'
   }
 };
 
@@ -1837,19 +1989,21 @@ function closeQuiz() {
 }
 
 function showQStep(step) {
-  const steps = ['0','1','2','3','4','5','6','Result'];
+  const steps = ['0','1','2','3','4','5','6','Result','Plans'];
   steps.forEach(s => {
     const el = document.getElementById('quizStep' + s);
     if (el) el.style.display = (String(step) === s) ? 'block' : 'none';
   });
   const isResult = step === 'Result';
-  const isLead = String(step) === '0';
-  const pct = isResult ? 100 : isLead ? 0 : Math.round((Number(step) / TOTAL_STEPS) * 100);
+  const isPlans  = step === 'Plans';
+  const isLead   = String(step) === '0';
+  const pct = (isResult) ? 85 : isPlans ? 100 : isLead ? 0 : Math.round((Number(step) / TOTAL_STEPS) * 100);
   document.getElementById('quizProgressBar').style.width = pct + '%';
   const tr = T[currentLang];
   let lbl;
-  if (isLead) lbl = '';
-  else if (isResult) lbl = tr['quiz.result.label'] || 'Resultado';
+  if (isLead)        lbl = '';
+  else if (isPlans)  lbl = tr['quiz.plans.label'] || 'Resultado';
+  else if (isResult) lbl = tr['quiz.result.label'] || 'Fotos';
   else lbl = (tr['quiz.steplabel'] || 'Pergunta {n} de {t}').replace('{n}', step).replace('{t}', TOTAL_STEPS);
   document.getElementById('quizStepLabel').textContent = lbl;
 }
@@ -1885,18 +2039,42 @@ document.getElementById('quizClose').addEventListener('click', closeQuiz);
 document.getElementById('quizModal').addEventListener('click', e => {
   if (e.target === document.getElementById('quizModal')) closeQuiz();
 });
-document.getElementById('quizSeeAll').addEventListener('click', () => {
-  closeQuiz();
-  document.getElementById('planos').scrollIntoView({behavior:'smooth'});
+// ─── PHOTO UPLOAD HANDLERS ───────────────────────────────────────────────────
+const CAROL_EMAIL = 'michelphlopes@gmail.com'; // ← atualizar para o email da Dra. Carol
+
+function checkAllPhotos() {
+  const ids = ['photoFront','photoRight','photoLeft','photoSmile'];
+  const allOk = ids.every(id => document.getElementById(id).files.length > 0);
+  document.getElementById('qUploadBtn').disabled = !allOk;
+}
+
+['photoFront','photoRight','photoLeft','photoSmile'].forEach(id => {
+  document.getElementById(id).addEventListener('change', function() {
+    const slotMap = {photoFront:'slotFront',photoRight:'slotRight',photoLeft:'slotLeft',photoSmile:'slotSmile'};
+    if (this.files.length > 0) document.getElementById(slotMap[id]).classList.add('has-file');
+    else document.getElementById(slotMap[id]).classList.remove('has-file');
+    checkAllPhotos();
+  });
 });
-document.getElementById('qResCTA').addEventListener('click', () => {
-  const wa = '5533998514322';
-  const msg = encodeURIComponent(
-    `Olá Dra. Carol! Me chamo ${qLeadName} e acabei de fazer a avaliação no site. ` +
-    `Meu WhatsApp é ${qLeadWa}. Quero receber minha análise personalizada! ✨`
-  );
-  closeQuiz();
-  window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
+
+document.getElementById('qUploadBtn').addEventListener('click', function() {
+  const btn = this;
+  btn.textContent = '⏳ Enviando...';
+  btn.disabled = true;
+
+  const fd = new FormData();
+  fd.append('_subject', 'Novas fotos para análise — ' + qLeadName);
+  fd.append('nome', qLeadName);
+  fd.append('whatsapp', qLeadWa);
+  fd.append('foto_frente',          document.getElementById('photoFront').files[0]);
+  fd.append('foto_perfil_direito',  document.getElementById('photoRight').files[0]);
+  fd.append('foto_perfil_esquerdo', document.getElementById('photoLeft').files[0]);
+  fd.append('foto_sorrindo',        document.getElementById('photoSmile').files[0]);
+  fd.append('_captcha', 'false');
+
+  fetch('https://formsubmit.co/ajax/' + CAROL_EMAIL, { method:'POST', body: fd })
+    .catch(() => {}) // falha silenciosa — ainda mostra os planos
+    .finally(() => { showQStep('Plans'); applyQuizLang(); });
 });
 document.getElementById('qLeadBtn').addEventListener('click', () => {
   const name = document.getElementById('qLeadName').value.trim();
