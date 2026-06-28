@@ -167,43 +167,7 @@
     margin-top: 10px; font-family: sans-serif; font-size: 0.75rem;
     color: rgba(255,255,255,0.45); letter-spacing: 0.5px;
   }
-  .hero-availability span { color: rgba(200,169,110,0.7); }
 
-  /* QUIZ COUNTDOWN */
-  .quiz-countdown-bar {
-    background: rgba(200,169,110,0.07); border: 1px solid rgba(200,169,110,0.18);
-    border-radius: 8px; padding: 10px 14px; margin-bottom: 16px;
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  }
-  .quiz-countdown-label { font-family: sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.55); }
-  .quiz-countdown-timer { font-family: monospace; font-size: 0.9rem; color: var(--accent); font-weight: 600; }
-  .quiz-vagas-line {
-    font-family: sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.5);
-    text-align: center; margin-bottom: 14px;
-  }
-  .quiz-vagas-line strong { color: rgba(200,169,110,0.85); }
-  .qp-scarcity {
-    font-family: sans-serif; font-size: 0.72rem; color: rgba(255,255,255,0.45);
-    margin-top: 5px;
-  }
-
-  /* PRE-REDIRECT OVERLAY */
-  .quiz-redirect-overlay {
-    display: none; position: absolute; inset: 0;
-    background: var(--bg); z-index: 10;
-    flex-direction: column; align-items: center; justify-content: center;
-    gap: 18px; border-radius: inherit;
-  }
-  .quiz-redirect-overlay.active { display: flex; }
-  .qro-step { font-family: sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.4); transition: color 0.4s; }
-  .qro-step.done { color: rgba(200,169,110,0.9); }
-  .qro-step.active { color: #fff; }
-  .qro-spinner {
-    width: 36px; height: 36px; border: 2px solid rgba(200,169,110,0.2);
-    border-top-color: var(--accent); border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
   .hero-social-proof {
     margin-top: 18px; font-family: sans-serif; font-size: 0.75rem;
     letter-spacing: 1.5px; color: rgba(200,169,110,0.7);
@@ -916,7 +880,6 @@
     </div>
     <p class="hero-social-proof" data-i18n="hero.proof">⏱ ~60 segundos · 🔒 Sem compromisso · ✨ Resultado personalizado</p>
     <p class="hero-authority" data-i18n="hero.authority">✦ Método da Dra. Carol Mafra · Especialista em resultados naturais em HOF</p>
-    <p class="hero-availability" id="heroAvailability"></p>
   </div>
   <div class="scroll-hint" data-i18n="hero.scroll">Scroll</div>
 </section>
@@ -1447,14 +1410,9 @@
 
     <!-- PLANS STEP -->
     <div id="quizStepPlans" class="quiz-step" style="display:none">
-      <div class="quiz-countdown-bar">
-        <span class="quiz-countdown-label" data-i18n="quiz.countdown.label">⟡ Vaga pré-reservada por:</span>
-        <span class="quiz-countdown-timer" id="quizCountdownTimer">15:00</span>
-      </div>
       <p class="quiz-received-msg" data-i18n="quiz.plans.received">✅ A Dra. Carol Mafra já recebeu suas imagens.</p>
       <h2 class="quiz-result-title" data-i18n="quiz.plans.title">Como deseja receber sua análise?</h2>
-      <p class="quiz-vagas-line"><strong id="quizVagasNum"></strong> <span data-i18n="quiz.vagas.suffix">vagas disponíveis para análise hoje</span></p>
-      <div class="quiz-plan-cards">
+<div class="quiz-plan-cards">
         <div class="quiz-plan-card" data-plan-url="https://go.hotmart.com/N106489882S">
           <span class="quiz-plan-medal">🥉</span>
           <h3 data-i18n="quiz.plan1.name">Relatório Labial</h3>
@@ -1470,18 +1428,10 @@
           <span class="quiz-plan-medal">🥇</span>
           <h3 data-i18n="quiz.plan3.name">Experiência Premium</h3>
           <p data-i18n="quiz.plan3.desc">Receba sua análise e converse ao vivo com a Dra. Carol Mafra.</p>
-          <p class="qp-scarcity" data-i18n="quiz.plan3.scarcity">⟡ Sessões ao vivo com vagas limitadas por semana</p>
         </div>
       </div>
     </div>
 
-    <!-- PRE-REDIRECT OVERLAY -->
-    <div class="quiz-redirect-overlay" id="quizRedirectOverlay">
-      <div class="qro-spinner"></div>
-      <p class="qro-step" id="qroStep1" data-i18n="quiz.redir.1">🔒 Reservando sua vaga...</p>
-      <p class="qro-step" id="qroStep2" data-i18n="quiz.redir.2">✓ Vaga confirmada</p>
-      <p class="qro-step" id="qroStep3" data-i18n="quiz.redir.3">📋 Preparando acesso seguro...</p>
-    </div>
   </div>
 </div>
 
@@ -1998,8 +1948,6 @@ function setLang(lang) {
     applyQuizLang();
   }
 
-  // update scarcity elements
-  initHeroAvailability();
 }
 
 // ─── LANG FLAGS ──────────────────────────────────────────────────────────────
@@ -2133,67 +2081,9 @@ document.getElementById('quizClose').addEventListener('click', closeQuiz);
 document.getElementById('quizModal').addEventListener('click', e => {
   if (e.target === document.getElementById('quizModal')) closeQuiz();
 });
-// ─── SCARCITY / URGENCY ──────────────────────────────────────────────────────
-function dateSeed() {
-  const d = new Date();
-  return d.getFullYear() * 10000 + (d.getMonth()+1) * 100 + d.getDate();
-}
-function getVagasHoje()    { return 4 + (dateSeed() % 5); }       // 4–8
-function getPremiumVagas() { const w = Math.floor(Date.now()/(7*864e5)); return 2+(w%3); } // 2–4
-function getFilaPos()      { return 3 + (dateSeed() % 5); }       // 3–7
-
-function initHeroAvailability() {
-  const el = document.getElementById('heroAvailability');
-  if (!el) return;
-  const tr = T[currentLang];
-  const v = getVagasHoje();
-  const txt = (tr['hero.availability'] || 'Restam <span>{v}</span> vagas para análise esta semana').replace('{v}', v);
-  el.innerHTML = txt;
-}
-
-// ─── QUIZ COUNTDOWN ───────────────────────────────────────────────────────────
-let cdTimer = null, cdSeconds = 15 * 60;
-
-function startCountdown() {
-  clearInterval(cdTimer);
-  cdSeconds = 15 * 60;
-  tickCountdown();
-  cdTimer = setInterval(tickCountdown, 1000);
-}
-function tickCountdown() {
-  if (cdSeconds <= 0) { clearInterval(cdTimer); return; }
-  cdSeconds--;
-  const m = String(Math.floor(cdSeconds/60)).padStart(2,'0');
-  const s = String(cdSeconds%60).padStart(2,'0');
-  const el = document.getElementById('quizCountdownTimer');
-  if (el) el.textContent = m+':'+s;
-}
-
-// ─── PRE-REDIRECT ANIMATION ───────────────────────────────────────────────────
-function redirectToPlan(url) {
-  const overlay = document.getElementById('quizRedirectOverlay');
-  const s1 = document.getElementById('qroStep1');
-  const s2 = document.getElementById('qroStep2');
-  const s3 = document.getElementById('qroStep3');
-  overlay.classList.add('active');
-  s1.classList.add('active');
-  setTimeout(() => {
-    s1.classList.remove('active'); s1.classList.add('done');
-    s2.classList.add('active');
-    const pos = getFilaPos();
-    const tr = T[currentLang];
-    s2.textContent = (tr['quiz.redir.2pos'] || '✓ Vaga confirmada — Posição na fila: #{p}').replace('{p}', pos);
-  }, 900);
-  setTimeout(() => {
-    s2.classList.remove('active'); s2.classList.add('done');
-    s3.classList.add('active');
-  }, 1800);
-  setTimeout(() => { window.open(url, '_blank'); closeQuiz(); }, 2700);
-}
-
 // plan card clicks
 document.querySelectorAll('.quiz-plan-card[data-plan-url]').forEach(card => {
-  card.addEventListener('click', () => redirectToPlan(card.dataset.planUrl));
+  card.addEventListener('click', () => { window.open(card.dataset.planUrl, '_blank'); closeQuiz(); });
 });
 
 // ─── PHOTO UPLOAD HANDLERS ───────────────────────────────────────────────────
@@ -2246,15 +2136,6 @@ document.getElementById('qUploadBtn').addEventListener('click', function() {
     .catch(() => {})
     .finally(() => {
       showQStep('Plans'); applyQuizLang();
-      // reset overlay steps
-      ['qroStep1','qroStep2','qroStep3'].forEach(id => {
-        const el = document.getElementById(id); if(el){ el.classList.remove('active','done'); }
-      });
-      document.getElementById('quizRedirectOverlay').classList.remove('active');
-      // vagas
-      document.getElementById('quizVagasNum').textContent = getVagasHoje();
-      // countdown
-      startCountdown();
     });
 });
 document.getElementById('qLeadBtn').addEventListener('click', () => {
