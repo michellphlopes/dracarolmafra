@@ -325,8 +325,31 @@
   }
   .plan-btn:hover, .plan-card.destaque .plan-btn { background: var(--accent); color: #000; }
 
-  .plan-badge-medal {
-    font-size: 1.4rem; margin-bottom: 8px; margin-top: 12px;
+  .plan-service {
+    font-family: Georgia, serif; font-size: 1.05rem; color: var(--text);
+    margin-bottom: 4px; line-height: 1.3;
+  }
+  .plan-installment {
+    font-family: sans-serif; font-size: 0.7rem; color: var(--muted);
+    margin-top: 2px; margin-bottom: 28px;
+  }
+  .plan-installment:empty { display: none; margin: 0; }
+  .plan-crown {
+    display: inline-block; font-family: sans-serif; font-size: 0.65rem;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--accent);
+    border: 1px solid rgba(200,169,110,0.35); padding: 4px 12px;
+    margin-bottom: 12px; margin-top: 4px; border-radius: 2px;
+  }
+  .plans-undecided {
+    text-align: center; max-width: 560px; margin: 48px auto 0;
+    padding: 32px 36px; border: 1px solid rgba(200,169,110,0.15);
+    border-top: 1px solid var(--accent);
+  }
+  .plans-undecided-title {
+    font-size: 1rem; font-weight: 400; margin-bottom: 12px; color: var(--text);
+  }
+  .plans-undecided-text {
+    font-family: sans-serif; font-size: 0.83rem; color: var(--muted); line-height: 1.9;
   }
 
   .plan-card.plan-premium {
@@ -1001,61 +1024,69 @@
 
     <!-- ESSENCIAL -->
     <div class="plan-card">
-      <p class="plan-badge-medal">🥉</p>
+      <p class="plan-service" data-i18n="plan1.service">Avaliação Labial</p>
       <p class="plan-name" data-i18n="plan1.name">Essencial</p>
       <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="97" data-usd="47" data-eur="44">97</span></div>
       <p class="plan-period" data-i18n="plans.period">pagamento único</p>
+      <p class="plan-installment" data-i18n="plan1.installment">ou 12x de R$8,08</p>
       <ul class="plan-features">
-        <li data-i18n="plan1.f1">Análise completa da região labial</li>
-        <li data-i18n="plan1.f2">Proporção e simetria do seu rosto</li>
-        <li data-i18n="plan1.f3">O que pode realçar sua beleza natural</li>
-        <li data-i18n="plan1.f4">Relatório estético personalizado (fins educativos)</li>
-        <li data-i18n="plan1.f5">Entregue em até 3 dias úteis</li>
-        <li class="no" data-i18n="plan1.f6">Análise facial completa</li>
+        <li data-i18n="plan1.f1">Descubra se o preenchimento labial combina com você</li>
+        <li data-i18n="plan1.f2">Entenda o que valoriza sua beleza natural</li>
+        <li data-i18n="plan1.f3">Evite um resultado artificial ou desproporcional</li>
+        <li data-i18n="plan1.f4">Recomendações personalizadas para o seu caso</li>
+        <li data-i18n="plan1.f5">Relatório entregue em até 3 dias úteis</li>
+        <li class="no" data-i18n="plan1.f6">Avaliação facial completa</li>
         <li class="no" data-i18n="plan1.f7">Sessão Particular com a Dra. Carol</li>
       </ul>
-      <a href="#" class="plan-btn quiz-trigger" data-i18n="plans.btn">Quero Esta Orientação</a>
+      <a href="#" class="plan-btn quiz-trigger" data-i18n="plan1.btn">Quero Descobrir Se Combina Comigo</a>
     </div>
 
     <!-- COMPLETO -->
     <div class="plan-card destaque">
       <div class="plan-badge" data-i18n="plans.popular">Mais Escolhido</div>
-      <p class="plan-badge-medal">🥈</p>
+      <p class="plan-service" data-i18n="plan2.service">Avaliação Facial Completa</p>
       <p class="plan-name" data-i18n="plan2.name">Completo</p>
       <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="247" data-usd="127" data-eur="117">247</span></div>
       <p class="plan-period" data-i18n="plans.period">pagamento único</p>
+      <p class="plan-installment" data-i18n="plan2.installment">ou 12x de R$20,58</p>
       <ul class="plan-features">
-        <li data-i18n="plan2.f1">Visão completa da harmonia do seu rosto</li>
-        <li data-i18n="plan2.f2">Todas as zonas faciais analisadas</li>
-        <li data-i18n="plan2.f3">Mapa das suas proporções únicas</li>
-        <li data-i18n="plan2.f4">O que cada característica do seu rosto comunica</li>
-        <li data-i18n="plan2.f5">Relatório estético com diagramas visuais</li>
+        <li data-i18n="plan2.f1">Tudo da Avaliação Labial</li>
+        <li data-i18n="plan2.f2">Descubra quais características do seu rosto merecem atenção</li>
+        <li data-i18n="plan2.f3">Entenda como todo o rosto influencia o resultado do preenchimento</li>
+        <li data-i18n="plan2.f4">Tome sua decisão com muito mais segurança</li>
+        <li data-i18n="plan2.f5">Relatório detalhado com diagramas visuais</li>
         <li data-i18n="plan2.f6">Entregue em até 3 dias úteis</li>
         <li class="no" data-i18n="plan2.f7">Sessão Particular com a Dra. Carol</li>
       </ul>
-      <a href="#" class="plan-btn quiz-trigger" data-i18n="plans.btn">Quero Esta Orientação</a>
+      <a href="#" class="plan-btn quiz-trigger" data-i18n="plan2.btn">Quero Minha Avaliação Completa</a>
     </div>
 
     <!-- PREMIUM -->
     <div class="plan-card plan-premium">
-      <p class="plan-badge-medal">🥇</p>
-      <p class="plan-exclusivo" data-i18n="plan3.exclusivo">✦ Acesso Direto à Dra. Carol</p>
+      <p class="plan-crown" data-i18n="plan3.crown">👑 Atendimento Exclusivo</p>
+      <p class="plan-service" data-i18n="plan3.service">Avaliação + Sessão Particular</p>
       <p class="plan-name" data-i18n="plan3.name">Premium</p>
       <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="347" data-usd="177" data-eur="163">347</span></div>
       <p class="plan-period" data-i18n="plans.period">pagamento único</p>
+      <p class="plan-installment" data-i18n="plan3.installment">ou 12x de R$28,92</p>
       <ul class="plan-features">
-        <li data-i18n="plan3.f1">Tudo do Plano Completo</li>
+        <li data-i18n="plan3.f1">Tudo da Avaliação Facial Completa</li>
         <li class="plan-feature-highlight" data-i18n="plan3.f2">Sessão Particular com a Dra. Carol Mafra</li>
-        <li data-i18n="plan3.f3">Conversa exclusiva de até 20 minutos</li>
-        <li data-i18n="plan3.f4">Explicação detalhada da sua análise</li>
-        <li data-i18n="plan3.f5">Espaço exclusivo para tirar todas as suas dúvidas</li>
-        <li data-i18n="plan3.f6">Orientações personalizadas para o seu caso</li>
+        <li data-i18n="plan3.f3">Tire todas as suas dúvidas diretamente com a especialista</li>
+        <li data-i18n="plan3.f4">Receba orientações exclusivas para o seu caso</li>
+        <li data-i18n="plan3.f5">Entenda cada detalhe da sua análise em tempo real</li>
+        <li data-i18n="plan3.f6">Tome a decisão mais segura sobre o procedimento</li>
         <li data-i18n="plan3.f7">Agendamento em até 3 dias úteis</li>
       </ul>
-      <a href="#" class="plan-btn quiz-trigger" data-i18n="plans.btn">Quero Esta Orientação</a>
-      <p class="plan-premium-note" data-i18n="plan3.note">Sessão individual de até 20 minutos, agendada em até 3 dias úteis conforme disponibilidade da Dra. Carol.</p>
+      <a href="#" class="plan-btn quiz-trigger" data-i18n="plan3.btn">Quero Conversar com a Dra. Carol</a>
+      <p class="plan-premium-note" data-i18n="plan3.note">Sessão individual de até 20 minutos. Agendamento realizado em até 3 dias úteis, conforme disponibilidade.</p>
     </div>
 
+  </div>
+
+  <div class="plans-undecided reveal">
+    <p class="plans-undecided-title" data-i18n="plans.undecided.title">Ainda não sabe qual escolher?</p>
+    <p class="plans-undecided-text" data-i18n="plans.undecided.text">O Plano Completo reúne tudo o que a maioria das clientes procura antes de decidir realizar um preenchimento labial. É a opção ideal para quem deseja entender como todo o rosto influencia o resultado e tomar uma decisão com muito mais segurança.</p>
   </div>
 
   <div class="trust-badges reveal">
@@ -1517,15 +1548,15 @@ const T = {
     'how.4.title':'A Dra. Carol analisa o seu rosto','how.4.desc':'Com olhar clínico e percepção estética apurada, ela dedica atenção exclusiva às suas características únicas.',
     'how.5.title':'Receba sua orientação','how.5.desc':'Em até 3 dias úteis, você recebe um relatório estético personalizado com finalidade educativa — criado só para você.',
     'plans.label':'Escolha seu nível de clareza','plans.title':'O quanto você quer saber sobre o seu rosto?','plans.sub':'Sem assinaturas. Sem taxas ocultas. Uma orientação estética que pode mudar a forma como você toma decisões.',
-    'plans.period':'pagamento único','plans.btn':'Quero Esta Orientação','plans.popular':'Mais Escolhido',
-    'plan1.name':'Essencial',
-    'plan1.f1':'Análise completa da região labial','plan1.f2':'Proporção e simetria do seu rosto','plan1.f3':'O que pode realçar sua beleza natural','plan1.f4':'Relatório estético personalizado (fins educativos)','plan1.f5':'Entregue em até 3 dias úteis','plan1.f6':'Análise facial completa','plan1.f7':'Sessão Particular com a Dra. Carol',
-    'plan2.name':'Completo',
-    'plan2.f1':'Visão completa da harmonia do seu rosto','plan2.f2':'Todas as zonas faciais analisadas','plan2.f3':'Mapa das suas proporções únicas','plan2.f4':'O que cada característica do seu rosto comunica','plan2.f5':'Relatório estético com diagramas visuais','plan2.f6':'Entregue em até 3 dias úteis','plan2.f7':'Sessão Particular com a Dra. Carol',
-    'plan3.name':'Premium',
-    'plan3.exclusivo':'✦ Acesso Direto à Dra. Carol',
-    'plan3.f1':'Tudo do Plano Completo','plan3.f2':'Sessão Particular com a Dra. Carol Mafra','plan3.f3':'Conversa exclusiva de até 20 minutos','plan3.f4':'Explicação detalhada da sua análise','plan3.f5':'Espaço exclusivo para tirar todas as suas dúvidas','plan3.f6':'Orientações personalizadas para o seu caso','plan3.f7':'Agendamento em até 3 dias úteis',
-    'plan3.note':'Sessão individual de até 20 minutos, agendada em até 3 dias úteis conforme disponibilidade da Dra. Carol.',
+    'plans.period':'pagamento único','plans.popular':'Mais Escolhido',
+    'plan1.name':'Essencial','plan1.service':'Avaliação Labial','plan1.btn':'Quero Descobrir Se Combina Comigo','plan1.installment':'ou 12x de R$8,08',
+    'plan1.f1':'Descubra se o preenchimento labial combina com você','plan1.f2':'Entenda o que valoriza sua beleza natural','plan1.f3':'Evite um resultado artificial ou desproporcional','plan1.f4':'Recomendações personalizadas para o seu caso','plan1.f5':'Relatório entregue em até 3 dias úteis','plan1.f6':'Avaliação facial completa','plan1.f7':'Sessão Particular com a Dra. Carol',
+    'plan2.name':'Completo','plan2.service':'Avaliação Facial Completa','plan2.btn':'Quero Minha Avaliação Completa','plan2.installment':'ou 12x de R$20,58',
+    'plan2.f1':'Tudo da Avaliação Labial','plan2.f2':'Descubra quais características do seu rosto merecem atenção','plan2.f3':'Entenda como todo o rosto influencia o resultado do preenchimento','plan2.f4':'Tome sua decisão com muito mais segurança','plan2.f5':'Relatório detalhado com diagramas visuais','plan2.f6':'Entregue em até 3 dias úteis','plan2.f7':'Sessão Particular com a Dra. Carol',
+    'plan3.name':'Premium','plan3.service':'Avaliação + Sessão Particular','plan3.btn':'Quero Conversar com a Dra. Carol','plan3.installment':'ou 12x de R$28,92','plan3.crown':'👑 Atendimento Exclusivo',
+    'plan3.f1':'Tudo da Avaliação Facial Completa','plan3.f2':'Sessão Particular com a Dra. Carol Mafra','plan3.f3':'Tire todas as suas dúvidas diretamente com a especialista','plan3.f4':'Receba orientações exclusivas para o seu caso','plan3.f5':'Entenda cada detalhe da sua análise em tempo real','plan3.f6':'Tome a decisão mais segura sobre o procedimento','plan3.f7':'Agendamento em até 3 dias úteis',
+    'plan3.note':'Sessão individual de até 20 minutos. Agendamento realizado em até 3 dias úteis, conforme disponibilidade.',
+    'plans.undecided.title':'Ainda não sabe qual escolher?','plans.undecided.text':'O Plano Completo reúne tudo o que a maioria das clientes procura antes de decidir realizar um preenchimento labial. É a opção ideal para quem deseja entender como todo o rosto influencia o resultado e tomar uma decisão com muito mais segurança.',
     'guar.title':'Garantia de Reembolso em 7 Dias','guar.desc':'Se você ainda não enviou suas fotos, tem direito a reembolso integral em até 7 dias após a compra — sem perguntas.',
     'trust.secure':'Pagamento Seguro',
     'about.label':'Quem vai analisar o seu rosto','about.p1':'A Dra. Ana Carolina Sousa Mafra é especialista em Harmonização Orofacial pela CETRO Belo Horizonte, com formação avançada em preenchimento com ácido hialurônico, toxina botulínica, rinomodelação, preenchimento labial, Full Face, intradermoterapia e microagulhamento. Graduada em Odontologia pela Rede Unidoctum Teófilo Otoni.','about.p2':'O que diferencia a Dra. Carol não é apenas a técnica — é o olhar. Ela enxerga o rosto como um todo, respeita a identidade de cada paciente e cria orientações que realçam a beleza natural sem apagar quem a pessoa é. Cada análise é tratada com exclusividade e atenção ao detalhe.','about.stat1':'Pacientes Atendidos em Procedimentos Diversos','about.stat2':'Avaliação Média','about.stat3':'Especialista Certificada','about.btn':'Quero Minha Orientação Personalizada',
@@ -1604,15 +1635,15 @@ const T = {
     'how.4.title':'Dr. Carol analyzes your face','how.4.desc':'With a clinical eye and refined aesthetic perception, she dedicates exclusive attention to your unique features.',
     'how.5.title':'Receive your guidance','how.5.desc':'Within 3 business days, you receive a personalized aesthetic report for educational purposes — created just for you.',
     'plans.label':'Choose your level of clarity','plans.title':'How much do you want to know about your face?','plans.sub':'No subscriptions. No hidden fees. Aesthetic guidance that can change how you make decisions.',
-    'plans.period':'one-time payment','plans.btn':'I Want This Guidance','plans.popular':'Most Chosen',
-    'plan1.name':'Essential',
-    'plan1.f1':'Complete lip region analysis','plan1.f2':'Proportion and symmetry of your face','plan1.f3':'What can enhance your natural beauty','plan1.f4':'Personalized aesthetic report (educational purposes)','plan1.f5':'Delivered within 3 business days','plan1.f6':'Complete facial analysis','plan1.f7':'Private Session with Dr. Carol',
-    'plan2.name':'Complete',
-    'plan2.f1':'Complete view of your facial harmony','plan2.f2':'All facial zones analyzed','plan2.f3':'Map of your unique proportions','plan2.f4':'What each feature of your face communicates','plan2.f5':'Aesthetic report with visual diagrams','plan2.f6':'Delivered within 3 business days','plan2.f7':'Private Session with Dr. Carol',
-    'plan3.name':'Premium',
-    'plan3.exclusivo':'✦ Direct Access to Dr. Carol',
-    'plan3.f1':'Everything in the Complete Plan','plan3.f2':'Private Session with Dr. Carol Mafra','plan3.f3':'Exclusive conversation of up to 20 minutes','plan3.f4':'Detailed explanation of your analysis','plan3.f5':'Dedicated space to answer all your questions','plan3.f6':'Personalized guidance for your case','plan3.f7':'Scheduled within 3 business days',
-    'plan3.note':'Individual session of up to 20 minutes, scheduled within 3 business days subject to Dr. Carol\'s availability.',
+    'plans.period':'one-time payment','plans.popular':'Most Chosen',
+    'plan1.name':'Essential','plan1.service':'Lip Assessment','plan1.btn':'Find Out If It\'s Right for Me','plan1.installment':'or 12x of $3.92',
+    'plan1.f1':'Find out if lip filler really works for you','plan1.f2':'Understand what enhances your natural beauty','plan1.f3':'Avoid an artificial or disproportionate result','plan1.f4':'Personalized recommendations for your case','plan1.f5':'Report delivered within 3 business days','plan1.f6':'Full facial assessment','plan1.f7':'Private Session with Dr. Carol',
+    'plan2.name':'Complete','plan2.service':'Full Facial Assessment','plan2.btn':'I Want My Full Assessment','plan2.installment':'or 12x of $10.58',
+    'plan2.f1':'Everything in the Lip Assessment','plan2.f2':'Discover which facial features deserve attention','plan2.f3':'Understand how your whole face influences the result','plan2.f4':'Make your decision with much more confidence','plan2.f5':'Detailed report with visual diagrams','plan2.f6':'Delivered within 3 business days','plan2.f7':'Private Session with Dr. Carol',
+    'plan3.name':'Premium','plan3.service':'Assessment + Private Session','plan3.btn':'I Want to Talk to Dr. Carol','plan3.installment':'or 12x of $14.75','plan3.crown':'👑 Exclusive Access',
+    'plan3.f1':'Everything in the Full Facial Assessment','plan3.f2':'Private Session with Dr. Carol Mafra','plan3.f3':'Ask all your questions directly with the specialist','plan3.f4':'Receive exclusive guidance for your case','plan3.f5':'Understand every detail of your analysis in real time','plan3.f6':'Make the most confident decision about your procedure','plan3.f7':'Scheduled within 3 business days',
+    'plan3.note':'Individual session of up to 20 minutes. Scheduling within 3 business days, subject to availability.',
+    'plans.undecided.title':'Not sure which to choose?','plans.undecided.text':'The Complete Plan brings together everything most clients look for before deciding on lip filler. It\'s the ideal option for those who want to understand how the whole face influences the result and make a decision with much more confidence.',
     'guar.title':'7-Day Money-Back Guarantee','guar.desc':'If you haven\'t submitted your photos yet, you\'re entitled to a full refund within 7 days of purchase — no questions asked.',
     'trust.secure':'Secure Payment',
     'about.label':'Who will analyze your face','about.p1':'Graduated in Dentistry from Rede Unidoctum Teófilo Otoni, Dr. Ana Carolina Sousa Mafra holds a specialization in Orofacial Harmonization from CETRO Belo Horizonte, with advanced training in hyaluronic acid fillers, botulinum toxin, rhinomodeling, lip filling, Full Face, intradermotherapy, facial and submental lipolysis, and microneedling.','about.p2':'What sets Dr. Carol apart is not just technique — it\'s the eye. She sees the face as a whole, respects each patient\'s identity, and creates guidance that enhances natural beauty without erasing who the person is.','about.stat1':'Patients Served in Various Procedures','about.stat2':'Average Rating','about.stat3':'Certified Specialist','about.btn':'I Want My Personalized Guidance',
@@ -1691,15 +1722,15 @@ const T = {
     'how.4.title':'La Dra. Carol analiza tu rostro','how.4.desc':'Con ojo clínico y percepción estética refinada, ella dedica atención exclusiva a tus características únicas.',
     'how.5.title':'Recibe tu orientación','how.5.desc':'En hasta 3 días hábiles, recibes un informe estético personalizado con fines educativos — creado solo para ti.',
     'plans.label':'Elige tu nivel de claridad','plans.title':'¿Cuánto quieres saber sobre tu rostro?','plans.sub':'Sin suscripciones. Sin tarifas ocultas. Una orientación estética que puede cambiar cómo tomas decisiones.',
-    'plans.period':'pago único','plans.btn':'Quiero Esta Orientación','plans.popular':'Más Elegido',
-    'plan1.name':'Esencial',
-    'plan1.f1':'Análisis completo de la región labial','plan1.f2':'Proporción y simetría de tu rostro','plan1.f3':'Lo que puede realzar tu belleza natural','plan1.f4':'Informe estético personalizado (fines educativos)','plan1.f5':'Entregado en hasta 3 días hábiles','plan1.f6':'Análisis facial completo','plan1.f7':'Sesión Particular con la Dra. Carol',
-    'plan2.name':'Completo',
-    'plan2.f1':'Visión completa de la armonía de tu rostro','plan2.f2':'Todas las zonas faciales analizadas','plan2.f3':'Mapa de tus proporciones únicas','plan2.f4':'Lo que cada característica de tu rostro comunica','plan2.f5':'Informe estético con diagramas visuales','plan2.f6':'Entregado en hasta 3 días hábiles','plan2.f7':'Sesión Particular con la Dra. Carol',
-    'plan3.name':'Premium',
-    'plan3.exclusivo':'✦ Acceso Directo a la Dra. Carol',
-    'plan3.f1':'Todo del Plan Completo','plan3.f2':'Sesión Particular con la Dra. Carol Mafra','plan3.f3':'Conversación exclusiva de hasta 20 minutos','plan3.f4':'Explicación detallada de tu análisis','plan3.f5':'Espacio exclusivo para resolver todas tus dudas','plan3.f6':'Orientaciones personalizadas para tu caso','plan3.f7':'Agendada en hasta 3 días hábiles',
-    'plan3.note':'Sesión individual de hasta 20 minutos, agendada en hasta 3 días hábiles conforme disponibilidad de la Dra. Carol.',
+    'plans.period':'pago único','plans.popular':'Más Elegido',
+    'plan1.name':'Esencial','plan1.service':'Evaluación Labial','plan1.btn':'Descubrir Si Es Para Mí','plan1.installment':'o 12 cuotas de €3,67',
+    'plan1.f1':'Descubre si el relleno labial realmente combina contigo','plan1.f2':'Entiende qué realza tu belleza natural','plan1.f3':'Evita un resultado artificial o desproporcionado','plan1.f4':'Recomendaciones personalizadas para tu caso','plan1.f5':'Informe entregado en hasta 3 días hábiles','plan1.f6':'Evaluación facial completa','plan1.f7':'Sesión Privada con la Dra. Carol',
+    'plan2.name':'Completo','plan2.service':'Evaluación Facial Completa','plan2.btn':'Quiero Mi Evaluación Completa','plan2.installment':'o 12 cuotas de €9,75',
+    'plan2.f1':'Todo de la Evaluación Labial','plan2.f2':'Descubre qué características de tu rostro merecen atención','plan2.f3':'Entiende cómo todo el rostro influye en el resultado','plan2.f4':'Toma tu decisión con mucha más seguridad','plan2.f5':'Informe detallado con diagramas visuales','plan2.f6':'Entregado en hasta 3 días hábiles','plan2.f7':'Sesión Privada con la Dra. Carol',
+    'plan3.name':'Premium','plan3.service':'Evaluación + Sesión Privada','plan3.btn':'Quiero Hablar con la Dra. Carol','plan3.installment':'o 12 cuotas de €13,58','plan3.crown':'👑 Acceso Exclusivo',
+    'plan3.f1':'Todo de la Evaluación Facial Completa','plan3.f2':'Sesión Privada con la Dra. Carol Mafra','plan3.f3':'Resuelve todas tus dudas directamente con la especialista','plan3.f4':'Recibe orientaciones exclusivas para tu caso','plan3.f5':'Entiende cada detalle de tu análisis en tiempo real','plan3.f6':'Toma la decisión más segura sobre el procedimiento','plan3.f7':'Agendada en hasta 3 días hábiles',
+    'plan3.note':'Sesión individual de hasta 20 minutos. Agendamiento realizado en hasta 3 días hábiles, conforme disponibilidad.',
+    'plans.undecided.title':'¿Todavía no sabes cuál elegir?','plans.undecided.text':'El Plan Completo reúne todo lo que la mayoría de las clientas busca antes de decidirse por un relleno labial. Es la opción ideal para quienes desean entender cómo todo el rostro influye en el resultado y tomar una decisión con mucha más seguridad.',
     'guar.title':'Garantía de Devolución de 7 Días','guar.desc':'Si aún no has enviado tus fotos, tienes derecho a un reembolso completo dentro de los 7 días posteriores a la compra — sin preguntas.',
     'trust.secure':'Pago Seguro',
     'about.label':'Quién va a analizar tu rostro','about.p1':'Graduada en Odontología por la Rede Unidoctum Teófilo Otoni, la Dra. Ana Carolina Sousa Mafra es especialista en Armonización Orofacial por el CETRO Belo Horizonte, con formación avanzada en relleno con ácido hialurónico, toxina botulínica, rinomodelación, relleno labial, Full Face, intradermoterapia, lipólisis facial y submentoniana y microagujamiento.','about.p2':'Lo que diferencia a la Dra. Carol no es solo la técnica — es la mirada. Ella ve el rostro como un todo, respeta la identidad de cada paciente y crea orientaciones que realzan la belleza natural sin borrar quién es la persona.','about.stat1':'Pacientes Atendidas en Diversos Procedimientos','about.stat2':'Valoración Media','about.stat3':'Especialista Certificada','about.btn':'Quiero Mi Orientación Personalizada',
@@ -1778,15 +1809,15 @@ const T = {
     'how.4.title':'La Dr. Carol analyse votre visage','how.4.desc':'Avec un œil clinique et une perception esthétique affinée, elle consacre une attention exclusive à vos caractéristiques uniques.',
     'how.5.title':'Recevez votre orientation','how.5.desc':'En jusqu\'à 3 jours ouvrables, vous recevez un rapport esthétique personnalisé à des fins éducatives — créé rien que pour vous.',
     'plans.label':'Choisissez votre niveau de clarté','plans.title':'Combien voulez-vous en savoir sur votre visage ?','plans.sub':'Pas d\'abonnements. Pas de frais cachés. Une orientation esthétique qui peut changer votre façon de prendre des décisions.',
-    'plans.period':'paiement unique','plans.btn':'Je Veux Cette Orientation','plans.popular':'Le Plus Choisi',
-    'plan1.name':'Essentiel',
-    'plan1.f1':'Analyse complète de la région labiale','plan1.f2':'Proportion et symétrie de votre visage','plan1.f3':'Ce qui peut sublimer votre beauté naturelle','plan1.f4':'Rapport esthétique personnalisé (fins éducatives)','plan1.f5':'Livré en jusqu\'à 3 jours ouvrables','plan1.f6':'Analyse faciale complète','plan1.f7':'Séance Particulière avec la Dr. Carol',
-    'plan2.name':'Complet',
-    'plan2.f1':'Vue complète de l\'harmonie de votre visage','plan2.f2':'Toutes les zones faciales analysées','plan2.f3':'Carte de vos proportions uniques','plan2.f4':'Ce que chaque trait de votre visage communique','plan2.f5':'Rapport esthétique avec diagrammes visuels','plan2.f6':'Livré en jusqu\'à 3 jours ouvrables','plan2.f7':'Séance Particulière avec la Dr. Carol',
-    'plan3.name':'Premium',
-    'plan3.exclusivo':'✦ Accès Direct à la Dr. Carol',
-    'plan3.f1':'Tout du Plan Complet','plan3.f2':'Séance Particulière avec la Dr. Carol Mafra','plan3.f3':'Conversation exclusive jusqu\'à 20 minutes','plan3.f4':'Explication détaillée de votre analyse','plan3.f5':'Espace exclusif pour toutes vos questions','plan3.f6':'Recommandations personnalisées pour votre cas','plan3.f7':'Programmée en jusqu\'à 3 jours ouvrables',
-    'plan3.note':'Séance individuelle de jusqu\'à 20 minutes, programmée en jusqu\'à 3 jours ouvrables selon disponibilité de la Dr. Carol.',
+    'plans.period':'paiement unique','plans.popular':'Le Plus Choisi',
+    'plan1.name':'Essentiel','plan1.service':'Évaluation Labiale','plan1.btn':'Découvrir Si C\'est Pour Moi','plan1.installment':'ou 12x de €3,67',
+    'plan1.f1':'Découvrez si le remplissage labial vous convient vraiment','plan1.f2':'Comprenez ce qui valorise votre beauté naturelle','plan1.f3':'Évitez un résultat artificiel ou disproportionné','plan1.f4':'Recommandations personnalisées pour votre cas','plan1.f5':'Rapport livré en jusqu\'à 3 jours ouvrables','plan1.f6':'Évaluation faciale complète','plan1.f7':'Séance Privée avec la Dr. Carol',
+    'plan2.name':'Complet','plan2.service':'Évaluation Faciale Complète','plan2.btn':'Je Veux Mon Évaluation Complète','plan2.installment':'ou 12x de €9,75',
+    'plan2.f1':'Tout de l\'Évaluation Labiale','plan2.f2':'Découvrez quels traits de votre visage méritent attention','plan2.f3':'Comprenez comment tout le visage influence le résultat','plan2.f4':'Prenez votre décision avec beaucoup plus de confiance','plan2.f5':'Rapport détaillé avec diagrammes visuels','plan2.f6':'Livré en jusqu\'à 3 jours ouvrables','plan2.f7':'Séance Privée avec la Dr. Carol',
+    'plan3.name':'Premium','plan3.service':'Évaluation + Séance Privée','plan3.btn':'Je Veux Parler à la Dr. Carol','plan3.installment':'ou 12x de €13,58','plan3.crown':'👑 Accès Exclusif',
+    'plan3.f1':'Tout de l\'Évaluation Faciale Complète','plan3.f2':'Séance Privée avec la Dr. Carol Mafra','plan3.f3':'Posez toutes vos questions directement à la spécialiste','plan3.f4':'Recevez des conseils exclusifs pour votre cas','plan3.f5':'Comprenez chaque détail de votre analyse en temps réel','plan3.f6':'Prenez la décision la plus éclairée sur votre procédure','plan3.f7':'Programmée en jusqu\'à 3 jours ouvrables',
+    'plan3.note':'Séance individuelle de jusqu\'à 20 minutes. Programmation dans les 3 jours ouvrables, selon disponibilité.',
+    'plans.undecided.title':'Vous ne savez pas encore laquelle choisir ?','plans.undecided.text':'Le Plan Complet réunit tout ce que la plupart des clientes recherchent avant de se décider pour un remplissage labial. C\'est l\'option idéale pour celles qui souhaitent comprendre comment l\'ensemble du visage influence le résultat et prendre une décision en toute confiance.',
     'guar.title':'Garantie Remboursement 7 Jours','guar.desc':'Si vous n\'avez pas encore soumis vos photos, vous avez droit à un remboursement intégral dans les 7 jours suivant l\'achat — sans conditions.',
     'trust.secure':'Paiement Sécurisé',
     'about.label':'Qui va analyser votre visage','about.p1':'Diplômée en Chirurgie Dentaire de la Rede Unidoctum Teófilo Otoni, la Dr. Ana Carolina Sousa Mafra est spécialiste en Harmonisation Orofaciale par le CETRO Belo Horizonte, avec une formation avancée en comblement à l\'acide hyaluronique, toxine botulique, rhinomodélation, augmentation des lèvres, Full Face, intradermothérapie, lipolyse faciale et sous-mentale et microneedling.','about.p2':'Ce qui distingue la Dr. Carol n\'est pas seulement la technique — c\'est le regard. Elle voit le visage dans son ensemble, respecte l\'identité de chaque patiente et crée des orientations qui subliment la beauté naturelle sans effacer qui est la personne.','about.stat1':'Patients Suivis en Divers Actes','about.stat2':'Note Moyenne','about.stat3':'Spécialiste Certifiée','about.btn':'Je Veux Mon Orientation Personnalisée',
@@ -1865,15 +1896,15 @@ const T = {
     'how.4.title':'La Dr.ssa Carol analizza il tuo viso','how.4.desc':'Con occhio clinico e percezione estetica raffinata, dedica attenzione esclusiva alle tue caratteristiche uniche.',
     'how.5.title':'Ricevi il tuo orientamento','how.5.desc':'Entro 3 giorni lavorativi, ricevi un report estetico personalizzato a fini educativi — creato solo per te.',
     'plans.label':'Scegli il tuo livello di chiarezza','plans.title':'Quanto vuoi sapere del tuo viso?','plans.sub':'Nessun abbonamento. Nessuna tariffa nascosta. Un orientamento estetico che può cambiare il modo in cui prendi le decisioni.',
-    'plans.period':'pagamento unico','plans.btn':'Voglio Questo Orientamento','plans.popular':'Più Scelto',
-    'plan1.name':'Essenziale',
-    'plan1.f1':'Analisi completa della zona labiale','plan1.f2':'Proporzione e simmetria del tuo viso','plan1.f3':'Ciò che può esaltare la tua bellezza naturale','plan1.f4':'Report estetico personalizzato (fini educativi)','plan1.f5':'Consegnato entro 3 giorni lavorativi','plan1.f6':'Analisi facciale completa','plan1.f7':'Sessione Privata con la Dr.ssa Carol Mafra',
-    'plan2.name':'Completo',
-    'plan2.f1':'Visione completa dell\'armonia del tuo viso','plan2.f2':'Tutte le zone facciali analizzate con attenzione','plan2.f3':'La mappa delle tue proporzioni uniche','plan2.f4':'Ciò che ogni caratteristica del tuo viso comunica','plan2.f5':'Report estetico con diagrammi visivi','plan2.f6':'Consegnato entro 3 giorni lavorativi','plan2.f7':'Sessione Privata con la Dr.ssa Carol Mafra',
-    'plan3.name':'Premium',
-    'plan3.exclusivo':'✦ Accesso Diretto alla Dr.ssa Carol',
-    'plan3.f1':'Tutto del Piano Completo','plan3.f2':'Sessione Privata con la Dr.ssa Carol Mafra','plan3.f3':'Conversazione esclusiva fino a 20 minuti','plan3.f4':'Spiegazione dettagliata della tua analisi','plan3.f5':'Spazio esclusivo per tutte le tue domande','plan3.f6':'Indicazioni personalizzate per il tuo caso','plan3.f7':'Appuntamento entro 3 giorni lavorativi',
-    'plan3.note':'Sessione individuale fino a 20 minuti, fissata entro 3 giorni lavorativi in base alla disponibilità della Dr.ssa Carol.',
+    'plans.period':'pagamento unico','plans.popular':'Più Scelto',
+    'plan1.name':'Essenziale','plan1.service':'Valutazione Labiale','plan1.btn':'Scoprire Se È Adatto a Me','plan1.installment':'o 12 rate da €3,67',
+    'plan1.f1':'Scopri se il filler labiale è davvero adatto a te','plan1.f2':'Capisci cosa valorizza la tua bellezza naturale','plan1.f3':'Evita un risultato artificiale o sproporzionato','plan1.f4':'Raccomandazioni personalizzate per il tuo caso','plan1.f5':'Report consegnato entro 3 giorni lavorativi','plan1.f6':'Valutazione facciale completa','plan1.f7':'Sessione Privata con la Dr.ssa Carol',
+    'plan2.name':'Completo','plan2.service':'Valutazione Facciale Completa','plan2.btn':'Voglio la Mia Valutazione Completa','plan2.installment':'o 12 rate da €9,75',
+    'plan2.f1':'Tutto della Valutazione Labiale','plan2.f2':'Scopri quali caratteristiche del tuo viso meritano attenzione','plan2.f3':'Capisci come tutto il viso influenza il risultato','plan2.f4':'Prendi la tua decisione con molta più sicurezza','plan2.f5':'Report dettagliato con diagrammi visivi','plan2.f6':'Consegnato entro 3 giorni lavorativi','plan2.f7':'Sessione Privata con la Dr.ssa Carol',
+    'plan3.name':'Premium','plan3.service':'Valutazione + Sessione Privata','plan3.btn':'Voglio Parlare con la Dr.ssa Carol','plan3.installment':'o 12 rate da €13,58','plan3.crown':'👑 Accesso Esclusivo',
+    'plan3.f1':'Tutto della Valutazione Facciale Completa','plan3.f2':'Sessione Privata con la Dr.ssa Carol Mafra','plan3.f3':'Fai tutte le tue domande direttamente alla specialista','plan3.f4':'Ricevi indicazioni esclusive per il tuo caso','plan3.f5':'Capisci ogni dettaglio della tua analisi in tempo reale','plan3.f6':'Prendi la decisione più sicura sul tuo procedimento','plan3.f7':'Appuntamento entro 3 giorni lavorativi',
+    'plan3.note':'Sessione individuale fino a 20 minuti. Appuntamento fissato entro 3 giorni lavorativi, secondo disponibilità.',
+    'plans.undecided.title':'Non sai ancora quale scegliere?','plans.undecided.text':'Il Piano Completo riunisce tutto ciò che la maggior parte delle clienti cerca prima di decidere di eseguire un filler per le labbra. È l\'opzione ideale per chi desidera capire come tutto il viso influenza il risultato e prendere una decisione con molta più sicurezza.',
     'guar.title':'Garanzia di Rimborso 7 Giorni','guar.desc':'Se non hai ancora inviato le tue foto, hai diritto a un rimborso completo entro 7 giorni dall\'acquisto — senza domande.',
     'trust.secure':'Pagamento Sicuro',
     'about.label':'Chi analizzerà il tuo viso','about.p1':'Laureata in Odontoiatria presso la Rede Unidoctum Teófilo Otoni, la Dr.ssa Ana Carolina Sousa Mafra è specialista in Armonizzazione Orofacciale presso il CETRO Belo Horizonte, con formazione avanzata in filler con acido ialuronico, tossina botulinica, rinomodellazione, filler labiale, Full Face, intradermoterapia, lipolisi facciale e sottomentoniera e microneedling.','about.p2':'Ciò che distingue la Dr.ssa Carol non è solo la tecnica — è lo sguardo. Vede il viso come un insieme, rispetta l\'identità di ogni paziente e crea orientamenti che esaltano la bellezza naturale senza cancellare chi è la persona.','about.stat1':'Pazienti Trattati in Diverse Procedure','about.stat2':'Valutazione Media','about.stat3':'Specialista Certificata','about.btn':'Voglio Il Mio Orientamento Personalizzato',
