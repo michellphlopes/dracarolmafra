@@ -95,7 +95,7 @@
 
   /* LANG FLAGS */
   .lang-flags {
-    display: flex; align-items: center; gap: 6px; margin-left: 16px;
+    display: none; align-items: center; gap: 6px; margin-left: 16px;
   }
   .lang-flag {
     background: none; border: none; cursor: pointer;
@@ -2150,7 +2150,18 @@ document.querySelectorAll('.quiz-opt').forEach(btn =>
 })();
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
-fetchRates().then(() => setLang('pt'));
+function detectLang() {
+  const param = new URLSearchParams(location.search).get('lang');
+  if (param && T[param]) return param;
+  const nav = (navigator.language || 'pt').toLowerCase();
+  if (nav.startsWith('pt')) return 'pt';
+  if (nav.startsWith('es')) return 'es';
+  if (nav.startsWith('fr')) return 'fr';
+  if (nav.startsWith('it')) return 'it';
+  if (nav.startsWith('en')) return 'en';
+  return 'pt';
+}
+fetchRates().then(() => setLang(detectLang()));
 </script>
 </body>
 </html>
