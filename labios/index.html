@@ -1368,6 +1368,31 @@
       </div>
     </div>
 
+    <!-- ANALYZING STEP -->
+    <div id="quizStepAnalyzing" class="quiz-step" style="display:none">
+      <div style="text-align:center; padding: 40px 0 20px">
+        <p style="font-family:sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:32px" data-i18n="quiz.analyzing.label">Analisando suas respostas...</p>
+        <div id="analyzingChecks" style="display:flex;flex-direction:column;gap:14px;margin-bottom:36px;text-align:left;max-width:300px;margin-inline:auto">
+          <div class="az-item" style="opacity:0;transition:opacity 0.4s;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:0.9rem;color:var(--text)">
+            <span style="color:var(--accent);font-size:1rem">✔</span><span data-i18n="quiz.analyzing.1">Compatibilidade labial</span>
+          </div>
+          <div class="az-item" style="opacity:0;transition:opacity 0.4s;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:0.9rem;color:var(--text)">
+            <span style="color:var(--accent);font-size:1rem">✔</span><span data-i18n="quiz.analyzing.2">Harmonia facial</span>
+          </div>
+          <div class="az-item" style="opacity:0;transition:opacity 0.4s;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:0.9rem;color:var(--text)">
+            <span style="color:var(--accent);font-size:1rem">✔</span><span data-i18n="quiz.analyzing.3">Proporções do rosto</span>
+          </div>
+          <div class="az-item" style="opacity:0;transition:opacity 0.4s;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:0.9rem;color:var(--text)">
+            <span style="color:var(--accent);font-size:1rem">✔</span><span data-i18n="quiz.analyzing.4">Estrutura dos lábios</span>
+          </div>
+        </div>
+        <p id="analyzingWait" style="opacity:0;transition:opacity 0.4s;font-family:sans-serif;font-size:0.75rem;color:var(--muted);letter-spacing:2px;margin-bottom:20px" data-i18n="quiz.analyzing.wait">Aguarde alguns segundos...</p>
+        <div style="max-width:280px;margin-inline:auto;height:3px;background:var(--border);border-radius:2px;overflow:hidden">
+          <div id="analyzingBar" style="height:100%;width:0%;background:var(--accent);transition:width 5s linear;border-radius:2px"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- UPLOAD STEP -->
     <div id="quizStepResult" class="quiz-step" style="display:none">
       <h2 class="quiz-result-title" data-i18n="quiz.upload.title">Encontramos características interessantes.</h2>
@@ -1499,6 +1524,7 @@ const T = {
     'quiz.q5.a':'Sim, esse é meu maior medo','quiz.q5.b':'Tenho um pouco de receio','quiz.q5.c':'Não, confio em uma especialista',
     'quiz.q6':'Você acredita que seus lábios estão em harmonia com seu rosto?',
     'quiz.q6.a':'Não, sinto que estão fora de proporção','quiz.q6.b':'Talvez, mas não tenho certeza','quiz.q6.c':'Sim, mas quero aprimorar',
+    'quiz.analyzing.label':'Analisando suas respostas...','quiz.analyzing.1':'Compatibilidade labial','quiz.analyzing.2':'Harmonia facial','quiz.analyzing.3':'Proporções do rosto','quiz.analyzing.4':'Estrutura dos lábios','quiz.analyzing.wait':'Aguarde alguns segundos...',
     'quiz.result.title':'Seu rosto tem características específicas que influenciam diretamente qualquer resultado de preenchimento.',
     'quiz.result.desc':'Com base nas suas respostas, identificamos pontos do seu rosto que fazem toda a diferença no resultado final. Para saber exatamente o que isso significa para o SEU rosto, a Dra. Carol precisa analisar suas fotos pessoalmente.',
     'quiz.cta':'Quero Saber o Que Isso Significa Para Mim →',
@@ -1583,6 +1609,7 @@ const T = {
     'quiz.q5.a':'Yes, that\'s my biggest fear','quiz.q5.b':'I have some concern about it','quiz.q5.c':'No, I trust a specialist',
     'quiz.q6':'Do you feel your lips are in harmony with your face?',
     'quiz.q6.a':'No, they feel out of proportion','quiz.q6.b':'Maybe, but I\'m not sure','quiz.q6.c':'Yes, but I want to improve them',
+    'quiz.analyzing.label':'Analyzing your answers...','quiz.analyzing.1':'Lip compatibility','quiz.analyzing.2':'Facial harmony','quiz.analyzing.3':'Facial proportions','quiz.analyzing.4':'Lip structure','quiz.analyzing.wait':'Please wait a few seconds...',
     'quiz.result.title':'Your face has specific characteristics that directly influence any filler result.',
     'quiz.result.desc':'Based on your answers, we identified features of your face that make all the difference in the final result. To find out exactly what this means for YOUR face, Dr. Carol Mafra needs to analyze your photos personally.',
     'quiz.cta':'I Want to Know What This Means for Me →',
@@ -1667,6 +1694,7 @@ const T = {
     'quiz.q5.a':'Sí, ese es mi mayor miedo','quiz.q5.b':'Tengo algo de miedo','quiz.q5.c':'No, confío en una especialista',
     'quiz.q6':'¿Crees que tus labios están en armonía con tu rostro?',
     'quiz.q6.a':'No, siento que están fuera de proporción','quiz.q6.b':'Tal vez, pero no estoy segura','quiz.q6.c':'Sí, pero quiero mejorarlos',
+    'quiz.analyzing.label':'Analizando tus respuestas...','quiz.analyzing.1':'Compatibilidad labial','quiz.analyzing.2':'Armonía facial','quiz.analyzing.3':'Proporciones del rostro','quiz.analyzing.4':'Estructura de los labios','quiz.analyzing.wait':'Espera unos segundos...',
     'quiz.result.title':'Tu rostro tiene características específicas que influyen directamente en cualquier resultado de relleno.',
     'quiz.result.desc':'Con base en tus respuestas, identificamos rasgos de tu rostro que marcan toda la diferencia en el resultado final. Para saber exactamente qué significa esto para TU rostro, la Dra. Carol Mafra necesita analizar tus fotos personalmente.',
     'quiz.cta':'Quiero Saber Qué Significa Esto para Mí →',
@@ -1751,6 +1779,7 @@ const T = {
     'quiz.q5.a':'Oui, c\'est ma plus grande peur','quiz.q5.b':'J\'ai un peu de crainte','quiz.q5.c':'Non, je fais confiance à une spécialiste',
     'quiz.q6':'Pensez-vous que vos lèvres sont en harmonie avec votre visage ?',
     'quiz.q6.a':'Non, je sens qu\'elles sont disproportionnées','quiz.q6.b':'Peut-être, mais je n\'en suis pas sûre','quiz.q6.c':'Oui, mais je veux les améliorer',
+    'quiz.analyzing.label':'Analyse de vos réponses...','quiz.analyzing.1':'Compatibilité labiale','quiz.analyzing.2':'Harmonie faciale','quiz.analyzing.3':'Proportions du visage','quiz.analyzing.4':'Structure des lèvres','quiz.analyzing.wait':'Veuillez patienter quelques secondes...',
     'quiz.result.title':'Votre visage a des caractéristiques spécifiques qui influencent directement tout résultat de filler.',
     'quiz.result.desc':'D\'après vos réponses, nous avons identifié des points spécifiques de votre visage qui influencent directement un résultat de filler labial. Pour découvrir exactement ce que cela signifie pour VOTRE visage, la Dr. Carol Mafra doit analyser vos photos personnellement.',
     'quiz.cta':'Je Veux Découvrir Ce Que Cela Signifie pour Moi',
@@ -1835,6 +1864,7 @@ const T = {
     'quiz.q5.a':'Sì, è la mia paura più grande','quiz.q5.b':'Ho un po\' di timore','quiz.q5.c':'No, mi fido di una specialista',
     'quiz.q6':'Credi che le tue labbra siano in armonia con il tuo viso?',
     'quiz.q6.a':'No, sento che sono sproporzionate','quiz.q6.b':'Forse, ma non ne sono sicura','quiz.q6.c':'Sì, ma voglio migliorarle',
+    'quiz.analyzing.label':'Analisi delle tue risposte...','quiz.analyzing.1':'Compatibilità labiale','quiz.analyzing.2':'Armonia facciale','quiz.analyzing.3':'Proporzioni del viso','quiz.analyzing.4':'Struttura delle labbra','quiz.analyzing.wait':'Attendi qualche secondo...',
     'quiz.result.title':'Il tuo viso ha caratteristiche specifiche che influenzano direttamente qualsiasi risultato del filler.',
     'quiz.result.desc':'In base alle tue risposte, abbiamo identificato punti specifici del tuo viso che influenzano direttamente un risultato di filler labiale. Per scoprire esattamente cosa significa per IL TUO viso, la Dr.ssa Carol Mafra deve analizzare le tue foto personalmente.',
     'quiz.cta':'Voglio Scoprire Cosa Significa Per Me',
@@ -2031,7 +2061,7 @@ function closeQuiz() {
 }
 
 function showQStep(step) {
-  const steps = ['0','1','2','3','4','5','6','Result','Plans'];
+  const steps = ['0','1','2','3','4','5','6','Analyzing','Result','Plans'];
   steps.forEach(s => {
     const el = document.getElementById('quizStep' + s);
     if (el) el.style.display = (String(step) === s) ? 'block' : 'none';
@@ -2070,8 +2100,27 @@ function selectQOpt(step, val) {
 }
 
 function showQResult() {
-  showQStep('Result');
+  showQStep('Analyzing');
   applyQuizLang();
+  // animate checkmarks one by one
+  const items = document.querySelectorAll('#analyzingChecks .az-item');
+  const bar = document.getElementById('analyzingBar');
+  const wait = document.getElementById('analyzingWait');
+  items.forEach(el => { el.style.opacity = '0'; });
+  if (bar) { bar.style.transition = 'none'; bar.style.width = '0%'; }
+  if (wait) wait.style.opacity = '0';
+  setTimeout(() => { if (items[0]) items[0].style.opacity = '1'; }, 400);
+  setTimeout(() => { if (items[1]) items[1].style.opacity = '1'; }, 1000);
+  setTimeout(() => { if (items[2]) items[2].style.opacity = '1'; }, 1700);
+  setTimeout(() => { if (items[3]) items[3].style.opacity = '1'; }, 2400);
+  setTimeout(() => {
+    if (wait) wait.style.opacity = '1';
+    if (bar) { bar.style.transition = 'width 3s linear'; bar.style.width = '100%'; }
+  }, 3000);
+  setTimeout(() => {
+    showQStep('Result');
+    applyQuizLang();
+  }, 6200);
 }
 
 document.querySelectorAll('.quiz-trigger').forEach(btn =>
