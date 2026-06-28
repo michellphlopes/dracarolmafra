@@ -265,6 +265,37 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* EXPLORE CARDS */
+  #explore {
+    text-align: center; border-top: 1px solid var(--border);
+    padding: 80px 48px; max-width: 1200px; margin-inline: auto;
+  }
+  .explore-label {
+    font-family: sans-serif; font-size: 0.65rem; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 48px;
+  }
+  .explore-grid {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+  }
+  .explore-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 40px 32px; min-width: 200px; flex: 1; max-width: 280px;
+    border: 1px solid rgba(255,255,255,0.12); text-decoration: none;
+    color: var(--text); transition: border-color 0.25s, background 0.25s;
+    cursor: pointer;
+  }
+  .explore-card:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.03); }
+  .explore-card-icon { font-size: 1.6rem; }
+  .explore-card-title {
+    font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+    font-family: sans-serif; color: var(--text);
+  }
+  .explore-card-sub {
+    font-family: sans-serif; font-size: 0.72rem; color: var(--muted); line-height: 1.6;
+  }
+  .explore-card.soon { cursor: default; opacity: 0.55; }
+  .explore-card.soon:hover { border-color: rgba(255,255,255,0.12); background: transparent; }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 0 20px; }
@@ -422,6 +453,28 @@
   </div>
 </section>
 
+<!-- EXPLORE -->
+<section id="explore">
+  <p class="explore-label" data-i18n="explore.label">Explore</p>
+  <div class="explore-grid">
+    <a href="/labios" class="explore-card reveal">
+      <div class="explore-card-icon">🩷</div>
+      <div class="explore-card-title" data-i18n="explore.labios.title">Análise Labial</div>
+      <div class="explore-card-sub" data-i18n="explore.labios.sub">Descubra o que combina com o seu rosto antes de qualquer decisão.</div>
+    </a>
+    <a href="https://www.instagram.com/dra.carolmafra/" target="_blank" class="explore-card reveal">
+      <div class="explore-card-icon">📷</div>
+      <div class="explore-card-title" data-i18n="explore.ig.title">Instagram</div>
+      <div class="explore-card-sub" data-i18n="explore.ig.sub">Resultados reais, posts educativos e o dia a dia da Dra. Carol Mafra.</div>
+    </a>
+    <span class="explore-card soon reveal">
+      <div class="explore-card-icon">✨</div>
+      <div class="explore-card-title" data-i18n="explore.skin.title">Skin Care</div>
+      <div class="explore-card-sub" data-i18n="explore.skin.sub">Em breve. Cuidados com a pele com o mesmo olhar especializado.</div>
+    </span>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Dra. Carol Mafra</div>
@@ -449,6 +502,10 @@ const T = {
     'test.label':'Resultados reais','test.title':'Antes e Depois','test.sub':'Alguns dos posts realizados pela Dra. Carol Mafra em seu instagram',
     'insta.label':'Siga a Dra. Carol Mafra','insta.title':'@dra.carolmafra no Instagram','insta.follow':'Seguir no Instagram',
     'footer.labios':'Análise Labial',
+    'explore.label':'Explore',
+    'explore.labios.title':'Análise Labial','explore.labios.sub':'Descubra o que combina com o seu rosto antes de qualquer decisão.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Resultados reais, posts educativos e o dia a dia da Dra. Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Em breve. Cuidados com a pele com o mesmo olhar especializado.',
     'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonização Orofacial · Todos os direitos reservados',
     'footer.disc':'Este serviço é informativo e educativo por natureza. Não constitui aconselhamento médico, diagnóstico ou tratamento. Em conformidade com GDPR, LGPD e leis de proteção ao consumidor aplicáveis.'
   },
@@ -466,6 +523,10 @@ const T = {
     'test.label':'Real results','test.title':'Before & After','test.sub':'Some of the posts shared by Dr. Carol Mafra on her instagram',
     'insta.label':'Follow Dr. Carol Mafra','insta.title':'@dra.carolmafra on Instagram','insta.follow':'Follow on Instagram',
     'footer.labios':'Lip Analysis',
+    'explore.label':'Explore',
+    'explore.labios.title':'Lip Analysis','explore.labios.sub':'Discover what suits your face before making any decision.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Real results, educational posts and Dr. Carol Mafra\'s daily work.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Coming soon. Skincare with the same specialist eye.',
     'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Orofacial Harmonization · All rights reserved',
     'footer.disc':'This service is informational and educational in nature. It does not constitute medical advice, diagnosis, or treatment. In compliance with GDPR, LGPD and applicable consumer protection laws.'
   },
@@ -483,6 +544,10 @@ const T = {
     'test.label':'Resultados reales','test.title':'Antes y Después','test.sub':'Algunos de los posts realizados por la Dra. Carol Mafra en su instagram',
     'insta.label':'Sigue a la Dra. Carol Mafra','insta.title':'@dra.carolmafra en Instagram','insta.follow':'Seguir en Instagram',
     'footer.labios':'Análisis Labial',
+    'explore.label':'Explorar',
+    'explore.labios.title':'Análisis Labial','explore.labios.sub':'Descubre qué combina con tu rostro antes de cualquier decisión.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Resultados reales, posts educativos y el día a día de la Dra. Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Próximamente. Cuidado de la piel con la misma mirada especializada.',
     'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Armonización Orofacial · Todos los derechos reservados',
     'footer.disc':'Este servicio es informativo y educativo por naturaleza. No constituye asesoramiento médico, diagnóstico ni tratamiento. De conformidad con el RGPD, LGPD y las leyes de protección al consumidor aplicables.'
   },
@@ -500,6 +565,10 @@ const T = {
     'test.label':'Résultats réels','test.title':'Avant & Après','test.sub':'Quelques posts de la Dr. Carol Mafra sur son instagram',
     'insta.label':'Suivez la Dr. Carol Mafra','insta.title':'@dra.carolmafra sur Instagram','insta.follow':'Suivre sur Instagram',
     'footer.labios':'Analyse Labiale',
+    'explore.label':'Explorer',
+    'explore.labios.title':'Analyse Labiale','explore.labios.sub':'Découvrez ce qui convient à votre visage avant toute décision.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Résultats réels, posts éducatifs et le quotidien de la Dr. Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Bientôt. Soins de la peau avec le même regard spécialisé.',
     'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonisation Orofaciale · Tous droits réservés',
     'footer.disc':'Ce service est informatif et éducatif par nature. Il ne constitue pas un avis médical, un diagnostic ou un traitement. Conformément au RGPD, à la LGPD et aux lois applicables de protection des consommateurs.'
   },
@@ -517,6 +586,10 @@ const T = {
     'test.label':'Risultati reali','test.title':'Prima e Dopo','test.sub':'Alcuni dei post condivisi dalla Dr.ssa Carol Mafra sul suo instagram',
     'insta.label':'Segui la Dr.ssa Carol Mafra','insta.title':'@dra.carolmafra su Instagram','insta.follow':'Segui su Instagram',
     'footer.labios':'Analisi Labiale',
+    'explore.label':'Esplora',
+    'explore.labios.title':'Analisi Labiale','explore.labios.sub':'Scopri cosa si adatta al tuo viso prima di qualsiasi decisione.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Risultati reali, post educativi e il quotidiano della Dr.ssa Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Prossimamente. Cura della pelle con lo stesso sguardo specializzato.',
     'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Armonizzazione Orofacciale · Tutti i diritti riservati',
     'footer.disc':'Questo servizio è informativo ed educativo per natura. Non costituisce consulenza medica, diagnosi o trattamento. In conformità con GDPR, LGPD e le leggi applicabili di protezione dei consumatori.'
   }
