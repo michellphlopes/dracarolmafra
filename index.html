@@ -82,6 +82,10 @@
     letter-spacing: -0.02em; color: var(--text); margin-bottom: 40px;
   }
   .hero-phrase em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-family: sans-serif; font-size: 0.82rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 32px;
+  }
   .hero-btns {
     display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
   }
@@ -352,10 +356,11 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow" data-i18n-html="hero.eyebrow">Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial</span></p>
-    <h1 class="hero-phrase" data-i18n-html="hero.phrase">Beleza é mais bonita quando <em>parece natural.</em></h1>
+    <h1 class="hero-phrase" data-i18n-html="hero.phrase">A beleza mais bonita é aquela que <em>continua parecendo sua.</em></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Escolha por onde deseja começar sua jornada.</p>
     <div class="hero-btns">
-      <a href="/labios" class="btn" data-i18n="hero.btn.labios">🩷 Análise Labial</a>
-      <span class="btn-outline" data-i18n="hero.btn.skincare">✨ Skin Care · Em Breve</span>
+      <a href="/labios" class="btn" data-i18n="hero.btn.labios">🩷 Descobrir se o preenchimento combina comigo</a>
+      <span class="btn-outline" data-i18n="hero.btn.skincare">✨ Descobrir a rotina ideal para minha pele</span>
     </div>
   </div>
 </section>
@@ -469,9 +474,10 @@ const T = {
   pt: {
     'nav.about':'Sobre','nav.insta':'Instagram','nav.labios':'Análise Labial',
     'hero.eyebrow':'Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial</span>',
-    'hero.phrase':'Beleza é mais bonita quando <em>parece natural.</em>',
-    'hero.btn.labios':'🩷 Análise Labial',
-    'hero.btn.skincare':'✨ Skin Care · Em Breve',
+    'hero.phrase':'A beleza mais bonita é aquela que <em>continua parecendo sua.</em>',
+    'hero.sub':'Escolha por onde deseja começar sua jornada.',
+    'hero.btn.labios':'🩷 Descobrir se o preenchimento combina comigo',
+    'hero.btn.skincare':'✨ Descobrir a rotina ideal para minha pele',
     'about.label':'Quem vai analisar o seu rosto',
     'about.p1':'A Dra. Ana Carolina Sousa Mafra é especialista em Harmonização Orofacial pela CETRO Belo Horizonte, com formação avançada em preenchimento com ácido hialurônico, toxina botulínica, rinomodelação, preenchimento labial, Full Face, intradermoterapia e microagulhamento. Graduada em Odontologia pela Rede Unidoctum Teófilo Otoni.',
     'about.p2':'O que diferencia a Dra. Carol não é apenas a técnica — é o olhar. Ela enxerga o rosto como um todo, respeita a identidade de cada paciente e cria orientações que realçam a beleza natural sem apagar quem a pessoa é. Cada análise é tratada com exclusividade e atenção ao detalhe.',
@@ -490,9 +496,10 @@ const T = {
   en: {
     'nav.about':'About','nav.insta':'Instagram','nav.labios':'Lip Analysis',
     'hero.eyebrow':'Dr. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Orofacial Harmonization</span>',
-    'hero.phrase':'Beauty is most beautiful when it <em>looks natural.</em>',
-    'hero.btn.labios':'🩷 Lip Analysis',
-    'hero.btn.skincare':'✨ Skin Care · Coming Soon',
+    'hero.phrase':'The most beautiful beauty is the one that <em>still looks like you.</em>',
+    'hero.sub':'Choose where you want to begin your journey.',
+    'hero.btn.labios':'🩷 Discover if filler is right for me',
+    'hero.btn.skincare':'✨ Discover my ideal skincare routine',
     'about.label':'Who will analyze your face',
     'about.p1':'Graduated in Dentistry from Rede Unidoctum Teófilo Otoni, Dr. Ana Carolina Sousa Mafra holds a specialization in Orofacial Harmonization from CETRO Belo Horizonte, with advanced training in hyaluronic acid fillers, botulinum toxin, rhinomodeling, lip filling, Full Face, intradermotherapy, facial lipolysis, and microneedling.',
     'about.p2':'What sets Dr. Carol apart is not just technique — it\'s the eye. She sees the face as a whole, respects each patient\'s identity, and creates guidance that enhances natural beauty without erasing who the person is.',
@@ -511,9 +518,10 @@ const T = {
   es: {
     'nav.about':'Sobre mí','nav.insta':'Instagram','nav.labios':'Análisis Labial',
     'hero.eyebrow':'Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Armonización Orofacial</span>',
-    'hero.phrase':'La belleza es más hermosa cuando <em>parece natural.</em>',
-    'hero.btn.labios':'🩷 Análisis Labial',
-    'hero.btn.skincare':'✨ Skin Care · Próximamente',
+    'hero.phrase':'La belleza más hermosa es la que <em>sigue pareciendo tuya.</em>',
+    'hero.sub':'Elige por dónde quieres comenzar tu jornada.',
+    'hero.btn.labios':'🩷 Descubrir si el relleno me queda bien',
+    'hero.btn.skincare':'✨ Descubrir la rutina ideal para mi piel',
     'about.label':'Quién analizará tu rostro',
     'about.p1':'La Dra. Ana Carolina Sousa Mafra es especialista en Armonización Orofacial por el CETRO Belo Horizonte, con formación avanzada en relleno con ácido hialurónico, toxina botulínica, rinomodelación, relleno labial, Full Face, intradermoterapia y microagujamiento. Graduada en Odontología por la Rede Unidoctum Teófilo Otoni.',
     'about.p2':'Lo que distingue a la Dra. Carol no es solo la técnica — es la mirada. Ella ve el rostro como un todo, respeta la identidad de cada paciente y crea orientaciones que realzan la belleza natural sin borrar quién es la persona.',
@@ -532,9 +540,10 @@ const T = {
   fr: {
     'nav.about':'À propos','nav.insta':'Instagram','nav.labios':'Analyse Labiale',
     'hero.eyebrow':'Dr. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonisation Orofaciale</span>',
-    'hero.phrase':'La beauté est plus belle quand elle <em>semble naturelle.</em>',
-    'hero.btn.labios':'🩷 Analyse Labiale',
-    'hero.btn.skincare':'✨ Skin Care · Bientôt',
+    'hero.phrase':'La plus belle beauté est celle qui <em>reste la vôtre.</em>',
+    'hero.sub':'Choisissez par où vous souhaitez commencer votre parcours.',
+    'hero.btn.labios':'🩷 Découvrir si le filler me correspond',
+    'hero.btn.skincare':'✨ Découvrir ma routine idéale pour la peau',
     'about.label':'Qui analysera votre visage',
     'about.p1':'Diplômée en Chirurgie Dentaire de la Rede Unidoctum Teófilo Otoni, la Dr. Ana Carolina Sousa Mafra est spécialiste en Harmonisation Orofaciale par le CETRO Belo Horizonte, avec une formation avancée en comblement à l\'acide hyaluronique, toxine botulique, rhinomodélation, augmentation des lèvres, Full Face, intradermothérapie et microneedling.',
     'about.p2':'Ce qui distingue la Dr. Carol n\'est pas seulement la technique — c\'est le regard. Elle voit le visage dans son ensemble, respecte l\'identité de chaque patiente et crée des orientations qui subliment la beauté naturelle sans effacer qui est la personne.',
@@ -553,9 +562,10 @@ const T = {
   it: {
     'nav.about':'Chi sono','nav.insta':'Instagram','nav.labios':'Analisi Labiale',
     'hero.eyebrow':'Dr.ssa Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Armonizzazione Orofacciale</span>',
-    'hero.phrase':'La bellezza è più bella quando <em>sembra naturale.</em>',
-    'hero.btn.labios':'🩷 Analisi Labiale',
-    'hero.btn.skincare':'✨ Skin Care · Prossimamente',
+    'hero.phrase':'La bellezza più bella è quella che <em>continua a sembrare tua.</em>',
+    'hero.sub':'Scegli da dove vuoi iniziare il tuo percorso.',
+    'hero.btn.labios':'🩷 Scoprire se il filler fa per me',
+    'hero.btn.skincare':'✨ Scoprire la routine ideale per la mia pelle',
     'about.label':'Chi analizzerà il tuo viso',
     'about.p1':'Laureata in Odontoiatria presso la Rede Unidoctum Teófilo Otoni, la Dr.ssa Ana Carolina Sousa Mafra è specialista in Armonizzazione Orofacciale presso il CETRO Belo Horizonte, con formazione avanzata in filler con acido ialuronico, tossina botulinica, rinomodellazione, filler labiale, Full Face, intradermoterapia e microneedling.',
     'about.p2':'Ciò che distingue la Dr.ssa Carol non è solo la tecnica — è lo sguardo. Vede il viso nella sua totalità, rispetta l\'identità di ogni paziente e crea orientamenti che esaltano la bellezza naturale senza cancellare chi è la persona.',
