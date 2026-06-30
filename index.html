@@ -1,542 +1,223 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaliação Labial Personalizada | Dra. Carol Mafra — CRO-MG 66417</title>
-<meta name="description" content="Avaliação de compatibilidade labial personalizada pela Dra. Carol Mafra, especialista em Harmonização Orofacial. CRO-MG 66417. Descubra o formato ideal para o seu rosto antes de qualquer procedimento.">
-<meta name="keywords" content="avaliação labial, preenchimento labial, harmonização orofacial, análise facial, Dra. Carol Mafra, CRO-MG 66417, lip filler assessment, orofacial harmonization">
-<meta property="og:title" content="Avaliação Labial Personalizada — Dra. Carol Mafra · CRO-MG 66417">
-<meta property="og:description" content="Stop guessing. Get a specialist's eye on your face. Personalized lip and facial analysis delivered as a PDF report.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="carol-about.jpg">
-<link rel="icon" type="image/png" href="carol-favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dra. Carol Mafra · Harmonização Orofacial</title>
+<meta name="description" content="Dra. Carol Mafra — Especialista em Harmonização Orofacial e Preenchimento Labial. CRO-MG 66417.">
 <link rel="canonical" href="https://www.dracarolmafra.com.br/">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Personal Lip Compatibility Assessment",
-  "provider": {
-    "@type": "Person",
-    "name": "Dra. Carol Mafra",
-    "jobTitle": "Orofacial Harmonization Specialist"
-  },
-  "description": "Personalized lip and facial harmony assessment delivered as a detailed PDF report.",
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "USD",
-    "price": "9"
-  }
-}
-</script>
-
+<link rel="icon" href="/carol-favicon.png" type="image/png">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #0a0a0a;
-    --bg2: #111;
-    --bg3: #1a1a1a;
-    --text: #f0f0f0;
-    --muted: #888;
-    --accent: #c8a96e;
-    --border: rgba(255,255,255,0.08);
-    --nav-h: 68px;
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --text: #f0ebe4; --muted: #888; --accent: #c8a96e;
+    --border: #222; --serif: Georgia, 'Times New Roman', serif;
   }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Georgia', serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--serif); }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    height: var(--nav-h);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 40px;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 72px;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,169,110,0.08);
   }
-
-  .nav-logo {
-    text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; line-height: 1;
-  }
-  .nav-logo-name {
-    font-size: 1rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--text); font-family: 'Georgia', serif;
-  }
-  .nav-logo-reg {
-    font-size: 0.6rem; letter-spacing: 2px; color: var(--accent);
-    font-family: sans-serif; margin-top: 2px;
-  }
-
+  .nav-logo { text-decoration: none; color: var(--text); display: flex; flex-direction: column; }
+  .nav-logo-name { font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; }
+  .nav-logo-reg { font-family: sans-serif; font-size: 0.6rem; letter-spacing: 2px; color: var(--muted); }
   .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
   .nav-links a {
     color: var(--muted); text-decoration: none; font-family: sans-serif;
-    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--accent); }
-
-  .nav-cta {
-    background: var(--accent); color: #000 !important;
-    padding: 8px 20px; font-size: 0.72rem !important;
-    letter-spacing: 2px; transition: opacity 0.2s !important;
-  }
-  .nav-cta:hover { opacity: 0.85; color: #000 !important; }
-
-  /* LANG FLAGS */
-  .lang-flags {
-    display: none; align-items: center; gap: 6px; margin-left: 16px;
-  }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .lang-flags { display: flex; }
   .lang-flag {
-    background: none; border: none; cursor: pointer;
-    padding: 3px; border-radius: 3px; opacity: 0.4;
-    transition: opacity 0.2s, transform 0.15s;
-    display: flex; align-items: center;
+    display: none; background: none; border: none;
+    font-size: 1.35rem; cursor: default; padding: 0; line-height: 1;
   }
-  .lang-flag img { width: 26px; height: 18px; object-fit: cover; display: block; border-radius: 2px; }
-  .lang-flag:hover { opacity: 0.85; transform: scale(1.12); }
-  .lang-flag.active { opacity: 1; transform: scale(1.15); box-shadow: 0 0 0 1.5px var(--accent); border-radius: 3px; }
-
-  @media (max-width: 768px) {
-    .lang-flags { margin-left: 8px; gap: 4px; }
-    .lang-flag img { width: 22px; height: 15px; }
-  }
-
+  .lang-flag.active { display: inline-block; }
   .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 4px;
+    display: none; flex-direction: column; gap: 5px; background: none;
+    border: none; cursor: pointer; padding: 4px;
   }
-  .hamburger span {
-    display: block; width: 22px; height: 1.5px; background: var(--text);
-    transition: all 0.3s;
-  }
+  .hamburger span { display: block; width: 22px; height: 1px; background: var(--text); }
 
   /* HERO */
-  .hero {
-    height: 100vh; position: relative;
+  #inicio {
+    position: relative; height: 100vh; min-height: 600px;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
   }
-
-  .hero-bg { position: absolute; inset: 0; overflow: hidden; }
-  .hero-bg::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(10,10,10,0.35) 0%, rgba(10,10,10,0.65) 100%);
+  .hero-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center top; z-index: 0;
   }
-  .hero-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
-
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to bottom,
+      rgba(10,10,10,0.55) 0%,
+      rgba(10,10,10,0.40) 40%,
+      rgba(10,10,10,0.70) 80%,
+      rgba(10,10,10,0.95) 100%);
+  }
   .hero-content {
-    position: relative; text-align: center;
-    animation: fadeUp 1.2s ease both;
-    padding: 0 20px;
+    position: relative; z-index: 2; text-align: center;
+    padding: 0 24px; max-width: 760px;
+    animation: fadeUp 1.1s ease both;
   }
-
   .hero-eyebrow {
-    font-family: sans-serif; font-size: 0.72rem; letter-spacing: 5px;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    font-family: sans-serif; font-size: 0.68rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
+    line-height: 1.8;
   }
-
-  .hero-title {
-    font-size: clamp(2.6rem, 6.5vw, 5rem);
-    font-weight: 400; line-height: 1.1; margin-bottom: 24px; color: #fff;
+  .hero-phrase {
+    font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 400; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--text); margin-bottom: 40px;
   }
-
+  .hero-phrase em { font-style: italic; color: var(--accent); }
   .hero-sub {
-    font-family: sans-serif; font-size: 0.95rem; letter-spacing: 0.5px;
-    color: rgba(255,255,255,0.7); margin-bottom: 40px;
-    max-width: 480px; margin-inline: auto; line-height: 1.7;
+    font-family: sans-serif; font-size: 0.82rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 32px;
   }
-
-  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .hero-authority {
-    margin-top: 14px; font-family: sans-serif; font-size: 0.78rem;
-    color: rgba(200,169,110,0.75); letter-spacing: 1px;
-    text-transform: uppercase;
+  .hero-btns {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
   }
-  .hero-availability {
-    margin-top: 10px; font-family: sans-serif; font-size: 0.75rem;
-    color: rgba(255,255,255,0.45); letter-spacing: 0.5px;
-  }
-
-  .hero-social-proof {
-    margin-top: 18px; font-family: sans-serif; font-size: 0.75rem;
-    letter-spacing: 1.5px; color: rgba(200,169,110,0.7);
-  }
-
   .btn {
-    display: inline-block; padding: 13px 36px;
-    border: 1px solid var(--accent); color: var(--accent);
-    text-decoration: none; font-family: sans-serif;
-    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
-    transition: background 0.25s, color 0.25s;
+    display: inline-block; background: var(--accent); color: #000;
+    padding: 16px 36px; font-family: sans-serif; font-size: 0.7rem;
+    letter-spacing: 3px; text-transform: uppercase; text-decoration: none;
+    cursor: pointer; border: none; transition: opacity 0.2s;
   }
-  .btn:hover { background: var(--accent); color: #000; }
-
-  .btn-filled {
-    background: var(--accent); color: #000; border: 1px solid var(--accent);
-  }
-  .btn-filled:hover { opacity: 0.85; background: var(--accent); color: #000; }
-  .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-  .btn-outline:hover { background: var(--accent); color: #000; }
-
-  .scroll-hint {
-    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    color: rgba(255,255,255,0.4); font-family: sans-serif; font-size: 0.65rem;
-    letter-spacing: 3px; text-transform: uppercase;
-    animation: bounce 2s infinite;
-  }
-  .scroll-hint::after {
-    content: ''; display: block; width: 1px; height: 40px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  .btn:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent;
+    border: 1px solid rgba(200,169,110,0.4); color: var(--muted);
+    padding: 16px 36px; font-family: sans-serif; font-size: 0.7rem;
+    letter-spacing: 3px; text-transform: uppercase; text-decoration: none;
+    cursor: default;
   }
 
   /* SECTIONS */
-  section { padding: 100px 40px; }
-
+  section { padding: 96px 48px; max-width: 1200px; margin-inline: auto; }
   .section-label {
-    font-family: sans-serif; font-size: 0.68rem; letter-spacing: 4px;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400;
-    line-height: 1.2; margin-bottom: 48px; max-width: 560px;
-  }
-
-  /* BENEFITS */
-  #beneficios { background: var(--bg2); }
-
-  .benefits-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px; max-width: 1100px; margin-inline: auto;
-  }
-
-  .benefit-item { text-align: center; }
-
-  .benefit-icon {
-    width: 52px; height: 52px; margin: 0 auto 20px;
-    border: 1px solid var(--accent); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--accent);
-  }
-
-  .benefit-item h3 { font-size: 1.1rem; font-weight: 400; margin-bottom: 10px; }
-  .benefit-item p {
-    font-family: sans-serif; font-size: 0.85rem; color: var(--muted); line-height: 1.7;
-  }
-
-  /* HOW IT WORKS */
-  #como-funciona { background: var(--bg); }
-
-  .steps-header { text-align: center; }
-  .steps-header .section-title { margin-inline: auto; }
-
-  .steps {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0; max-width: 1100px; margin-inline: auto; position: relative;
-  }
-  .steps::before {
-    content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px;
-    background: var(--border); z-index: 0;
-  }
-
-  .step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
-
-  .step-num {
-    width: 56px; height: 56px; margin: 0 auto 24px;
-    border: 1px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-family: sans-serif; font-size: 1.1rem; color: var(--accent);
-    background: var(--bg);
-  }
-
-  .step h3 { font-size: 0.95rem; font-weight: 400; margin-bottom: 8px; }
-  .step p { font-family: sans-serif; font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
-
-  /* PLANS */
-  #planos { background: var(--bg2); }
-
-  .planos-header { text-align: center; }
-  .planos-header .section-title { margin-inline: auto; }
-  .planos-header .section-title + p {
-    font-family: sans-serif; font-size: 0.88rem; color: var(--muted);
-    margin-top: -32px; margin-bottom: 48px;
-  }
-
-  .plans-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px; max-width: 1050px; margin-inline: auto;
-  }
-
-  .plan-card {
-    background: var(--bg3); border: 1px solid var(--border);
-    padding: 48px 36px; position: relative; transition: border-color 0.3s;
-  }
-  .plan-card:hover { border-color: var(--accent); }
-  .plan-card.destaque { border-color: var(--accent); }
-
-  .plan-badge {
-    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-    background: var(--accent); color: #000;
-    font-family: sans-serif; font-size: 0.62rem; letter-spacing: 2px;
-    text-transform: uppercase; padding: 5px 16px; white-space: nowrap;
-  }
-
-  .plan-name {
-    font-family: sans-serif; font-size: 0.72rem; letter-spacing: 3px;
+    font-family: sans-serif; font-size: 0.65rem; letter-spacing: 4px;
     text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
   }
-
-  .plan-price { font-size: 2.8rem; color: #fff; line-height: 1; margin-bottom: 6px; }
-  .plan-price sup { font-size: 1.2rem; vertical-align: top; margin-top: 8px; }
-
-  .plan-period {
-    font-family: sans-serif; font-size: 0.75rem; color: var(--muted); margin-bottom: 32px;
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 400; line-height: 1.2;
+    letter-spacing: -0.01em; max-width: 540px; margin-bottom: 48px;
   }
 
-  .plan-features {
-    list-style: none; margin-bottom: 36px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .plan-features li {
-    font-family: sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.7);
-    display: flex; align-items: flex-start; gap: 10px; line-height: 1.4;
-  }
-  .plan-features li::before { content: '✓'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
-  .plan-features li.no::before { content: '—'; color: var(--muted); }
-  .plan-features li.no { color: var(--muted); }
-
-  .plan-btn {
-    display: block; text-align: center; padding: 13px;
-    border: 1px solid var(--accent); color: var(--accent);
-    text-decoration: none; font-family: sans-serif;
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
-    transition: background 0.25s, color 0.25s; cursor: pointer;
-    background: none; width: 100%;
-  }
-  .plan-btn:hover, .plan-card.destaque .plan-btn { background: var(--accent); color: #000; }
-
-  /* GUARANTEE */
-  .guarantee-strip {
-    text-align: center; margin-top: 48px; padding: 32px;
-    border: 1px solid var(--border); max-width: 600px; margin-inline: auto;
-  }
-  .guarantee-strip .g-icon { font-size: 2.2rem; margin-bottom: 12px; }
-  .guarantee-strip h4 { font-size: 1rem; font-weight: 400; margin-bottom: 8px; }
-  .guarantee-strip p {
-    font-family: sans-serif; font-size: 0.82rem; color: var(--muted); line-height: 1.6;
-  }
-
-  /* TRUST BADGES */
-  .trust-badges {
-    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
-    margin-top: 32px;
-  }
-  .trust-badge {
-    display: flex; align-items: center; gap: 8px;
-    font-family: sans-serif; font-size: 0.72rem; color: var(--muted);
-    letter-spacing: 1px;
-  }
-  .trust-badge svg { color: var(--accent); flex-shrink: 0; }
-
-  /* ABOUT */
+  /* SOBRE */
   #sobre {
-    background: var(--bg);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-    align-items: center; max-width: 1200px; margin-inline: auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    padding: 96px 48px; max-width: 1200px; margin-inline: auto;
   }
-
-  /* SOBRE CAROUSEL */
-  .sobre-carousel { position: relative; overflow: hidden; }
-  .sobre-carousel::before {
-    content: ''; position: absolute; top: -16px; left: -16px;
-    right: 16px; bottom: 16px;
-    border: 1px solid var(--accent); z-index: -1;
-  }
+  .sobre-carousel { position: relative; overflow: hidden; border-radius: 2px; }
   .sobre-carousel-track {
     display: flex; width: 100%;
+    transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
   }
   .sobre-carousel-track img {
-    min-width: 100%; width: 100%; height: 520px;
-    object-fit: cover; object-position: top; display: block;
-    transition: opacity 0.7s ease;
+    flex: 0 0 100%; width: 100%; height: 480px;
+    object-fit: cover; object-position: center top; display: block;
   }
-  .sobre-dots {
-    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px; z-index: 2;
-  }
+  .sobre-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
   .sobre-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: rgba(255,255,255,0.35); border: none; cursor: pointer;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border); border: none; cursor: pointer;
     padding: 0; transition: background 0.3s, transform 0.3s;
   }
   .sobre-dot.active { background: var(--accent); transform: scale(1.3); }
-
-  @media (max-width: 768px) {
-    .sobre-carousel::before { display: none; }
-    .sobre-carousel-track img { height: 340px; }
-  }
-
+  .sobre-text .section-title { margin-bottom: 24px; }
   .sobre-text p {
-    color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.9; margin-bottom: 20px;
+    font-family: sans-serif; font-size: 0.88rem; color: var(--muted);
+    line-height: 1.9; margin-bottom: 20px;
   }
-
-  .stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 40px 0;
-    padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  }
-  .stat-num { font-size: 2.2rem; color: var(--accent); line-height: 1; }
+  .stats { display: flex; gap: 40px; margin: 36px 0; }
+  .stat-num { font-size: 1.6rem; color: var(--accent); margin-bottom: 6px; font-weight: 400; }
   .stat-label {
-    font-family: sans-serif; font-size: 0.68rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted); margin-top: 6px;
+    font-family: sans-serif; font-size: 0.65rem; color: var(--muted);
+    letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.5; max-width: 80px;
   }
 
-  /* TESTIMONIALS */
-  #depoimentos { background: var(--bg2); text-align: center; }
+  /* BEFORE/AFTER */
+  #depoimentos { text-align: center; }
+  #depoimentos .section-title { margin-inline: auto; }
 
-  .testimonials {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px; max-width: 1100px; margin-inline: auto;
+  /* iPhone mockup */
+  .iphone-mockup-wrap {
+    display: flex; align-items: center; justify-content: center; gap: 32px;
+    position: relative; padding: 20px 0;
   }
+  .iphone-frame {
+    width: 340px;
+    background: linear-gradient(160deg, #2a2a2a 0%, #111 100%);
+    border-radius: 50px; border: 2px solid #3a3a3a;
+    box-shadow: 0 0 0 1px #555, 0 40px 100px rgba(0,0,0,0.7), inset 0 0 0 1px #000,
+                4px 0 8px rgba(200,169,110,0.06), -4px 0 8px rgba(200,169,110,0.06);
+    padding: 14px 10px 20px; position: relative;
+  }
+  .iphone-notch {
+    width: 110px; height: 28px; background: #111;
+    border-radius: 0 0 20px 20px; margin: 0 auto 6px; position: relative; z-index: 2;
+  }
+  .iphone-notch::before {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #1c1c1e; border: 1px solid #333;
+  }
+  .iphone-screen { border-radius: 6px; overflow: hidden; background: #000; }
+  .iphone-home-bar {
+    width: 100px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.25); margin: 12px auto 0;
+  }
+  .ig-carousel-wrap { position: relative; overflow: hidden; width: 320px; }
+  .ig-track {
+    display: flex; gap: 0; padding: 0;
+    transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+  }
+  .ig-slide { flex: 0 0 320px; overflow: hidden; cursor: grab; }
+  .ig-slide .instagram-media {
+    min-width: 0 !important; width: 320px !important;
+    margin: 0 !important; background: #111 !important; border: none !important;
+  }
+  .ig-nav { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; }
+  .ig-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border); border: none; cursor: pointer;
+    padding: 0; transition: background 0.3s, transform 0.3s;
+  }
+  .ig-dot.active { background: var(--accent); transform: scale(1.3); }
+  .ig-arrow {
+    background: rgba(10,10,10,0.8); border: 1px solid rgba(200,169,110,0.3);
+    color: var(--accent); width: 48px; height: 48px; border-radius: 50%;
+    cursor: pointer; font-size: 1.2rem; z-index: 2; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s; backdrop-filter: blur(4px);
+  }
+  .ig-arrow:hover { background: rgba(200,169,110,0.15); border-color: var(--accent); }
 
-  .testimonial {
-    background: var(--bg3); padding: 36px 32px;
-    border: 1px solid var(--border); position: relative; text-align: left;
-  }
-  .testimonial::before {
-    content: '"'; position: absolute; top: 16px; left: 28px;
-    font-size: 4rem; color: var(--accent); opacity: 0.3; line-height: 1;
-  }
-  .testimonial p {
-    color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.8;
-    margin-bottom: 24px; font-style: italic;
-  }
-  .testimonial-author {
-    font-family: sans-serif; font-size: 0.72rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--accent);
-  }
-  .testimonial-stars {
-    color: var(--accent); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 3px;
-  }
-
-  /* INSTAGRAM */
-  #instagram { background: var(--bg3); text-align: center; }
-  #instagram .section-title { margin-inline: auto; }
-
+  /* INSTAGRAM FEED */
+  #instagram { text-align: left; }
   .insta-follow-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: #fff; border: none; cursor: pointer;
-    padding: 13px 32px; font-family: sans-serif;
-    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
-    text-decoration: none; margin-bottom: 48px;
-    transition: opacity 0.2s;
+    border: 1px solid rgba(200,169,110,0.35); color: var(--accent);
+    padding: 12px 28px; text-decoration: none; font-family: sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.2s; margin-bottom: 48px;
   }
-  .insta-follow-btn:hover { opacity: 0.88; }
-  .insta-follow-btn svg { flex-shrink: 0; }
-
-  .behold-feed { max-width: 1100px; margin-inline: auto; min-height: 300px; }
-
-  /* FAQ */
-  #faq { background: var(--bg); max-width: 760px; margin-inline: auto; }
-
-  .faq-list { display: flex; flex-direction: column; }
-
-  .faq-item { border-bottom: 1px solid var(--border); }
-
-  .faq-question {
-    width: 100%; background: none; border: none; color: var(--text);
-    padding: 22px 0; display: flex; justify-content: space-between;
-    align-items: center; cursor: pointer; font-family: Georgia, serif;
-    font-size: 1rem; text-align: left; gap: 16px;
-  }
-
-  .faq-icon {
-    color: var(--accent); font-size: 1.4rem; flex-shrink: 0;
-    transition: transform 0.3s; line-height: 1;
-  }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-  .faq-item.open .faq-answer { max-height: 300px; }
-
-  .faq-answer p {
-    font-family: sans-serif; font-size: 0.88rem; color: var(--muted);
-    line-height: 1.8; padding-bottom: 22px;
-  }
-
-  /* CTA */
-  #cta-final {
-    background: var(--bg3); text-align: center;
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  }
-  #cta-final .section-title { margin-inline: auto; }
-  #cta-final p {
-    font-family: sans-serif; font-size: 0.9rem; color: var(--muted);
-    max-width: 480px; margin: -24px auto 36px; line-height: 1.7;
-  }
-
-  /* DISCLAIMER */
-  #disclaimer {
-    background: var(--bg); border-top: 1px solid var(--border);
-    padding: 32px 40px; text-align: center;
-  }
-  #disclaimer p {
-    font-family: sans-serif; font-size: 0.75rem; color: var(--muted);
-    max-width: 700px; margin-inline: auto; line-height: 1.8;
-  }
-
-  /* CONTACT */
-  #contato { background: var(--bg2); max-width: 680px; margin-inline: auto; }
-
-  .contact-form { display: flex; flex-direction: column; gap: 16px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; }
-  .form-group label {
-    font-family: sans-serif; font-size: 0.68rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted);
-  }
-  .form-group input, .form-group select, .form-group textarea {
-    background: var(--bg3); border: 1px solid var(--border);
-    color: var(--text); padding: 13px 16px;
-    font-family: sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.2s; -webkit-appearance: none;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: var(--accent);
-  }
-  .form-group textarea { resize: vertical; min-height: 120px; }
-
-  .form-submit {
-    background: var(--accent); color: #000; border: none;
-    padding: 15px 40px; font-family: sans-serif; font-size: 0.75rem;
-    letter-spacing: 3px; text-transform: uppercase; cursor: pointer;
-    transition: opacity 0.2s; align-self: flex-start; margin-top: 8px;
-  }
-  .form-submit:hover { opacity: 0.85; }
-
-  .form-success {
-    display: none; text-align: center; padding: 40px;
-    color: var(--accent); font-family: sans-serif; font-size: 0.9rem;
-  }
-
-  .contact-extra {
-    margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border);
-    font-family: sans-serif; font-size: 0.82rem; color: var(--muted);
-    display: flex; gap: 32px; flex-wrap: wrap;
-  }
-  .contact-extra a { color: var(--accent); text-decoration: none; }
+  .insta-follow-btn:hover { background: rgba(200,169,110,0.08); border-color: var(--accent); }
+  .behold-feed { width: 100%; }
 
   /* FOOTER */
   footer {
@@ -557,9 +238,7 @@
     transition: color 0.2s;
   }
   .footer-links a:hover { color: var(--accent); }
-  .footer-copy {
-    font-family: sans-serif; font-size: 0.72rem; color: var(--muted); letter-spacing: 1px;
-  }
+  .footer-copy { font-family: sans-serif; font-size: 0.72rem; color: var(--muted); letter-spacing: 1px; }
   .footer-disclaimer {
     font-family: sans-serif; font-size: 0.68rem; color: #555;
     max-width: 600px; margin: 16px auto 0; line-height: 1.7;
@@ -583,250 +262,54 @@
     from { opacity: 0; transform: translateY(30px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50%       { transform: translateX(-50%) translateY(8px); }
-  }
-
   .reveal {
     opacity: 0; transform: translateY(28px);
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* QUIZ MODAL */
-  #quizModal {
-    display: none; position: fixed; inset: 0; z-index: 300;
-    background: rgba(6,6,6,0.98); overflow-y: auto;
-    padding: 0; backdrop-filter: blur(4px);
+  /* EXPLORE CARDS */
+  #explore {
+    text-align: center; border-top: 1px solid var(--border);
+    padding: 80px 48px; max-width: 1200px; margin-inline: auto;
   }
-  .quiz-inner {
-    max-width: 580px; margin: 0 auto; padding: 0 20px 60px;
-    position: relative; min-height: 100vh; display: flex; flex-direction: column;
+  .explore-label {
+    font-family: sans-serif; font-size: 0.65rem; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 48px;
   }
-  .quiz-topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 24px 0 20px; position: sticky; top: 0;
-    background: rgba(6,6,6,0.98); z-index: 2; backdrop-filter: blur(4px);
+  .explore-grid {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
   }
-  .quiz-timer {
-    font-family: sans-serif; font-size: 0.72rem; letter-spacing: 2px;
-    color: var(--accent); text-transform: uppercase;
-  }
-  .quiz-step-label {
-    font-family: sans-serif; font-size: 0.72rem; letter-spacing: 2px;
-    color: var(--muted); text-transform: uppercase;
-  }
-  #quizClose {
-    background: none; border: 1px solid var(--border); color: var(--muted);
-    font-size: 1rem; cursor: pointer; line-height: 1; padding: 6px 10px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  #quizClose:hover { color: var(--text); border-color: var(--text); }
-  .quiz-progress-bar-wrap {
-    width: 100%; height: 2px; background: var(--border); margin-bottom: 48px;
-    position: relative; overflow: hidden;
-  }
-  .quiz-progress-bar {
-    height: 100%; background: var(--accent);
-    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-  }
-  .quiz-step { animation: qFadeIn 0.35s ease; }
-  @keyframes qFadeIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
-  .quiz-q {
-    font-size: clamp(1.25rem, 3.5vw, 1.75rem); font-weight: 400;
-    line-height: 1.35; margin-bottom: 32px; color: var(--text);
-  }
-  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
-  .quiz-opt {
-    background: transparent; border: 1px solid rgba(255,255,255,0.1);
-    color: var(--text); padding: 17px 22px; text-align: left;
-    font-family: sans-serif; font-size: 0.92rem; cursor: pointer;
-    transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
-    line-height: 1.45; border-radius: 2px;
-  }
-  .quiz-opt:hover { border-color: var(--accent); background: rgba(200,169,110,0.06); transform: translateX(4px); }
-  .quiz-opt.selected { border-color: var(--accent); background: rgba(200,169,110,0.1); color: var(--accent); }
-  .quiz-result-box {
-    border: 1px solid rgba(200,169,110,0.3); padding: 36px;
-    background: linear-gradient(135deg, rgba(200,169,110,0.05), rgba(200,169,110,0.02));
-    text-align: center; margin-top: 8px;
-  }
-  .quiz-result-icon { font-size: 2.4rem; margin-bottom: 20px; display: block; }
-  .quiz-result-title {
-    font-size: clamp(1.1rem, 2.5vw, 1.45rem); font-weight: 400;
-    line-height: 1.4; margin-bottom: 16px; color: var(--accent);
-  }
-  .quiz-result-desc {
-    font-family: sans-serif; font-size: 0.9rem; color: var(--muted);
-    line-height: 1.7; margin-bottom: 32px;
-  }
-  .quiz-result-cta {
-    display: block; width: 100%; padding: 16px 24px;
-    background: var(--accent); color: #000; text-decoration: none;
-    font-family: sans-serif; font-size: 0.75rem; letter-spacing: 2.5px;
-    text-transform: uppercase; font-weight: 600; cursor: pointer;
-    border: none; transition: opacity 0.2s;
-  }
-  .quiz-result-cta:hover { opacity: 0.88; }
-  .quiz-social-proof {
-    margin-top: 20px; font-family: sans-serif; font-size: 0.75rem;
-    color: var(--muted); text-align: center; letter-spacing: 0.5px;
-  }
-  .quiz-see-all {
-    display: block; text-align: center; margin-top: 14px;
-    color: var(--muted); font-family: sans-serif; font-size: 0.78rem;
-    text-decoration: underline; cursor: pointer; background: none;
-    border: none; width: 100%;
-  }
-  .quiz-see-all:hover { color: var(--text); }
-  .quiz-result-cta:disabled { opacity: 0.35; cursor: not-allowed; }
-
-  /* UPLOAD STEP */
-  .quiz-upload-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;
-  }
-  .upload-slot {
+  .explore-card {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 6px; background: rgba(200,169,110,0.05);
-    border: 1.5px dashed rgba(200,169,110,0.3); border-radius: 12px;
-    padding: 18px 10px; cursor: pointer; transition: all 0.2s;
+    gap: 16px; padding: 40px 32px; min-width: 200px; flex: 1; max-width: 280px;
+    border: 1px solid rgba(255,255,255,0.12); text-decoration: none;
+    color: var(--text); transition: border-color 0.25s, background 0.25s;
+    cursor: pointer;
   }
-  .upload-slot:hover { border-color: var(--accent); background: rgba(200,169,110,0.1); }
-  .upload-slot.has-file { border-color: var(--accent); border-style: solid; background: rgba(200,169,110,0.12); }
-  .upload-slot input[type="file"] { display: none; }
-  .upload-slot-icon { font-size: 1.5rem; }
-  .upload-slot-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-family: sans-serif; text-align: center; }
-  .upload-slot-check { font-size: 0.8rem; color: var(--accent); font-family: sans-serif; display: none; }
-  .upload-slot.has-file .upload-slot-check { display: block; }
-  .upload-trust {
-    background: rgba(200,169,110,0.06); border-radius: 10px;
-    padding: 14px 16px; margin: 16px 0; text-align: left;
+  .explore-card:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.03); }
+  .explore-card-icon { font-size: 1.6rem; }
+  .explore-card-title {
+    font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+    font-family: sans-serif; color: var(--text);
   }
-  .upload-trust p { font-family: sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.75); margin: 5px 0; }
-  .upload-hint { font-size: 0.73rem; color: var(--muted); font-family: sans-serif; text-align: center; margin-top: 10px; }
-
-  /* QUIZ PLANS STEP */
-  .quiz-received-msg {
-    font-family: sans-serif; font-size: 0.88rem; color: rgba(200,169,110,0.9);
-    text-align: center; margin-bottom: 10px;
+  .explore-card-sub {
+    font-family: sans-serif; font-size: 0.72rem; color: var(--muted); line-height: 1.6;
   }
-  .quiz-plan-cards { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
-  .quiz-plan-card {
-    display: block; background: rgba(255,255,255,0.03);
-    border: 1.5px solid rgba(200,169,110,0.2); border-radius: 12px;
-    padding: 16px 18px; text-decoration: none; color: inherit;
-    transition: all 0.2s; position: relative; text-align: left;
-  }
-  .quiz-plan-card:hover { border-color: var(--accent); background: rgba(200,169,110,0.08); }
-  .quiz-plan-card.qp-featured { border-color: var(--accent); background: rgba(200,169,110,0.08); }
-  .quiz-plan-medal { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-  .quiz-plan-card h3 { font-size: 0.98rem; margin: 4px 0; color: #fff; font-weight: 500; }
-  .quiz-plan-card p { font-family: sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 4px 0 0; }
-  .qp-badge {
-    position: absolute; top: -10px; right: 14px;
-    background: var(--accent); color: #000;
-    font-family: sans-serif; font-size: 0.68rem; font-weight: 700;
-    padding: 2px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;
-  }
-
-  /* QUIZ LEAD FORM */
-  .quiz-lead-sub {
-    font-family: sans-serif; font-size: 0.85rem; color: var(--muted);
-    margin-bottom: 28px; line-height: 1.6;
-  }
-  .quiz-lead-form { display: flex; flex-direction: column; gap: 14px; }
-  .quiz-lead-input {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
-    color: var(--text); padding: 15px 18px; font-family: sans-serif;
-    font-size: 0.92rem; outline: none; transition: border-color 0.2s;
-  }
-  .quiz-lead-input:focus { border-color: var(--accent); }
-  .quiz-lead-input::placeholder { color: var(--muted); }
-
-  /* INSTAGRAM CAROUSEL */
-  /* iPhone mockup */
-  .iphone-mockup-wrap {
-    display: flex; align-items: center; justify-content: center; gap: 32px;
-    position: relative; padding: 20px 0;
-  }
-  .iphone-frame {
-    width: 340px;
-    background: linear-gradient(160deg, #2a2a2a 0%, #111 100%);
-    border-radius: 50px;
-    border: 2px solid #3a3a3a;
-    box-shadow: 0 0 0 1px #555, 0 40px 100px rgba(0,0,0,0.7), inset 0 0 0 1px #000,
-                4px 0 8px rgba(200,169,110,0.06), -4px 0 8px rgba(200,169,110,0.06);
-    padding: 14px 10px 20px;
-    position: relative;
-  }
-  .iphone-notch {
-    width: 110px; height: 28px;
-    background: #111; border-radius: 0 0 20px 20px;
-    margin: 0 auto 6px; position: relative; z-index: 2;
-  }
-  .iphone-notch::before {
-    content: ''; position: absolute; left: 50%; top: 50%;
-    transform: translate(-50%,-50%);
-    width: 10px; height: 10px; border-radius: 50%;
-    background: #1c1c1e; border: 1px solid #333;
-  }
-  .iphone-screen {
-    border-radius: 6px; overflow: hidden;
-    background: #000;
-  }
-  .iphone-home-bar {
-    width: 100px; height: 4px; border-radius: 2px;
-    background: rgba(255,255,255,0.25); margin: 12px auto 0;
-  }
-  .ig-carousel-wrap {
-    position: relative; overflow: hidden; width: 320px;
-  }
-  .ig-track {
-    display: flex; gap: 0; padding: 0;
-    transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
-    will-change: transform;
-  }
-  .ig-slide {
-    flex: 0 0 320px; overflow: hidden; cursor: grab;
-  }
-  .ig-slide .instagram-media {
-    min-width: 0 !important; width: 320px !important;
-    margin: 0 !important; background: #111 !important; border: none !important;
-  }
-  .ig-nav {
-    display: flex; justify-content: center; align-items: center;
-    gap: 8px; margin-top: 20px;
-  }
-  .ig-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--border); border: none; cursor: pointer;
-    padding: 0; transition: background 0.3s, transform 0.3s;
-  }
-  .ig-dot.active { background: var(--accent); transform: scale(1.3); }
-  .ig-arrow {
-    background: rgba(10,10,10,0.8); border: 1px solid rgba(200,169,110,0.3);
-    color: var(--accent); width: 48px; height: 48px; border-radius: 50%;
-    cursor: pointer; font-size: 1.2rem; z-index: 2; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, border-color 0.2s; backdrop-filter: blur(4px);
-  }
-  .ig-arrow:hover { background: rgba(200,169,110,0.15); border-color: var(--accent); }
+  .explore-card.soon { cursor: default; opacity: 0.55; }
+  .explore-card.soon:hover { border-color: rgba(255,255,255,0.12); background: transparent; }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
     .hamburger { display: flex; }
-    section { padding: 72px 20px; }
     #sobre { grid-template-columns: 1fr; gap: 48px; padding: 72px 20px; }
-    .sobre-img::before { display: none; }
-    .sobre-img img { height: 320px; }
-    .form-row { grid-template-columns: 1fr; }
-    .steps::before { display: none; }
-    .steps { gap: 32px; }
-    .hero-title { font-size: 2.4rem; }
-    .contact-extra { flex-direction: column; gap: 12px; }
+    section { padding: 72px 20px; }
+    .hero-phrase { font-size: 2rem; }
+    .stats { gap: 24px; }
+    .iphone-mockup-wrap { flex-direction: column; }
+    .ig-arrow { display: none; }
   }
 </style>
 </head>
@@ -834,223 +317,61 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#inicio" class="nav-logo">
+  <a href="/" class="nav-logo">
     <span class="nav-logo-name">Dra. Carol Mafra</span>
     <span class="nav-logo-reg">CRO-MG 66417</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#como-funciona" data-i18n="nav.works">How It Works</a></li>
-    <li><a href="#planos" data-i18n="nav.plans">Plans</a></li>
-    <li><a href="#sobre" data-i18n="nav.about">About</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#planos" class="nav-cta quiz-trigger" data-i18n="nav.cta">Fazer Avaliação</a></li>
+    <li><a href="#sobre" data-i18n="nav.about">Sobre</a></li>
+    <li><a href="#instagram" data-i18n="nav.insta">Instagram</a></li>
+    <li><a href="/labios" data-i18n="nav.labios">Análise Labial</a></li>
   </ul>
-  <div class="lang-flags">
-    <button class="lang-flag active" data-lang="pt" title="Português"><img src="https://flagcdn.com/br.svg" alt="PT"></button>
-    <button class="lang-flag" data-lang="en" title="English"><img src="https://flagcdn.com/us.svg" alt="EN"></button>
-    <button class="lang-flag" data-lang="es" title="Español"><img src="https://flagcdn.com/es.svg" alt="ES"></button>
-    <button class="lang-flag" data-lang="fr" title="Français"><img src="https://flagcdn.com/fr.svg" alt="FR"></button>
-    <button class="lang-flag" data-lang="it" title="Italiano"><img src="https://flagcdn.com/it.svg" alt="IT"></button>
+  <div class="nav-right">
+    <div class="lang-flags">
+      <button class="lang-flag active" data-lang="pt">🇧🇷</button>
+      <button class="lang-flag" data-lang="en">🇺🇸</button>
+      <button class="lang-flag" data-lang="es">🇪🇸</button>
+      <button class="lang-flag" data-lang="fr">🇫🇷</button>
+      <button class="lang-flag" data-lang="it">🇮🇹</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#como-funciona" class="mob-link" data-i18n="nav.works">How It Works</a>
-  <a href="#planos" class="mob-link" data-i18n="nav.plans">Plans</a>
-  <a href="#sobre" class="mob-link" data-i18n="nav.about">About</a>
-  <a href="#faq" class="mob-link">FAQ</a>
-  <a href="#planos" class="mob-link quiz-trigger" data-i18n="nav.cta">Fazer Avaliação</a>
+  <a href="#sobre" class="mob-link" data-i18n="nav.about">Sobre</a>
+  <a href="#instagram" class="mob-link" data-i18n="nav.insta">Instagram</a>
+  <a href="/labios" class="mob-link" data-i18n="nav.labios">Análise Labial</a>
 </div>
 
 <!-- HERO -->
-<section class="hero" id="inicio">
-  <div class="hero-bg">
-    <video autoplay muted loop playsinline preload="auto">
-      <source src="carol-hero.mp4" type="video/mp4">
-    </video>
-  </div>
+<section id="inicio" style="padding:0; max-width:none;">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="/carol-hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-i18n-html="hero.eyebrow">Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial — Especialista em Preenchimento Labial</span></p>
-    <h1 class="hero-title" data-i18n="hero.title">Será que Preenchimento Labial Combina com Você?</h1>
-    <p class="hero-sub" data-i18n="hero.sub">Descubra se as características do seu rosto favorecem o preenchimento labial — e o que você realmente precisa para um resultado bonito e natural. O teste leva menos de 60 segundos.</p>
+    <p class="hero-eyebrow" data-i18n-html="hero.eyebrow">Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial</span></p>
+    <h1 class="hero-phrase" data-i18n-html="hero.phrase">A beleza mais bonita é aquela que <em>continua parecendo sua.</em></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Escolha por onde deseja começar sua jornada.</p>
     <div class="hero-btns">
-      <a href="/labios" class="btn btn-filled" data-i18n="hero.btn.labios">🩷 Descobrir se o preenchimento combina comigo</a>
-      <a href="/skincare" class="btn btn-outline" data-i18n="hero.btn.skincare">✨ Descobrir a rotina ideal para minha pele</a>
-    </div>
-    <p class="hero-social-proof" data-i18n="hero.proof">⏱ ~60 segundos · 🔒 Sem compromisso · ✨ Resultado personalizado</p>
-    <p class="hero-authority" data-i18n="hero.authority">✦ Método da Dra. Carol Mafra · Especialista em resultados naturais em HOF</p>
-  </div>
-  <div class="scroll-hint" data-i18n="hero.scroll">Scroll</div>
-</section>
-
-<!-- BENEFITS -->
-<section id="beneficios">
-  <div style="text-align:center; margin-bottom:56px" class="reveal">
-    <h2 class="section-title" style="margin-inline:auto" data-i18n="ben.title">Todo cuidado é pouco ao escolher o formato dos seus lábios</h2>
-  </div>
-  <div class="benefits-grid reveal">
-    <div class="benefit-item">
-      <div class="benefit-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
-      </div>
-      <h3 data-i18n="ben.1.title">Atenção: lábio errado é difícil de reverter</h3>
-      <p data-i18n="ben.1.desc">Escolher um formato sem considerar a harmonia do rosto pode gerar resultados que destoam da sua beleza natural. O primeiro passo seguro é o diagnóstico correto — antes de qualquer agulha.</p>
-    </div>
-    <div class="benefit-item">
-      <div class="benefit-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-      </div>
-      <h3 data-i18n="ben.2.title">Paciente preparada é paciente satisfeita</h3>
-      <p data-i18n="ben.2.desc">Quem chega ao consultório sabendo o que combina com seu rosto tem resultados muito superiores e menos riscos. A instrução é o melhor tratamento preventivo que existe.</p>
-    </div>
-    <div class="benefit-item">
-      <div class="benefit-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-        </svg>
-      </div>
-      <h3 data-i18n="ben.3.title">Nada substitui o olhar clínico de uma especialista</h3>
-      <p data-i18n="ben.3.desc">A Dra. Carol Mafra acompanha você do diagnóstico à recomendação final. Mais de 250 preenchimentos labiais realizados com zero intercorrências falam por si.</p>
-    </div>
-    <div class="benefit-item">
-      <div class="benefit-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-        </svg>
-      </div>
-      <h3 data-i18n="ben.4.title">Do relatório básico ao acompanhamento completo</h3>
-      <p data-i18n="ben.4.desc">Avaliação Labial, Análise Facial Completa ou Premium com consultoria por vídeo. Escolha o nível de orientação que você precisa para chegar preparada ao procedimento.</p>
+      <a href="/labios" class="btn" data-i18n="hero.btn.labios">🩷 Descobrir se o preenchimento combina comigo</a>
+      <a href="/skincare" class="btn-outline" data-i18n="hero.btn.skincare">✨ Descobrir a rotina ideal para minha pele</a>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="como-funciona">
-  <div class="steps-header reveal">
-    <p class="section-label" data-i18n="how.label">The process</p>
-    <h2 class="section-title" data-i18n="how.title">How it works</h2>
-  </div>
-  <div class="steps reveal">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h3 data-i18n="how.1.title">Choose your plan</h3>
-      <p data-i18n="how.1.desc">Pick the assessment that fits your needs — lip-focused or full facial harmony.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h3 data-i18n="how.2.title">Secure checkout</h3>
-      <p data-i18n="how.2.desc">Pay safely with credit card, PayPal, Apple Pay or Google Pay. Instant confirmation.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h3 data-i18n="how.3.title">Submit your photos</h3>
-      <p data-i18n="how.3.desc">Send 3 photos (front and both profiles) following our simple step-by-step photo guide.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">04</div>
-      <h3 data-i18n="how.4.title">Dr. Carol analyzes</h3>
-      <p data-i18n="how.4.desc">Your photos are reviewed and analyzed personally by Dr. Carol Mafra, HOF specialist.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">05</div>
-      <h3 data-i18n="how.5.title">Receive your PDF</h3>
-      <p data-i18n="how.5.desc">Your personalized report is delivered to your inbox within 3 business days.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PLANS & PRICING -->
-<section id="planos">
-  <div class="planos-header reveal">
-    <p class="section-label" data-i18n="plans.label">Your investment</p>
-    <h2 class="section-title" data-i18n="plans.title">Simple, one-time pricing</h2>
-    <p data-i18n="plans.sub">No subscriptions. No hidden fees. Just one payment for your personalized report.</p>
-  </div>
-  <div class="plans-grid reveal">
-
-    <div class="plan-card">
-      <p class="plan-name" data-i18n="plan1.name">Lip Assessment</p>
-      <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="97" data-usd="47" data-eur="44">97</span></div>
-      <p class="plan-period" data-i18n="plans.period">one-time payment</p>
-      <ul class="plan-features">
-        <li data-i18n="plan1.f1">Full lip region analysis</li>
-        <li data-i18n="plan1.f2">Proportion & symmetry evaluation</li>
-        <li data-i18n="plan1.f3">Personalized lip enhancement recommendations</li>
-        <li data-i18n="plan1.f4">Detailed PDF report</li>
-        <li data-i18n="plan1.f5">Delivered within 3 business days</li>
-        <li class="no" data-i18n="plan1.f6">Full facial analysis</li>
-        <li class="no" data-i18n="plan1.f7">Video consultation</li>
-      </ul>
-      <a href="#" class="plan-btn quiz-trigger" data-i18n="plans.btn">Get Started</a>
-    </div>
-
-    <div class="plan-card destaque">
-      <div class="plan-badge" data-i18n="plans.popular">Most popular</div>
-      <p class="plan-name" data-i18n="plan2.name">Complete Facial Assessment</p>
-      <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="197" data-usd="97" data-eur="89">197</span></div>
-      <p class="plan-period" data-i18n="plans.period">one-time payment</p>
-      <ul class="plan-features">
-        <li data-i18n="plan2.f1">Full facial harmony analysis</li>
-        <li data-i18n="plan2.f2">All facial zones (forehead, eyes, nose, lips, chin)</li>
-        <li data-i18n="plan2.f3">Proportion mapping & symmetry scoring</li>
-        <li data-i18n="plan2.f4">Personalized HOF procedure recommendations</li>
-        <li data-i18n="plan2.f5">Detailed PDF report with diagrams</li>
-        <li data-i18n="plan2.f6">Delivered within 3 business days</li>
-        <li class="no" data-i18n="plan2.f7">Video consultation</li>
-      </ul>
-      <a href="#" class="plan-btn quiz-trigger" data-i18n="plans.btn">Get Started</a>
-    </div>
-
-    <div class="plan-card">
-      <p class="plan-name" data-i18n="plan3.name">Premium + Consultation</p>
-      <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="397" data-usd="197" data-eur="179">397</span></div>
-      <p class="plan-period" data-i18n="plans.period">one-time payment</p>
-      <ul class="plan-features">
-        <li data-i18n="plan3.f1">Everything in Complete Facial Assessment</li>
-        <li data-i18n="plan3.f2">Personalized video explanation by Dr. Carol</li>
-        <li data-i18n="plan3.f3">Live video consultation included</li>
-        <li data-i18n="plan3.f4">Detailed beauty roadmap & treatment plan</li>
-        <li data-i18n="plan3.f5">Priority delivery (3 business days)</li>
-        <li data-i18n="plan3.f6">7-day post-analysis support</li>
-        <li data-i18n="plan3.f7">One free revision</li>
-      </ul>
-      <a href="#" class="plan-btn quiz-trigger" data-i18n="plans.btn">Get Started</a>
-    </div>
-
-  </div>
-
-  <div class="trust-badges reveal">
-    <div class="trust-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <span data-i18n="trust.secure">Secure Payment</span>
-    </div>
-    <div class="trust-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <span>Stripe · PayPal · Apple Pay · Google Pay</span>
-    </div>
-    <div class="trust-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span>GDPR & LGPD Compliant</span>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
+<!-- SOBRE -->
 <section id="sobre">
   <div class="sobre-carousel reveal" id="sobreCarousel">
     <div class="sobre-carousel-track" id="sobreTrack">
-      <img src="carol-about.jpg" alt="Dra. Carol Mafra">
-      <img src="carol-foto2.jpg" alt="Dra. Carol Mafra">
-      <img src="carol-foto3.jpg" alt="Dra. Carol Mafra">
-      <img src="carol-foto4.jpg" alt="Dra. Carol Mafra">
+      <img src="/carol-about.jpg" alt="Dra. Carol Mafra">
+      <img src="/carol-foto2.jpg" alt="Dra. Carol Mafra">
+      <img src="/carol-foto3.jpg" alt="Dra. Carol Mafra">
+      <img src="/carol-foto4.jpg" alt="Dra. Carol Mafra">
     </div>
     <div class="sobre-dots" id="sobreDots">
       <button class="sobre-dot active" data-idx="0"></button>
@@ -1060,60 +381,29 @@
     </div>
   </div>
   <div class="sobre-text reveal">
-    <p class="section-label" data-i18n="about.label">Meet your specialist</p>
+    <p class="section-label" data-i18n="about.label">Quem vai analisar o seu rosto</p>
     <h2 class="section-title">Dra. Carol Mafra</h2>
-    <p data-i18n="about.p1">Graduated in Dentistry from Rede Unidoctum Teófilo Otoni, Dr. Ana Carolina Sousa Mafra holds a specialization in Orofacial Harmonization from CETRO Belo Horizonte, with advanced training in hyaluronic acid fillers, botulinum toxin, rhinomodeling, lip filling, Full Face, intradermotherapy, facial and submental lipolysis, and microneedling.</p>
-    <p data-i18n="about.p2">She recently reached the milestone of 250 lip fillings performed with zero complications — a result of deep anatomical knowledge, rigorous safety protocols, and a refined aesthetic perception. Her commitment is to deliver sophisticated, natural, and personalized results that enhance each patient's self-esteem without losing their facial identity.</p>
+    <p data-i18n="about.p1">A Dra. Ana Carolina Sousa Mafra é especialista em Harmonização Orofacial pela CETRO Belo Horizonte, com formação avançada em preenchimento com ácido hialurônico, toxina botulínica, rinomodelação, preenchimento labial, Full Face, intradermoterapia e microagulhamento. Graduada em Odontologia pela Rede Unidoctum Teófilo Otoni.</p>
+    <p data-i18n="about.p2">O que diferencia a Dra. Carol não é apenas a técnica — é o olhar. Ela enxerga o rosto como um todo, respeita a identidade de cada paciente e cria orientações que realçam a beleza natural sem apagar quem a pessoa é. Cada análise é tratada com exclusividade e atenção ao detalhe.</p>
     <div class="stats">
       <div>
         <div class="stat-num">500+</div>
-        <div class="stat-label" data-i18n="about.stat1">Patients Served</div>
+        <div class="stat-label" data-i18n="about.stat1">Pacientes Atendidos em Procedimentos Diversos</div>
       </div>
       <div>
         <div class="stat-num">5★</div>
-        <div class="stat-label" data-i18n="about.stat2">Average Rating</div>
+        <div class="stat-label" data-i18n="about.stat2">Avaliação Média</div>
       </div>
       <div>
         <div class="stat-num">HOF</div>
-        <div class="stat-label" data-i18n="about.stat3">Certified Specialist</div>
+        <div class="stat-label" data-i18n="about.stat3">Especialista Certificada</div>
       </div>
     </div>
-    <a href="#planos" class="btn quiz-trigger" data-i18n="about.btn">Iniciar Minha Avaliação</a>
+    <a href="/labios" class="btn" data-i18n="about.btn">Quero Minha Orientação Personalizada</a>
   </div>
 </section>
 
-<!-- ANTES E DEPOIS -->
-<section id="depoimentos">
-  <div class="reveal" style="text-align:center; margin-bottom:48px">
-    <p class="section-label" data-i18n="test.label">Resultados reais</p>
-    <h2 class="section-title" style="margin-inline:auto" data-i18n="test.title">Antes e Depois</h2>
-    <p style="color:var(--muted);font-family:sans-serif;font-size:0.85rem;margin-top:12px" data-i18n="test.sub">Procedimentos realizados pela Dra. Carol Mafra</p>
-  </div>
-  <div class="reveal iphone-mockup-wrap">
-    <button class="ig-arrow prev" id="igPrev">&#8592;</button>
-    <div class="iphone-frame">
-      <div class="iphone-notch"></div>
-      <div class="iphone-screen">
-        <div class="ig-carousel-wrap" id="igCarouselWrap">
-          <div class="ig-track" id="igTrack">
-            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C0CkMrvAumO/" data-instgrm-version="14"></blockquote></div>
-            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Cz345m8AAwW/" data-instgrm-version="14"></blockquote></div>
-            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DH9b8NGy_qR/" data-instgrm-version="14"></blockquote></div>
-            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DKQNxCuva-p/" data-instgrm-version="14"></blockquote></div>
-            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C_d_Vl8vwK2/" data-instgrm-version="14"></blockquote></div>
-            <div class="ig-slide"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/C48yv1TPsh9/" data-instgrm-version="14"></blockquote></div>
-          </div>
-        </div>
-      </div>
-      <div class="iphone-home-bar"></div>
-    </div>
-    <button class="ig-arrow next" id="igNext">&#8594;</button>
-  </div>
-  <div class="ig-nav" id="igDots"></div>
-  <script async src="https://www.instagram.com/embed.js"></script>
-</section>
-
-<!-- INSTAGRAM -->
+<!-- INSTAGRAM FEED -->
 <section id="instagram">
   <div class="reveal" style="margin-bottom:40px">
     <p class="section-label" data-i18n="insta.label">Siga a Dra. Carol Mafra</p>
@@ -1136,1046 +426,203 @@
   </div>
 </section>
 
-<!-- FAQ -->
-<section id="faq">
-  <div class="reveal">
-    <p class="section-label" data-i18n="faq.label">Questions</p>
-    <h2 class="section-title" data-i18n="faq.title">Frequently asked questions</h2>
-  </div>
-  <div class="faq-list reveal">
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.3.q">Does this replace an in-person consultation?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.3.a">No. This is an informational and educational service that helps you understand your facial features and aesthetic possibilities. It does not constitute a medical diagnosis, prescription, or treatment plan. For any procedure, always consult a qualified in-person professional.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.1.q">What kind of photos do I need to send?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.1.a">You'll need 3 photos: one front-facing, one left profile, and one right profile. Photos should be taken in good natural lighting, without filters, with a clean face and hair pulled back. Detailed photo instructions are sent to your email immediately after purchase.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.2.q">How long does it take to receive my assessment?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.2.a">Standard delivery is within 3 business days after we receive and approve your photos. The Premium plan includes priority processing with delivery within 3 business days.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.4.q">What payment methods are accepted?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.4.a">We accept all major credit and debit cards via Stripe, PayPal, Apple Pay, and Google Pay. For Brazilian customers, Pix and boleto are also available via Mercado Pago. All payments are processed securely with SSL encryption.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.5.q">Are my photos and personal data safe?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.5.a">Absolutely. Your photos and personal information are handled with strict confidentiality, in compliance with GDPR and LGPD regulations. Your images are used exclusively to prepare your analysis and are never shared with third parties.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.6.q">Can I get a refund?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.6.a">Yes. If you haven't submitted your photos yet, you're entitled to a full refund within 7 days of purchase — no questions asked. Once photo submission and analysis have begun, refunds are no longer available.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        <span data-i18n="faq.7.q">What if I have follow-up questions after receiving my report?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p data-i18n="faq.7.a">Premium plan clients receive 7 days of post-analysis support and one free revision. For other plans, you can always reach us via the contact form below with any questions about your report.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section id="cta-final">
-  <div class="reveal">
-    <p class="section-label" data-i18n="cta.label">Antes de qualquer decisão</p>
-    <h2 class="section-title" data-i18n="cta.title">Você merece chegar ao procedimento sabendo exatamente o que esperar.</h2>
-    <p data-i18n="cta.sub">Centenas de mulheres já fizeram essa descoberta. Responderam ao teste, entenderam seu rosto — e chegaram ao procedimento com muito mais segurança, clareza e confiança no resultado.</p>
-    <a href="#" class="btn btn-filled quiz-trigger" data-i18n="cta.btn">Quero Saber o Que Combina com Mim →</a>
-  </div>
-</section>
-
-<!-- DISCLAIMER -->
-<div id="disclaimer">
-  <p data-i18n-html="disclaimer.text">⚠️ <strong>Important notice:</strong> The assessments provided through this service are strictly informational and educational in nature. They do not constitute a medical diagnosis, prescription, or professional treatment recommendation. For any aesthetic procedure, always consult a qualified, licensed professional in person.</p>
-</div>
-
-<!-- CONTACT -->
-<section id="contato">
-  <div class="reveal">
-    <p class="section-label" data-i18n="contact.label">Get in touch</p>
-    <h2 class="section-title" data-i18n="contact.title">Contact us</h2>
-  </div>
-  <div class="reveal">
-    <form class="contact-form" id="contactForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="nome" data-i18n="contact.name">Full Name</label>
-          <input type="text" id="nome" data-i18n-ph="contact.name.ph" placeholder="Your full name" required>
-        </div>
-        <div class="form-group">
-          <label for="email" data-i18n="contact.email">Email Address</label>
-          <input type="email" id="email" placeholder="you@email.com" required>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="assunto" data-i18n="contact.subject">Subject</label>
-        <select id="assunto">
-          <option value="" data-i18n="contact.select">Select a topic...</option>
-          <option data-i18n="contact.opt1">Question about plans</option>
-          <option data-i18n="contact.opt2">Payment issue</option>
-          <option data-i18n="contact.opt3">Order status</option>
-          <option data-i18n="contact.opt4">Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="mensagem" data-i18n="contact.msg">Message</label>
-        <textarea id="mensagem" data-i18n-ph="contact.msg.ph" placeholder="How can we help you?" required></textarea>
-      </div>
-      <button type="submit" class="form-submit" data-i18n="contact.send">Send Message</button>
-    </form>
-    <div class="form-success" id="formSuccess">
-      <span data-i18n="contact.success">Message sent!</span><br>
-      <span style="color:var(--muted); font-size:0.8rem; display:block; margin-top:8px;" data-i18n="contact.success2">We'll get back to you within 24 hours.</span>
-    </div>
-    <div class="contact-extra">
-      <span>Instagram: <a href="https://instagram.com/dra.carolmafra" target="_blank">@dra.carolmafra</a></span>
-      <span>WhatsApp: <a href="https://wa.me/5533998514322" target="_blank">(33) 99851-4322</a></span>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><img src="carol-logo.png" alt="Dra. Carol Mafra" style="height:64px;width:auto;opacity:0.9;"></div>
-  <div class="footer-links">
-    <a href="#como-funciona" data-i18n="nav.works">How It Works</a>
-    <a href="#planos" data-i18n="nav.plans">Plans</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contato" data-i18n="contact.title">Contact</a>
-    <a href="#" data-i18n="footer.terms">Terms of Service</a>
-    <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
-  </div>
-  <p class="footer-copy" data-i18n="footer.copy">© 2025 Dr. Carol Mafra · Orofacial Harmonization Specialist · All rights reserved</p>
-  <p class="footer-disclaimer" data-i18n="footer.disc">This service is informational and educational in nature. It does not constitute medical advice, diagnosis, or treatment. In compliance with GDPR, LGPD, and applicable consumer protection laws.</p>
+  <div class="footer-logo">Dra. Carol Mafra</div>
+  <p class="footer-copy" data-i18n="footer.copy">© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonização Orofacial · Todos os direitos reservados</p>
+  <p class="footer-disclaimer" data-i18n="footer.disc">Este serviço é informativo e educativo por natureza. Não constitui aconselhamento médico, diagnóstico ou tratamento. Em conformidade com GDPR, LGPD e leis de proteção ao consumidor aplicáveis.</p>
 </footer>
 
-<!-- QUIZ MODAL -->
-<div id="quizModal">
-  <div class="quiz-inner">
-    <div class="quiz-topbar">
-      <span class="quiz-timer" data-i18n="quiz.timer">⏱ ~60 segundos</span>
-      <span class="quiz-step-label" id="quizStepLabel">Pergunta 1 de 6</span>
-      <button id="quizClose">✕</button>
-    </div>
-    <div class="quiz-progress-bar-wrap">
-      <div class="quiz-progress-bar" id="quizProgressBar" style="width:16.66%"></div>
-    </div>
-
-    <div id="quizStep0" class="quiz-step">
-      <h2 class="quiz-q" data-i18n="quiz.lead.title">Para onde enviamos seu resultado?</h2>
-      <p class="quiz-lead-sub" data-i18n="quiz.lead.sub">Informe seus dados para receber sua análise personalizada da Dra. Carol Mafra.</p>
-      <div class="quiz-lead-form">
-        <input class="quiz-lead-input" type="text" id="qLeadName" data-i18n-ph="quiz.lead.name" placeholder="Seu nome completo">
-        <input class="quiz-lead-input" type="tel" id="qLeadWa" data-i18n-ph="quiz.lead.wa" placeholder="WhatsApp com DDD">
-        <button class="quiz-result-cta" id="qLeadBtn" data-i18n="quiz.lead.btn">Iniciar Avaliação</button>
-      </div>
-    </div>
-
-    <div id="quizStep1" class="quiz-step" style="display:none">
-      <h2 class="quiz-q" data-i18n="quiz.q1">Você já pensou em fazer preenchimento labial?</h2>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-step="1" data-val="a" data-i18n="quiz.q1.a">Nunca pensei nisso</button>
-        <button class="quiz-opt" data-step="1" data-val="b" data-i18n="quiz.q1.b">Tenho curiosidade, mas nunca pesquisei</button>
-        <button class="quiz-opt" data-step="1" data-val="c" data-i18n="quiz.q1.c">Já pesquisei bastante</button>
-        <button class="quiz-opt" data-step="1" data-val="d" data-i18n="quiz.q1.d">Já fiz e quero refinar o resultado</button>
-      </div>
-    </div>
-
-    <div id="quizStep2" class="quiz-step" style="display:none">
-      <h2 class="quiz-q" data-i18n="quiz.q2">O que mais incomoda em seus lábios?</h2>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-step="2" data-val="a" data-i18n="quiz.q2.a">São finos ou assimétricos</button>
-        <button class="quiz-opt" data-step="2" data-val="b" data-i18n="quiz.q2.b">Perdi volume com o tempo</button>
-        <button class="quiz-opt" data-step="2" data-val="c" data-i18n="quiz.q2.c">Sinto que não combinam com meu rosto</button>
-        <button class="quiz-opt" data-step="2" data-val="d" data-i18n="quiz.q2.d">Nada — só quero entender melhor</button>
-      </div>
-    </div>
-
-    <div id="quizStep3" class="quiz-step" style="display:none">
-      <h2 class="quiz-q" data-i18n="quiz.q3">Você prefere um resultado discreto ou mais volumoso?</h2>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-step="3" data-val="a" data-i18n="quiz.q3.a">Discreto e natural</button>
-        <button class="quiz-opt" data-step="3" data-val="b" data-i18n="quiz.q3.b">Um pouco mais cheio</button>
-        <button class="quiz-opt" data-step="3" data-val="c" data-i18n="quiz.q3.c">Mais volumoso e marcado</button>
-        <button class="quiz-opt" data-step="3" data-val="d" data-i18n="quiz.q3.d">Ainda não sei</button>
-      </div>
-    </div>
-
-    <div id="quizStep4" class="quiz-step" style="display:none">
-      <h2 class="quiz-q" data-i18n="quiz.q4">Já realizou algum procedimento estético?</h2>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-step="4" data-val="a" data-i18n="quiz.q4.a">Nunca fiz nada</button>
-        <button class="quiz-opt" data-step="4" data-val="b" data-i18n="quiz.q4.b">Sim, mas diferente de preenchimento labial</button>
-        <button class="quiz-opt" data-step="4" data-val="c" data-i18n="quiz.q4.c">Sim, já fiz preenchimento labial antes</button>
-      </div>
-    </div>
-
-    <div id="quizStep5" class="quiz-step" style="display:none">
-      <h2 class="quiz-q" data-i18n="quiz.q5">Seu maior receio é perder a naturalidade?</h2>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-step="5" data-val="a" data-i18n="quiz.q5.a">Sim, esse é meu maior medo</button>
-        <button class="quiz-opt" data-step="5" data-val="b" data-i18n="quiz.q5.b">Tenho um pouco de receio</button>
-        <button class="quiz-opt" data-step="5" data-val="c" data-i18n="quiz.q5.c">Não, confio em uma especialista</button>
-      </div>
-    </div>
-
-    <div id="quizStep6" class="quiz-step" style="display:none">
-      <h2 class="quiz-q" data-i18n="quiz.q6">Você acredita que seus lábios estão em harmonia com seu rosto?</h2>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-step="6" data-val="a" data-i18n="quiz.q6.a">Não, sinto que estão fora de proporção</button>
-        <button class="quiz-opt" data-step="6" data-val="b" data-i18n="quiz.q6.b">Talvez, mas não tenho certeza</button>
-        <button class="quiz-opt" data-step="6" data-val="c" data-i18n="quiz.q6.c">Sim, mas quero aprimorar</button>
-      </div>
-    </div>
-
-    <!-- UPLOAD STEP -->
-    <div id="quizStepResult" class="quiz-step" style="display:none">
-      <h2 class="quiz-result-title" data-i18n="quiz.upload.title">Encontramos características interessantes.</h2>
-      <p class="quiz-result-desc" data-i18n="quiz.upload.sub">Agora precisamos analisar suas fotos.</p>
-      <div class="quiz-upload-grid">
-        <label class="upload-slot" id="slotFront">
-          <input type="file" accept="image/*" id="photoFront">
-          <span class="upload-slot-icon">📷</span>
-          <span class="upload-slot-label" data-i18n="quiz.photo.front">Frente</span>
-          <span class="upload-slot-check">✔ Adicionada</span>
-        </label>
-        <label class="upload-slot" id="slotRight">
-          <input type="file" accept="image/*" id="photoRight">
-          <span class="upload-slot-icon">📷</span>
-          <span class="upload-slot-label" data-i18n="quiz.photo.right">Perfil Direito</span>
-          <span class="upload-slot-check">✔ Adicionada</span>
-        </label>
-        <label class="upload-slot" id="slotLeft">
-          <input type="file" accept="image/*" id="photoLeft">
-          <span class="upload-slot-icon">📷</span>
-          <span class="upload-slot-label" data-i18n="quiz.photo.left">Perfil Esquerdo</span>
-          <span class="upload-slot-check">✔ Adicionada</span>
-        </label>
-        <label class="upload-slot" id="slotSmile">
-          <input type="file" accept="image/*" id="photoSmile">
-          <span class="upload-slot-icon">📷</span>
-          <span class="upload-slot-label" data-i18n="quiz.photo.smile">Sorrindo</span>
-          <span class="upload-slot-check">✔ Adicionada</span>
-        </label>
-      </div>
-      <div class="upload-trust">
-        <p>✔ 4.200 mulheres analisadas</p>
-        <p>✔ Especialista em resultados naturais</p>
-        <p>✔ Mais de 250 preenchimentos labiais realizados</p>
-        <p>✔ Zero intercorrências</p>
-      </div>
-      <button class="quiz-result-cta" id="qUploadBtn" disabled data-i18n="quiz.upload.btn">Enviar Fotos</button>
-      <p class="upload-hint" data-i18n="quiz.upload.hint">Sem filtros · Boa iluminação · Rosto neutro</p>
-    </div>
-
-    <!-- PLANS STEP -->
-    <div id="quizStepPlans" class="quiz-step" style="display:none">
-      <p class="quiz-received-msg" data-i18n="quiz.plans.received">✅ A Dra. Carol Mafra já recebeu suas imagens.</p>
-      <h2 class="quiz-result-title" data-i18n="quiz.plans.title">Como deseja receber sua análise?</h2>
-<div class="quiz-plan-cards">
-        <div class="quiz-plan-card" data-plan-url="https://go.hotmart.com/N106489882S">
-          <span class="quiz-plan-medal">🥉</span>
-          <h3 data-i18n="quiz.plan1.name">Relatório Labial</h3>
-          <p data-i18n="quiz.plan1.desc">Ideal para quem quer entender exclusivamente seus lábios.</p>
-        </div>
-        <div class="quiz-plan-card qp-featured" data-plan-url="https://go.hotmart.com/N106489882S">
-          <span class="qp-badge" data-i18n="quiz.plan.badge">Mais escolhido</span>
-          <span class="quiz-plan-medal">🥈</span>
-          <h3 data-i18n="quiz.plan2.name">Relatório Completo</h3>
-          <p data-i18n="quiz.plan2.desc">Entenda como todo o seu rosto influencia o resultado.</p>
-        </div>
-        <div class="quiz-plan-card" data-plan-url="https://go.hotmart.com/N106489882S">
-          <span class="quiz-plan-medal">🥇</span>
-          <h3 data-i18n="quiz.plan3.name">Experiência Premium</h3>
-          <p data-i18n="quiz.plan3.desc">Receba sua análise e converse ao vivo com a Dra. Carol Mafra.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <script>
-// ─── TRANSLATIONS ────────────────────────────────────────────────────────────
 const T = {
   pt: {
-    'nav.works':'Como Funciona','nav.plans':'Planos','nav.about':'Sobre','nav.cta':'Descobrir Meu Resultado',
+    'nav.about':'Sobre','nav.insta':'Instagram','nav.labios':'Análise Labial',
     'hero.eyebrow':'Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial — Especialista em Preenchimento Labial</span>',
-    'hero.title':'Será que Preenchimento Labial Combina com Você?',
-    'hero.authority':'✦ Método da Dra. Carol Mafra · Especialista em resultados naturais em HOF',
-    'hero.sub':'Descubra se o preenchimento labial realmente combina com o seu rosto — e o que você precisa saber antes de qualquer decisão. O teste leva menos de 60 segundos.',
-    'hero.btn1':'Quero Descobrir Agora →','hero.scroll':'Rolar',
-    'hero.btn.labios':'🩷 Descobrir se o preenchimento combina comigo',
+    'hero.phrase':'A beleza mais bonita é aquela que <em>continua parecendo sua.</em>',
+    'hero.sub':'Escolha por onde deseja começar sua jornada.',
+    'hero.btn.labios':'🩷 Descobrir se o preenchimento labial combina comigo',
     'hero.btn.skincare':'✨ Descobrir a rotina ideal para minha pele',
-    'hero.proof':'⏱ ~60 segundos · 🔒 Sem compromisso · ✨ Resultado personalizado',
-    'ben.title':'Antes de qualquer decisão sobre seus lábios, existe uma pergunta que muda tudo',
-    'ben.1.title':'Clareza antes da escolha','ben.1.desc':'Mulheres que entendem o que combina com seu rosto chegam a qualquer procedimento com muito mais segurança, confiança e satisfação. Esse é o passo que a maioria pula.',
-    'ben.2.title':'Tranquilidade de saber o que é certo para você','ben.2.desc':'Com as informações certas sobre o seu rosto, a conversa com qualquer profissional flui melhor, as decisões ficam mais claras — e o resultado final é mais previsível.',
-    'ben.3.title':'Um olhar único, criado só para o seu rosto','ben.3.desc':'A Dra. Carol Mafra analisa pessoalmente cada caso, respeitando as proporções únicas de quem é você. A orientação é criada exclusivamente para as suas características faciais.',
-    'ben.4.title':'Você decide o quanto quer saber','ben.4.desc':'Orientação focada nos lábios, análise facial completa ou sessão ao vivo com a Dra. Carol. Cada nível foi criado para te dar mais clareza antes de qualquer decisão estética.',
-    'how.label':'O processo','how.title':'Como funciona',
-    'how.1.title':'Responda ao teste','how.1.desc':'6 perguntas rápidas sobre seu rosto e seus objetivos. Gratuito, leva menos de 60 segundos e não tem compromisso.',
-    'how.2.title':'Escolha sua orientação','how.2.desc':'Se quiser ir além, escolha o nível de análise que faz sentido para você. Pagamento seguro e instantâneo.',
-    'how.3.title':'Envie suas fotos','how.3.desc':'3 fotos simples (frente e perfis) seguindo nosso guia visual passo a passo. Sem filtros, sem segredos.',
-    'how.4.title':'A Dra. Carol analisa o seu rosto','how.4.desc':'Com olhar clínico e percepção estética apurada, ela dedica atenção exclusiva às suas características únicas.',
-    'how.5.title':'Receba sua orientação','how.5.desc':'Em até 3 dias úteis, você recebe um relatório estético personalizado com finalidade educativa — criado só para você.',
-    'plans.label':'Escolha seu nível de clareza','plans.title':'O quanto você quer saber sobre o seu rosto?','plans.sub':'Sem assinaturas. Sem taxas ocultas. Uma orientação estética que pode mudar a forma como você toma decisões.',
-    'plans.period':'pagamento único','plans.btn':'Quero Esta Orientação','plans.popular':'Mais escolhido',
-    'plan1.name':'Orientação Labial',
-    'plan1.f1':'O que realmente favorece os seus lábios','plan1.f2':'Proporção e simetria do seu rosto','plan1.f3':'O que pode realçar sua beleza natural','plan1.f4':'Relatório estético personalizado (fins educativos)','plan1.f5':'Entregue em até 3 dias úteis','plan1.f6':'Análise facial completa','plan1.f7':'Sessão ao vivo com a Dra. Carol',
-    'plan2.name':'Orientação Facial Completa',
-    'plan2.f1':'Visão completa da harmonia do seu rosto','plan2.f2':'Todas as zonas faciais analisadas com atenção','plan2.f3':'O mapa das suas proporções únicas','plan2.f4':'O que cada característica do seu rosto comunica','plan2.f5':'Relatório estético com diagramas visuais','plan2.f6':'Entregue em até 3 dias úteis','plan2.f7':'Sessão ao vivo com a Dra. Carol',
-    'plan3.name':'Experiência Premium',
-    'plan3.f1':'Tudo da Orientação Facial Completa','plan3.f2':'Vídeo explicativo personalizado pela Dra. Carol','plan3.f3':'Sessão ao vivo para tirar todas as suas dúvidas','plan3.f4':'Roteiro estético criado para o seu rosto','plan3.f5':'Entrega prioritária em até 3 dias úteis','plan3.f6':'7 dias de suporte após a orientação','plan3.f7':'Uma revisão gratuita incluída',
-    'guar.title':'Garantia de Reembolso em 7 Dias','guar.desc':'Se você ainda não enviou suas fotos, tem direito a reembolso integral em até 7 dias após a compra — sem perguntas.',
-    'trust.secure':'Pagamento Seguro',
-    'about.label':'Quem vai analisar o seu rosto','about.p1':'A Dra. Ana Carolina Sousa Mafra é especialista em Harmonização Orofacial pela CETRO Belo Horizonte, com formação avançada em preenchimento com ácido hialurônico, toxina botulínica, rinomodelação, preenchimento labial, Full Face, intradermoterapia e microagulhamento. Graduada em Odontologia pela Rede Unidoctum Teófilo Otoni.','about.p2':'O que diferencia a Dra. Carol não é apenas a técnica — é o olhar. Ela enxerga o rosto como um todo, respeita a identidade de cada paciente e cria orientações que realçam a beleza natural sem apagar quem a pessoa é. Cada análise é tratada com exclusividade e atenção ao detalhe.','about.stat1':'Pacientes Atendidos em Procedimentos Diversos','about.stat2':'Avaliação Média','about.stat3':'Especialista Certificada','about.btn':'Quero Minha Orientação Personalizada',
-    'test.label':'Resultados reais','test.title':'Antes e Depois','test.sub':'Alguns dos posts realizados pela Dra. Carol Mafra em seu instagram','test.before':'Antes','test.after':'Depois',
-    'test.1.text':'"Fiz a avaliação facial completa e foi incrível. A Dra. Carol explicou cada detalhe do meu rosto de uma forma que eu nunca havia considerado. As recomendações foram certeiras e me ajudaram a tomar decisões confiantes sobre meu tratamento."','test.1.author':'Fernanda R. — São Paulo, SP',
-    'test.2.text':'"Valeu muito mais do que paguei. O PDF veio com diagramas detalhados mostrando exatamente o que ela analisou. Finalmente me senti confiante para ir a uma profissional local sabendo exatamente o que queria."','test.2.author':'Juliana M. — Miami, FL',
-    'test.3.text':'"O plano premium com consultoria por vídeo foi um divisor de águas. A Dra. Carol é incrivelmente atenciosa e profissional. Já recomendei para três amigas — e todas adoraram a experiência."','test.3.author':'Camila T. — Los Angeles, CA',
-    'faq.label':'Dúvidas','faq.title':'Perguntas frequentes',
-    'faq.1.q':'Que tipo de foto preciso enviar?','faq.1.a':'Você precisará de 3 fotos: uma de frente, uma de perfil esquerdo e uma de perfil direito. As fotos devem ser tiradas com boa iluminação natural, sem filtros, com o rosto limpo e o cabelo preso. As instruções detalhadas para as fotos são enviadas para o seu e-mail imediatamente após a compra.',
-    'faq.2.q':'Quanto tempo leva para receber minha avaliação?','faq.2.a':'A entrega padrão é em até 3 dias úteis após recebermos e aprovarmos suas fotos. O plano Premium inclui processamento prioritário com entrega em 3 dias úteis.',
-    'faq.3.q':'Isso substitui uma consulta presencial?','faq.3.a':'Não. Este é um serviço informativo e educativo que ajuda você a entender suas características faciais e possibilidades estéticas. Não constitui diagnóstico médico, prescrição ou plano de tratamento. Para qualquer procedimento, sempre consulte um profissional qualificado presencialmente.',
-    'faq.4.q':'Quais formas de pagamento são aceitas?','faq.4.a':'Aceitamos todos os principais cartões de crédito e débito via Stripe, PayPal, Apple Pay e Google Pay. Para clientes brasileiros, Pix e boleto também estão disponíveis via Mercado Pago. Todos os pagamentos são processados com segurança e criptografia SSL.',
-    'faq.5.q':'Minhas fotos e dados pessoais estão seguros?','faq.5.a':'Com certeza. Suas fotos e informações pessoais são tratadas com total confidencialidade, em conformidade com as regulamentações GDPR e LGPD. Suas imagens são usadas exclusivamente para preparar sua análise e nunca são compartilhadas com terceiros.',
-    'faq.6.q':'Posso pedir reembolso?','faq.6.a':'Sim. Se você ainda não enviou suas fotos, tem direito a reembolso integral em até 7 dias após a compra — sem perguntas. Uma vez que o envio de fotos e a análise tenham começado, os reembolsos não estão mais disponíveis.',
-    'faq.7.q':'E se eu tiver dúvidas após receber meu relatório?','faq.7.a':'Clientes do plano Premium recebem 7 dias de suporte pós-análise e uma revisão gratuita. Para outros planos, você sempre pode nos contatar pelo formulário abaixo com qualquer dúvida sobre seu relatório.',
-    'cta.label':'Antes de qualquer decisão','cta.title':'Você merece chegar ao procedimento sabendo exatamente o que esperar.','cta.sub':'Centenas de mulheres já fizeram essa descoberta. Responderam ao teste, entenderam seu rosto — e chegaram ao procedimento com muito mais segurança, clareza e confiança no resultado.','cta.btn':'Quero Saber o Que Combina com Mim →',
-    'disclaimer.text':'⚠️ <strong>Aviso importante:</strong> As avaliações fornecidas através deste serviço são estritamente informativas e educativas por natureza. Não constituem diagnóstico médico, prescrição ou recomendação profissional de tratamento. Para qualquer procedimento estético, sempre consulte um profissional qualificado e licenciado presencialmente.',
-    'contact.label':'Entre em contato','contact.title':'Fale conosco','contact.name':'Nome Completo','contact.name.ph':'Seu nome completo','contact.email':'Endereço de E-mail','contact.subject':'Assunto','contact.select':'Selecione um assunto...','contact.opt1':'Dúvida sobre planos','contact.opt2':'Problema de pagamento','contact.opt3':'Status do pedido','contact.opt4':'Outro','contact.msg':'Mensagem','contact.msg.ph':'Como podemos ajudar?','contact.send':'Enviar Mensagem','contact.success':'Mensagem enviada!','contact.success2':'Retornaremos em até 24 horas.','contact.wa':'WhatsApp: <a href="#">Contato via Instagram</a>',
-    'quiz.lead.title':'Para onde enviamos seu resultado?','quiz.lead.sub':'Informe seus dados para receber sua análise personalizada da Dra. Carol Mafra.','quiz.lead.name':'Seu nome completo','quiz.lead.wa':'WhatsApp com DDD','quiz.lead.btn':'Iniciar Avaliação',
+    'about.label':'Quem vai analisar o seu rosto',
+    'about.p1':'A Dra. Ana Carolina Sousa Mafra é especialista em Harmonização Orofacial pela CETRO Belo Horizonte, com formação avançada em preenchimento com ácido hialurônico, toxina botulínica, rinomodelação, preenchimento labial, Full Face, intradermoterapia e microagulhamento. Graduada em Odontologia pela Rede Unidoctum Teófilo Otoni.',
+    'about.p2':'O que diferencia a Dra. Carol não é apenas a técnica — é o olhar. Ela enxerga o rosto como um todo, respeita a identidade de cada paciente e cria orientações que realçam a beleza natural sem apagar quem a pessoa é. Cada análise é tratada com exclusividade e atenção ao detalhe.',
+    'about.stat1':'Pacientes Atendidos em Procedimentos Diversos','about.stat2':'Avaliação Média','about.stat3':'Especialista Certificada',
+    'about.btn':'Quero Minha Orientação Personalizada',
+    'test.label':'Resultados reais','test.title':'Antes e Depois','test.sub':'Alguns dos posts realizados pela Dra. Carol Mafra em seu instagram',
     'insta.label':'Siga a Dra. Carol Mafra','insta.title':'@dra.carolmafra no Instagram','insta.follow':'Seguir no Instagram',
-    'footer.terms':'Termos de Serviço','footer.privacy':'Política de Privacidade','footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonização Orofacial · Todos os direitos reservados','footer.disc':'Este serviço é informativo e educativo por natureza. Não constitui aconselhamento médico, diagnóstico ou tratamento. Em conformidade com GDPR, LGPD e leis de proteção ao consumidor aplicáveis.',
-    'quiz.timer':'⏱ ~60 segundos','quiz.steplabel':'Pergunta {n} de {t}','quiz.result.label':'Resultado',
-    'quiz.q1':'Você já pensou em fazer preenchimento labial?',
-    'quiz.q1.a':'Nunca pensei nisso','quiz.q1.b':'Tenho curiosidade, mas nunca pesquisei','quiz.q1.c':'Já pesquisei bastante','quiz.q1.d':'Já fiz e quero refinar o resultado',
-    'quiz.q2':'O que mais incomoda em seus lábios?',
-    'quiz.q2.a':'São finos ou assimétricos','quiz.q2.b':'Perdi volume com o tempo','quiz.q2.c':'Sinto que não combinam com meu rosto','quiz.q2.d':'Nada — só quero entender melhor',
-    'quiz.q3':'Você prefere um resultado discreto ou mais volumoso?',
-    'quiz.q3.a':'Discreto e natural','quiz.q3.b':'Um pouco mais cheio','quiz.q3.c':'Mais volumoso e marcado','quiz.q3.d':'Ainda não sei',
-    'quiz.q4':'Já realizou algum procedimento estético?',
-    'quiz.q4.a':'Nunca fiz nada','quiz.q4.b':'Sim, mas diferente de preenchimento labial','quiz.q4.c':'Sim, já fiz preenchimento labial antes',
-    'quiz.q5':'Seu maior receio é perder a naturalidade?',
-    'quiz.q5.a':'Sim, esse é meu maior medo','quiz.q5.b':'Tenho um pouco de receio','quiz.q5.c':'Não, confio em uma especialista',
-    'quiz.q6':'Você acredita que seus lábios estão em harmonia com seu rosto?',
-    'quiz.q6.a':'Não, sinto que estão fora de proporção','quiz.q6.b':'Talvez, mas não tenho certeza','quiz.q6.c':'Sim, mas quero aprimorar',
-    'quiz.result.title':'Seu rosto tem características específicas que influenciam diretamente qualquer resultado de preenchimento.',
-    'quiz.result.desc':'Com base nas suas respostas, identificamos pontos do seu rosto que fazem toda a diferença no resultado final. Para saber exatamente o que isso significa para o SEU rosto, a Dra. Carol precisa analisar suas fotos pessoalmente.',
-    'quiz.cta':'Quero Saber o Que Isso Significa Para Mim →',
-    'quiz.proof2':'✦ Mais de 500 perfis analisados com olhar clínico especializado',
-    'quiz.seeall':'Ver planos e preços',
-    'quiz.upload.title':'A Dra. Carol já tem o seu perfil. Agora ela precisa ver o seu rosto.',
-    'quiz.upload.sub':'Envie 4 fotos seguindo as orientações abaixo. Quanto mais natural, mais precisa será a sua análise.',
-    'quiz.photo.front':'Frente','quiz.photo.right':'Perfil Direito','quiz.photo.left':'Perfil Esquerdo','quiz.photo.smile':'Sorrindo',
-    'quiz.upload.btn':'Enviar Fotos','quiz.upload.hint':'Sem filtros · Boa iluminação · Rosto neutro',
-    'quiz.plans.received':'✅ A Dra. Carol Mafra já recebeu suas imagens.',
-    'quiz.plans.title':'Como deseja receber sua análise?','quiz.plans.label':'Sua Análise',
-    'quiz.plan1.name':'Relatório Labial','quiz.plan1.desc':'Ideal para quem quer entender exclusivamente seus lábios.',
-    'quiz.plan2.name':'Relatório Completo','quiz.plan2.desc':'Entenda como todo o seu rosto influencia o resultado.',
-    'quiz.plan3.name':'Experiência Premium','quiz.plan3.desc':'Receba sua análise e converse ao vivo com a Dra. Carol Mafra.',
-    'quiz.plan.badge':'Mais escolhido',
-    'hero.availability':'Restam <span>{v}</span> vagas para análise esta semana',
-    'quiz.countdown.label':'⟡ Vaga pré-reservada por:',
-    'quiz.vagas.suffix':'vagas disponíveis para análise hoje',
-    'quiz.plan3.scarcity':'⟡ Sessões ao vivo com vagas limitadas por semana',
-    'quiz.redir.1':'🔒 Reservando sua vaga...','quiz.redir.2':'✓ Vaga confirmada',
-    'quiz.redir.2pos':'✓ Vaga confirmada — Posição na fila: #{p}',
-    'quiz.redir.3':'📋 Preparando acesso seguro...'
+    'footer.labios':'Análise Labial',
+    'explore.label':'Explore',
+    'explore.labios.title':'Análise Labial','explore.labios.sub':'Descubra o que combina com o seu rosto antes de qualquer decisão.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Resultados reais, posts educativos e o dia a dia da Dra. Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Em breve. Cuidados com a pele com o mesmo olhar especializado.',
+    'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonização Orofacial · Todos os direitos reservados',
+    'footer.disc':'Este serviço é informativo e educativo por natureza. Não constitui aconselhamento médico, diagnóstico ou tratamento. Em conformidade com GDPR, LGPD e leis de proteção ao consumidor aplicáveis.'
   },
   en: {
-    'nav.works':'How It Works','nav.plans':'Plans','nav.about':'About','nav.cta':'Discover My Result',
+    'nav.about':'About','nav.insta':'Instagram','nav.labios':'Lip Analysis',
     'hero.eyebrow':'Dr. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Orofacial Harmonization — Lip Filler Specialist</span>',
-    'hero.title':'Does Lip Filler Really Suit You?',
-    'hero.authority':'✦ Dr. Carol Mafra\'s Method · Specialist in natural HOF results',
-    'hero.sub':'Discover if your facial features truly suit lip filler — and what you need to know before making any decision. The test takes less than 60 seconds.',
-    'hero.btn1':'I Want to Discover Now →','hero.scroll':'Scroll',
-    'hero.btn.labios':'🩷 Discover if lip filler suits me',
+    'hero.phrase':'The most beautiful beauty is the one that <em>still looks like you.</em>',
+    'hero.sub':'Choose where you want to begin your journey.',
+    'hero.btn.labios':'🩷 Discover if filler is right for me',
     'hero.btn.skincare':'✨ Discover my ideal skincare routine',
-    'hero.proof':'⏱ ~60 seconds · 🔒 No commitment · ✨ Personalized result',
-    'ben.title':'Before any decision about your lips, there is one question that changes everything',
-    'ben.1.title':'Clarity before choosing','ben.1.desc':'Women who understand what suits their face arrive at any procedure with far more confidence, certainty, and satisfaction. This is the step most people skip.',
-    'ben.2.title':'The peace of knowing what\'s right for you','ben.2.desc':'With the right information about your face, any conversation with a professional becomes clearer, decisions are easier — and the final result is more predictable.',
-    'ben.3.title':'A unique perspective, created just for your face','ben.3.desc':'Dr. Carol Mafra personally analyzes each case, respecting the unique proportions of who you are. The guidance is created exclusively for your facial features.',
-    'ben.4.title':'You decide how much you want to know','ben.4.desc':'Lip-focused guidance, complete facial analysis, or a live session with Dr. Carol. Each level was designed to give you more clarity before any aesthetic decision.',
-    'how.label':'The process','how.title':'How it works',
-    'how.1.title':'Answer the test','how.1.desc':'6 quick questions about your face and goals. Free, takes less than 60 seconds, no commitment.',
-    'how.2.title':'Choose your guidance','how.2.desc':'If you want to go further, choose the level of analysis that makes sense for you. Safe and instant payment.',
-    'how.3.title':'Send your photos','how.3.desc':'3 simple photos (front and profiles) following our step-by-step visual guide. No filters, no secrets.',
-    'how.4.title':'Dr. Carol analyzes your face','how.4.desc':'With a clinical eye and refined aesthetic perception, she dedicates exclusive attention to your unique features.',
-    'how.5.title':'Receive your guidance','how.5.desc':'Within 3 business days, you receive a personalized aesthetic report for educational purposes — created just for you.',
-    'plans.label':'Choose your level of clarity','plans.title':'How much do you want to know about your face?','plans.sub':'No subscriptions. No hidden fees. Aesthetic guidance that can change how you make decisions.',
-    'plans.period':'one-time payment','plans.btn':'I Want This Guidance','plans.popular':'Most chosen',
-    'plan1.name':'Lip Guidance',
-    'plan1.f1':'What truly suits your lips','plan1.f2':'Proportion and symmetry of your face','plan1.f3':'What can enhance your natural beauty','plan1.f4':'Personalized aesthetic report (educational purposes)','plan1.f5':'Delivered within 3 business days','plan1.f6':'Complete facial analysis','plan1.f7':'Video consultation',
-    'plan2.name':'Complete Facial Guidance',
-    'plan2.f1':'Complete view of your facial harmony','plan2.f2':'All facial zones analyzed with attention','plan2.f3':'The map of your unique proportions','plan2.f4':'What each feature of your face communicates','plan2.f5':'Aesthetic report with visual diagrams','plan2.f6':'Delivered within 3 business days','plan2.f7':'Video consultation',
-    'plan3.name':'Premium Experience',
-    'plan3.f1':'Everything in Complete Facial Guidance','plan3.f2':'Personalized explanatory video by Dr. Carol','plan3.f3':'Live session to answer all your questions','plan3.f4':'Aesthetic roadmap created for your face','plan3.f5':'Priority delivery within 3 business days','plan3.f6':'7 days of support after guidance','plan3.f7':'One free revision included',
-    'guar.title':'7-Day Money-Back Guarantee','guar.desc':'If you haven\'t submitted your photos yet, you\'re entitled to a full refund within 7 days of purchase — no questions asked.',
-    'trust.secure':'Secure Payment',
-    'about.label':'Who will analyze your face','about.p1':'Graduated in Dentistry from Rede Unidoctum Teófilo Otoni, Dr. Ana Carolina Sousa Mafra holds a specialization in Orofacial Harmonization from CETRO Belo Horizonte, with advanced training in hyaluronic acid fillers, botulinum toxin, rhinomodeling, lip filling, Full Face, intradermotherapy, facial and submental lipolysis, and microneedling.','about.p2':'What sets Dr. Carol apart is not just technique — it\'s the eye. She sees the face as a whole, respects each patient\'s identity, and creates guidance that enhances natural beauty without erasing who the person is.','about.stat1':'Patients Served in Various Procedures','about.stat2':'Average Rating','about.stat3':'Certified Specialist','about.btn':'I Want My Personalized Guidance',
-    'test.label':'Real results','test.title':'Before & After','test.sub':'Some of the posts shared by Dr. Carol Mafra on her instagram','test.before':'Before','test.after':'After',
-    'test.1.text':'"I did the complete facial assessment and it was incredible. Dr. Carol explained every detail about my face in a way I\'d never considered before. The recommendations were spot-on and helped me make confident decisions about my treatment."','test.1.author':'Fernanda R. — São Paulo, Brazil',
-    'test.2.text':'"Worth every penny and so much more. The PDF came with detailed diagrams showing exactly what she analyzed. I finally felt confident going to a local provider knowing precisely what I wanted."','test.2.author':'Juliana M. — Miami, FL',
-    'test.3.text':'"The premium plan with video consultation was a game changer. Dr. Carol is incredibly attentive and professional. I\'ve already recommended her to three friends — and they all loved their experience too."','test.3.author':'Camila T. — Los Angeles, CA',
-    'faq.label':'Questions','faq.title':'Frequently asked questions',
-    'faq.1.q':'What kind of photos do I need to send?','faq.1.a':'You\'ll need 3 photos: one front-facing, one left profile, and one right profile. Photos should be taken in good natural lighting, without filters, with a clean face and hair pulled back. Detailed photo instructions are sent to your email immediately after purchase.',
-    'faq.2.q':'How long does it take to receive my assessment?','faq.2.a':'Standard delivery is within 3 business days after we receive and approve your photos. The Premium plan includes priority processing with delivery within 3 business days.',
-    'faq.3.q':'Does this replace an in-person consultation?','faq.3.a':'No. This is an informational and educational service that helps you understand your facial features and aesthetic possibilities. It does not constitute a medical diagnosis, prescription, or treatment plan. For any procedure, always consult a qualified in-person professional.',
-    'faq.4.q':'What payment methods are accepted?','faq.4.a':'We accept all major credit and debit cards via Stripe, PayPal, Apple Pay, and Google Pay. For Brazilian customers, Pix and boleto are also available via Mercado Pago. All payments are processed securely with SSL encryption.',
-    'faq.5.q':'Are my photos and personal data safe?','faq.5.a':'Absolutely. Your photos and personal information are handled with strict confidentiality, in compliance with GDPR and LGPD regulations. Your images are used exclusively to prepare your analysis and are never shared with third parties.',
-    'faq.6.q':'Can I get a refund?','faq.6.a':'Yes. If you haven\'t submitted your photos yet, you\'re entitled to a full refund within 7 days of purchase — no questions asked. Once photo submission and analysis have begun, refunds are no longer available.',
-    'faq.7.q':'What if I have follow-up questions after receiving my report?','faq.7.a':'Premium plan clients receive 7 days of post-analysis support and one free revision. For other plans, you can always reach us via the contact form below with any questions about your report.',
-    'cta.label':'Before any decision','cta.title':'You deserve to arrive at your procedure knowing exactly what to expect.','cta.sub':'Hundreds of women have already made this discovery. They answered the test, understood their face — and arrived at their procedure with far more confidence, clarity, and certainty about the result.','cta.btn':'I Want to Know What Suits Me →',
-    'disclaimer.text':'⚠️ <strong>Important notice:</strong> The assessments provided through this service are strictly informational and educational in nature. They do not constitute a medical diagnosis, prescription, or professional treatment recommendation. For any aesthetic procedure, always consult a qualified, licensed professional in person.',
-    'contact.label':'Get in touch','contact.title':'Contact us','contact.name':'Full Name','contact.name.ph':'Your full name','contact.email':'Email Address','contact.subject':'Subject','contact.select':'Select a topic...','contact.opt1':'Question about plans','contact.opt2':'Payment issue','contact.opt3':'Order status','contact.opt4':'Other','contact.msg':'Message','contact.msg.ph':'How can we help you?','contact.send':'Send Message','contact.success':'Message sent!','contact.success2':'We\'ll get back to you within 24 hours.','contact.wa':'WhatsApp: <a href="#">Contact via Instagram</a>',
-    'quiz.lead.title':'Where should we send your result?','quiz.lead.sub':'Enter your details to receive your personalized analysis from Dr. Carol Mafra.','quiz.lead.name':'Your full name','quiz.lead.wa':'WhatsApp with country code','quiz.lead.btn':'Start Assessment',
+    'about.label':'Who will analyze your face',
+    'about.p1':'Graduated in Dentistry from Rede Unidoctum Teófilo Otoni, Dr. Ana Carolina Sousa Mafra holds a specialization in Orofacial Harmonization from CETRO Belo Horizonte, with advanced training in hyaluronic acid fillers, botulinum toxin, rhinomodeling, lip filling, Full Face, intradermotherapy, facial lipolysis, and microneedling.',
+    'about.p2':'What sets Dr. Carol apart is not just technique — it\'s the eye. She sees the face as a whole, respects each patient\'s identity, and creates guidance that enhances natural beauty without erasing who the person is.',
+    'about.stat1':'Patients Served in Various Procedures','about.stat2':'Average Rating','about.stat3':'Certified Specialist',
+    'about.btn':'I Want My Personalized Guidance',
+    'test.label':'Real results','test.title':'Before & After','test.sub':'Some of the posts shared by Dr. Carol Mafra on her instagram',
     'insta.label':'Follow Dr. Carol Mafra','insta.title':'@dra.carolmafra on Instagram','insta.follow':'Follow on Instagram',
-    'footer.terms':'Terms of Service','footer.privacy':'Privacy Policy','footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Orofacial Harmonization Specialist · All rights reserved','footer.disc':'This service is informational and educational in nature. It does not constitute medical advice, diagnosis, or treatment. In compliance with GDPR, LGPD, and applicable consumer protection laws.',
-    'quiz.timer':'⏱ ~60 seconds','quiz.steplabel':'Question {n} of {t}','quiz.result.label':'Result',
-    'quiz.q1':'Have you ever considered getting lip filler?',
-    'quiz.q1.a':'I\'ve never thought about it','quiz.q1.b':'I\'m curious but never researched it','quiz.q1.c':'I\'ve already researched it a lot','quiz.q1.d':'I\'ve done it before and want to refine the result',
-    'quiz.q2':'What bothers you most about your lips?',
-    'quiz.q2.a':'They\'re thin or asymmetric','quiz.q2.b':'I\'ve lost volume over time','quiz.q2.c':'They don\'t seem to suit my face','quiz.q2.d':'Nothing — I just want to understand better',
-    'quiz.q3':'Do you prefer a subtle or more voluminous result?',
-    'quiz.q3.a':'Subtle and natural','quiz.q3.b':'A little fuller','quiz.q3.c':'More voluminous and defined','quiz.q3.d':'I\'m not sure yet',
-    'quiz.q4':'Have you had any aesthetic procedure before?',
-    'quiz.q4.a':'Never had anything done','quiz.q4.b':'Yes, but not lip filler','quiz.q4.c':'Yes, I\'ve had lip filler before',
-    'quiz.q5':'Is your biggest fear losing a natural look?',
-    'quiz.q5.a':'Yes, that\'s my biggest fear','quiz.q5.b':'I have some concern about it','quiz.q5.c':'No, I trust a specialist',
-    'quiz.q6':'Do you feel your lips are in harmony with your face?',
-    'quiz.q6.a':'No, they feel out of proportion','quiz.q6.b':'Maybe, but I\'m not sure','quiz.q6.c':'Yes, but I want to improve them',
-    'quiz.result.title':'Your face has specific characteristics that directly influence any filler result.',
-    'quiz.result.desc':'Based on your answers, we identified features of your face that make all the difference in the final result. To find out exactly what this means for YOUR face, Dr. Carol Mafra needs to analyze your photos personally.',
-    'quiz.cta':'I Want to Know What This Means for Me →',
-    'quiz.proof2':'✦ Over 500 profiles analyzed with specialized clinical expertise',
-    'quiz.seeall':'See plans & pricing',
-    'quiz.upload.title':'Dr. Carol already has your profile. Now she needs to see your face.',
-    'quiz.upload.sub':'Send 4 photos following the instructions below. The more natural, the more precise your analysis will be.',
-    'quiz.photo.front':'Front','quiz.photo.right':'Right Profile','quiz.photo.left':'Left Profile','quiz.photo.smile':'Smiling',
-    'quiz.upload.btn':'Send Photos','quiz.upload.hint':'No filters · Good lighting · Neutral expression',
-    'quiz.plans.received':'✅ Dr. Carol Mafra has already received your images.',
-    'quiz.plans.title':'How would you like to receive your analysis?','quiz.plans.label':'Your Analysis',
-    'quiz.plan1.name':'Lip Report','quiz.plan1.desc':'Ideal for those who want to understand exclusively their lips.',
-    'quiz.plan2.name':'Complete Report','quiz.plan2.desc':'Understand how your entire face influences the result.',
-    'quiz.plan3.name':'Premium Experience','quiz.plan3.desc':'Receive your analysis and speak live with Dr. Carol Mafra.',
-    'quiz.plan.badge':'Most chosen',
-    'hero.availability':'<span>{v}</span> analysis spots remaining this week',
-    'quiz.countdown.label':'⟡ Pre-reserved spot expires in:',
-    'quiz.vagas.suffix':'spots available for analysis today',
-    'quiz.plan3.scarcity':'⟡ Live sessions have limited availability per week',
-    'quiz.redir.1':'🔒 Reserving your spot...','quiz.redir.2':'✓ Spot confirmed',
-    'quiz.redir.2pos':'✓ Spot confirmed — Queue position: #{p}',
-    'quiz.redir.3':'📋 Preparing secure access...'
+    'footer.labios':'Lip Analysis',
+    'explore.label':'Explore',
+    'explore.labios.title':'Lip Analysis','explore.labios.sub':'Discover what suits your face before making any decision.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Real results, educational posts and Dr. Carol Mafra\'s daily work.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Coming soon. Skincare with the same specialist eye.',
+    'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Orofacial Harmonization · All rights reserved',
+    'footer.disc':'This service is informational and educational in nature. It does not constitute medical advice, diagnosis, or treatment. In compliance with GDPR, LGPD and applicable consumer protection laws.'
   },
   es: {
-    'nav.works':'Cómo Funciona','nav.plans':'Planes','nav.about':'Sobre mí','nav.cta':'Descubrir Mi Resultado',
+    'nav.about':'Sobre mí','nav.insta':'Instagram','nav.labios':'Análisis Labial',
     'hero.eyebrow':'Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Armonización Orofacial — Especialista en Relleno Labial</span>',
-    'hero.title':'¿El Relleno Labial Realmente Te Favorece?',
-    'hero.authority':'✦ Método de la Dra. Carol Mafra · Especialista en resultados naturales en HOF',
-    'hero.sub':'Descubre si el relleno labial realmente combina con tu rostro — y lo que necesitas saber antes de tomar cualquier decisión. El test dura menos de 60 segundos.',
-    'hero.btn1':'Quiero Descubrir Ahora →','hero.scroll':'Bajar',
-    'hero.btn.labios':'🩷 Descubrir si el relleno me favorece',
-    'hero.btn.skincare':'✨ Descubrir mi rutina ideal para la piel',
-    'hero.proof':'⏱ ~60 segundos · 🔒 Sin compromiso · ✨ Resultado personalizado',
-    'ben.title':'Antes de cualquier decisión sobre tus labios, hay una pregunta que lo cambia todo',
-    'ben.1.title':'Claridad antes de elegir','ben.1.desc':'Las mujeres que entienden lo que favorece su rostro llegan a cualquier procedimiento con mucha más seguridad, confianza y satisfacción. Este es el paso que la mayoría omite.',
-    'ben.2.title':'La tranquilidad de saber qué es lo correcto para ti','ben.2.desc':'Con la información correcta sobre tu rostro, cualquier conversación con un profesional fluye mejor, las decisiones son más claras — y el resultado final es más predecible.',
-    'ben.3.title':'Una perspectiva única, creada solo para tu rostro','ben.3.desc':'La Dra. Carol Mafra analiza personalmente cada caso, respetando las proporciones únicas de quien eres. La orientación se crea exclusivamente para tus características faciales.',
-    'ben.4.title':'Tú decides cuánto quieres saber','ben.4.desc':'Orientación enfocada en los labios, análisis facial completo o sesión en vivo con la Dra. Carol. Cada nivel fue diseñado para darte más claridad antes de cualquier decisión estética.',
-    'how.label':'El proceso','how.title':'Cómo funciona',
-    'how.1.title':'Responde el test','how.1.desc':'6 preguntas rápidas sobre tu rostro y tus objetivos. Gratuito, dura menos de 60 segundos y sin compromiso.',
-    'how.2.title':'Elige tu orientación','how.2.desc':'Si quieres ir más lejos, elige el nivel de análisis que tiene sentido para ti. Pago seguro e instantáneo.',
-    'how.3.title':'Envía tus fotos','how.3.desc':'3 fotos simples (frente y perfiles) siguiendo nuestra guía visual paso a paso. Sin filtros, sin secretos.',
-    'how.4.title':'La Dra. Carol analiza tu rostro','how.4.desc':'Con ojo clínico y percepción estética refinada, ella dedica atención exclusiva a tus características únicas.',
-    'how.5.title':'Recibe tu orientación','how.5.desc':'En hasta 3 días hábiles, recibes un informe estético personalizado con fines educativos — creado solo para ti.',
-    'plans.label':'Elige tu nivel de claridad','plans.title':'¿Cuánto quieres saber sobre tu rostro?','plans.sub':'Sin suscripciones. Sin tarifas ocultas. Una orientación estética que puede cambiar cómo tomas decisiones.',
-    'plans.period':'pago único','plans.btn':'Quiero Esta Orientación','plans.popular':'Más elegido',
-    'plan1.name':'Orientación Labial',
-    'plan1.f1':'Lo que realmente favorece tus labios','plan1.f2':'Proporción y simetría de tu rostro','plan1.f3':'Lo que puede realzar tu belleza natural','plan1.f4':'Informe estético personalizado (fines educativos)','plan1.f5':'Entregado en hasta 3 días hábiles','plan1.f6':'Análisis facial completo','plan1.f7':'Consulta por video',
-    'plan2.name':'Orientación Facial Completa',
-    'plan2.f1':'Visión completa de la armonía de tu rostro','plan2.f2':'Todas las zonas faciales analizadas con atención','plan2.f3':'El mapa de tus proporciones únicas','plan2.f4':'Lo que cada característica de tu rostro comunica','plan2.f5':'Informe estético con diagramas visuales','plan2.f6':'Entregado en hasta 3 días hábiles','plan2.f7':'Consulta por video',
-    'plan3.name':'Experiencia Premium',
-    'plan3.f1':'Todo de la Orientación Facial Completa','plan3.f2':'Video explicativo personalizado por la Dra. Carol','plan3.f3':'Sesión en vivo para resolver todas tus dudas','plan3.f4':'Guía estética creada para tu rostro','plan3.f5':'Entrega prioritaria en hasta 3 días hábiles','plan3.f6':'7 días de soporte tras la orientación','plan3.f7':'Una revisión gratuita incluida',
-    'guar.title':'Garantía de Devolución de 7 Días','guar.desc':'Si aún no has enviado tus fotos, tienes derecho a un reembolso completo dentro de los 7 días posteriores a la compra — sin preguntas.',
-    'trust.secure':'Pago Seguro',
-    'about.label':'Quién va a analizar tu rostro','about.p1':'Graduada en Odontología por la Rede Unidoctum Teófilo Otoni, la Dra. Ana Carolina Sousa Mafra es especialista en Armonización Orofacial por el CETRO Belo Horizonte, con formación avanzada en relleno con ácido hialurónico, toxina botulínica, rinomodelación, relleno labial, Full Face, intradermoterapia, lipólisis facial y submentoniana y microagujamiento.','about.p2':'Lo que diferencia a la Dra. Carol no es solo la técnica — es la mirada. Ella ve el rostro como un todo, respeta la identidad de cada paciente y crea orientaciones que realzan la belleza natural sin borrar quién es la persona.','about.stat1':'Pacientes Atendidas en Diversos Procedimientos','about.stat2':'Valoración Media','about.stat3':'Especialista Certificada','about.btn':'Quiero Mi Orientación Personalizada',
-    'test.label':'Resultados reales','test.title':'Antes y Después','test.sub':'Algunos de los posts de la Dra. Carol Mafra en su instagram','test.before':'Antes','test.after':'Después',
-    'test.1.text':'"Hice la evaluación facial completa y fue increíble. La Dra. Carol explicó cada detalle de mi rostro de una manera que nunca había considerado. Las recomendaciones fueron perfectas y me ayudaron a tomar decisiones seguras sobre mi tratamiento."','test.1.author':'Fernanda R. — São Paulo, Brasil',
-    'test.2.text':'"Valió cada céntimo y mucho más. El PDF incluía diagramas detallados que mostraban exactamente lo que ella analizó. Finalmente me sentí segura al ir a un profesional local sabiendo exactamente lo que quería."','test.2.author':'Juliana M. — Miami, FL',
-    'test.3.text':'"El plan premium con consulta por video fue un cambio total. La Dra. Carol es increíblemente atenta y profesional. Ya la he recomendado a tres amigas — y todas adoraron la experiencia."','test.3.author':'Camila T. — Los Ángeles, CA',
-    'faq.label':'Preguntas','faq.title':'Preguntas frecuentes',
-    'faq.1.q':'¿Qué tipo de fotos necesito enviar?','faq.1.a':'Necesitarás 3 fotos: una de frente, una de perfil izquierdo y una de perfil derecho. Las fotos deben tomarse con buena luz natural, sin filtros, con el rostro limpio y el cabello recogido. Las instrucciones detalladas se envían a tu correo electrónico inmediatamente después de la compra.',
-    'faq.2.q':'¿Cuánto tiempo tarda en recibir mi evaluación?','faq.2.a':'La entrega estándar es dentro de los 3 días hábiles después de que recibamos y aprobemos tus fotos. El plan Premium incluye procesamiento prioritario con entrega en 3 días hábiles.',
-    'faq.3.q':'¿Esto reemplaza una consulta presencial?','faq.3.a':'No. Este es un servicio informativo y educativo que te ayuda a comprender tus características faciales y posibilidades estéticas. No constituye un diagnóstico médico, receta o plan de tratamiento. Para cualquier procedimiento, consulta siempre a un profesional cualificado en persona.',
-    'faq.4.q':'¿Qué métodos de pago se aceptan?','faq.4.a':'Aceptamos todas las principales tarjetas de crédito y débito a través de Stripe, PayPal, Apple Pay y Google Pay. Todos los pagos se procesan de forma segura con cifrado SSL.',
-    'faq.5.q':'¿Están seguros mis fotos y datos personales?','faq.5.a':'Por supuesto. Tus fotos e información personal se manejan con estricta confidencialidad, cumpliendo con las regulaciones GDPR. Tus imágenes se utilizan exclusivamente para preparar tu análisis y nunca se comparten con terceros.',
-    'faq.6.q':'¿Puedo solicitar un reembolso?','faq.6.a':'Sí. Si aún no has enviado tus fotos, tienes derecho a un reembolso completo dentro de los 7 días posteriores a la compra — sin preguntas. Una vez que el envío de fotos y el análisis hayan comenzado, los reembolsos ya no están disponibles.',
-    'faq.7.q':'¿Qué pasa si tengo preguntas después de recibir mi informe?','faq.7.a':'Los clientes del plan Premium reciben 7 días de soporte post-análisis y una revisión gratuita. Para otros planes, siempre puede contactarnos a través del formulario de contacto a continuación.',
-    'cta.label':'Antes de cualquier decisión','cta.title':'Mereces llegar al procedimiento sabiendo exactamente qué esperar.','cta.sub':'Cientos de mujeres ya hicieron este descubrimiento. Respondieron el test, entendieron su rostro — y llegaron al procedimiento con mucha más seguridad, claridad y confianza en el resultado.','cta.btn':'Quiero Saber Qué Combina Conmigo →',
-    'disclaimer.text':'⚠️ <strong>Aviso importante:</strong> Las evaluaciones proporcionadas a través de este servicio son estrictamente informativas y educativas por naturaleza. No constituyen diagnóstico médico, receta o recomendación profesional de tratamiento. Para cualquier procedimiento estético, consulte siempre a un profesional calificado y licenciado en persona.',
-    'contact.label':'Contacto','contact.title':'Contáctenos','contact.name':'Nombre Completo','contact.name.ph':'Tu nombre completo','contact.email':'Correo Electrónico','contact.subject':'Asunto','contact.select':'Selecciona un tema...','contact.opt1':'Pregunta sobre planes','contact.opt2':'Problema de pago','contact.opt3':'Estado del pedido','contact.opt4':'Otro','contact.msg':'Mensaje','contact.msg.ph':'¿Cómo podemos ayudarte?','contact.send':'Enviar Mensaje','contact.success':'¡Mensaje enviado!','contact.success2':'Te responderemos en 24 horas.','contact.wa':'WhatsApp: <a href="#">Contacto vía Instagram</a>',
-    'quiz.lead.title':'¿A dónde enviamos tu resultado?','quiz.lead.sub':'Ingresa tus datos para recibir tu análisis personalizado de la Dra. Carol Mafra.','quiz.lead.name':'Tu nombre completo','quiz.lead.wa':'WhatsApp con código de área','quiz.lead.btn':'Iniciar Evaluación',
+    'hero.phrase':'La belleza más hermosa es la que <em>sigue pareciendo tuya.</em>',
+    'hero.sub':'Elige por dónde quieres comenzar tu jornada.',
+    'hero.btn.labios':'🩷 Descubrir si el relleno me queda bien',
+    'hero.btn.skincare':'✨ Descubrir la rutina ideal para mi piel',
+    'about.label':'Quién analizará tu rostro',
+    'about.p1':'La Dra. Ana Carolina Sousa Mafra es especialista en Armonización Orofacial por el CETRO Belo Horizonte, con formación avanzada en relleno con ácido hialurónico, toxina botulínica, rinomodelación, relleno labial, Full Face, intradermoterapia y microagujamiento. Graduada en Odontología por la Rede Unidoctum Teófilo Otoni.',
+    'about.p2':'Lo que distingue a la Dra. Carol no es solo la técnica — es la mirada. Ella ve el rostro como un todo, respeta la identidad de cada paciente y crea orientaciones que realzan la belleza natural sin borrar quién es la persona.',
+    'about.stat1':'Pacientes Atendidos en Diversos Procedimientos','about.stat2':'Calificación Promedio','about.stat3':'Especialista Certificada',
+    'about.btn':'Quiero Mi Orientación Personalizada',
+    'test.label':'Resultados reales','test.title':'Antes y Después','test.sub':'Algunos de los posts realizados por la Dra. Carol Mafra en su instagram',
     'insta.label':'Sigue a la Dra. Carol Mafra','insta.title':'@dra.carolmafra en Instagram','insta.follow':'Seguir en Instagram',
-    'footer.terms':'Términos de Servicio','footer.privacy':'Política de Privacidad','footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Armonización Orofacial · Todos los derechos reservados','footer.disc':'Este servicio es informativo y educativo por naturaleza. No constituye consejo médico, diagnóstico o tratamiento. En cumplimiento con GDPR y las leyes de protección al consumidor aplicables.',
-    'quiz.timer':'⏱ ~60 segundos','quiz.steplabel':'Pregunta {n} de {t}','quiz.result.label':'Resultado',
-    'quiz.q1':'¿Alguna vez has pensado en hacerte relleno labial?',
-    'quiz.q1.a':'Nunca lo he pensado','quiz.q1.b':'Tengo curiosidad, pero nunca lo investigué','quiz.q1.c':'Ya lo he investigado bastante','quiz.q1.d':'Ya lo hice y quiero refinar el resultado',
-    'quiz.q2':'¿Qué es lo que más te molesta de tus labios?',
-    'quiz.q2.a':'Son finos o asimétricos','quiz.q2.b':'He perdido volumen con el tiempo','quiz.q2.c':'Siento que no combinan con mi rostro','quiz.q2.d':'Nada — solo quiero entender mejor',
-    'quiz.q3':'¿Prefieres un resultado discreto o más voluminoso?',
-    'quiz.q3.a':'Discreto y natural','quiz.q3.b':'Un poco más lleno','quiz.q3.c':'Más voluminoso y definido','quiz.q3.d':'Todavía no lo sé',
-    'quiz.q4':'¿Ya te has realizado algún procedimiento estético?',
-    'quiz.q4.a':'Nunca me he hecho nada','quiz.q4.b':'Sí, pero diferente al relleno labial','quiz.q4.c':'Sí, ya me he hecho relleno labial antes',
-    'quiz.q5':'¿Tu mayor miedo es perder la naturalidad?',
-    'quiz.q5.a':'Sí, ese es mi mayor miedo','quiz.q5.b':'Tengo algo de miedo','quiz.q5.c':'No, confío en una especialista',
-    'quiz.q6':'¿Crees que tus labios están en armonía con tu rostro?',
-    'quiz.q6.a':'No, siento que están fuera de proporción','quiz.q6.b':'Tal vez, pero no estoy segura','quiz.q6.c':'Sí, pero quiero mejorarlos',
-    'quiz.result.title':'Tu rostro tiene características específicas que influyen directamente en cualquier resultado de relleno.',
-    'quiz.result.desc':'Con base en tus respuestas, identificamos rasgos de tu rostro que marcan toda la diferencia en el resultado final. Para saber exactamente qué significa esto para TU rostro, la Dra. Carol Mafra necesita analizar tus fotos personalmente.',
-    'quiz.cta':'Quiero Saber Qué Significa Esto para Mí →',
-    'quiz.proof2':'✦ Más de 500 perfiles analizados con experiencia clínica especializada',
-    'quiz.seeall':'Ver planes y precios',
-    'quiz.upload.title':'La Dra. Carol ya tiene tu perfil. Ahora necesita ver tu rostro.',
-    'quiz.upload.sub':'Envía 4 fotos siguiendo las indicaciones abajo. Cuanto más natural, más preciso será tu análisis.',
-    'quiz.photo.front':'Frente','quiz.photo.right':'Perfil Derecho','quiz.photo.left':'Perfil Izquierdo','quiz.photo.smile':'Sonriendo',
-    'quiz.upload.btn':'Enviar Fotos','quiz.upload.hint':'Sin filtros · Buena iluminación · Expresión neutra',
-    'quiz.plans.received':'✅ La Dra. Carol Mafra ya recibió tus imágenes.',
-    'quiz.plans.title':'¿Cómo deseas recibir tu análisis?','quiz.plans.label':'Tu Análisis',
-    'quiz.plan1.name':'Informe Labial','quiz.plan1.desc':'Ideal para quienes quieren entender exclusivamente sus labios.',
-    'quiz.plan2.name':'Informe Completo','quiz.plan2.desc':'Entiende cómo todo tu rostro influye en el resultado.',
-    'quiz.plan3.name':'Experiencia Premium','quiz.plan3.desc':'Recibe tu análisis y habla en vivo con la Dra. Carol Mafra.',
-    'quiz.plan.badge':'Más elegido',
-    'hero.availability':'Quedan <span>{v}</span> plazas para análisis esta semana',
-    'quiz.countdown.label':'⟡ Plaza pre-reservada por:',
-    'quiz.vagas.suffix':'plazas disponibles para análisis hoy',
-    'quiz.plan3.scarcity':'⟡ Sesiones en vivo con plazas limitadas por semana',
-    'quiz.redir.1':'🔒 Reservando tu plaza...','quiz.redir.2':'✓ Plaza confirmada',
-    'quiz.redir.2pos':'✓ Plaza confirmada — Posición en la cola: #{p}',
-    'quiz.redir.3':'📋 Preparando acceso seguro...'
+    'footer.labios':'Análisis Labial',
+    'explore.label':'Explorar',
+    'explore.labios.title':'Análisis Labial','explore.labios.sub':'Descubre qué combina con tu rostro antes de cualquier decisión.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Resultados reales, posts educativos y el día a día de la Dra. Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Próximamente. Cuidado de la piel con la misma mirada especializada.',
+    'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Armonización Orofacial · Todos los derechos reservados',
+    'footer.disc':'Este servicio es informativo y educativo por naturaleza. No constituye asesoramiento médico, diagnóstico ni tratamiento. De conformidad con el RGPD, LGPD y las leyes de protección al consumidor aplicables.'
   },
   fr: {
-    'nav.works':'Comment ça marche','nav.plans':'Formules','nav.about':'À propos','nav.cta':'Découvrir Mon Résultat',
+    'nav.about':'À propos','nav.insta':'Instagram','nav.labios':'Analyse Labiale',
     'hero.eyebrow':'Dr. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonisation Orofaciale — Spécialiste en Filler Labial</span>',
-    'hero.title':'Le Filler Labial Est-il Vraiment Fait Pour Vous ?',
-    'hero.authority':'✦ Méthode de la Dr. Carol Mafra · Spécialiste en résultats naturels en HOF',
-    'hero.sub':'Découvrez si le filler labial vous correspond vraiment — et ce que vous devez savoir avant toute décision. Le test dure moins de 60 secondes.',
-    'hero.btn1':'Je Veux Découvrir Maintenant →','hero.scroll':'Défiler',
-    'hero.btn.labios':'🩷 Découvrir si le filler me convient',
+    'hero.phrase':'La plus belle beauté est celle qui <em>reste la vôtre.</em>',
+    'hero.sub':'Choisissez par où vous souhaitez commencer votre parcours.',
+    'hero.btn.labios':'🩷 Découvrir si le filler me correspond',
     'hero.btn.skincare':'✨ Découvrir ma routine idéale pour la peau',
-    'hero.proof':'⏱ ~60 secondes · 🔒 Sans engagement · ✨ Résultat personnalisé',
-    'ben.title':'Avant toute décision concernant vos lèvres, il y a une question qui change tout',
-    'ben.1.title':'La clarté avant de choisir','ben.1.desc':'Les femmes qui comprennent ce qui convient à leur visage arrivent à n\'importe quel soin avec beaucoup plus de confiance, de certitude et de satisfaction. C\'est l\'étape que la plupart sautent.',
-    'ben.2.title':'La tranquillité de savoir ce qui vous convient','ben.2.desc':'Avec les bonnes informations sur votre visage, toute conversation avec un professionnel devient plus fluide, les décisions sont plus claires — et le résultat final est plus prévisible.',
-    'ben.3.title':'Une perspective unique, créée rien que pour votre visage','ben.3.desc':'La Dr. Carol Mafra analyse personnellement chaque cas, en respectant les proportions uniques de qui vous êtes. L\'orientation est créée exclusivement pour vos caractéristiques faciales.',
-    'ben.4.title':'Vous décidez combien vous voulez savoir','ben.4.desc':'Orientation centrée sur les lèvres, analyse faciale complète ou séance en direct avec la Dr. Carol. Chaque niveau a été conçu pour vous donner plus de clarté avant toute décision esthétique.',
-    'how.label':'Le processus','how.title':'Comment ça marche',
-    'how.1.title':'Répondez au test','how.1.desc':'6 questions rapides sur votre visage et vos objectifs. Gratuit, dure moins de 60 secondes, sans engagement.',
-    'how.2.title':'Choisissez votre orientation','how.2.desc':'Si vous souhaitez aller plus loin, choisissez le niveau d\'analyse qui vous convient. Paiement sécurisé et instantané.',
-    'how.3.title':'Envoyez vos photos','how.3.desc':'3 photos simples (face et profils) en suivant notre guide visuel étape par étape. Sans filtres, sans secrets.',
-    'how.4.title':'La Dr. Carol analyse votre visage','how.4.desc':'Avec un œil clinique et une perception esthétique affinée, elle consacre une attention exclusive à vos caractéristiques uniques.',
-    'how.5.title':'Recevez votre orientation','how.5.desc':'En jusqu\'à 3 jours ouvrables, vous recevez un rapport esthétique personnalisé à des fins éducatives — créé rien que pour vous.',
-    'plans.label':'Choisissez votre niveau de clarté','plans.title':'Combien voulez-vous en savoir sur votre visage ?','plans.sub':'Pas d\'abonnements. Pas de frais cachés. Une orientation esthétique qui peut changer votre façon de prendre des décisions.',
-    'plans.period':'paiement unique','plans.btn':'Je Veux Cette Orientation','plans.popular':'Le plus choisi',
-    'plan1.name':'Orientation Labiale',
-    'plan1.f1':'Ce qui favorise vraiment vos lèvres','plan1.f2':'Proportion et symétrie de votre visage','plan1.f3':'Ce qui peut sublimer votre beauté naturelle','plan1.f4':'Rapport esthétique personnalisé (fins éducatives)','plan1.f5':'Livré en jusqu\'à 3 jours ouvrables','plan1.f6':'Analyse faciale complète','plan1.f7':'Consultation vidéo',
-    'plan2.name':'Orientation Faciale Complète',
-    'plan2.f1':'Vue complète de l\'harmonie de votre visage','plan2.f2':'Toutes les zones faciales analysées avec attention','plan2.f3':'La carte de vos proportions uniques','plan2.f4':'Ce que chaque trait de votre visage communique','plan2.f5':'Rapport esthétique avec diagrammes visuels','plan2.f6':'Livré en jusqu\'à 3 jours ouvrables','plan2.f7':'Consultation vidéo',
-    'plan3.name':'Expérience Premium',
-    'plan3.f1':'Tout de l\'Orientation Faciale Complète','plan3.f2':'Vidéo explicative personnalisée par la Dr. Carol','plan3.f3':'Séance en direct pour répondre à toutes vos questions','plan3.f4':'Guide esthétique créé pour votre visage','plan3.f5':'Livraison prioritaire en jusqu\'à 3 jours ouvrables','plan3.f6':'7 jours de support après l\'orientation','plan3.f7':'Une révision gratuite incluse',
-    'guar.title':'Garantie Remboursement 7 Jours','guar.desc':'Si vous n\'avez pas encore soumis vos photos, vous avez droit à un remboursement intégral dans les 7 jours suivant l\'achat — sans conditions.',
-    'trust.secure':'Paiement Sécurisé',
-    'about.label':'Qui va analyser votre visage','about.p1':'Diplômée en Chirurgie Dentaire de la Rede Unidoctum Teófilo Otoni, la Dr. Ana Carolina Sousa Mafra est spécialiste en Harmonisation Orofaciale par le CETRO Belo Horizonte, avec une formation avancée en comblement à l\'acide hyaluronique, toxine botulique, rhinomodélation, augmentation des lèvres, Full Face, intradermothérapie, lipolyse faciale et sous-mentale et microneedling.','about.p2':'Ce qui distingue la Dr. Carol n\'est pas seulement la technique — c\'est le regard. Elle voit le visage dans son ensemble, respecte l\'identité de chaque patiente et crée des orientations qui subliment la beauté naturelle sans effacer qui est la personne.','about.stat1':'Patients Suivis en Divers Actes','about.stat2':'Note Moyenne','about.stat3':'Spécialiste Certifiée','about.btn':'Je Veux Mon Orientation Personnalisée',
-    'test.label':'Résultats réels','test.title':'Avant & Après','test.sub':'Quelques posts de la Dr. Carol Mafra sur son instagram','test.before':'Avant','test.after':'Après',
-    'test.1.text':'"J\'ai fait l\'évaluation faciale complète et c\'était incroyable. La Dr. Carol a expliqué chaque détail de mon visage d\'une manière que je n\'avais jamais envisagée. Les recommandations étaient parfaites et m\'ont aidée à prendre des décisions confiantes."','test.1.author':'Fernanda R. — São Paulo, Brésil',
-    'test.2.text':'"Ça valait chaque centime et bien plus encore. Le PDF contenait des diagrammes détaillés montrant exactement ce qu\'elle a analysé. Je me suis enfin sentie confiante pour aller chez un professionnel local."','test.2.author':'Juliana M. — Miami, FL',
-    'test.3.text':'"Le plan premium avec consultation vidéo a tout changé. La Dr. Carol est incroyablement attentionnée et professionnelle. Je l\'ai déjà recommandée à trois amies — et elles ont toutes adoré."','test.3.author':'Camila T. — Los Angeles, CA',
-    'faq.label':'Questions','faq.title':'Questions fréquentes',
-    'faq.1.q':'Quel type de photos dois-je envoyer ?','faq.1.a':'Vous aurez besoin de 3 photos : une de face, une de profil gauche et une de profil droit. Les photos doivent être prises avec un bon éclairage naturel, sans filtres, avec un visage propre et les cheveux attachés. Les instructions détaillées vous sont envoyées par e-mail immédiatement après l\'achat.',
-    'faq.2.q':'Combien de temps faut-il pour recevoir mon évaluation ?','faq.2.a':'La livraison standard est dans les 3 jours ouvrables après réception et approbation de vos photos. Le plan Premium inclut un traitement prioritaire avec livraison en 3 jours ouvrables.',
-    'faq.3.q':'Cela remplace-t-il une consultation en personne ?','faq.3.a':'Non. Il s\'agit d\'un service informatif et éducatif. Il ne constitue pas un diagnostic médical, une ordonnance ou un plan de traitement. Pour toute procédure, consultez toujours un professionnel qualifié en personne.',
-    'faq.4.q':'Quels modes de paiement sont acceptés ?','faq.4.a':'Nous acceptons toutes les principales cartes de crédit et de débit via Stripe, PayPal, Apple Pay et Google Pay. Tous les paiements sont traités de manière sécurisée avec cryptage SSL.',
-    'faq.5.q':'Mes photos et données personnelles sont-elles en sécurité ?','faq.5.a':'Absolument. Vos photos et informations personnelles sont traitées avec une stricte confidentialité, conformément au RGPD. Vos images sont utilisées exclusivement pour préparer votre analyse et ne sont jamais partagées avec des tiers.',
-    'faq.6.q':'Puis-je obtenir un remboursement ?','faq.6.a':'Oui. Si vous n\'avez pas encore soumis vos photos, vous avez droit à un remboursement intégral dans les 7 jours suivant l\'achat — sans conditions. Une fois la soumission des photos et l\'analyse commencées, les remboursements ne sont plus disponibles.',
-    'faq.7.q':'Que faire si j\'ai des questions après avoir reçu mon rapport ?','faq.7.a':'Les clients du plan Premium bénéficient de 7 jours de support post-analyse et d\'une révision gratuite. Pour les autres plans, vous pouvez toujours nous contacter via le formulaire ci-dessous.',
-    'cta.label':'Avant toute décision','cta.title':'Vous méritez d\'arriver au soin en sachant exactement à quoi vous attendre.','cta.sub':'Des centaines de femmes ont déjà fait cette découverte. Elles ont répondu au test, compris leur visage — et sont arrivées au soin avec beaucoup plus de confiance, de clarté et de certitude sur le résultat.','cta.btn':'Je Veux Savoir Ce Qui Me Convient →',
-    'disclaimer.text':'⚠️ <strong>Avis important :</strong> Les évaluations fournies via ce service sont strictement informatives et éducatives. Elles ne constituent pas un diagnostic médical, une ordonnance ou une recommandation de traitement professionnel. Pour tout procédure esthétique, consultez toujours un professionnel qualifié et agréé en personne.',
-    'contact.label':'Nous contacter','contact.title':'Contactez-nous','contact.name':'Nom Complet','contact.name.ph':'Votre nom complet','contact.email':'Adresse E-mail','contact.subject':'Sujet','contact.select':'Sélectionnez un sujet...','contact.opt1':'Question sur les formules','contact.opt2':'Problème de paiement','contact.opt3':'Statut de commande','contact.opt4':'Autre','contact.msg':'Message','contact.msg.ph':'Comment pouvons-nous vous aider ?','contact.send':'Envoyer','contact.success':'Message envoyé !','contact.success2':'Nous vous répondrons dans les 24 heures.','contact.wa':'WhatsApp: <a href="#">Contact via Instagram</a>',
-    'quiz.lead.title':'Où envoyons-nous votre résultat ?','quiz.lead.sub':'Entrez vos coordonnées pour recevoir votre analyse personnalisée de la Dr. Carol Mafra.','quiz.lead.name':'Votre nom complet','quiz.lead.wa':'WhatsApp avec indicatif','quiz.lead.btn':'Commencer l\'évaluation',
+    'about.label':'Qui analysera votre visage',
+    'about.p1':'Diplômée en Chirurgie Dentaire de la Rede Unidoctum Teófilo Otoni, la Dr. Ana Carolina Sousa Mafra est spécialiste en Harmonisation Orofaciale par le CETRO Belo Horizonte, avec une formation avancée en comblement à l\'acide hyaluronique, toxine botulique, rhinomodélation, augmentation des lèvres, Full Face, intradermothérapie et microneedling.',
+    'about.p2':'Ce qui distingue la Dr. Carol n\'est pas seulement la technique — c\'est le regard. Elle voit le visage dans son ensemble, respecte l\'identité de chaque patiente et crée des orientations qui subliment la beauté naturelle sans effacer qui est la personne.',
+    'about.stat1':'Patients Suivis en Divers Actes','about.stat2':'Note Moyenne','about.stat3':'Spécialiste Certifiée',
+    'about.btn':'Je Veux Mon Orientation Personnalisée',
+    'test.label':'Résultats réels','test.title':'Avant & Après','test.sub':'Quelques posts de la Dr. Carol Mafra sur son instagram',
     'insta.label':'Suivez la Dr. Carol Mafra','insta.title':'@dra.carolmafra sur Instagram','insta.follow':'Suivre sur Instagram',
-    'footer.terms':'Conditions d\'utilisation','footer.privacy':'Politique de confidentialité','footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonisation Orofaciale · Tous droits réservés','footer.disc':'Ce service est informatif et éducatif par nature. Il ne constitue pas un avis médical, un diagnostic ou un traitement. Conformément au RGPD et aux lois applicables de protection des consommateurs.',
-    'quiz.timer':'⏱ ~60 secondes','quiz.steplabel':'Question {n} sur {t}','quiz.result.label':'Résultat',
-    'quiz.q1':'Avez-vous déjà pensé à faire des injections labiales ?',
-    'quiz.q1.a':'Je n\'y ai jamais pensé','quiz.q1.b':'J\'ai de la curiosité mais je n\'ai jamais recherché','quiz.q1.c':'J\'ai déjà beaucoup recherché','quiz.q1.d':'Je l\'ai déjà fait et je veux affiner le résultat',
-    'quiz.q2':'Qu\'est-ce qui vous dérange le plus dans vos lèvres ?',
-    'quiz.q2.a':'Elles sont fines ou asymétriques','quiz.q2.b':'J\'ai perdu du volume avec le temps','quiz.q2.c':'Je sens qu\'elles ne vont pas avec mon visage','quiz.q2.d':'Rien — je veux juste mieux comprendre',
-    'quiz.q3':'Préférez-vous un résultat discret ou plus volumineux ?',
-    'quiz.q3.a':'Discret et naturel','quiz.q3.b':'Un peu plus plein','quiz.q3.c':'Plus volumineux et défini','quiz.q3.d':'Je ne sais pas encore',
-    'quiz.q4':'Avez-vous déjà eu un soin esthétique ?',
-    'quiz.q4.a':'Je n\'ai jamais rien fait','quiz.q4.b':'Oui, mais différent des injections labiales','quiz.q4.c':'Oui, j\'ai déjà eu des injections labiales',
-    'quiz.q5':'Votre plus grande crainte est-elle de perdre le naturel ?',
-    'quiz.q5.a':'Oui, c\'est ma plus grande peur','quiz.q5.b':'J\'ai un peu de crainte','quiz.q5.c':'Non, je fais confiance à une spécialiste',
-    'quiz.q6':'Pensez-vous que vos lèvres sont en harmonie avec votre visage ?',
-    'quiz.q6.a':'Non, je sens qu\'elles sont disproportionnées','quiz.q6.b':'Peut-être, mais je n\'en suis pas sûre','quiz.q6.c':'Oui, mais je veux les améliorer',
-    'quiz.result.title':'Votre visage a des caractéristiques spécifiques qui influencent directement tout résultat de filler.',
-    'quiz.result.desc':'D\'après vos réponses, nous avons identifié des points spécifiques de votre visage qui influencent directement un résultat de filler labial. Pour découvrir exactement ce que cela signifie pour VOTRE visage, la Dr. Carol Mafra doit analyser vos photos personnellement.',
-    'quiz.cta':'Je Veux Découvrir Ce Que Cela Signifie pour Moi',
-    'quiz.proof2':'✦ Plus de 500 profils analysés avec une expertise clinique spécialisée',
-    'quiz.seeall':'Voir les formules et tarifs',
-    'quiz.upload.title':'La Dr. Carol a déjà votre profil. Maintenant elle a besoin de voir votre visage.',
-    'quiz.upload.sub':'Envoyez 4 photos en suivant les instructions ci-dessous. Plus c\'est naturel, plus votre analyse sera précise.',
-    'quiz.photo.front':'Face','quiz.photo.right':'Profil Droit','quiz.photo.left':'Profil Gauche','quiz.photo.smile':'En souriant',
-    'quiz.upload.btn':'Envoyer les photos','quiz.upload.hint':'Sans filtres · Bonne lumière · Expression neutre',
-    'quiz.plans.received':'✅ La Dr. Carol Mafra a déjà reçu vos images.',
-    'quiz.plans.title':'Comment souhaitez-vous recevoir votre analyse ?','quiz.plans.label':'Votre Analyse',
-    'quiz.plan1.name':'Rapport Labial','quiz.plan1.desc':'Idéal pour celles qui veulent comprendre exclusivement leurs lèvres.',
-    'quiz.plan2.name':'Rapport Complet','quiz.plan2.desc':'Comprenez comment l\'ensemble de votre visage influence le résultat.',
-    'quiz.plan3.name':'Expérience Premium','quiz.plan3.desc':'Recevez votre analyse et parlez en direct avec la Dr. Carol Mafra.',
-    'quiz.plan.badge':'Le plus choisi',
-    'hero.availability':'<span>{v}</span> places restantes pour analyse cette semaine',
-    'quiz.countdown.label':'⟡ Place pré-réservée pendant :',
-    'quiz.vagas.suffix':'places disponibles pour analyse aujourd\'hui',
-    'quiz.plan3.scarcity':'⟡ Séances en direct avec disponibilité limitée par semaine',
-    'quiz.redir.1':'🔒 Réservation de votre place...','quiz.redir.2':'✓ Place confirmée',
-    'quiz.redir.2pos':'✓ Place confirmée — Position dans la file : #{p}',
-    'quiz.redir.3':'📋 Préparation de l\'accès sécurisé...'
+    'footer.labios':'Analyse Labiale',
+    'explore.label':'Explorer',
+    'explore.labios.title':'Analyse Labiale','explore.labios.sub':'Découvrez ce qui convient à votre visage avant toute décision.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Résultats réels, posts éducatifs et le quotidien de la Dr. Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Bientôt. Soins de la peau avec le même regard spécialisé.',
+    'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonisation Orofaciale · Tous droits réservés',
+    'footer.disc':'Ce service est informatif et éducatif par nature. Il ne constitue pas un avis médical, un diagnostic ou un traitement. Conformément au RGPD, à la LGPD et aux lois applicables de protection des consommateurs.'
   },
   it: {
-    'nav.works':'Come Funziona','nav.plans':'Piani','nav.about':'Chi sono','nav.cta':'Scoprire Il Mio Risultato',
+    'nav.about':'Chi sono','nav.insta':'Instagram','nav.labios':'Analisi Labiale',
     'hero.eyebrow':'Dr.ssa Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Armonizzazione Orofacciale — Specialista in Filler Labiale</span>',
-    'hero.title':'Il Filler Labiale È Davvero Adatto a Te?',
-    'hero.authority':'✦ Metodo della Dr.ssa Carol Mafra · Specialista in risultati naturali in HOF',
-    'hero.sub':'Scopri se il filler labiale è davvero adatto al tuo viso — e cosa devi sapere prima di qualsiasi decisione. Il test richiede meno di 60 secondi.',
-    'hero.btn1':'Voglio Scoprire Adesso →','hero.scroll':'Scorri',
-    'hero.btn.labios':'🩷 Scoprire se il filler mi si addice',
-    'hero.btn.skincare':'✨ Scoprire la mia routine ideale per la pelle',
-    'hero.proof':'⏱ ~60 secondi · 🔒 Senza impegno · ✨ Risultato personalizzato',
-    'ben.title':'Prima di qualsiasi decisione sulle tue labbra, c\'è una domanda che cambia tutto',
-    'ben.1.title':'Chiarezza prima di scegliere','ben.1.desc':'Le donne che capiscono cosa valorizza il loro viso arrivano a qualsiasi procedura con molta più sicurezza, certezza e soddisfazione. Questo è il passo che la maggior parte salta.',
-    'ben.2.title':'La serenità di sapere cosa è giusto per te','ben.2.desc':'Con le giuste informazioni sul tuo viso, qualsiasi conversazione con un professionista scorre meglio, le decisioni sono più chiare — e il risultato finale è più prevedibile.',
-    'ben.3.title':'Una prospettiva unica, creata solo per il tuo viso','ben.3.desc':'La Dr.ssa Carol Mafra analizza personalmente ogni caso, rispettando le proporzioni uniche di chi sei. L\'orientamento è creato esclusivamente per le tue caratteristiche facciali.',
-    'ben.4.title':'Decidi tu quanto vuoi sapere','ben.4.desc':'Orientamento focalizzato sulle labbra, analisi facciale completa o sessione dal vivo con la Dr.ssa Carol. Ogni livello è stato progettato per darti più chiarezza prima di qualsiasi decisione estetica.',
-    'how.label':'Il processo','how.title':'Come funziona',
-    'how.1.title':'Rispondi al test','how.1.desc':'6 domande rapide sul tuo viso e i tuoi obiettivi. Gratuito, richiede meno di 60 secondi, senza impegno.',
-    'how.2.title':'Scegli il tuo orientamento','how.2.desc':'Se vuoi andare oltre, scegli il livello di analisi che ha senso per te. Pagamento sicuro e istantaneo.',
-    'how.3.title':'Invia le tue foto','how.3.desc':'3 foto semplici (fronte e profili) seguendo la nostra guida visiva passo passo. Senza filtri, senza segreti.',
-    'how.4.title':'La Dr.ssa Carol analizza il tuo viso','how.4.desc':'Con occhio clinico e percezione estetica raffinata, dedica attenzione esclusiva alle tue caratteristiche uniche.',
-    'how.5.title':'Ricevi il tuo orientamento','how.5.desc':'Entro 3 giorni lavorativi, ricevi un report estetico personalizzato a fini educativi — creato solo per te.',
-    'plans.label':'Scegli il tuo livello di chiarezza','plans.title':'Quanto vuoi sapere del tuo viso?','plans.sub':'Nessun abbonamento. Nessuna tariffa nascosta. Un orientamento estetico che può cambiare il modo in cui prendi le decisioni.',
-    'plans.period':'pagamento unico','plans.btn':'Voglio Questo Orientamento','plans.popular':'Più scelto',
-    'plan1.name':'Orientamento Labiale',
-    'plan1.f1':'Ciò che favorisce davvero le tue labbra','plan1.f2':'Proporzione e simmetria del tuo viso','plan1.f3':'Ciò che può esaltare la tua bellezza naturale','plan1.f4':'Report estetico personalizzato (fini educativi)','plan1.f5':'Consegnato entro 3 giorni lavorativi','plan1.f6':'Analisi facciale completa','plan1.f7':'Consulenza video',
-    'plan2.name':'Orientamento Facciale Completo',
-    'plan2.f1':'Visione completa dell\'armonia del tuo viso','plan2.f2':'Tutte le zone facciali analizzate con attenzione','plan2.f3':'La mappa delle tue proporzioni uniche','plan2.f4':'Ciò che ogni caratteristica del tuo viso comunica','plan2.f5':'Report estetico con diagrammi visivi','plan2.f6':'Consegnato entro 3 giorni lavorativi','plan2.f7':'Consulenza video',
-    'plan3.name':'Esperienza Premium',
-    'plan3.f1':'Tutto dell\'Orientamento Facciale Completo','plan3.f2':'Video esplicativo personalizzato dalla Dr.ssa Carol','plan3.f3':'Sessione dal vivo per rispondere a tutte le tue domande','plan3.f4':'Guida estetica creata per il tuo viso','plan3.f5':'Consegna prioritaria entro 3 giorni lavorativi','plan3.f6':'7 giorni di supporto dopo l\'orientamento','plan3.f7':'Una revisione gratuita inclusa',
-    'guar.title':'Garanzia di Rimborso 7 Giorni','guar.desc':'Se non hai ancora inviato le tue foto, hai diritto a un rimborso completo entro 7 giorni dall\'acquisto — senza domande.',
-    'trust.secure':'Pagamento Sicuro',
-    'about.label':'Chi analizzerà il tuo viso','about.p1':'Laureata in Odontoiatria presso la Rede Unidoctum Teófilo Otoni, la Dr.ssa Ana Carolina Sousa Mafra è specialista in Armonizzazione Orofacciale presso il CETRO Belo Horizonte, con formazione avanzata in filler con acido ialuronico, tossina botulinica, rinomodellazione, filler labiale, Full Face, intradermoterapia, lipolisi facciale e sottomentoniera e microneedling.','about.p2':'Ciò che distingue la Dr.ssa Carol non è solo la tecnica — è lo sguardo. Vede il viso come un insieme, rispetta l\'identità di ogni paziente e crea orientamenti che esaltano la bellezza naturale senza cancellare chi è la persona.','about.stat1':'Pazienti Trattati in Diverse Procedure','about.stat2':'Valutazione Media','about.stat3':'Specialista Certificata','about.btn':'Voglio Il Mio Orientamento Personalizzato',
-    'test.label':'Risultati reali','test.title':'Prima e Dopo','test.sub':'Alcuni dei post della Dr.ssa Carol Mafra sul suo instagram','test.before':'Prima','test.after':'Dopo',
-    'test.1.text':'"Ho fatto la valutazione facciale completa ed è stata incredibile. La Dr.ssa Carol ha spiegato ogni dettaglio del mio viso in un modo che non avevo mai considerato. Le raccomandazioni erano perfette e mi hanno aiutata a prendere decisioni sicure."','test.1.author':'Fernanda R. — São Paulo, Brasile',
-    'test.2.text':'"Valeva ogni centesimo e molto di più. Il PDF includeva diagrammi dettagliati che mostravano esattamente cosa aveva analizzato. Mi sono finalmente sentita sicura di andare da un professionista locale."','test.2.author':'Juliana M. — Miami, FL',
-    'test.3.text':'"Il piano premium con consulenza video ha cambiato tutto. La Dr.ssa Carol è incredibilmente attenta e professionale. L\'ho già raccomandata a tre amiche — e tutte hanno adorato l\'esperienza."','test.3.author':'Camila T. — Los Angeles, CA',
-    'faq.label':'Domande','faq.title':'Domande frequenti',
-    'faq.1.q':'Che tipo di foto devo inviare?','faq.1.a':'Avrai bisogno di 3 foto: una frontale, una di profilo sinistro e una di profilo destro. Le foto devono essere scattate con buona luce naturale, senza filtri, con il viso pulito e i capelli raccolti. Le istruzioni dettagliate vengono inviate alla tua email immediatamente dopo l\'acquisto.',
-    'faq.2.q':'Quanto tempo ci vuole per ricevere la mia valutazione?','faq.2.a':'La consegna standard è entro 3 giorni lavorativi dopo aver ricevuto e approvato le tue foto. Il piano Premium include l\'elaborazione prioritaria con consegna entro 3 giorni lavorativi.',
-    'faq.3.q':'Questo sostituisce una consulenza di persona?','faq.3.a':'No. Questo è un servizio informativo ed educativo. Non costituisce una diagnosi medica, prescrizione o piano di trattamento. Per qualsiasi procedura, consulta sempre un professionista qualificato di persona.',
-    'faq.4.q':'Quali metodi di pagamento sono accettati?','faq.4.a':'Accettiamo tutte le principali carte di credito e debito tramite Stripe, PayPal, Apple Pay e Google Pay. Tutti i pagamenti sono elaborati in modo sicuro con crittografia SSL.',
-    'faq.5.q':'Le mie foto e dati personali sono al sicuro?','faq.5.a':'Assolutamente. Le tue foto e informazioni personali sono gestite con rigorosa riservatezza, in conformità con il GDPR. Le tue immagini sono utilizzate esclusivamente per preparare la tua analisi e non vengono mai condivise con terze parti.',
-    'faq.6.q':'Posso ottenere un rimborso?','faq.6.a':'Sì. Se non hai ancora inviato le tue foto, hai diritto a un rimborso completo entro 7 giorni dall\'acquisto — senza domande. Una volta iniziato l\'invio delle foto e l\'analisi, i rimborsi non sono più disponibili.',
-    'faq.7.q':'Cosa succede se ho domande dopo aver ricevuto il mio report?','faq.7.a':'I clienti del piano Premium ricevono 7 giorni di supporto post-analisi e una revisione gratuita. Per altri piani, puoi sempre contattarci tramite il modulo di contatto qui sotto.',
-    'cta.label':'Prima di qualsiasi decisione','cta.title':'Meriti di arrivare alla procedura sapendo esattamente cosa aspettarti.','cta.sub':'Centinaia di donne hanno già fatto questa scoperta. Hanno risposto al test, capito il loro viso — e sono arrivate alla procedura con molta più sicurezza, chiarezza e certezza sul risultato.','cta.btn':'Voglio Sapere Cosa Mi Si Addice →',
-    'disclaimer.text':'⚠️ <strong>Avviso importante:</strong> Le valutazioni fornite tramite questo servizio sono strettamente informative ed educative per natura. Non costituiscono una diagnosi medica, prescrizione o raccomandazione professionale di trattamento. Per qualsiasi procedura estetica, consulta sempre un professionista qualificato e abilitato di persona.',
-    'contact.label':'Contattaci','contact.title':'Contattaci','contact.name':'Nome Completo','contact.name.ph':'Il tuo nome completo','contact.email':'Indirizzo Email','contact.subject':'Oggetto','contact.select':'Seleziona un argomento...','contact.opt1':'Domanda sui piani','contact.opt2':'Problema di pagamento','contact.opt3':'Stato dell\'ordine','contact.opt4':'Altro','contact.msg':'Messaggio','contact.msg.ph':'Come possiamo aiutarti?','contact.send':'Invia Messaggio','contact.success':'Messaggio inviato!','contact.success2':'Ti risponderemo entro 24 ore.','contact.wa':'WhatsApp: <a href="#">Contatto via Instagram</a>',
-    'quiz.lead.title':'Dove inviamo il tuo risultato?','quiz.lead.sub':'Inserisci i tuoi dati per ricevere la tua analisi personalizzata dalla Dr.ssa Carol Mafra.','quiz.lead.name':'Il tuo nome completo','quiz.lead.wa':'WhatsApp con prefisso','quiz.lead.btn':'Inizia la valutazione',
+    'hero.phrase':'La bellezza più bella è quella che <em>continua a sembrare tua.</em>',
+    'hero.sub':'Scegli da dove vuoi iniziare il tuo percorso.',
+    'hero.btn.labios':'🩷 Scoprire se il filler fa per me',
+    'hero.btn.skincare':'✨ Scoprire la routine ideale per la mia pelle',
+    'about.label':'Chi analizzerà il tuo viso',
+    'about.p1':'Laureata in Odontoiatria presso la Rede Unidoctum Teófilo Otoni, la Dr.ssa Ana Carolina Sousa Mafra è specialista in Armonizzazione Orofacciale presso il CETRO Belo Horizonte, con formazione avanzata in filler con acido ialuronico, tossina botulinica, rinomodellazione, filler labiale, Full Face, intradermoterapia e microneedling.',
+    'about.p2':'Ciò che distingue la Dr.ssa Carol non è solo la tecnica — è lo sguardo. Vede il viso nella sua totalità, rispetta l\'identità di ogni paziente e crea orientamenti che esaltano la bellezza naturale senza cancellare chi è la persona.',
+    'about.stat1':'Pazienti Seguiti in Vari Trattamenti','about.stat2':'Valutazione Media','about.stat3':'Specialista Certificata',
+    'about.btn':'Voglio il Mio Orientamento Personalizzato',
+    'test.label':'Risultati reali','test.title':'Prima e Dopo','test.sub':'Alcuni dei post condivisi dalla Dr.ssa Carol Mafra sul suo instagram',
     'insta.label':'Segui la Dr.ssa Carol Mafra','insta.title':'@dra.carolmafra su Instagram','insta.follow':'Segui su Instagram',
-    'footer.terms':'Termini di Servizio','footer.privacy':'Informativa sulla Privacy','footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Armonizzazione Orofacciale · Tutti i diritti riservati','footer.disc':'Questo servizio è informativo ed educativo per natura. Non costituisce consulenza medica, diagnosi o trattamento. In conformità con il GDPR e le leggi applicabili a tutela dei consumatori.',
-    'quiz.timer':'⏱ ~60 secondi','quiz.steplabel':'Domanda {n} di {t}','quiz.result.label':'Risultato',
-    'quiz.q1':'Hai mai pensato di fare il filler labiale?',
-    'quiz.q1.a':'Non ci ho mai pensato','quiz.q1.b':'Ho curiosità ma non ho mai cercato informazioni','quiz.q1.c':'Ho già fatto molte ricerche','quiz.q1.d':'L\'ho già fatto e voglio perfezionare il risultato',
-    'quiz.q2':'Cosa ti disturba di più delle tue labbra?',
-    'quiz.q2.a':'Sono sottili o asimmetriche','quiz.q2.b':'Ho perso volume nel tempo','quiz.q2.c':'Sento che non si adattano al mio viso','quiz.q2.d':'Niente — voglio solo capire meglio',
-    'quiz.q3':'Preferisci un risultato discreto o più voluminoso?',
-    'quiz.q3.a':'Discreto e naturale','quiz.q3.b':'Un po\' più pieno','quiz.q3.c':'Più voluminoso e definito','quiz.q3.d':'Non lo so ancora',
-    'quiz.q4':'Hai già fatto qualche procedura estetica?',
-    'quiz.q4.a':'Non ho mai fatto nulla','quiz.q4.b':'Sì, ma diverso dal filler labiale','quiz.q4.c':'Sì, ho già fatto il filler labiale',
-    'quiz.q5':'La tua paura più grande è perdere la naturalezza?',
-    'quiz.q5.a':'Sì, è la mia paura più grande','quiz.q5.b':'Ho un po\' di timore','quiz.q5.c':'No, mi fido di una specialista',
-    'quiz.q6':'Credi che le tue labbra siano in armonia con il tuo viso?',
-    'quiz.q6.a':'No, sento che sono sproporzionate','quiz.q6.b':'Forse, ma non ne sono sicura','quiz.q6.c':'Sì, ma voglio migliorarle',
-    'quiz.result.title':'Il tuo viso ha caratteristiche specifiche che influenzano direttamente qualsiasi risultato del filler.',
-    'quiz.result.desc':'In base alle tue risposte, abbiamo identificato punti specifici del tuo viso che influenzano direttamente un risultato di filler labiale. Per scoprire esattamente cosa significa per IL TUO viso, la Dr.ssa Carol Mafra deve analizzare le tue foto personalmente.',
-    'quiz.cta':'Voglio Scoprire Cosa Significa Per Me',
-    'quiz.proof2':'✦ Oltre 500 profili analizzati con competenza clinica specializzata',
-    'quiz.seeall':'Vedi piani e prezzi',
-    'quiz.upload.title':'La Dr.ssa Carol ha già il tuo profilo. Ora ha bisogno di vedere il tuo viso.',
-    'quiz.upload.sub':'Invia 4 foto seguendo le istruzioni qui sotto. Più è naturale, più precisa sarà la tua analisi.',
-    'quiz.photo.front':'Fronte','quiz.photo.right':'Profilo Destro','quiz.photo.left':'Profilo Sinistro','quiz.photo.smile':'Sorridente',
-    'quiz.upload.btn':'Invia Foto','quiz.upload.hint':'Senza filtri · Buona illuminazione · Espressione neutra',
-    'quiz.plans.received':'✅ La Dr.ssa Carol Mafra ha già ricevuto le tue immagini.',
-    'quiz.plans.title':'Come desideri ricevere la tua analisi?','quiz.plans.label':'La Tua Analisi',
-    'quiz.plan1.name':'Report Labiale','quiz.plan1.desc':'Ideale per chi vuole capire esclusivamente le proprie labbra.',
-    'quiz.plan2.name':'Report Completo','quiz.plan2.desc':'Capisci come tutto il tuo viso influenza il risultato.',
-    'quiz.plan3.name':'Esperienza Premium','quiz.plan3.desc':'Ricevi la tua analisi e parla dal vivo con la Dr.ssa Carol Mafra.',
-    'quiz.plan.badge':'Il più scelto',
-    'hero.availability':'<span>{v}</span> posti rimasti per l\'analisi questa settimana',
-    'quiz.countdown.label':'⟡ Posto pre-riservato per:',
-    'quiz.vagas.suffix':'posti disponibili per l\'analisi oggi',
-    'quiz.plan3.scarcity':'⟡ Sessioni live con disponibilità limitata a settimana',
-    'quiz.redir.1':'🔒 Prenotazione del tuo posto...','quiz.redir.2':'✓ Posto confermato',
-    'quiz.redir.2pos':'✓ Posto confermato — Posizione in coda: #{p}',
-    'quiz.redir.3':'📋 Preparazione accesso sicuro...'
+    'footer.labios':'Analisi Labiale',
+    'explore.label':'Esplora',
+    'explore.labios.title':'Analisi Labiale','explore.labios.sub':'Scopri cosa si adatta al tuo viso prima di qualsiasi decisione.',
+    'explore.ig.title':'Instagram','explore.ig.sub':'Risultati reali, post educativi e il quotidiano della Dr.ssa Carol Mafra.',
+    'explore.skin.title':'Skin Care','explore.skin.sub':'Prossimamente. Cura della pelle con lo stesso sguardo specializzato.',
+    'footer.copy':'© 2025 Dra. Carol Mafra · CRO-MG 66417 · Armonizzazione Orofacciale · Tutti i diritti riservati',
+    'footer.disc':'Questo servizio è informativo ed educativo per natura. Non costituisce consulenza medica, diagnosi o trattamento. In conformità con GDPR, LGPD e le leggi applicabili di protezione dei consumatori.'
   }
 };
 
-// currency config per language
-const LANG_CFG = {
-  pt: { cur: 'BRL', sym: 'R$', flag: '🇧🇷', label: 'PT' },
-  en: { cur: 'USD', sym: '$',  flag: '🇺🇸', label: 'EN' },
-  es: { cur: 'EUR', sym: '€',  flag: '🇪🇸', label: 'ES' },
-  fr: { cur: 'EUR', sym: '€',  flag: '🇫🇷', label: 'FR' },
-  it: { cur: 'EUR', sym: '€',  flag: '🇮🇹', label: 'IT' }
-};
-
-// ─── RATES ───────────────────────────────────────────────────────────────────
-const rates = { USD: null, EUR: null };
-
-async function fetchRates() {
-  try {
-    const r = await fetch('https://open.er-api.com/v6/latest/BRL');
-    const d = await r.json();
-    rates.USD = d.rates.USD;
-    rates.EUR = d.rates.EUR;
-  } catch(e) {}
-}
-
-// ─── CURRENCY ────────────────────────────────────────────────────────────────
-function updatePrices(sym, cur) {
-  document.querySelectorAll('.price-symbol').forEach(el => el.textContent = sym);
-  document.querySelectorAll('.price-val').forEach(el => {
-    if (cur === 'BRL') {
-      el.textContent = el.dataset.brl;
-    } else if (cur === 'USD') {
-      el.textContent = el.dataset.usd || Math.round(Number(el.dataset.brl) * (rates.USD || 0.18));
-    } else if (cur === 'EUR') {
-      el.textContent = el.dataset.eur || Math.round(Number(el.dataset.brl) * (rates.EUR || 0.17));
-    }
-  });
-}
-
-// ─── i18n ────────────────────────────────────────────────────────────────────
 let currentLang = 'pt';
 
 function setLang(lang) {
   if (!T[lang]) return;
   currentLang = lang;
   const tr = T[lang];
-  const cfg = LANG_CFG[lang];
-
-  // update html lang attr
   document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
-
-  // text nodes
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (tr[key] !== undefined) el.textContent = tr[key];
   });
-
-  // html nodes
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const key = el.dataset.i18nHtml;
     if (tr[key] !== undefined) el.innerHTML = tr[key];
   });
-
-  // placeholders
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-    const key = el.dataset.i18nPh;
-    if (tr[key] !== undefined) el.placeholder = tr[key];
-  });
-
-  // select options (contact form)
-  const sel = document.getElementById('assunto');
-  if (sel) {
-    const opts = sel.querySelectorAll('option[data-i18n]');
-    opts.forEach(opt => {
-      const key = opt.dataset.i18n;
-      if (tr[key] !== undefined) opt.textContent = tr[key];
-    });
-  }
-
-  // mark active flag
   document.querySelectorAll('.lang-flag').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
-
-  // update prices
-  updatePrices(cfg.sym, cfg.cur);
-
-  // refresh quiz if open
-  if (document.getElementById('quizModal') && document.getElementById('quizModal').style.display === 'block') {
-    applyQuizLang();
-  }
-
 }
 
-// ─── LANG FLAGS ──────────────────────────────────────────────────────────────
+function detectLang() {
+  const param = new URLSearchParams(location.search).get('lang');
+  if (param && T[param]) return param;
+  const nav = (navigator.language || 'pt').toLowerCase();
+  if (nav.startsWith('pt')) return 'pt';
+  if (nav.startsWith('es')) return 'es';
+  if (nav.startsWith('fr')) return 'fr';
+  if (nav.startsWith('it')) return 'it';
+  return 'en';
+}
+
 document.querySelectorAll('.lang-flag').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
 
-// ─── HAMBURGER ───────────────────────────────────────────────────────────────
+// hamburger
 const ham = document.getElementById('hamburger');
 const mob = document.getElementById('mobileMenu');
 ham.addEventListener('click', () => mob.classList.toggle('open'));
 document.querySelectorAll('.mob-link').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
 
-// ─── REVEAL ──────────────────────────────────────────────────────────────────
+// reveal
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ─── FAQ ─────────────────────────────────────────────────────────────────────
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  });
-});
-
-// ─── CONTACT FORM ────────────────────────────────────────────────────────────
-document.getElementById('contactForm').addEventListener('submit', e => {
-  e.preventDefault();
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
-});
-
-// ─── SOBRE CAROUSEL ──────────────────────────────────────────────────────────
+// sobre carousel
 (function() {
   const track = document.getElementById('sobreTrack');
   const dots = document.querySelectorAll('#sobreDots .sobre-dot');
   if (!track) return;
   const imgs = track.querySelectorAll('img');
   let cur = 0, timer;
-
   function goTo(n) {
     cur = (n + imgs.length) % imgs.length;
     track.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
     track.style.transform = `translateX(-${cur * 100}%)`;
     dots.forEach((d, i) => d.classList.toggle('active', i === cur));
   }
-
-  function next() { goTo(cur + 1); }
-
-  timer = setInterval(next, 3500);
-
+  timer = setInterval(() => goTo(cur + 1), 3500);
   dots.forEach(d => d.addEventListener('click', () => {
     clearInterval(timer);
     goTo(Number(d.dataset.idx));
-    timer = setInterval(next, 3500);
+    timer = setInterval(() => goTo(cur + 1), 3500);
   }));
 })();
 
-// ─── QUIZ ────────────────────────────────────────────────────────────────────
-const TOTAL_STEPS = 6;
-const qAnswers = {};
-let qLeadName = '', qLeadWa = '';
-
-function openQuiz() {
-  for (let i = 1; i <= TOTAL_STEPS; i++) qAnswers['q'+i] = null;
-  showQStep('0');
-  document.getElementById('quizModal').style.display = 'block';
-  document.getElementById('quizModal').scrollTop = 0;
-  document.body.style.overflow = 'hidden';
-  applyQuizLang();
-  setTimeout(() => document.getElementById('qLeadName').focus(), 200);
-}
-
-function closeQuiz() {
-  document.getElementById('quizModal').style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-function showQStep(step) {
-  const steps = ['0','1','2','3','4','5','6','Result','Plans'];
-  steps.forEach(s => {
-    const el = document.getElementById('quizStep' + s);
-    if (el) el.style.display = (String(step) === s) ? 'block' : 'none';
-  });
-  const isResult = step === 'Result';
-  const isPlans  = step === 'Plans';
-  const isLead   = String(step) === '0';
-  const pct = (isResult) ? 85 : isPlans ? 100 : isLead ? 0 : Math.round((Number(step) / TOTAL_STEPS) * 100);
-  document.getElementById('quizProgressBar').style.width = pct + '%';
-  const tr = T[currentLang];
-  let lbl;
-  if (isLead)        lbl = '';
-  else if (isPlans)  lbl = tr['quiz.plans.label'] || 'Resultado';
-  else if (isResult) lbl = tr['quiz.result.label'] || 'Fotos';
-  else lbl = (tr['quiz.steplabel'] || 'Pergunta {n} de {t}').replace('{n}', step).replace('{t}', TOTAL_STEPS);
-  document.getElementById('quizStepLabel').textContent = lbl;
-}
-
-function applyQuizLang() {
-  const tr = T[currentLang];
-  document.querySelectorAll('#quizModal [data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (tr[key] !== undefined) el.textContent = tr[key];
-  });
-}
-
-function selectQOpt(step, val) {
-  qAnswers['q' + step] = val;
-  document.querySelectorAll('#quizStep' + step + ' .quiz-opt').forEach(b =>
-    b.classList.toggle('selected', b.dataset.val === val)
-  );
-  setTimeout(() => {
-    if (step < TOTAL_STEPS) { showQStep(step + 1); applyQuizLang(); }
-    else showQResult();
-  }, 380);
-}
-
-function showQResult() {
-  showQStep('Result');
-  applyQuizLang();
-}
-
-document.querySelectorAll('.quiz-trigger').forEach(btn =>
-  btn.addEventListener('click', e => { e.preventDefault(); openQuiz(); })
-);
-document.getElementById('quizClose').addEventListener('click', closeQuiz);
-document.getElementById('quizModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('quizModal')) closeQuiz();
-});
-// plan card clicks
-document.querySelectorAll('.quiz-plan-card[data-plan-url]').forEach(card => {
-  card.addEventListener('click', () => { window.open(card.dataset.planUrl, '_blank'); closeQuiz(); });
-});
-
-// ─── PHOTO UPLOAD HANDLERS ───────────────────────────────────────────────────
-const CAROL_EMAIL = 'caarolsousamafra@gmail.com';
-
-function checkAllPhotos() {
-  const ids = ['photoFront','photoRight','photoLeft','photoSmile'];
-  const allOk = ids.every(id => document.getElementById(id).files.length > 0);
-  document.getElementById('qUploadBtn').disabled = !allOk;
-}
-
-['photoFront','photoRight','photoLeft','photoSmile'].forEach(id => {
-  document.getElementById(id).addEventListener('change', function() {
-    const slotMap = {photoFront:'slotFront',photoRight:'slotRight',photoLeft:'slotLeft',photoSmile:'slotSmile'};
-    if (this.files.length > 0) document.getElementById(slotMap[id]).classList.add('has-file');
-    else document.getElementById(slotMap[id]).classList.remove('has-file');
-    checkAllPhotos();
-  });
-});
-
-document.getElementById('qUploadBtn').addEventListener('click', function() {
-  const btn = this;
-  btn.textContent = '⏳ Enviando...';
-  btn.disabled = true;
-
-  const fd = new FormData();
-  const tr = T[currentLang];
-  const qLabels = {
-    q1: tr['quiz.q1']||'Q1', q2: tr['quiz.q2']||'Q2', q3: tr['quiz.q3']||'Q3',
-    q4: tr['quiz.q4']||'Q4', q5: tr['quiz.q5']||'Q5', q6: tr['quiz.q6']||'Q6'
-  };
-  const qOpts = {};
-  for (let i = 1; i <= 6; i++) {
-    const v = qAnswers['q'+i];
-    if (v) qOpts['q'+i] = tr['quiz.q'+i+'.'+v] || v;
-  }
-  const respostasTxt = Object.entries(qOpts).map(([k,v]) => qLabels[k] + ': ' + v).join('\n');
-
-  fd.append('_subject', 'Novas fotos para análise — ' + qLeadName);
-  fd.append('nome', qLeadName);
-  fd.append('whatsapp', qLeadWa);
-  fd.append('respostas_do_quiz', respostasTxt);
-  fd.append('foto_frente',          document.getElementById('photoFront').files[0]);
-  fd.append('foto_perfil_direito',  document.getElementById('photoRight').files[0]);
-  fd.append('foto_perfil_esquerdo', document.getElementById('photoLeft').files[0]);
-  fd.append('foto_sorrindo',        document.getElementById('photoSmile').files[0]);
-  fd.append('_captcha', 'false');
-
-  fetch('https://formsubmit.co/ajax/' + CAROL_EMAIL, { method:'POST', body: fd })
-    .catch(() => {})
-    .finally(() => {
-      showQStep('Plans'); applyQuizLang();
-    });
-});
-document.getElementById('qLeadBtn').addEventListener('click', () => {
-  const name = document.getElementById('qLeadName').value.trim();
-  const waNum = document.getElementById('qLeadWa').value.trim();
-  if (!name || !waNum) {
-    document.getElementById('qLeadName').style.borderColor = name ? '' : 'var(--accent)';
-    document.getElementById('qLeadWa').style.borderColor = waNum ? '' : 'var(--accent)';
-    return;
-  }
-  qLeadName = name; qLeadWa = waNum;
-  showQStep(1); applyQuizLang();
-});
-document.querySelectorAll('.quiz-opt').forEach(btn =>
-  btn.addEventListener('click', () => selectQOpt(Number(btn.dataset.step), btn.dataset.val))
-);
-
-// ─── INSTAGRAM CAROUSEL (infinite) ───────────────────────────────────────────
+// instagram carousel
 (function() {
   const track = document.getElementById('igTrack');
   const dotsEl = document.getElementById('igDots');
   if (!track) return;
-
   const slides = track.querySelectorAll('.ig-slide');
   const TOTAL = slides.length;
   const SLIDE_W = 320;
-
   let cur = 0, timer, isDragging = false, startX = 0, startOffset = 0;
 
   for (let i = 0; i < TOTAL; i++) {
@@ -2204,26 +651,14 @@ document.querySelectorAll('.quiz-opt').forEach(btn =>
   window.addEventListener('mouseup', e => { if (!isDragging) return; isDragging = false; track.style.transition = ''; goTo(startX - e.clientX > SLIDE_W / 3 ? cur + 1 : startX - e.clientX < -SLIDE_W / 3 ? cur - 1 : cur); startAuto(); });
   track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startOffset = cur * SLIDE_W; track.style.transition = 'none'; stopAuto(); }, {passive:true});
   track.addEventListener('touchend', e => { track.style.transition = ''; const dx = startX - e.changedTouches[0].clientX; goTo(dx > 50 ? cur + 1 : dx < -50 ? cur - 1 : cur); startAuto(); });
-
   track.addEventListener('mouseenter', stopAuto);
   track.addEventListener('mouseleave', startAuto);
 
   startAuto();
 })();
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
-function detectLang() {
-  const param = new URLSearchParams(location.search).get('lang');
-  if (param && T[param]) return param;
-  const nav = (navigator.language || 'pt').toLowerCase();
-  if (nav.startsWith('pt')) return 'pt';
-  if (nav.startsWith('es')) return 'es';
-  if (nav.startsWith('fr')) return 'fr';
-  if (nav.startsWith('it')) return 'it';
-  if (nav.startsWith('en')) return 'en';
-  return 'pt';
-}
-fetchRates().then(() => setLang(detectLang()));
+// init
+setLang(detectLang());
 </script>
 </body>
 </html>
