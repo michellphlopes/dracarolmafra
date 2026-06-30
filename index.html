@@ -186,6 +186,8 @@
     background: var(--accent); color: #000; border: 1px solid var(--accent);
   }
   .btn-filled:hover { opacity: 0.85; background: var(--accent); color: #000; }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn-outline:hover { background: var(--accent); color: #000; }
 
   .scroll-hint {
     position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
@@ -876,7 +878,8 @@
     <h1 class="hero-title" data-i18n="hero.title">Será que Preenchimento Labial Combina com Você?</h1>
     <p class="hero-sub" data-i18n="hero.sub">Descubra se as características do seu rosto favorecem o preenchimento labial — e o que você realmente precisa para um resultado bonito e natural. O teste leva menos de 60 segundos.</p>
     <div class="hero-btns">
-      <a href="#" class="btn btn-filled quiz-trigger" data-i18n="hero.btn1">Quero Descobrir Agora →</a>
+      <a href="/labios" class="btn btn-filled" data-i18n="hero.btn.labios">🩷 Descobrir se o preenchimento combina comigo</a>
+      <a href="/skincare" class="btn btn-outline" data-i18n="hero.btn.skincare">✨ Descobrir a rotina ideal para minha pele</a>
     </div>
     <p class="hero-social-proof" data-i18n="hero.proof">⏱ ~60 segundos · 🔒 Sem compromisso · ✨ Resultado personalizado</p>
     <p class="hero-authority" data-i18n="hero.authority">✦ Método da Dra. Carol Mafra · Especialista em resultados naturais em HOF</p>
@@ -1445,6 +1448,8 @@ const T = {
     'hero.authority':'✦ Método da Dra. Carol Mafra · Especialista em resultados naturais em HOF',
     'hero.sub':'Descubra se o preenchimento labial realmente combina com o seu rosto — e o que você precisa saber antes de qualquer decisão. O teste leva menos de 60 segundos.',
     'hero.btn1':'Quero Descobrir Agora →','hero.scroll':'Rolar',
+    'hero.btn.labios':'🩷 Descobrir se o preenchimento combina comigo',
+    'hero.btn.skincare':'✨ Descobrir a rotina ideal para minha pele',
     'hero.proof':'⏱ ~60 segundos · 🔒 Sem compromisso · ✨ Resultado personalizado',
     'ben.title':'Antes de qualquer decisão sobre seus lábios, existe uma pergunta que muda tudo',
     'ben.1.title':'Clareza antes da escolha','ben.1.desc':'Mulheres que entendem o que combina com seu rosto chegam a qualquer procedimento com muito mais segurança, confiança e satisfação. Esse é o passo que a maioria pula.',
@@ -1529,6 +1534,8 @@ const T = {
     'hero.authority':'✦ Dr. Carol Mafra\'s Method · Specialist in natural HOF results',
     'hero.sub':'Discover if your facial features truly suit lip filler — and what you need to know before making any decision. The test takes less than 60 seconds.',
     'hero.btn1':'I Want to Discover Now →','hero.scroll':'Scroll',
+    'hero.btn.labios':'🩷 Discover if lip filler suits me',
+    'hero.btn.skincare':'✨ Discover my ideal skincare routine',
     'hero.proof':'⏱ ~60 seconds · 🔒 No commitment · ✨ Personalized result',
     'ben.title':'Before any decision about your lips, there is one question that changes everything',
     'ben.1.title':'Clarity before choosing','ben.1.desc':'Women who understand what suits their face arrive at any procedure with far more confidence, certainty, and satisfaction. This is the step most people skip.',
@@ -1613,6 +1620,8 @@ const T = {
     'hero.authority':'✦ Método de la Dra. Carol Mafra · Especialista en resultados naturales en HOF',
     'hero.sub':'Descubre si el relleno labial realmente combina con tu rostro — y lo que necesitas saber antes de tomar cualquier decisión. El test dura menos de 60 segundos.',
     'hero.btn1':'Quiero Descubrir Ahora →','hero.scroll':'Bajar',
+    'hero.btn.labios':'🩷 Descubrir si el relleno me favorece',
+    'hero.btn.skincare':'✨ Descubrir mi rutina ideal para la piel',
     'hero.proof':'⏱ ~60 segundos · 🔒 Sin compromiso · ✨ Resultado personalizado',
     'ben.title':'Antes de cualquier decisión sobre tus labios, hay una pregunta que lo cambia todo',
     'ben.1.title':'Claridad antes de elegir','ben.1.desc':'Las mujeres que entienden lo que favorece su rostro llegan a cualquier procedimiento con mucha más seguridad, confianza y satisfacción. Este es el paso que la mayoría omite.',
@@ -1697,6 +1706,8 @@ const T = {
     'hero.authority':'✦ Méthode de la Dr. Carol Mafra · Spécialiste en résultats naturels en HOF',
     'hero.sub':'Découvrez si le filler labial vous correspond vraiment — et ce que vous devez savoir avant toute décision. Le test dure moins de 60 secondes.',
     'hero.btn1':'Je Veux Découvrir Maintenant →','hero.scroll':'Défiler',
+    'hero.btn.labios':'🩷 Découvrir si le filler me convient',
+    'hero.btn.skincare':'✨ Découvrir ma routine idéale pour la peau',
     'hero.proof':'⏱ ~60 secondes · 🔒 Sans engagement · ✨ Résultat personnalisé',
     'ben.title':'Avant toute décision concernant vos lèvres, il y a une question qui change tout',
     'ben.1.title':'La clarté avant de choisir','ben.1.desc':'Les femmes qui comprennent ce qui convient à leur visage arrivent à n\'importe quel soin avec beaucoup plus de confiance, de certitude et de satisfaction. C\'est l\'étape que la plupart sautent.',
@@ -1781,6 +1792,8 @@ const T = {
     'hero.authority':'✦ Metodo della Dr.ssa Carol Mafra · Specialista in risultati naturali in HOF',
     'hero.sub':'Scopri se il filler labiale è davvero adatto al tuo viso — e cosa devi sapere prima di qualsiasi decisione. Il test richiede meno di 60 secondi.',
     'hero.btn1':'Voglio Scoprire Adesso →','hero.scroll':'Scorri',
+    'hero.btn.labios':'🩷 Scoprire se il filler mi si addice',
+    'hero.btn.skincare':'✨ Scoprire la mia routine ideale per la pelle',
     'hero.proof':'⏱ ~60 secondi · 🔒 Senza impegno · ✨ Risultato personalizzato',
     'ben.title':'Prima di qualsiasi decisione sulle tue labbra, c\'è una domanda che cambia tutto',
     'ben.1.title':'Chiarezza prima di scegliere','ben.1.desc':'Le donne che capiscono cosa valorizza il loro viso arrivano a qualsiasi procedura con molta più sicurezza, certezza e soddisfazione. Questo è il passo che la maggior parte salta.',
