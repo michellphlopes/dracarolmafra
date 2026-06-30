@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seu Plano Inteligente está pronto · Dra. Carol Mafra</title>
+<link rel="icon" href="/carol-favicon.png" type="image/png">
+<style>
+:root{--gold:#C8A96E;--bg:#0A0A0A;--bg2:#111;--text:#F0EBE3;--muted:#666;--serif:'Georgia',serif;--sans:'Helvetica Neue',Helvetica,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:var(--bg2);border:1px solid #1e1e1e;border-top:2px solid var(--gold);max-width:520px;width:100%;padding:48px 40px}
+.logo{font-family:var(--serif);font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:40px;text-align:center}
+.icon-wrap{width:52px;height:52px;border-radius:50%;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.3rem}
+h1{font-family:var(--serif);font-size:clamp(1.25rem,3vw,1.7rem);font-weight:400;line-height:1.3;text-align:center;margin-bottom:10px}
+.sub{font-size:.85rem;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:28px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,169,110,.07);border:1px solid rgba(200,169,110,.2);padding:7px 16px;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;width:100%;justify-content:center}
+/* Steps */
+.steps-wrap{padding:16px 0}
+.step-item{display:flex;align-items:center;gap:12px;padding:6px 0}
+.step-dot{width:20px;height:20px;border-radius:50%;border:1px solid #333;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--muted);transition:all .4s}
+.step-dot.done{background:var(--gold);border-color:var(--gold);color:#000}
+.step-dot.active{border-color:var(--gold);color:var(--gold);animation:pulse .9s ease infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,169,110,.4)}50%{box-shadow:0 0 0 4px rgba(200,169,110,.1)}}
+.step-label{font-size:.78rem;color:var(--muted);transition:color .4s}
+.step-label.active{color:var(--text)}
+.step-label.done{color:#666;text-decoration:line-through}
+/* Email */
+.email-section{border-top:1px solid #1e1e1e;padding-top:24px;margin-top:24px}
+.email-label{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block}
+.email-row{display:flex;gap:8px}
+.email-input{flex:1;background:#0d0d0d;border:1px solid #2a2a2a;color:var(--text);padding:12px 14px;font-family:var(--sans);font-size:.85rem;outline:none;transition:border-color .2s}
+.email-input:focus{border-color:var(--gold)}
+.email-input::placeholder{color:#333}
+.btn-email{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:12px 16px;font-family:var(--sans);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all .2s}
+.btn-email:hover{background:var(--gold);color:#000}
+.btn-email:disabled{opacity:.5;cursor:default}
+.email-ok{font-size:.75rem;color:var(--gold);margin-top:8px;display:none}
+/* Buttons */
+.btn-download{display:block;width:100%;padding:17px;background:var(--gold);color:#000;font-family:var(--sans);font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:pointer;margin-top:24px;margin-bottom:10px;transition:opacity .3s;font-weight:600}
+.btn-download:hover{opacity:.88}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border:1px solid #222;color:var(--muted);font-family:var(--sans);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.btn-wa:hover{border-color:#444;color:var(--text)}
+.disc{font-size:.6rem;color:#2e2e2e;line-height:1.6;text-align:center;margin-top:20px}
+#readySection{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="logo">Dra. Carol Mafra</p>
+
+  <!-- GERANDO -->
+  <div id="generatingSection">
+    <div class="icon-wrap">⚡</div>
+    <h1>Preparando seu Plano Inteligente</h1>
+    <p class="sub">Montando seu material personalizado. Segundos.</p>
+    <div class="steps-wrap" id="stepsWrap">
+      <div class="step-item"><div class="step-dot" id="d1">1</div><span class="step-label" id="l1">Lendo seu perfil de pele</span></div>
+      <div class="step-item"><div class="step-dot" id="d2">2</div><span class="step-label" id="l2">Selecionando módulos compatíveis</span></div>
+      <div class="step-item"><div class="step-dot" id="d3">3</div><span class="step-label" id="l3">Montando sua rotina personalizada</span></div>
+      <div class="step-item"><div class="step-dot" id="d4">4</div><span class="step-label" id="l4">Definindo ativos e produtos</span></div>
+      <div class="step-item"><div class="step-dot" id="d5">5</div><span class="step-label" id="l5">Finalizando o documento</span></div>
+    </div>
+  </div>
+
+  <!-- PRONTO -->
+  <div id="readySection">
+    <div class="icon-wrap">✓</div>
+    <h1 id="readyTitle">Seu plano está pronto</h1>
+    <p class="sub" id="readySub">Preparado exclusivamente para você.</p>
+    <div class="badge" id="profileBadge">Perfil: Pele Mista</div>
+
+    <!-- Email opcional -->
+    <div class="email-section">
+      <span class="email-label">Receber também no seu email?</span>
+      <div class="email-row">
+        <input class="email-input" type="email" id="emailInput" placeholder="seuemail@exemplo.com">
+        <button class="btn-email" id="btnSendEmail" onclick="sendByEmail()">Enviar</button>
+      </div>
+      <p class="email-ok" id="emailOk">✓ Enviado com sucesso</p>
+    </div>
+
+    <button class="btn-download" id="btnDownload" onclick="downloadPDF()">⬇ Baixar meu Plano Inteligente</button>
+    <a class="btn-wa" id="btnWa" href="https://wa.me/5533998514322?text=Olá%2C%20Dra.%20Carol!%20Acabei%20de%20receber%20meu%20Plano%20Inteligente%20de%20Skincare." target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Tirar dúvidas com a Dra. Carol
+    </a>
+    <p class="disc">Material educativo e orientativo · Não constitui diagnóstico médico, prescrição ou avaliação clínica · Resultados individuais podem variar</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════════
+// MOTOR DE PERSONALIZAÇÃO — PLANO INTELIGENTE DE SKINCARE
+// ══════════════════════════════════════════════════════════════
+let planData = { name:'Você', firstName:'Você', profile:'mista', profileLabel:'Pele Mista', answers:{}, conditions:[] };
+let pdfDoc = null;
+
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    const raw = localStorage.getItem('skincare_plan_data');
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s.name) planData.name = s.name;
+      if (s.profile) planData.profile = s.profile;
+      if (s.profileLabel) planData.profileLabel = s.profileLabel;
+      if (s.answers) planData.answers = s.answers;
+    }
+  } catch(e) {}
+  const urlPerfil = new URLSearchParams(location.search).get('perfil');
+  if (urlPerfil) planData.profile = urlPerfil;
+  planData.firstName = planData.name.trim().split(' ')[0] || 'Você';
+  planData.conditions = deriveConditions(planData.answers, planData.profile);
+
+  document.getElementById('readyTitle').textContent = `${planData.firstName}, seu plano está pronto!`;
+  document.getElementById('profileBadge').textContent = `✦  ${planData.profileLabel}`;
+  document.getElementById('readySub').textContent = `Guia montado exclusivamente para o seu perfil de pele.`;
+
+  animateSteps().then(() => generatePDFDoc(planData).then(doc => {
+    pdfDoc = doc;
+    document.getElementById('generatingSection').style.display = 'none';
+    document.getElementById('readySection').style.display = 'block';
+  }));
+});
+
+function downloadPDF() {
+  if (pdfDoc) pdfDoc.save(`plano-skincare-${planData.firstName.toLowerCase()}.pdf`);
+}
+
+async function sendByEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@')) { document.getElementById('emailInput').focus(); return; }
+  const btn = document.getElementById('btnSendEmail');
+  btn.disabled = true; btn.textContent = '...';
+  try {
+    const b64 = pdfDoc.output('datauristring').split(',')[1];
+    const r = await fetch('/.netlify/functions/send-skincare-pdf', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, name: planData.name, pdfBase64: b64, profileLabel: planData.profileLabel })
+    });
+    if (r.ok) { document.getElementById('emailOk').style.display = 'block'; btn.textContent = '✓'; }
+    else { btn.textContent = 'Erro'; btn.disabled = false; }
+  } catch(e) { btn.textContent = 'Erro'; btn.disabled = false; }
+}
+
+async function animateSteps() {
+  const ids = [1,2,3,4,5];
+  for (const i of ids) {
+    document.getElementById(`d${i}`).className = 'step-dot active';
+    document.getElementById(`l${i}`).className = 'step-label active';
+    await sleep(500);
+    document.getElementById(`d${i}`).className = 'step-dot done';
+    document.getElementById(`d${i}`).textContent = '✓';
+    document.getElementById(`l${i}`).className = 'step-label done';
+  }
+  await sleep(300);
+}
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+// ── REGRAS ────────────────────────────────────────────────────
+function deriveConditions(a, profile) {
+  const c = new Set();
+  if (profile==='oleosa') c.add('acne');
+  if (profile==='mista')  { c.add('manchas'); c.add('desidratacao'); }
+  if (profile==='seca')   { c.add('envelhecimento'); c.add('desidratacao'); }
+  if (profile==='normal') c.add('prevencao');
+  if (a.q4==='nunca') c.add('sensibilidade');
+  if (a.q4==='tenho'||a.q2==='seca') c.add('desidratacao');
+  if (a.q6==='manchas'||a.q3==='manchas') c.add('manchas');
+  if (a.q6==='acne') c.add('acne');
+  if (a.q6==='rugas') c.add('envelhecimento');
+  // Q7 — Descamação
+  if (a.q7==='descamacao_alta'||a.q7==='descamacao_ativo') c.add('descamacao');
+  // Q8 — Espinhas
+  if (a.q8==='acne_frequente'||a.q8==='acne_eventual'||a.q8==='cravos') c.add('acne');
+  // Q9 — Sensibilidade
+  if (a.q9==='muito_sensivel'||a.q9==='moderado_sensivel') c.add('sensibilidade');
+  const order = ['acne','manchas','sensibilidade','desidratacao','descamacao','envelhecimento','barreira','prevencao'];
+  return order.filter(x=>c.has(x)).slice(0,3);
+}
+
+// ══════════════════════════════════════════════════════════════
+// CONTEÚDO DOS MÓDULOS
+// ══════════════════════════════════════════════════════════════
+const SKIN = {
+  oleosa:{
+    label:'Pele Oleosa', icon:'◈',
+    tagline:'Produção sebácea elevada · Zona T ativa',
+    desc:'Sua pele produz sebo em excesso pelas glândulas sebáceas — principalmente na testa, nariz e queixo (zona T). Esse excesso cria um ambiente favorável para obstrução de poros, cravos e espinhas. A boa notícia: pele oleosa tem maior resistência ao envelhecimento e às linhas de expressão.',
+    bio:'As glândulas sebáceas da pele oleosa são hiperativas por estímulo hormonal (andrógenos) e genético. O excesso de sebo misturado a células mortas forma comedões (cravos abertos e fechados). Com a bactéria C. acnes presente, ocorre inflamação — o que chamamos de espinha.',
+    mitos:['Pele oleosa não precisa de hidratante','Quanto mais lavar, menos oleosidade','Expor ao sol seca a pele oleosa'],
+    morningTip:'Na pele oleosa, o gel de limpeza é indispensável. Use água fria — abre menos os poros que a morna.',
+    traitsDesc:['Excesso de sebo que aparece 1-2h após a limpeza','Poros com abertura > 0,2mm visíveis a olho nu','Textura mais espessa e resistente a agressões','Microcomedões frequentes mesmo sem manipulação'],
+    priorities:[
+      {n:'1. Limpeza dupla noturna',d:'Remove sebo, protetor e impurezas acumuladas. Base de tudo.'},
+      {n:'2. Niacinamida diária',d:'Regula produção sebácea, minimiza poros e uniformiza.'},
+      {n:'3. Protetor FPS 50+ gel',d:'Evitar fotodano sem adicionar oleosidade.'},
+      {n:'4. Ácido salicílico 2–3×/sem',d:'Esfoliação química dentro do poro — dissolve cravos.'},
+      {n:'5. Retinol noturno (progressivo)',d:'Normaliza queratinização e reduz acne a longo prazo.'},
+    ],
+    morning:[
+      {n:'Limpador Facial',i:'①',d:'Gel com ácido salicílico · 60s de massagem · água fria',why:'Remove sebo da noite sem agredir. O salicílico já começa a desobstruir poros desde a limpeza.'},
+      {n:'Sérum',i:'②',d:'Niacinamida 10% + Zinco PCA',why:'Regula a produção sebácea, minimiza poros visíveis e tem leve efeito anti-inflamatório.'},
+      {n:'Hidratante',i:'③',d:'Gel oil-free com glicerina',why:'Pele oleosa desidratada produz ainda mais sebo compensatório. Hidratação é obrigatória.'},
+      {n:'Protetor FPS 50+',i:'④',d:'Fluido ou gel · último passo · reaplicar a cada 2h',why:'Previne manchas pós-acne e fotoenvelhecimento. Use textura gel para não adicionar brilho.'},
+    ],
+    night:[
+      {n:'Limpador Facial',i:'①',d:'Gel suave · água morna · remover todo o protetor',why:'Segunda limpeza remove resíduos que o produto diurno não alcança. Essencial para pele oleosa.'},
+      {n:'Tratamento',i:'②',d:'Alterne: Ácido Salicílico 2% (3×/sem) · Retinol 0,1% (1–2×/sem)',why:'O salicílico dissolve os tampões de sebo dentro do poro. O retinol normaliza a queratinização.'},
+      {n:'Hidratante',i:'③',d:'Gel leve · obrigatório mesmo à noite',why:'Sela os ativos e mantém barreira íntegra. Sem hidratante, os ácidos ressecam e irritam.'},
+    ],
+    notPortrait:'Os tratamentos noturnos (ácidos, retinol) devem ser removidos pela manhã com a limpeza. Eles não ficam na pele — reagem com o ambiente noturno e são metabolizados. O protetor solar de manhã é sempre obrigatório.',
+    actives:['Ácido Salicílico','Niacinamida','Zinco PCA','Retinol','Ácido Glicólico','Argila Caulim'],
+    activesNot:['Ácido Kójico','Esqualano puro','Cremes com karité','Óleos comedogênicos','Vitamina C instável'],
+    activesNotWhy:['Seu perfil não tem manchas como prioridade agora','Já tem oleosidade suficiente — óleos pesados obstruem poros','Alta concentração de lipídios ocluem poros em pele oleosa','Bloqueiam saída do sebo e agravam comedões','Pode irritar sem trazer benefício prioritário agora'],
+    avoid:['Óleos comedogênicos','Álcool SD em excesso','Cremes muito ricos','Sabonete corporal no rosto'],
+    erros:['Pular o hidratante (estimula ainda mais sebo compensatório)','Usar sabonete corporal no rosto (pH errado e muito agressivo)','Não remover o protetor à noite (obstrui poros)','Apertar cravos com as mãos (causa inflamação e manchas)'],
+    prods:{
+      eco:[
+        {p:'The Ordinary Niacinamide 10% + Zinc 1%',n:'Sérum',why:'Referência mundial em custo-benefício. Niacinamida 10% com zinco PCA — combinação ideal para regular sebo e minimizar poros.'},
+        {p:'Neutrogena Hydro Boost Water Gel',n:'Hidratante',why:'Gel oil-free com ácido hialurônico. Hidrata sem adicionar oleosidade. Amplamente testado em pele acneica.'},
+        {p:'Episol Sec FPS 50+',n:'Protetor',why:'Textura fluida seca ao toque. Desenvolvido para pele oleosa. Não causa brilho nem entope poros.'},
+        {p:'Minimo Gel de Limpeza Salicílico',n:'Limpador',why:'pH adequado para pele oleosa com salicílico na fórmula — limpa e já começa a tratar desde a primeira etapa.'},
+      ],
+      mid:[
+        {p:'La Roche-Posay Effaclar Gel',n:'Limpador',why:'Gel purificante sem sabão com zinco. pH 5,5 — respeita a barreira enquanto controla sebo eficientemente.'},
+        {p:'Vichy Normaderm Phytosolution',n:'Hidratante',why:'Sérum-hidratante com ácido salicílico, probióticos e niacinamida. Trata enquanto hidrata — ideal para pele oleosa.'},
+        {p:'Isdin Fusion Water FPS 50',n:'Protetor',why:'Textura de água ultralight. Um dos mais bem aceitos em pele oleosa. Não deixa resíduo.'},
+        {p:'The Ordinary AHA 30% + BHA 2%',n:'Esfoliação (2×/sem)',why:'Combinação de AHA (superfície) e BHA (dentro do poro). Usar com cuidado: deixar 10min e lavar.'},
+      ],
+      top:[
+        {p:'Paula\'s Choice Skin Perfecting 2% BHA',n:'Ácido',why:'O padrão-ouro em ácido salicílico. Concentração ideal sem irritação. Substitui esfoliantes físicos completamente.'},
+        {p:'SkinCeuticals Hydra Balm',n:'Hidratante',why:'Fórmula leve com glicerina e beta-glucana. Hidratação profunda sem oclusão excessiva.'},
+        {p:'Heliocare 360 Gel Oil-Free SPF 50+',n:'Protetor',why:'Fotoprotecção completa UVA/UVB/luz visível. Textura gel seca imediatamente. Referência dermatológica.'},
+        {p:'Skinceuticals Blemish + Age Defense',n:'Sérum',why:'Combinação de salicílico + glicólico + DIOIC. Trata acne e sinais de envelhecimento simultaneamente.'},
+      ],
+    }
+  },
+  mista:{
+    label:'Pele Mista', icon:'◈',
+    tagline:'Zona T oleosa · Bochechas equilibradas',
+    desc:'Sua pele apresenta comportamentos diferentes por região: a zona T (testa, nariz, queixo) é oleosa com poros dilatados, enquanto as bochechas são normais ou levemente secas. Essa dualidade exige uma abordagem estratégica — não um produto único para tudo.',
+    bio:'A distribuição desigual de glândulas sebáceas explica a pele mista: alta concentração na zona T, baixa nas bochechas. Fatores hormonais, estresse e clima influenciam diretamente a oleosidade da zona T. As bochechas, com menos glândulas, podem desidratar com produtos formulados para pele oleosa.',
+    mitos:['Um produto serve para toda a face','Zona T oleosa não precisa de hidratante','Adstringente em toda a face resolve o problema'],
+    morningTip:'Na pele mista, a estratégia bizona funciona melhor: gel na zona T, creme leve nas bochechas. Com o tempo, você aprende onde cada produto deve ir.',
+    traitsDesc:['Sebo visível 2-3h após limpeza — somente zona T','Poros dilatados em testa e nariz, discretos nas bochechas','Pele pode secar nas bochechas em climas frios','Hidratação e oleosidade variam por região e clima'],
+    priorities:[
+      {n:'1. Estratégia bizona',d:'Produtos diferentes para zona T e bochechas — ou produtos multizona.'},
+      {n:'2. Hidratação leve e uniforme',d:'Hialurônico hidrata sem ocluir poros da zona T.'},
+      {n:'3. Protetor FPS 50+ fluido',d:'Fluido leve que funciona bem em toda a face.'},
+      {n:'4. Niacinamida na zona T',d:'Regula sebo da zona T sem ressecar bochechas.'},
+      {n:'5. Ácido salicílico focal',d:'Usar apenas na zona T — evitar nas bochechas.'},
+    ],
+    morning:[
+      {n:'Limpador Facial',i:'①',d:'Gel suave sem agentes agressivos — respeita bochechas',why:'Gel suave limpa a zona T sem ressecar as bochechas. Evite géis com salicílico em excesso aqui.'},
+      {n:'Sérum',i:'②',d:'Ácido Hialurônico + Niacinamida em toda a face',why:'O HA hidrata uniformemente. A niacinamida regula o sebo da zona T sem interferir nas bochechas.'},
+      {n:'Hidratante',i:'③',d:'Gel na zona T · emulsão leve nas bochechas',why:'Estratégia bizona: a zona T não precisa de emolientes pesados. As bochechas precisam de mais nutrição.'},
+      {n:'Protetor FPS 50+',i:'④',d:'Fluido ou emulsão leve · em toda a face uniformemente',why:'Fluido distribui melhor em peles mistas que gel puro. Essencial nas bochechas para prevenir fotodano.'},
+    ],
+    night:[
+      {n:'Limpador Facial',i:'①',d:'Gel suave · remover protetor e sebo da zona T',why:'Limpa a zona T eficientemente sem comprometer a hidratação natural das bochechas.'},
+      {n:'Tratamento',i:'②',d:'Niacinamida (diário) · Salicílico zona T apenas (2×/sem)',why:'Niacinamida é segura em toda a face. O salicílico deve ir somente na zona T — não nas bochechas.'},
+      {n:'Hidratante',i:'③',d:'Gel na zona T · creme leve nas bochechas',why:'Mesma estratégia da manhã. À noite, pode usar um creme levemente mais rico nas bochechas.'},
+    ],
+    notPortrait:'Os tratamentos noturnos agem durante o sono e são eliminados com a limpeza matinal. Sempre remova com limpador antes de aplicar o protetor solar — ele não vai por cima de tratamentos noturnos.',
+    actives:['Niacinamida','Ácido Hialurônico','Ácido Salicílico (zona T)','Vitamina C','Glicerina','Pantenol'],
+    activesNot:['Retinol em alta concentração','Óleos faciais pesados','AHA em toda a face','Cremes com karité em toda a face'],
+    activesNotWhy:['Começar com 0,1% é suficiente — concentrações altas irritam as bochechas','Oleosidade extra obstrui zona T sem benefício real','AHA em toda a face pode ressecar bochechas — usar pontualmente','Emolientes ricos na zona T agravam oleosidade e poros'],
+    avoid:['Adstringentes em toda a face','Produto muito oleoso global','Sabonetes em barra','Álcool SD'],
+    erros:['Aplicar anti-oleosidade em toda a face (resseca bochechas)','Usar óleo nas bochechas oleosas (zona T)','Usar apenas um hidratante em toda a face sem estratégia bizona','Ignorar as bochechas por focar só na zona T'],
+    prods:{
+      eco:[
+        {p:'The Ordinary Hyaluronic Acid 2% + B5',n:'Sérum',why:'Hialurônico multimolécula que hidrata toda a face uniformemente — funciona perfeitamente em pele mista sem agravar a zona T.'},
+        {p:'Neutrogena Oil-Free Moisture',n:'Hidratante',why:'Emulsão leve sem óleo. Boa para toda a face em pele mista — hidrata bochechas sem ocluir zona T.'},
+        {p:'Sundown Fps 70 Ultra',n:'Protetor',why:'Fluido leve de amplo espectro. Textura que funciona bem em pele mista sem deixar resíduo na zona T.'},
+        {p:'Cetaphil Gentle Skin Cleanser',n:'Limpador',why:'Limpa suavemente sem alterar o manto lipídico das bochechas enquanto remove sebo da zona T.'},
+      ],
+      mid:[
+        {p:'La Roche-Posay Toleriane Hydrating Gel',n:'Limpador',why:'pH 5,5 com ceramidas. Limpa a zona T sem ressecar as bochechas — formulado para pele mista a sensível.'},
+        {p:'Vichy Minéral 89 72H Moisture Boosting',n:'Sérum',why:'Pré-sérum com água vulcânica e hialurônico. Prepara toda a face uniformemente antes do hidratante.'},
+        {p:'Isdin Eryfotona Actinica FPS 100',n:'Protetor',why:'Proteção muito alta com textura ultralight. Indicado para pele mista que tende a manchas na zona T.'},
+        {p:'Bioderma Sébium Pore Refiner',n:'Tratamento Zona T',why:'Corretivo de poros para zona T. Não usar nas bochechas. Reduz aparência de poros e controla sebo.'},
+      ],
+      top:[
+        {p:'Bioderma Sensibio Gel Moussant',n:'Limpador',why:'Gel espumante ultra-suave. Tolerated mesmo em pele sensível. Remove sebo sem comprometer a barreira das bochechas.'},
+        {p:'Paula\'s Choice Skin Balancing Pore-Reducing Toner',n:'Tônico Zona T',why:'Tônico sem álcool com niacinamida. Equilibra a zona T sem alterar as bochechas. Usar com algodão somente na zona T.'},
+        {p:'EltaMD UV Clear Broad-Spectrum SPF 46',n:'Protetor',why:'O favorito dos dermatologistas para pele mista. Niacinamida + zinco na fórmula — trata e protege simultaneamente.'},
+        {p:'Skinceuticals Phloretin CF',n:'Sérum Vitamina C',why:'Vitamina C + Phloretin + ácido ferúlico. Antioxidante completo para toda a face, potencializa a ação do FPS.'},
+      ],
+    }
+  },
+  seca:{
+    label:'Pele Seca', icon:'◈',
+    tagline:'Barreira lipídica reduzida · Necessidade de reposição',
+    desc:'Sua pele produz menos sebo que o necessário para manter a barreira cutânea íntegra. Isso resulta em perda de água transepidérmica (TEWL) elevada, causando sensação de repuxamento, descamação e predisposição a linhas finas precoces. O foco da rotina é restaurar e manter a barreira lipídica.',
+    bio:'A pele seca tem glândulas sebáceas pouco ativas, produzindo baixa quantidade de sebo. Sem essa camada lipídica natural, a barreira cutânea fica comprometida — moléculas de água escapam para o ambiente (TEWL). Ceramidas, ácidos graxos e colesterol são os componentes naturais que precisam ser repostos.',
+    mitos:['Pele seca envelhecida precisa de cremes "anti-idade" pesados','Água quente hidrata a pele','Mais produto = mais hidratação'],
+    morningTip:'Aplique o sérum de ácido hialurônico em pele ainda levemente úmida após lavar — isso potencializa a absorção da molécula.',
+    traitsDesc:['Sensação de "apertar" que começa logo após a limpeza','Finas lamelas de pele que se desprendem, principalmente nas bochechas','Aspecto liso e fosco — boa notícia: envelhecimento mais tardio','Linhas finas aparecem mais cedo pela falta de hidratação contínua'],
+    priorities:[
+      {n:'1. Restaurar a barreira com ceramidas',d:'Prioridade máxima — tudo depende de uma barreira íntegra.'},
+      {n:'2. Hidratante rico manhã e noite',d:'Fórmulas com ceramidas, ácidos graxos e oclusivos leves.'},
+      {n:'3. Sérum de hialurônico',d:'Hidratação profunda que pele seca não consegue reter sozinha.'},
+      {n:'4. Protetor FPS 50+ cremoso',d:'Evitar fórmulas com álcool — agravam o ressecamento.'},
+      {n:'5. Óleo ou oclusivo noturno',d:'Esqualano ou sleeping mask para selar a hidratação durante o sono.'},
+    ],
+    morning:[
+      {n:'Limpador Facial',i:'①',d:'Leite ou gel cremoso SLS-free · água morna · toque suave',why:'Limpadores agressivos com SLS removem os lipídios naturais que a pele seca já tem pouco. Use SLS-free.'},
+      {n:'Sérum',i:'②',d:'Ácido Hialurônico em pele levemente úmida',why:'O HA em pele úmida tem absorção potencializada. Múltiplos pesos moleculares hidratam em camadas diferentes.'},
+      {n:'Hidratante',i:'③',d:'Creme com ceramidas + ácidos graxos',why:'Ceramidas + ácidos graxos + colesterol = tríade que restaura a barreira cutânea exatamente onde falta.'},
+      {n:'Protetor FPS 50+',i:'④',d:'Fórmula cremosa · evitar álcool na composição',why:'Protetor cremoso adiciona mais uma camada de oclusão e evita o ressecamento que os fluidos alcoólicos causam.'},
+    ],
+    night:[
+      {n:'Limpador Facial',i:'①',d:'Leite ou óleo suave · apenas uma limpeza à noite',why:'Uma única limpeza suave à noite é suficiente. Duas limpezas em pele seca comprometem ainda mais a barreira.'},
+      {n:'Tratamento',i:'②',d:'Peptídeos ou Retinol 0,1% (1–2×/sem com emoliente)',why:'Peptídeos são os mais seguros para pele seca — sem irritação. O retinol, quando introduzido, sempre com hidratante base.'},
+      {n:'Hidratante',i:'③',d:'Creme rico com karité · opcional: sleeping mask oclusivo',why:'Noite é o momento de maior reparação. Creme mais rico que o da manhã + oclusivo sela toda a hidratação.'},
+    ],
+    notPortrait:'Pele seca é especialmente sensível a tratamentos irritantes. Retinol e ácidos devem ser introduzidos sempre com um hidratante base — técnica "sandwich": hidratante, ativo, hidratante. Protetor solar de manhã é indispensável.',
+    actives:['Ceramidas','Ácido Hialurônico','Esqualano','Glicerina','Uréia 5–10%','Peptídeos','Pantenol'],
+    activesNot:['Ácido Salicílico','Retinol alto (>0,5%)','Álcool SD','AHA diário','Tônicos adstringentes'],
+    activesNotWhy:['BHA dissolve lipídios que pele seca já não tem — agrava o ressecamento','Alta concentração causa descamação excessiva e irritação severa','Remove o manto lipídico residual — pele fica ainda mais ressecada','Esfoliação química frequente fragiliza barreira já comprometida','Adstringentes removem sebo — o que pele seca não tem excesso'],
+    avoid:['Álcool SD','SLS (lauril sulfato)','Retinol sem emoliente','Fragrâncias','Água muito quente'],
+    erros:['Lavar com água quente (remove manto lipídico)','Aplicar hidratante em pele completamente seca (perde 40% da eficácia)','Pular o oclusivo à noite (perde hidratação durante o sono)','Usar o mesmo hidratante leve de pele oleosa'],
+    prods:{
+      eco:[
+        {p:'CeraVe Moisturizing Cream',n:'Hidratante',why:'A referência para pele seca. Ceramidas 1, 3 e 6-II + ácido hialurônico + MVE technology. Dermatologicamente testado e com ótimo custo.'},
+        {p:'The Ordinary Hyaluronic Acid 2% + B5',n:'Sérum',why:'Hialurônico multimolécula com B5. Hidratação profunda que pele seca não consegue reter sozinha. Aplicar em pele úmida.'},
+        {p:'Eucerin Sun Sensitive Protect FPS 50+',n:'Protetor',why:'Fórmula cremosa sem álcool. Ideal para pele seca e sensível — adiciona hidratação ao invés de ressecar.'},
+        {p:'CeraVe Hydrating Cleanser',n:'Limpador',why:'Leite de limpeza com ceramidas e ácido hialurônico. Limpa sem remover a hidratação natural. SLS-free.'},
+      ],
+      mid:[
+        {p:'La Roche-Posay Lipikar Syndet AP+',n:'Limpador',why:'Syndet (detergente sintético) pH 5,5 com Shea Butter e Niacinamida. Limpa e começa a restaurar a barreira desde a limpeza.'},
+        {p:'Biossance 100% Squalane Oil',n:'Óleo',why:'Esqualano puro derivado de cana-de-açúcar. Oclusivo não comedogênico que sela a hidratação sem peso.'},
+        {p:'Avène Cicalfate+ Restorative Protective Cream',n:'Hidratante',why:'Formulação cicatrizante e restauradora. Indicada para barreiras muito comprometidas. Cobre e protege.'},
+        {p:'Bioderma Atoderm Intensive Baume',n:'Tratamento Noturno',why:'Manteiga intensiva com óleos vegetais para restauração noturna profunda. Funciona como sleeping mask natural.'},
+      ],
+      top:[
+        {p:'Elemis Pro-Collagen Cleansing Balm',n:'Limpador',why:'Bálsamo de limpeza luxuoso com óleos de rosa mosqueta e camomila. Remove completamente sem ressecar pele seca.'},
+        {p:'SkinCeuticals Triple Lipid Restore 2:4:2',n:'Sérum Lipídico',why:'A proporção exata de ceramidas (2%), colesterol (4%) e ácidos graxos (2%) que imita a composição natural da barreira.'},
+        {p:'Heliocare 360 Cream SPF 50+',n:'Protetor',why:'Creme solar completo com tecnologia Fernblock. Proteção máxima com textura nutritiva para pele seca.'},
+        {p:'La Mer Moisturizing Cream',n:'Hidratante Premium',why:'A referência mundial em hidratação intensa. Miracle Broth™ com algas marinhas e minerais. Para casos de pele extremamente seca.'},
+      ],
+    }
+  },
+  normal:{
+    label:'Pele Normal', icon:'◈',
+    tagline:'Perfil equilibrado · Foco em prevenção',
+    desc:'Você tem o tipo de pele mais equilibrado — produção sebácea adequada, barreira cutânea íntegra, boa hidratação natural e tolerância à maioria dos produtos. O foco da sua rotina é manutenção e prevenção de danos futuros, não correção de problemas existentes.',
+    bio:'Pele normal tem equilíbrio entre produção de sebo e hidratação transepidérmica. As glândulas sebáceas funcionam em ritmo adequado, a barreira lipídica está íntegra e o pH mantém-se naturalmente em torno de 4,5-5,5. Esse equilíbrio pode ser comprometido por agressões externas, estresse ou produtos inadequados.',
+    mitos:['Pele normal não precisa de rotina','Quem tem boa pele pode usar qualquer produto','Protetor solar só é necessário na praia'],
+    morningTip:'Vitamina C de manhã e protetor solar são o protocolo anti-aging mais custo-efetivo que existe — mais do que qualquer creme de R$500.',
+    traitsDesc:['Aparência uniforme, sem brilho excessivo nem ressecamento','Poros praticamente invisíveis a olho nu','Raramente reage a produtos comuns — mas atenção ao excesso','Hidratação natural bem distribuída em toda a face'],
+    priorities:[
+      {n:'1. Protetor FPS 50+ diário',d:'O ativo anti-aging mais eficaz. Previne manchas, rugas e câncer.'},
+      {n:'2. Vitamina C pela manhã',d:'Antioxidante + estímulo de colágeno. Par perfeito com o protetor.'},
+      {n:'3. Limpeza suave',d:'Não agredir a barreira que já funciona bem.'},
+      {n:'4. Retinol preventivo (25+ anos)',d:'A evidência mais robusta para anti-aging real.'},
+      {n:'5. Hidratante leve',d:'Manutenção do equilíbrio — não sobrecarregar a pele.'},
+    ],
+    morning:[
+      {n:'Limpador Facial',i:'①',d:'Gel suave · sem agentes agressivos',why:'Limpar sem comprometer o equilíbrio natural da pele. Limpadores fortes em pele normal causam ressecamento desnecessário.'},
+      {n:'Sérum',i:'②',d:'Vitamina C 10–15% · aplicar antes do protetor',why:'Antioxidante que neutraliza radicais livres, estimula colágeno e potencializa o efeito do FPS. Prevenção ativa.'},
+      {n:'Hidratante',i:'③',d:'Emulsão leve com ácido hialurônico',why:'Manutenção do equilíbrio hídrico. Em pele normal, hidratante leve é suficiente — sem necessidade de fórmulas pesadas.'},
+      {n:'Protetor FPS 50+',i:'④',d:'O ativo mais importante da rotina · reaplique a cada 2h',why:'80% do envelhecimento visível é causado por UV. Protetor solar diário é a decisão mais inteligente de skincare.'},
+    ],
+    night:[
+      {n:'Limpador Facial',i:'①',d:'Gel suave ou leite · remover protetor e impurezas',why:'Pele normal tolera bem a limpeza. Remover o protetor à noite é essencial para os ativos noturnos funcionarem.'},
+      {n:'Tratamento',i:'②',d:'Retinol 0,1–0,3% (2–3×/sem) · ou peptídeos (diário)',why:'Retinol é o ativo anti-aging com mais evidência científica. Nos dias sem retinol, peptídeos mantêm o estímulo de colágeno.'},
+      {n:'Hidratante',i:'③',d:'Creme leve a médio · sela os ativos noturnos',why:'Finaliza a rotina e sela os ativos aplicados. Em pele normal, creme leve-médio é suficiente.'},
+    ],
+    notPortrait:'Em pele normal, o foco é não interferir no equilíbrio existente. Retinol e vitamina C não devem ser usados na mesma aplicação — alternância é a estratégia correta. Protetor solar pela manhã é inegociável.',
+    actives:['Vitamina C','Retinol 0,1–0,3%','Peptídeos','Ácido Hialurônico','Niacinamida','Antioxidantes'],
+    activesNot:['Ácido Salicílico diário','AHA em alta frequência','Retinol >0,5% no início','Múltiplos ácidos simultâneos'],
+    activesNotWhy:['Pele normal não tem obstrução de poros — salicílico diário é desnecessário e pode ressecar','Esfoliação excessiva compromete a barreira saudável que você já tem','Alta concentração sem adaptação causa irritação desnecessária — 0,1% já traz resultado','Combinações ácidas sem adaptação comprometem a barreira e causam sensibilidade'],
+    avoid:['Excesso de esfoliação','Múltiplos ácidos simultâneos','Rotinas excessivamente complexas'],
+    erros:['Não usar protetor por "ter boa pele" (prejuízo cumulativo invisível)','Não introduzir retinol preventivo (resultado apenas após 12+ semanas)','Mudar toda a rotina de uma vez (impossível identificar reações)','Copiar rotinas de influencers sem adaptar ao próprio perfil'],
+    prods:{
+      eco:[
+        {p:'The Ordinary Ascorbyl Glucoside Solution 12%',n:'Vitamina C',why:'Vitamina C estável em pH neutro. Não mancha a pele, tolera exposição ao ar. Boa opção inicial para pele normal.'},
+        {p:'Neutrogena Hydro Boost Water Gel',n:'Hidratante',why:'Gel-creme levíssimo com ácido hialurônico. Perfeito para pele normal que não precisa de emolientes pesados.'},
+        {p:'Sundown FPS 70 Ultra',n:'Protetor',why:'Amplo espectro com alta proteção a preço acessível. Textura que funciona bem em pele normal.'},
+        {p:'CeraVe Foaming Facial Cleanser',n:'Limpador',why:'Gel espumante suave com ceramidas. Limpa eficientemente sem comprometer o equilíbrio da pele normal.'},
+      ],
+      mid:[
+        {p:'L\'Oréal Revitalift 12% Pure Vitamin C',n:'Vitamina C',why:'Vitamina C pura (ácido L-ascórbico) a 12% com vitamina E. Fórmula testada com resultados visíveis em 4 semanas.'},
+        {p:'Olay Regenerist Micro-Sculpting Cream',n:'Hidratante',why:'Niacinamida + peptídeos + ácido hialurônico. Hidratação e tratamento anti-aging em um produto para pele normal.'},
+        {p:'Isdin Fusion Water SPF 50',n:'Protetor',why:'Textura de água com alta proteção. Absorção imediata, sem resíduo. Referência para uso diário urbano.'},
+        {p:'The Ordinary Retinol 0,2% in Squalane',n:'Retinol',why:'Concentração ideal para início do uso de retinol. Esqualano na base reduz irritação — perfeito para introdução gradual.'},
+      ],
+      top:[
+        {p:'SkinCeuticals C E Ferulic',n:'Vitamina C',why:'O padrão-ouro em antioxidantes. Vitamina C 15% + vitamina E + ácido ferúlico. Evidência clínica consistente por décadas.'},
+        {p:'The INKEY List Peptide Moisturizer',n:'Hidratante',why:'10 peptídeos diferentes para estimular colágeno de múltiplas formas. Textura leve ideal para pele normal com foco preventivo.'},
+        {p:'EltaMD UV Clear Broad-Spectrum SPF 46',n:'Protetor',why:'Niacinamida + zinco na fórmula. O favorito de dermatologistas norte-americanos. Proteção + tratamento simultâneos.'},
+        {p:'Medik8 Crystal Retinal 3',n:'Retinol Premium',why:'Retinaldeído (forma mais potente e menos irritante que retinol) a concentração 0,03%. Resultados 11× mais rápidos com menos irritação.'},
+      ],
+    }
+  }
+};
+
+const COND = {
+  acne:{label:'Tendência à Acne',cor:[180,60,60],
+    desc:'Processo inflamatório com três fatores: sebo excessivo, células mortas obstruindo poros e bactéria C. acnes. Não é falta de higiene — tem base biológica e responde bem aos ativos certos.',
+    tips:['Dupla limpeza noturna é obrigatória — remove sebo + protetor + impurezas','Ácido salicílico 2% na zona afetada 3×/semana — desobstrói poros de dentro para fora','Nunca apertar — inflamação aprofunda a lesão e cria mancha pós-inflamatória','Niacinamida 10% reduz inflamação, sebum e uniformiza o tom','Zinco PCA tem ação antiséptica e regula sebo'],
+    ativos:['Ácido Salicílico 2%','Niacinamida 10%','Zinco PCA','Ácido Azelaico 10%','Enxofre','Adapaleno 0,1%'],
+    evitar:['Óleos comedogênicos (coco, linhaça)','Cremes muito ricos e oclusivos','Álcool SD em excesso','Maquiagem não-noncomedogênica']},
+  manchas:{label:'Manchas e Hiperpigmentação',cor:[130,90,30],
+    desc:'Produção irregular de melanina causada por UV, inflamação pós-acne ou hormônios. O tratamento requer consistência mínima de 8 semanas — e o protetor solar não é opcional, é o tratamento principal.',
+    tips:['FPS 50+ todo dia, sem exceção — manchas pioram dramaticamente com UV','Vitamina C pela manhã clareia e protege contra novos danos','Ácido tranexâmico e alfa-arbutina à noite inibem a melanina','Reaplicar protetor a cada 2h em exposição direta','Evitar manipulação de lesões — manchas pós-inflamatórias são as mais difíceis de tratar'],
+    ativos:['Vitamina C 10–15%','Ácido Tranexâmico 2–5%','Alfa-arbutina 2%','Niacinamida 5–10%','Ácido Kójico 1%','Retinol'],
+    evitar:['Exposição solar sem protetor (agrava em horas)','Esfoliação física em manchas ativas (dispersa melanina)','Calor excessivo na face']},
+  sensibilidade:{label:'Sensibilidade e Reatividade',cor:[80,80,160],
+    desc:'Barreira cutânea comprometida que permite entrada de irritantes. Manifesta-se como vermelhidão, ardência, coceira após produtos comuns. A abordagem é simplificação — menos produtos, mais efetivos.',
+    tips:['Menos produtos = mais resultado — máximo 4 produtos na rotina','Patch test obrigatório: aplique no pescoço por 48h antes de qualquer produto novo','Fragrância zero — verifique sempre o INCI (lista de ingredientes)','Introduzir um produto por vez, com 2 semanas de intervalo entre cada','Temperatura da água: morna — quente agrava a reatividade'],
+    ativos:['Centella Asiática','Pantenol B5','Alantoína','Ceramidas','Bisabolol','Aloe Vera'],
+    evitar:['Fragrâncias e perfumes','Álcool SD','Múltiplos ácidos juntos','Esfoliantes físicos (grânulos)','Retinol sem adaptação gradual']},
+  desidratacao:{label:'Desidratação Cutânea',cor:[40,100,120],
+    desc:'Falta de água nas camadas superficiais — afeta qualquer tipo de pele, inclusive oleosa. Pele apagada, linhas temporárias visíveis, sensação de "falta de conforto" após lavar.',
+    tips:['Aplicar hidratante em pele levemente úmida — absorção até 3× maior','Hialurônico de múltiplos pesos moleculares para hidratação em camadas','Evitar ar-condicionado prolongado sem reidratação','Beber 2–3L de água por dia — hidratação interna complementa a externa','Oclusivo à noite (esqualano, vaselina) para evitar perda hídrica durante o sono'],
+    ativos:['Ácido Hialurônico (múltiplos pesos)','Glicerina','Beta-Glucana','Uréia 5%','Aloe Vera','Pantenol'],
+    evitar:['Tônicos alcoólicos','Limpeza excessiva (>2×/dia)','Sabões alcalinos','Água muito quente no rosto']},
+  descamacao:{label:'Descamação e Barreira Comprometida',cor:[120,85,50],
+    desc:'A descamação indica barreira lipídica fragilizada ou renovação celular acelerada. Pode ser causada por produtos agressivos, clima frio, ressecamento ou condições como dermatite seborreica. O tratamento envolve restaurar a barreira e remover as escamas de forma gentil.',
+    tips:['Evitar esfoliantes físicos enquanto houver descamação ativa — agrava e irrita','Ceramidas restauram a barreira onde ela está faltando','Ureia 5–10% dissolve escamas por queratólise suave — sem agredir','Aplicar hidratante em pele levemente úmida para máxima absorção','Álcool SD e fragrâncias agravam qualquer descamação — verificar ingredientes'],
+    ativos:['Ceramidas','Uréia 5–10%','Pantenol B5','Ácido Hialurônico','Glicerina','Alantoína'],
+    evitar:['Esfoliantes físicos (grânulos, esponjas)','Sabonetes com SLS','Álcool SD','Retinol em alta concentração','Ácidos em excesso']},
+  envelhecimento:{label:'Sinais de Envelhecimento',cor:[100,70,150],
+    desc:'80% do envelhecimento visível é extrínseco — UV, poluição, tabaco. Há ativos com eficácia comprovada para reversão parcial. A intervenção mais eficaz ainda é a prevenção.',
+    tips:['FPS 50+ diário é o ativo anti-aging mais eficaz que existe — não é propaganda','Vitamina C pela manhã: antioxidante + estimula colágeno de forma direta','Retinol à noite: o ativo mais estudado para anti-aging — mais de 40 anos de evidência','Peptídeos: sem irritação, benefício cumulativo alto ao longo de meses','Dormir 7–8h: GH (hormônio do crescimento) regenera células durante o sono'],
+    ativos:['Retinol 0,1–1%','Vitamina C 10–15%','Peptídeos','Ácido Hialurônico','Resveratrol','Niacinamida'],
+    evitar:['Esfoliação excessiva (fragiliza barreira)','Retinol em alta concentração sem adaptação gradual','Protetor solar com baixo FPS ou sem UVA']},
+  prevencao:{label:'Manutenção Preventiva',cor:[60,120,80],
+    desc:'Pele equilibrada merece rotina preventiva. Estabelecer bons hábitos agora é sempre mais eficaz — e mais barato — do que corrigir danos futuros.',
+    tips:['Vitamina C + FPS 50+ = protocolo anti-aging base. Simples e comprovado.','Retinol preventivo 0,1% a partir dos 25–28 anos — colágeno que não perde > colágeno que tenta recuperar','Consistência de 21 dias > perfeição de 3 dias — rotina simples que você faz todo dia bate rotina complexa que você abandona','Dormir 7–8h: GH regenera células durante o sono — o melhor anti-aging gratuito'],
+    ativos:['Vitamina C 10%','Retinol 0,1%','Peptídeos','Niacinamida','Ácido Hialurônico'],
+    evitar:['Rotinas desnecessariamente complexas (>6 produtos)','Produtos agressivos sem indicação clínica','Mudar de rotina frequentemente sem dar tempo para resultado']},
+};
+
+// ── DICIONÁRIO DE ATIVOS ──────────────────────────────────────
+const ACTIVES_INFO = {
+  'Ácido Salicílico':{conc:'0,5–2%',what:'BHA (beta-hydroxy acid) que penetra no interior do poro e dissolve o excesso de sebo e células mortas que causam cravos.',use:'Após a limpeza noturna. Aplicar na zona afetada com algodão ou diretamente.',freq:'2–3× por semana. Não usar diariamente no início.',},
+  'Niacinamida':{conc:'5–10%',what:'Vitamina B3 multifuncional: regula sebo, minimiza poros, clareia manchas, reduz inflamação e fortalece a barreira.',use:'Sérum após limpeza, antes do hidratante. Manhã e/ou noite.',freq:'1–2× ao dia. Uma das mais seguras — tolerada em qualquer tipo de pele.',},
+  'Zinco PCA':{conc:'1–2%',what:'Mineral com ação antiséptica, anti-inflamatória e sebostática. Reduz a atividade das glândulas sebáceas.',use:'Sérum ou loção após a limpeza. Funciona bem combinado com niacinamida.',freq:'Diariamente. Pode usar manhã e noite sem restrições.',},
+  'Retinol':{conc:'0,1–1%',what:'Derivado da vitamina A. Acelera renovação celular, normaliza queratinização, estimula colágeno e trata acne e fotoenvelhecimento.',use:'Noite, em pele limpa e seca. Começar 1× por semana por 4 semanas, depois 2×, depois 3×.',freq:'Início: 1×/sem. Meta: 2–3×/sem. Nunca usar de manhã sem FPS robusto.',},
+  'Vitamina C':{conc:'10–20%',what:'Antioxidante que neutraliza radicais livres, clareia manchas por inibição da tirosinase e estimula síntese de colágeno diretamente.',use:'Manhã, em pele limpa, antes do protetor solar. Potencializa a ação do FPS.',freq:'1× ao dia, preferencialmente pela manhã.',},
+  'Ácido Hialurônico':{conc:'0,5–2%',what:'Glicosaminoglicano que retém até 1.000× seu peso em água. Hidratação em múltiplas camadas conforme o peso molecular.',use:'Em pele levemente úmida, antes do hidratante. Selar com oclusivo.',freq:'Manhã e noite. Um dos mais seguros — não tem restrição de frequência.',},
+  'Ceramidas':{conc:'0,5–5%',what:'Lipídios que compõem 50% da barreira cutânea. Essenciais para reter água e bloquear entrada de irritantes.',use:'Presente em hidratantes. Aplicar depois dos séruns, antes do protetor.',freq:'Diariamente, manhã e noite. Indispensável para pele seca e sensível.',},
+  'Esqualano':{conc:'100%',what:'Óleo emoliente leve derivado de oliva. Análogo ao esqualeno natural da pele. Não comedogênico.',use:'Após o sérum, antes ou misturado ao hidratante. Ou como oclusivo final à noite.',freq:'Noite principalmente. Pode usar manhã e noite.',},
+  'Uréia':{conc:'5–10%',what:'Queratólito que dissolve células mortas e umectante que retém água. Dupla ação para pele seca e com descamação.',use:'Creme noturno ou loção nas áreas secas e descamativas.',freq:'Noite diariamente. 5% para hidratação, 10%+ para queratólise.',},
+  'Peptídeos':{conc:'variável',what:'Cadeias curtas de aminoácidos que sinalizam para a pele produzir mais colágeno, elastina e outros componentes estruturais.',use:'Sérum após limpeza, antes do hidratante. Funciona bem com HA e niacinamida.',freq:'1–2× ao dia. Sem restrição de frequência — ação cumulativa.',},
+  'Pantenol B5':{conc:'1–5%',what:'Pró-vitamina B5. Acalma, hidrata intensamente e cicatriza microlesões. Fortalece a barreira cutânea.',use:'Hidratante ou sérum calmante. Pode ser o passo principal para pele sensível.',freq:'Diariamente, especialmente em pele irritada, pós-procedimento ou sensível.',},
+  'Centella Asiática':{conc:'variável',what:'Extrato botânico com forte ação cicatrizante, anti-inflamatória e calmante. Reduz vermelhidão e reatividade.',use:'Sérum ou creme pós-procedimento, pós-depilação ou em pele irritada.',freq:'Diariamente. Ideal para pele sensível e reativa como base da rotina.',},
+  'Ácido Azelaico':{conc:'10–20%',what:'Ácido dicarboxílico com tripla ação: antibacteriano, anti-inflamatório e inibidor da tirosinase. Trata acne e manchas.',use:'Noite, após o sérum. A 20% é prescrito — OTC disponível a 10–15%.',freq:'1× ao dia no início, aumentar para 2× conforme tolerância.',},
+  'Alfa-arbutina':{conc:'1–2%',what:'Inibidor da tirosinase que clareia manchas sem irritar. Mais estável e menos agressivo que o ácido kójico.',use:'Sérum após limpeza, antes do hidratante.',freq:'1–2× ao dia. Sem fotossensibilidade — pode usar de manhã e à noite.',},
+  'Ácido Tranexâmico':{conc:'2–5%',what:'Inibe a produção de melanina na via da plasmina. Eficaz em manchas hormonais e pós-inflamatórias — mais tolerado que ácido kójico.',use:'Sérum à noite ou tônico sem enxágue.',freq:'1–2× ao dia. Pode ser usado manhã e noite.',},
+};
+
+// ── DICIONÁRIO EVITAR ─────────────────────────────────────────
+const AVOID_INFO = {
+  'Óleos comedogênicos':   {r:'Bloqueiam a saída do sebo dentro do poro, agravando cravos e acne.',                       alt:'Esqualano ou óleo de jojoba — não comedogênicos'},
+  'Álcool SD em excesso':  {r:'Resseca e irrita, estimulando produção compensatória de mais sebo.',                       alt:'Tônicos sem álcool ou com álcool cetílico (não irritante)'},
+  'Cremes muito ricos':    {r:'Excesso de emolientes obstrui poros em pele já oleosa.',                                    alt:'Gel-creme oil-free ou emulsão leve textura fluida'},
+  'Sabonete corporal no rosto':{r:'pH alcalino (9–10) agride a barreira ácida da pele (pH ideal 4,5–5,5).',              alt:'Gel de limpeza facial com pH 4,5–5,5'},
+  'Adstringentes em toda a face':{r:'Ressecam as bochechas da pele mista, causando descamação e sensibilidade.',          alt:'Usar apenas na zona T com algodão — se necessário'},
+  'Produto muito oleoso global':{r:'A zona T oleosa não precisa de lipídios extras — agrava poros e brilho.',             alt:'Estratégia bizona: gel zona T + creme nas bochechas'},
+  'Sabonetes em barra':    {r:'pH alcalino (9–10) destrói o manto hidrolipídico e fragiliza a barreira.',                alt:'Gel facial com pH adequado — verificar embalagem'},
+  'Álcool SD':             {r:'Remove manto lipídico residual da pele seca, agravando o ressecamento.',                   alt:'Tônicos isentos de álcool ou com álcool graxo'},
+  'SLS (lauril sulfato)':  {r:'Surfactante agressivo que dissolve os lipídios que pele seca já tem pouco.',              alt:'Limpadores com SCI, cocamidopropil betaína ou glucosídeos'},
+  'Retinol sem emoliente': {r:'Retinol puro em pele seca causa descamação e irritação intensa.',                          alt:'Técnica sandwich: hidratante → retinol → hidratante'},
+  'Fragrâncias':           {r:'Causa de alergia cosmética mais comum. Pele sensível e seca não toleram.',                 alt:'Produtos "fragrance-free" — verificar INCI'},
+  'Óleos comedogênicos (coco, linhaça)':{r:'Ácido laúrico do coco e ácido linoleico em excesso obstruem poros acneicos.', alt:'Óleo de jojoba (líquido — tecnicamente uma cera), esqualano'},
+  'Maquiagem não-noncomedogênica':{r:'Bases com lanolina, isopropil miristato e D&C Red corantes agravam acne.',          alt:'Bases oil-free, não-comedogênicas — verificar rótulo'},
+  'Exposição solar sem protetor':{r:'UV é o principal gatilho de melanócitos — manchas pioram em horas de exposição.',    alt:'FPS 50+ UVA/UVB alto, reaplicar a cada 2h'},
+  'Esfoliação física em manchas ativas':{r:'Microabrasão dispersa melanina e causa hiperpigmentação pós-inflamatória.',  alt:'AHA (glicólico, lático) ou enzimas (mamão, abacaxi)'},
+  'Esfoliantes físicos (grânulos, esponjas)':{r:'Microfissuras da abrasão física agravam barreira comprometida.',         alt:'Esfoliação enzimática ou AHA em baixa concentração'},
+  'Excesso de esfoliação': {r:'Barreira comprometida, pele reativa, sensibilidade aumentada.',                            alt:'Máximo 2–3× por semana de esfoliação química'},
+  'Múltiplos ácidos simultâneos':{r:'Combinação AHA+BHA+retinol na mesma aplicação provoca irritação severa.',           alt:'Alternância: AHA segunda, BHA quarta, retinol sexta'},
+  'Rotinas desnecessariamente complexas':{r:'Mais de 6 produtos = maior risco de reação, incompatibilidade e abandono.',  alt:'4 produtos essenciais: limpeza, sérum, hidratante, FPS'},
+};
+
+const SCHEDULE = {
+  oleosa:['Gel + Niacinamida + FPS','Gel + Niacinamida + FPS','Gel + Niacinamida + FPS','Gel + Vit C + FPS','Gel + Niacinamida + FPS','Gel + Vit C + FPS','Gel + Vit C + FPS'],
+  oN:['Dupla Limpeza + Niacinamida','Dupla Limpeza + Ácido Salicílico','Dupla Limpeza + Retinol','Dupla Limpeza + Niacinamida','Dupla Limpeza + Ácido Salicílico','Dupla Limpeza + Retinol','Dupla Limpeza + Descanso'],
+  mista:['Limpeza + Niacinamida + FPS','Limpeza + HA + FPS','Limpeza + Niacinamida + FPS','Limpeza + Vit C + FPS','Limpeza + Niacinamida + FPS','Limpeza + Vit C + FPS','Limpeza + HA + FPS'],
+  mN:['Dupla Limpeza + Niacinamida','Dupla Limpeza + Ácido (ZT)','Dupla Limpeza + Retinol','Dupla Limpeza + Sérum Calmante','Dupla Limpeza + Ácido (ZT)','Dupla Limpeza + Retinol','Limpeza + Máscara Hidratante'],
+  seca:['Limpeza + HA + Creme + FPS','Limpeza + HA + Creme + FPS','Limpeza + Vit C + FPS','Limpeza + HA + Creme + FPS','Limpeza + HA + Creme + FPS','Limpeza + Vit C + FPS','Limpeza + HA + Creme + FPS'],
+  sN:['Limpeza + Ceramidas + Óleo + Creme','Limpeza + Peptídeos + Creme','Limpeza + Ceramidas + Retinol','Limpeza + Peptídeos + Óleo','Limpeza + Ceramidas + Creme','Limpeza + Retinol + Oclusivo','Limpeza + Máscara Hidratante'],
+  normal:['Limpeza + Vit C + FPS','Limpeza + Vit C + FPS','Limpeza + Vit C + FPS','Limpeza + Vit C + FPS','Limpeza + Vit C + FPS','Limpeza + Niacinamida + FPS','Limpeza + Vit C + FPS'],
+  normalN:['Limpeza + Retinol','Limpeza + Peptídeos','Limpeza + Retinol','Limpeza + Peptídeos','Limpeza + Retinol','Limpeza + Peptídeos','Limpeza + Peptídeos (descanso)'],
+};
+const DAYS = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+
+// ── ASSINATURA ────────────────────────────────────────────────
+function buildSignatureDataUrl() {
+  const c = document.createElement('canvas');
+  c.width = 260; c.height = 70;
+  const x = c.getContext('2d');
+  x.clearRect(0,0,260,70);
+  x.strokeStyle = '#1a1a1a';
+  x.lineWidth = 1.7;
+  x.lineCap = 'round';
+  x.lineJoin = 'round';
+
+  // C
+  x.beginPath(); x.moveTo(44,20); x.bezierCurveTo(28,8,4,12,4,32); x.bezierCurveTo(4,52,28,56,44,46); x.stroke();
+  // a
+  x.beginPath(); x.moveTo(48,44); x.bezierCurveTo(42,44,52,20,68,28); x.bezierCurveTo(76,32,74,48,64,50); x.bezierCurveTo(56,52,50,50,48,56); x.stroke();
+  // r
+  x.beginPath(); x.moveTo(52,56); x.lineTo(56,32); x.bezierCurveTo(58,24,68,22,76,28); x.stroke();
+  // o
+  x.beginPath(); x.ellipse(90,38,8,12,0,0,Math.PI*2); x.stroke();
+  // l
+  x.beginPath(); x.moveTo(106,14); x.bezierCurveTo(104,36,102,50,108,56); x.bezierCurveTo(112,60,118,58,120,52); x.stroke();
+  // espaço + M
+  x.beginPath(); x.moveTo(128,52); x.lineTo(130,22); x.bezierCurveTo(132,14,136,14,140,22); x.lineTo(146,40); x.bezierCurveTo(148,46,152,46,156,38); x.lineTo(162,22); x.bezierCurveTo(166,14,170,16,172,26); x.lineTo(174,52); x.stroke();
+  // a
+  x.beginPath(); x.moveTo(178,50); x.bezierCurveTo(172,50,182,26,196,32); x.bezierCurveTo(204,36,202,52,192,54); x.bezierCurveTo(184,56,178,54,176,58); x.stroke();
+  // f
+  x.beginPath(); x.moveTo(204,14); x.bezierCurveTo(210,8,218,12,218,22); x.lineTo(212,56); x.moveTo(202,36); x.lineTo(220,34); x.stroke();
+  // r
+  x.beginPath(); x.moveTo(218,54); x.lineTo(222,32); x.bezierCurveTo(224,24,234,22,240,28); x.stroke();
+  // a final
+  x.beginPath(); x.moveTo(242,52); x.bezierCurveTo(236,52,246,26,258,34); x.bezierCurveTo(264,38,262,52,252,54); x.bezierCurveTo(246,56,240,54,238,58); x.stroke();
+  // flourish
+  x.lineWidth = 1.1;
+  x.beginPath(); x.moveTo(4,64); x.bezierCurveTo(80,60,160,68,264,62); x.stroke();
+
+  return c.toDataURL('image/png');
+}
+
+// ══════════════════════════════════════════════════════════════
+// PDF GENERATOR
+// ══════════════════════════════════════════════════════════════
+async function generatePDFDoc(data) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const ctx = _buildCtx(doc, data);
+  const pn1 = _pdfPages1to10(doc, ctx);
+  _pdfPages11to20(doc, ctx, pn1);
+  return doc;
+}
+
+function _buildCtx(doc, data) {
+  const W=210,H=297,ML=20,MR=20,CW=W-ML-MR;
+  const skin=SKIN[data.profile]||SKIN.mista;
+  const conds=data.conditions.map(k=>COND[k]).filter(Boolean);
+  const fn=data.firstName;
+  const today=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  const sigDataUrl=buildSignatureDataUrl();
+  const DARK=[10,10,10],GOLD=[200,169,110],WHITE=[255,255,255];
+  const CREAM=[248,245,240],GRAY=[130,130,130],TXT=[26,26,26];
+  const rgb=c=>{doc.setTextColor(c[0],c[1],c[2]);};
+  const fill=c=>{doc.setFillColor(c[0],c[1],c[2]);};
+  const stroke=c=>{doc.setDrawColor(c[0],c[1],c[2]);};
+  function R(x,y,w,h,c,s='F'){fill(c);doc.rect(x,y,w,h,s);}
+  function L(x1,y1,x2,y2,c=GOLD,lw=0.3){doc.setLineWidth(lw);stroke(c);doc.line(x1,y1,x2,y2);}
+  function lbl(t,x,y,c=GRAY){rgb(c);doc.setFont('helvetica','bold');doc.setFontSize(6);doc.text(t.toUpperCase(),x,y,{charSpace:1.8});}
+  function body(t,x,y,mw=CW,sz=9,c=TXT){
+    rgb(c);doc.setFont('helvetica','normal');doc.setFontSize(sz);
+    const ls=doc.splitTextToSize(t,mw);doc.text(ls,x,y);return ls.length*(sz*0.46)+1;
+  }
+  function hdr(){
+    R(0,0,W,9,DARK);
+    rgb(GOLD);doc.setFont('helvetica','normal');doc.setFontSize(5.5);
+    doc.text('DRA. CAROL MAFRA · PLANO INTELIGENTE DE SKINCARE',ML,6,{charSpace:1});
+    rgb(GRAY);doc.text(fn.toUpperCase(),W-MR,6,{align:'right',charSpace:1});
+    L(0,9,W,9,DARK,0.1);
+  }
+  function ftr(n){
+    L(ML,H-10,W-MR,H-10,[60,60,60],0.15);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6);
+    doc.text('Material educativo · Não substitui consulta médica presencial',ML,H-6);
+    doc.text(String(n),W-MR,H-6,{align:'right'});
+  }
+  return {W,H,ML,MR,CW,skin,conds,fn,today,sigDataUrl,DARK,GOLD,WHITE,CREAM,GRAY,TXT,rgb,fill,stroke,R,L,lbl,body,hdr,ftr};
+}
+
+function _pdfPages1to10(doc, ctx) {
+  const {W,H,ML,MR,CW,skin,conds,fn,today,DARK,GOLD,WHITE,CREAM,GRAY,TXT,rgb,fill,stroke,R,L,lbl,body,hdr,ftr}=ctx;
+  let pn=1;
+
+  // ══ P1 CAPA ══
+  R(0,0,W,H,DARK); R(0,0,4,H,GOLD); L(16,20,W-16,20,GOLD,0.5);
+  lbl('Dra. Carol Mafra',ML+2,32,GOLD);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6);
+  doc.text('HARMONIZAÇÃO OROFACIAL',ML+2,39,{charSpace:1.5});
+
+  // título
+  rgb([90,80,60]);doc.setFont('times','normal');doc.setFontSize(8);
+  doc.text('PLANO INTELIGENTE DE',W/2,88,{align:'center',charSpace:3});
+  rgb(WHITE);doc.setFont('times','italic');doc.setFontSize(38);
+  doc.text('Skincare',W/2,108,{align:'center'});
+  L(55,116,W-55,116,GOLD,0.4);
+
+  // destinatário
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7);
+  doc.text('PREPARADO EXCLUSIVAMENTE PARA',W/2,130,{align:'center',charSpace:2});
+  rgb(WHITE);doc.setFont('times','italic');doc.setFontSize(26);
+  doc.text(fn,W/2,146,{align:'center'});
+
+  // badge perfil
+  R(W/2-38,156,76,18,[25,20,14]);
+  stroke(GOLD);doc.setLineWidth(0.3);doc.rect(W/2-38,156,76,18);
+  rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7);
+  doc.text(skin.label.toUpperCase(),W/2,164,{align:'center',charSpace:2});
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);
+  doc.text(skin.tagline,W/2,170,{align:'center'});
+
+  // condições
+  if(conds.length){
+    let cx=W/2-(conds.length*28)/2;
+    conds.forEach(c=>{
+      rgb([90,80,60]);doc.setFont('helvetica','normal');doc.setFontSize(6);
+      doc.text('✦  '+c.label,cx+(28/2),185,{align:'center'});
+      cx+=28;
+    });
+  }
+
+  // data
+  L(55,255,W-55,255,[35,30,20],0.2);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);
+  doc.text(today,W/2,262,{align:'center'});
+  doc.text('guia educativo e orientativo · não constitui diagnóstico médico',W/2,268,{align:'center'});
+
+  // ══ P2 BOAS-VINDAS ══
+  doc.addPage(); pn++; hdr();
+  let y=18;
+  rgb(GOLD);doc.setFont('times','italic');doc.setFontSize(20);
+  doc.text('Seja muito bem-vind',ML,y);
+  rgb(GOLD);doc.setFont('times','italic');doc.setFontSize(20);
+  doc.text('Seja muito bem-vinda(o)',ML,y); y+=9;
+  rgb(TXT);doc.setFont('times','normal');doc.setFontSize(13);
+  doc.text('ao seu Guia Completo do Skincare Inteligente.',ML,y); y+=8;
+  L(ML,y,W-MR,y,GOLD,0.4); y+=7;
+  y+=body(`${fn}, parabéns por investir no cuidado com a sua pele.\n\nEste guia foi montado com base nas suas respostas sobre tipo de pele, hábitos, preocupações e histórico. Não é um material genérico — cada recomendação foi feita para o seu perfil específico.\n\nSkincare eficiente não precisa ser caro nem complicado. Precisa ser correto. E é exatamente isso que você tem nas próximas páginas.`,ML,y,CW,9,TXT);
+  y+=8;
+  // Índice
+  R(ML,y,CW,9,DARK);
+  rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7);
+  doc.text('O QUE VOCÊ ENCONTRA NESTE GUIA',ML+4,y+6.5,{charSpace:1}); y+=11;
+  const idx=['Seu perfil de pele identificado e explicado','Condições específicas detectadas no quiz','Prioridades da sua rotina personalizada','Rotina completa da manhã — passo a passo','Rotina completa da noite — passo a passo','Ordem correta de aplicação dos produtos','Guia completo dos ativos do seu perfil','O que evitar e por quê','Produtos recomendados — Econômico, Intermediário e Premium','Cronograma semanal de aplicações','Checklist diário e erros mais comuns','Quando procurar um dermatologista','Considerações finais e agradecimento'];
+  idx.forEach((s,i)=>{
+    R(ML,y,CW,8,i%2===0?CREAM:WHITE);
+    rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7);
+    doc.text(String(i+1).padStart(2,'0'),ML+3,y+5.8);
+    rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+    doc.text(s,ML+12,y+5.8); y+=8;
+  });
+  y+=5;
+  R(ML,y,CW,14,[255,250,240]);stroke(GOLD);doc.setLineWidth(0.3);doc.rect(ML,y,CW,14);R(ML,y,3,14,GOLD);
+  rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('Importante:',ML+7,y+5.5);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text('Material educativo e orientativo. Não substitui avaliação clínica presencial.',ML+7,y+11);
+  ftr(pn);
+
+  // ══ P3 PERFIL IDENTIFICADO ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('SEU PERFIL DE PELE IDENTIFICADO',ML,y,GOLD); y+=7;
+  R(ML,y,CW,16,[20,16,10]);stroke(GOLD);doc.setLineWidth(0.3);doc.rect(ML,y,CW,16);R(ML,y,5,16,GOLD);
+  rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(skin.label.toUpperCase(),ML+10,y+7,{charSpace:2});
+  rgb(WHITE);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text(skin.tagline,ML+10,y+13); y+=19;
+  lbl('O QUE SIGNIFICA TER '+skin.label.toUpperCase(),ML,y,GOLD); y+=6;
+  y+=body(skin.desc,ML,y,CW,9,TXT); y+=5;
+  L(ML,y,W-MR,y,[220,210,200],0.2); y+=6;
+  // Traits cards 2 colunas
+  lbl('CARACTERÍSTICAS DO SEU TIPO DE PELE',ML,y,GOLD); y+=6;
+  const hcol=(CW-6)/2;
+  skin.traits.forEach((t,i)=>{
+    const cx=ML+(i%2)*(hcol+6),cy=y+Math.floor(i/2)*18;
+    R(cx,cy,hcol,16,CREAM);stroke([200,190,175]);doc.setLineWidth(0.15);doc.rect(cx,cy,hcol,16);
+    fill(GOLD);doc.circle(cx+5,cy+8,1.5,'F');
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(8);
+    const ls=doc.splitTextToSize(t,hcol-12);doc.text(ls,cx+10,cy+6);
+    if(skin.traitsDesc&&skin.traitsDesc[i]){rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);const dl=doc.splitTextToSize(skin.traitsDesc[i],hcol-12);doc.text(dl,cx+10,cy+11);}
+  });
+  y+=Math.ceil(skin.traits.length/2)*18+5;
+  L(ML,y,W-MR,y,[220,210,200],0.2); y+=6;
+  // Biologia
+  lbl('POR QUE SUA PELE É ASSIM',ML,y,GOLD); y+=6;
+  y+=body(skin.bio,ML,y,CW,9,TXT); y+=6;
+  // Mitos
+  if(skin.mitos&&y<H-55){
+    lbl('MITOS SOBRE '+skin.label.toUpperCase(),ML,y,[180,60,60]); y+=6;
+    skin.mitos.forEach(m=>{
+      R(ML,y,CW,10,[255,247,247]);stroke([220,180,180]);doc.setLineWidth(0.1);doc.rect(ML,y,CW,10);
+      rgb([180,60,60]);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('✗',ML+4,y+8);
+      rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text(m,ML+12,y+7); y+=11;
+    });
+  }
+  ftr(pn);
+
+  // ══ P4 CONDIÇÕES OVERVIEW ══
+  if(conds.length){
+    doc.addPage(); pn++; hdr(); y=18;
+    lbl('CONDIÇÕES IDENTIFICADAS NO SEU QUIZ',ML,y,GOLD); y+=7;
+    y+=body(`Com base nas suas respostas, identificamos ${conds.length===1?'uma condição específica':conds.length+' condições'} que complementam seu tipo de pele e guiam cuidados adicionais na sua rotina.`,ML,y,CW,9,GRAY); y+=7;
+    conds.forEach((cond,ci)=>{
+      const cc=cond.cor||[100,100,100];
+      const cLt=cc.map(x=>Math.min(255,Math.floor(x*0.25+220)));
+      R(ML,y,CW,38,cLt);stroke(cc);doc.setLineWidth(0.4);doc.rect(ML,y,CW,38);R(ML,y,6,38,cc);
+      rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text(String(ci+1),ML+3,y+23,{align:'center'});
+      rgb(cc.map(x=>Math.max(0,x-50)));doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text(cond.label,ML+11,y+11);
+      rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(8);
+      const dl=doc.splitTextToSize(cond.desc,CW-16);doc.text(dl,ML+11,y+18); y+=42;
+    });
+    ftr(pn);
+
+    // ══ P5-P7 CADA CONDIÇÃO ══
+    conds.forEach((cond,ci)=>{
+      doc.addPage(); pn++; hdr(); y=18;
+      const cc=cond.cor||[100,100,100];
+      lbl(`CONDIÇÃO ${ci+1} DE ${conds.length}`,ML,y,GRAY); y+=6;
+      R(ML,y,CW,12,cc);rgb(WHITE);doc.setFont('times','italic');doc.setFontSize(13);doc.text(cond.label,ML+5,y+9); y+=15;
+      y+=body(cond.desc,ML,y,CW,9,TXT); y+=5;
+      L(ML,y,W-MR,y,[220,210,200],0.2); y+=6;
+      lbl('O QUE FAZER',ML,y,cc); y+=6;
+      (cond.tips||[]).forEach(tip=>{
+        fill(cc);doc.circle(ML+2.5,y-1.5,1.2,'F');
+        rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+        const ls=doc.splitTextToSize(tip,CW-8);doc.text(ls,ML+7,y); y+=ls.length*4.2+2;
+      });
+      y+=4;L(ML,y,W-MR,y,[220,210,200],0.2);y+=6;
+      lbl('ATIVOS INDICADOS',ML,y,[60,140,80]); y+=6;
+      const aColW=(CW-6)/3;
+      (cond.ativos||[]).forEach((a,ai)=>{
+        const ax=ML+(ai%3)*(aColW+3),ay=y+Math.floor(ai/3)*13;
+        R(ax,ay,aColW,11,ai%2===0?CREAM:WHITE);stroke([200,195,185]);doc.setLineWidth(0.1);doc.rect(ax,ay,aColW,11);
+        fill([60,140,80]);doc.circle(ax+3.5,ay+5.5,1.2,'F');
+        rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text(a,ax+7,ay+7);
+      });
+      y+=Math.ceil((cond.ativos||[]).length/3)*13+6;
+      if(cond.evitar&&cond.evitar.length){
+        lbl('EVITAR',ML,y,[180,60,60]); y+=6;
+        (cond.evitar||[]).forEach((ev,ei)=>{
+          R(ML,y,CW,10,[255,245,245]);stroke([220,180,180]);doc.setLineWidth(0.1);doc.rect(ML,y,CW,10);
+          rgb([180,60,60]);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('✗',ML+3,y+7.5);
+          rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text(ev,ML+10,y+7); y+=11;
+        });
+      }
+      ftr(pn);
+    });
+  }
+
+  // ══ P PRIORIDADES ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('PRIORIDADES DA SUA ROTINA',ML,y,GOLD); y+=7;
+  y+=body(`Para pele ${skin.label.toLowerCase()}, a ordem de prioridade abaixo define o que faz mais diferença. Comece pelos primeiros itens e adicione os seguintes conforme sua pele se adaptar.`,ML,y,CW,9,GRAY); y+=6;
+  (skin.priorities||[]).forEach((p,pi)=>{
+    R(ML,y,CW,20,pi%2===0?CREAM:WHITE);stroke([210,200,185]);doc.setLineWidth(0.15);doc.rect(ML,y,CW,20);
+    fill(GOLD);doc.circle(ML+9,y+10,7,'F');
+    rgb(DARK);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text(String(pi+1),ML+9,y+13.5,{align:'center'});
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(p.n.replace(/^\d+\.\s*/,''),ML+22,y+8);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+    const dl=doc.splitTextToSize(p.d,CW-26);doc.text(dl,ML+22,y+14); y+=21;
+  });
+  y+=5;
+  R(ML,y,CW,12,[255,250,235]);stroke(GOLD);doc.setLineWidth(0.25);doc.rect(ML,y,CW,12);R(ML,y,3,12,GOLD);
+  rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('Regra de ouro:',ML+7,y+5);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text('Mantenha a rotina básica por 21 dias antes de adicionar qualquer novo ativo.',ML+7,y+10);
+  ftr(pn);
+
+  // ══ P ROTINA MANHÃ ══
+  doc.addPage(); pn++; hdr(); y=18;
+  R(ML,y,CW,10,[20,20,40]);
+  rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('☀  ROTINA COMPLETA DA MANHÃ',ML+5,y+7,{charSpace:1});
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.text('Duração estimada: 3–5 minutos',W-MR,y+7,{align:'right'}); y+=13;
+  skin.morning.forEach((step,si)=>{
+    R(ML,y,CW,28,si%2===0?CREAM:WHITE);stroke([210,200,185]);doc.setLineWidth(0.15);doc.rect(ML,y,CW,28);
+    R(ML,y,12,28,si%2===0?GOLD:[180,155,90]);
+    rgb(DARK);doc.setFont('times','bold');doc.setFontSize(14);doc.text(step.i,ML+6,y+18,{align:'center'});
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(step.n,ML+16,y+9);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+    const dl=doc.splitTextToSize(step.d,CW-20);doc.text(dl,ML+16,y+15);
+    if(step.why){rgb([140,110,50]);doc.setFont('helvetica','italic');doc.setFontSize(7);const wl=doc.splitTextToSize('Por que: '+step.why,CW-20);doc.text(wl,ML+16,y+22);}
+    y+=29;
+  });
+  if(skin.morningTip){
+    y+=2;R(ML,y,CW,14,[255,250,235]);stroke(GOLD);doc.setLineWidth(0.25);doc.rect(ML,y,CW,14);R(ML,y,3,14,GOLD);
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('Dica:',ML+7,y+5.5);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+    const tl=doc.splitTextToSize(skin.morningTip,CW-18);doc.text(tl,ML+22,y+5.5);
+  }
+  ftr(pn);
+
+  // ══ P ROTINA NOITE ══
+  doc.addPage(); pn++; hdr(); y=18;
+  R(ML,y,CW,10,[8,8,30]);
+  rgb([140,140,220]);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('☽  ROTINA COMPLETA DA NOITE',ML+5,y+7,{charSpace:1});
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.text('Duração estimada: 5–8 minutos',W-MR,y+7,{align:'right'}); y+=13;
+  skin.night.forEach((step,si)=>{
+    R(ML,y,CW,28,si%2===0?[234,234,248]:WHITE);stroke([210,210,225]);doc.setLineWidth(0.15);doc.rect(ML,y,CW,28);
+    R(ML,y,12,28,[70,70,140]);
+    rgb(WHITE);doc.setFont('times','bold');doc.setFontSize(14);doc.text(step.i,ML+6,y+18,{align:'center'});
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(step.n,ML+16,y+9);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+    const dl=doc.splitTextToSize(step.d,CW-20);doc.text(dl,ML+16,y+15);
+    if(step.why){rgb([100,100,170]);doc.setFont('helvetica','italic');doc.setFontSize(7);const wl=doc.splitTextToSize('Por que: '+step.why,CW-20);doc.text(wl,ML+16,y+22);}
+    y+=29;
+  });
+  y+=5;
+  R(ML,y,CW,20,[235,235,252]);stroke([120,120,180]);doc.setLineWidth(0.3);doc.rect(ML,y,CW,20);R(ML,y,3,20,[100,100,180]);
+  rgb([60,60,140]);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('Sobre os tratamentos noturnos:',ML+7,y+7);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+  const nt=skin.notPortrait||'Os tratamentos noturnos agem durante o sono e devem ser removidos pela manhã com a limpeza. O protetor solar de manhã é sempre obrigatório.';
+  const nl=doc.splitTextToSize(nt,CW-14);doc.text(nl,ML+7,y+13);
+  ftr(pn);
+  return pn;
+}
+
+function _pdfPages11to20(doc, ctx, startPn) {
+  const {W,H,ML,MR,CW,skin,conds,fn,today,sigDataUrl,DARK,GOLD,WHITE,CREAM,GRAY,TXT,rgb,fill,stroke,R,L,lbl,body,hdr,ftr}=ctx;
+  let pn=startPn||10;
+  let y;
+
+  // ══ P ORDEM DE APLICAÇÃO ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('ORDEM CORRETA DE APLICAÇÃO',ML,y,GOLD); y+=7;
+  y+=body('A regra de ouro: do mais fino (aquoso) para o mais grosso (oleoso). Isso garante penetração correta sem bloquear o próximo produto.',ML,y,CW,9,TXT); y+=6;
+  // Manhã flow
+  R(ML,y,CW,9,DARK);rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('☀  SEQUÊNCIA DA MANHÃ',ML+5,y+6.5); y+=11;
+  const mFlow=[{n:'① Limpador Facial',d:'Base limpa para tudo funcionar'},{n:'② Sérum',d:'Ativo mais concentrado — penetra primeiro'},{n:'③ Hidratante',d:'Sela e potencializa os ativos'},{n:'④ Protetor FPS 50+',d:'Sempre o último — não misturar'}];
+  const fColW=(CW-9)/4;
+  mFlow.forEach((s,si)=>{
+    const fx=ML+si*(fColW+3);
+    R(fx,y,fColW,26,CREAM);stroke(GOLD);doc.setLineWidth(0.15);doc.rect(fx,y,fColW,26);
+    R(fx,y,fColW,8,GOLD);
+    rgb(DARK);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text(s.n,fx+3,y+6);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7);
+    const dl=doc.splitTextToSize(s.d,fColW-5);doc.text(dl,fx+3,y+14);
+    if(si<3){rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text('→',fx+fColW+0.5,y+16);}
+  });
+  y+=30;
+  // Noite flow
+  R(ML,y,CW,9,[8,8,30]);rgb([140,140,220]);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('☽  SEQUÊNCIA DA NOITE',ML+5,y+6.5); y+=11;
+  const nFlow=[{n:'① Limpador Facial',d:'Remove protetor e impurezas do dia'},{n:'② Tratamento',d:'Retinol/ácido/sérum — máxima penetração'},{n:'③ Hidratante',d:'Sela o tratamento e repara a barreira'}];
+  const nfColW=(CW-6)/3;
+  nFlow.forEach((s,si)=>{
+    const fx=ML+si*(nfColW+3);
+    R(fx,y,nfColW,26,[230,230,248]);stroke([120,120,180]);doc.setLineWidth(0.15);doc.rect(fx,y,nfColW,26);
+    R(fx,y,nfColW,8,[70,70,140]);
+    rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text(s.n,fx+3,y+6);
+    rgb([60,60,100]);doc.setFont('helvetica','normal');doc.setFontSize(7);
+    const dl=doc.splitTextToSize(s.d,nfColW-5);doc.text(dl,fx+3,y+14);
+    if(si<2){rgb([120,120,180]);doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text('→',fx+nfColW+0.5,y+16);}
+  });
+  y+=30;
+  y+=4;
+  R(ML,y,CW,24,[255,250,235]);stroke(GOLD);doc.setLineWidth(0.25);doc.rect(ML,y,CW,24);R(ML,y,3,24,GOLD);
+  rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('Regras importantes:',ML+7,y+6);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+  doc.text('• Aguarde 1–2 minutos entre cada produto para absorção adequada.',ML+7,y+12);
+  doc.text('• Os tratamentos noturnos são removidos pela manhã com a limpeza. O protetor solar de manhã é sempre obrigatório.',ML+7,y+18);
+  ftr(pn);
+
+  // ROTINAS em 2 colunas
+  // ══ P GUIA DOS ATIVOS ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('GUIA COMPLETO DOS SEUS ATIVOS',ML,y,GOLD); y+=7;
+  const allActives=[...new Set([...skin.actives,...conds.flatMap(c=>c.ativos||[])])].slice(0,8);
+  allActives.forEach((aName,ai)=>{
+    const info=ACTIVES_INFO[aName]||{conc:'',what:'Ingrediente ativo para cuidados com a pele.',use:'Conforme indicação.',freq:'Conforme tolerância.'};
+    R(ML,y,CW,30,ai%2===0?CREAM:WHITE);stroke([210,200,185]);doc.setLineWidth(0.15);doc.rect(ML,y,CW,30);
+    R(ML,y,CW,9,DARK);
+    rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(aName,ML+5,y+6.5);
+    if(info.conc){rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.text('Conc.: '+info.conc,W-MR,y+6.5,{align:'right'});}
+    const ic=(CW-4)/3;
+    ['O que é','Como usar','Frequência'].forEach((lb,li)=>{
+      const lx=ML+li*(ic+2);
+      rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(6);doc.text(lb.toUpperCase(),lx+4,y+14,{charSpace:0.5});
+      rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+      const vl=doc.splitTextToSize([info.what,info.use,info.freq][li],ic-6);doc.text(vl,lx+4,y+19);
+    });
+    y+=31;
+    if(y>H-55&&ai<allActives.length-1){ftr(pn);doc.addPage();pn++;hdr();y=18;}
+  });
+  ftr(pn);
+
+  // ══ P ATIVOS NÃO PRIORITÁRIOS ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('O QUE EVITAR AGORA — E POR QUÊ',ML,y,[180,60,60]); y+=7;
+  y+=body('Alguns ingredientes e hábitos parecem boa ideia mas podem atrapalhar sua rotina neste momento. Não significa que são ruins — apenas que não são prioridade para o seu perfil agora.',ML,y,CW,9,GRAY); y+=6;
+  const avoidNames=[...(skin.activesNot||[])];
+  const avoidWhy=[...(skin.activesNotWhy||[])];
+  if(avoidNames.length){
+    lbl('ATIVOS NÃO PRIORITÁRIOS PARA SEU PERFIL',ML,y,GOLD); y+=6;
+    avoidNames.forEach((av,avi)=>{
+      R(ML,y,CW,18,[255,247,247]);stroke([220,180,180]);doc.setLineWidth(0.2);doc.rect(ML,y,CW,18);R(ML,y,6,18,[180,60,60]);
+      rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('✗',ML+3,y+12,{align:'center'});
+      rgb([150,30,30]);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(av,ML+11,y+7);
+      rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+      const wl=doc.splitTextToSize(avoidWhy[avi]||'Não é prioridade para o seu perfil neste momento.',CW-16);doc.text(wl,ML+11,y+13);
+      y+=19;
+    });
+    y+=4;
+  }
+  // Evitar da pele
+  const allAvoid=[...new Set([...skin.avoid,...conds.flatMap(c=>c.evitar||[])])];
+  if(allAvoid.length){
+    lbl('INGREDIENTES E HÁBITOS A EVITAR',ML,y,[180,60,60]); y+=6;
+    allAvoid.forEach((av,avi)=>{
+      const info=AVOID_INFO[av]||{r:'Pode prejudicar seu perfil de pele.',alt:''};
+      R(ML,y,CW,16,avi%2===0?[255,246,246]:WHITE);stroke([220,180,180]);doc.setLineWidth(0.1);doc.rect(ML,y,CW,16);R(ML,y,4,16,[180,60,60]);
+      rgb([150,30,30]);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text(av,ML+8,y+6);
+      rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text(info.r,ML+8,y+11);
+      if(info.alt){rgb([60,140,80]);doc.setFont('helvetica','italic');doc.setFontSize(6.5);doc.text('Alt: '+info.alt,W-MR,y+11,{align:'right'});}
+      y+=17;
+      if(y>H-45&&avi<allAvoid.length-1){ftr(pn);doc.addPage();pn++;hdr();y=18;}
+    });
+  }
+  ftr(pn);
+
+  // ══ P PRODUTOS ECO ══
+  doc.addPage(); pn++; hdr(); y=18;
+  R(ML,y,CW,12,[40,80,50]);rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('💚  PRODUTOS RECOMENDADOS — ECONÔMICO',ML+5,y+8.5); y+=15;
+  y+=body('Excelente custo-benefício. Ativos de qualidade a preço acessível.',ML,y,CW,9,GRAY); y+=6;
+  (skin.prods.eco||[]).forEach((p,pi)=>{
+    R(ML,y,CW,28,pi%2===0?CREAM:WHITE);stroke([200,220,200]);doc.setLineWidth(0.2);doc.rect(ML,y,CW,28);R(ML,y,8,28,[40,100,60]);
+    fill(WHITE);doc.circle(ML+4,y+14,3.5,'F');
+    rgb([40,100,60]);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(String(pi+1),ML+4,y+16.5,{align:'center'});
+    rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text(p.n,ML+12,y+8);
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(p.p,ML+12,y+14);
+    if(p.why){rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);const wl=doc.splitTextToSize(p.why,CW-18);doc.text(wl,ML+12,y+20);}
+    y+=29;
+  });
+  ftr(pn);
+
+  // ══ P PRODUTOS INTERMEDIÁRIO ══
+  doc.addPage(); pn++; hdr(); y=18;
+  R(ML,y,CW,12,[40,60,120]);rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('💙  PRODUTOS RECOMENDADOS — INTERMEDIÁRIO',ML+5,y+8.5); y+=15;
+  y+=body('Marcas farmacêuticas reconhecidas. Formulações testadas dermatologicamente.',ML,y,CW,9,GRAY); y+=6;
+  (skin.prods.mid||[]).forEach((p,pi)=>{
+    R(ML,y,CW,28,pi%2===0?CREAM:WHITE);stroke([190,200,225]);doc.setLineWidth(0.2);doc.rect(ML,y,CW,28);R(ML,y,8,28,[50,80,160]);
+    fill(WHITE);doc.circle(ML+4,y+14,3.5,'F');
+    rgb([50,80,160]);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(String(pi+1),ML+4,y+16.5,{align:'center'});
+    rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text(p.n,ML+12,y+8);
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(p.p,ML+12,y+14);
+    if(p.why){rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);const wl=doc.splitTextToSize(p.why,CW-18);doc.text(wl,ML+12,y+20);}
+    y+=29;
+  });
+  ftr(pn);
+
+  // ══ P PRODUTOS PREMIUM ══
+  doc.addPage(); pn++; hdr(); y=18;
+  R(ML,y,CW,12,[100,70,20]);rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('👑  PRODUTOS RECOMENDADOS — PREMIUM',ML+5,y+8.5); y+=15;
+  y+=body('Alta performance com tecnologias avançadas. Resultados otimizados e formulações exclusivas.',ML,y,CW,9,GRAY); y+=6;
+  (skin.prods.top||[]).forEach((p,pi)=>{
+    R(ML,y,CW,28,pi%2===0?CREAM:WHITE);stroke([220,190,130]);doc.setLineWidth(0.2);doc.rect(ML,y,CW,28);R(ML,y,8,28,GOLD);
+    fill(DARK);doc.circle(ML+4,y+14,3.5,'F');
+    rgb(DARK);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(String(pi+1),ML+4,y+16.5,{align:'center'});
+    rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text(p.n,ML+12,y+8);
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(p.p,ML+12,y+14);
+    if(p.why){rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);const wl=doc.splitTextToSize(p.why,CW-18);doc.text(wl,ML+12,y+20);}
+    y+=29;
+  });
+  ftr(pn);
+
+  // ══ P CRONOGRAMA ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('SEU CRONOGRAMA SEMANAL',ML,y,GOLD); y+=7;
+  const mArr=SCHEDULE[data.profile]||SCHEDULE.mista;
+  const nArr=SCHEDULE[data.profile+'N']||SCHEDULE.mistaN||SCHEDULE.mN||[];
+  R(ML,y,CW,9,DARK);
+  const tcols=[22,84,84]; let tcx=ML;
+  ['DIA','MANHÃ','NOITE'].forEach((h,i)=>{
+    rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.text(h,tcx+4,y+6,{charSpace:1.2});tcx+=tcols[i];
+  });
+  y+=9;
+  DAYS.forEach((d,i)=>{
+    R(ML,y,CW,15,i%2===0?CREAM:WHITE);stroke([215,208,195]);doc.setLineWidth(0.15);doc.rect(ML,y,CW,15);
+    if(i>=5)R(ML,y,3,15,GOLD);
+    rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text(d,ML+(i>=5?6:4),y+10);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+    const ml=doc.splitTextToSize(mArr[i]||'',82);doc.text(ml,ML+tcols[0]+4,y+(15-ml.length*4.2)/2+3.5);
+    const nl=doc.splitTextToSize(nArr[i]||'',82);doc.text(nl,ML+tcols[0]+tcols[1]+4,y+(15-nl.length*4.2)/2+3.5);
+    y+=15;
+  });
+  y+=5;R(ML,y,CW,12,[255,250,235]);stroke(GOLD);doc.setLineWidth(0.25);doc.rect(ML,y,CW,12);R(ML,y,3,12,GOLD);
+  rgb(TXT);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('Dica de consistência:',ML+7,y+5);
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text('21 dias de rotina consistente criam o hábito. Resultados visíveis em 4 a 8 semanas.',ML+7,y+10);
+  ftr(pn);
+
+  // ══ P CHECKLIST + ERROS ══
+  doc.addPage(); pn++; hdr(); y=18;
+  const hcol2=(CW-6)/2;
+  lbl('CHECKLIST DIÁRIO',ML,y,GOLD); lbl('ERROS MAIS COMUNS',ML+hcol2+6,y,[180,60,60]); y+=8;
+  // Checklist manhã
+  let yL=y, yR=y;
+  R(ML,yL,hcol2,8,DARK);rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text('☀  MANHÃ',ML+4,yL+6);yL+=10;
+  ['Limpeza suave','Sérum ou ativo principal','Hidratante','Protetor FPS 50+','Reaplicar protetor em exposição'].forEach(c=>{
+    R(ML,yL,hcol2,9,CREAM);stroke([210,200,185]);doc.setLineWidth(0.1);doc.rect(ML,yL,hcol2,9);
+    stroke([180,170,150]);doc.setLineWidth(0.4);doc.rect(ML+4,yL+2.5,4,4);
+    rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text(c,ML+11,yL+6.5);yL+=10;
+  });
+  yL+=3;
+  R(ML,yL,hcol2,8,[8,8,30]);rgb([140,140,220]);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text('☽  NOITE',ML+4,yL+6);yL+=10;
+  ['Pré-limpeza (remover protetor)','Limpeza com gel suave','Ativo de tratamento (conforme dia)','Hidratante noturno','Oclusivo (opcional, 2-3×/sem)'].forEach(c=>{
+    R(ML,yL,hcol2,9,WHITE);stroke([210,200,185]);doc.setLineWidth(0.1);doc.rect(ML,yL,hcol2,9);
+    stroke([180,170,150]);doc.setLineWidth(0.4);doc.rect(ML+4,yL+2.5,4,4);
+    rgb(TXT);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text(c,ML+11,yL+6.5);yL+=10;
+  });
+  // Erros
+  const errItems=[
+    {e:'Pular o protetor solar',r:'Piora manchas e acelera envelhecimento'},
+    {e:'Testar muitos produtos ao mesmo tempo',r:'Impossível identificar o que causou reação'},
+    {e:'Esperar resultado em menos de 3 semanas',r:'Ativos precisam de 4-8 semanas para agir'},
+    {e:'Comprar por indicação sem analisar o perfil',r:'O que funciona para outra pessoa pode piorar para você'},
+    {e:'Não hidratar por ter pele oleosa',r:'Pele desidratada produz ainda mais sebo'},
+    {e:'Usar água muito quente no rosto',r:'Remove o manto lipídico e fragiliza a barreira'},
+    ...(skin.erros||[]).map(e=>({e,r:''})).slice(0,2),
+  ];
+  errItems.slice(0,7).forEach((item,ei)=>{
+    const ex=ML+hcol2+6;
+    R(ex,yR,hcol2,16,[255,246,246]);stroke([220,180,180]);doc.setLineWidth(0.1);doc.rect(ex,yR,hcol2,16);R(ex,yR,4,16,[180,60,60]);
+    rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('✗',ex+2,yR+10.5,{align:'center'});
+    rgb([150,30,30]);doc.setFont('helvetica','bold');doc.setFontSize(7.5);
+    const el=doc.splitTextToSize(item.e,hcol2-10);doc.text(el,ex+8,yR+5.5);
+    if(item.r){rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6.5);const rl=doc.splitTextToSize(item.r,hcol2-10);doc.text(rl,ex+8,yR+10.5);}
+    yR+=17;
+  });
+  ftr(pn);
+
+  // ══ P QUANDO CONSULTAR DERMATOLOGISTA ══
+  doc.addPage(); pn++; hdr(); y=18;
+  lbl('QUANDO PROCURAR UM DERMATOLOGISTA',ML,y,[180,60,60]); y+=7;
+  y+=body('Este guia é educativo e orientativo. Para as situações abaixo, recomendamos fortemente avaliação presencial com um dermatologista:',ML,y,CW,9,TXT); y+=7;
+  [{s:'Acne grau 3 ou 4',d:'Nódulos, cistos ou acne que não responde a ativos OTC após 8 semanas de uso correto.'},{s:'Manchas que mudam de forma ou cor',d:'Sempre requer avaliação — pode indicar lesão que precisa de biópsia.'},{s:'Reações alérgicas frequentes',d:'Vermelhidão, ardência ou descamação intensa após múltiplos produtos.'},{s:'Rosácea não controlada',d:'Vermelhidão persistente com vasos visíveis ou pápulas — requer tratamento prescrito.'},{s:'Dermatite seborreica ou atópica',d:'Descamação com inflamação e coceira — requer diagnóstico diferencial.'},{s:'Melasma confirmado',d:'Hiperpigmentação profunda que não melhora com protetor + vitamina C após 3 meses.'},{s:'Pele extremamente sensível a tudo',d:'Pode ser comprometimento severo da barreira ou condição autoimune.'}].forEach((item,di)=>{
+    R(ML,y,CW,22,di%2===0?[255,247,247]:WHITE);stroke([220,180,180]);doc.setLineWidth(0.15);doc.rect(ML,y,CW,22);
+    fill([180,60,60]);doc.circle(ML+5,y+11,4,'F');
+    rgb(WHITE);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('!',ML+5,y+13.5,{align:'center'});
+    rgb([150,30,30]);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(item.s,ML+13,y+8);
+    rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8);
+    const dl=doc.splitTextToSize(item.d,CW-18);doc.text(dl,ML+13,y+14); y+=23;
+  });
+  ftr(pn);
+
+  // ══ P FINAL — CONSIDERAÇÕES + AGRADECIMENTO ══
+  doc.addPage(); pn++;
+  R(0,0,W,H,DARK);R(0,0,4,H,GOLD);L(16,20,W-16,20,GOLD,0.4);
+  rgb(WHITE);doc.setFont('times','italic');doc.setFontSize(9);doc.text('CONSIDERAÇÕES FINAIS',W/2,38,{align:'center',charSpace:2.5});
+  doc.setFontSize(22);doc.text(`${fn}, você está pronta.`,W/2,54,{align:'center'});
+  L(55,60,W-55,60,GOLD,0.35);
+  const msg=`Você dedicou tempo para entender a sua pele. Isso já é diferente da maioria.\n\nSeu perfil de ${skin.label}${conds.length?' com '+conds.map(c=>c.label.toLowerCase()).join(' e '):''} tem protocolo, tem ativo certo e tem resultado possível.\n\nComece pela rotina básica — limpeza, hidratação e protetor solar. Mantenha por 21 dias antes de adicionar qualquer ativo novo. A consistência importa mais do que a perfeição.\n\nNão compare sua pele com a de outra pessoa. Cada pele tem sua história. A sua rotina foi montada para você.\n\nSe tiver dúvidas ao longo do caminho, pode me chamar. Estou aqui.`;
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+  const mL=doc.splitTextToSize(msg,CW-10);doc.text(mL,W/2,72,{align:'center'});
+  const signY=72+mL.length*4.3+12;
+  L(W/2-30,signY,W/2+30,signY,GOLD,0.3);
+  try{doc.addImage(sigDataUrl,'PNG',W/2-32,signY+2,64,20);}catch(e){}
+  rgb(WHITE);doc.setFont('helvetica','normal');doc.setFontSize(7);doc.text('Dra. Carol Mafra',W/2,signY+27,{align:'center'});
+  const waY=signY+36;
+  R(W/2-40,waY,80,14,[25,20,14]);stroke(GOLD);doc.setLineWidth(0.3);doc.rect(W/2-40,waY,80,14);
+  rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text('wa.me/5533998514322',W/2,waY+9,{align:'center',charSpace:0.5});
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6);
+  doc.text('Material educativo e orientativo · Não constitui diagnóstico, prescrição ou avaliação clínica',W/2,H-18,{align:'center'});
+  doc.text('Dados tratados em conformidade com a LGPD (Lei 13.709/2018)',W/2,H-13,{align:'center'});
+}
+  }catch(e){}
+  rgb(WHITE);doc.setFont('helvetica','normal');doc.setFontSize(7);
+  doc.text('Dra. Carol Mafra',W/2,signY+27,{align:'center'});
+
+  // WhatsApp no final
+  const waY=signY+38;
+  R(W/2-40,waY,80,14,[25,20,14]);
+  stroke(GOLD);doc.setLineWidth(0.3);doc.rect(W/2-40,waY,80,14);
+  rgb(GOLD);doc.setFont('helvetica','bold');doc.setFontSize(7);
+  doc.text('wa.me/5533998514322',W/2,waY+9,{align:'center',charSpace:0.5});
+
+  rgb(GRAY);doc.setFont('helvetica','normal');doc.setFontSize(6);
+  doc.text('Material educativo e orientativo · Não constitui diagnóstico, prescrição ou avaliação clínica',W/2,H-18,{align:'center'});
+  doc.text('Dados tratados em conformidade com a LGPD (Lei 13.709/2018)',W/2,H-13,{align:'center'});
+}
+</script>
+</body>
+</html>

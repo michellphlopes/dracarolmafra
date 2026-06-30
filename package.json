@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "motion": "^12.41.0",
+    "resend": "^6.16.0"
+  }
+}

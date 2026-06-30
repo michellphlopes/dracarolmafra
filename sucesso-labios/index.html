@@ -2,76 +2,312 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2933605756976484');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2933605756976484&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xee2975rv9");
+</script>
+<!-- End Microsoft Clarity -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagamento Confirmado — Dra. Carol Mafra</title>
+<title>Sua Análise Está Quase Começando — Dra. Carol Mafra</title>
+<link rel="icon" type="image/png" href="/carol-favicon.png">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --bg: #0a0a0a; --accent: #c8a96e; --text: #e8e0d4; }
-  body { background: var(--bg); color: var(--text); font-family: Georgia, serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 20px; text-align: center; }
+  :root { --bg: #0a0a0a; --bg2: #111; --bg3: #1a1a1a; --accent: #c8a96e; --text: #f0f0f0; --muted: #888; --border: rgba(255,255,255,0.08); }
 
-  .logo { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); opacity: 0.65; margin-bottom: 48px; }
+  body { background: var(--bg); color: var(--text); font-family: Georgia, serif; min-height: 100vh; }
 
-  .badge-confirmed { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,169,110,0.08); border: 1px solid rgba(200,169,110,0.2); border-radius: 100px; padding: 6px 16px; font-family: sans-serif; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
+  nav {
+    height: 64px; display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--border); padding: 0 40px;
+  }
+  .nav-logo { text-decoration: none; display: flex; flex-direction: column; align-items: center; line-height: 1; }
+  .nav-logo-name { font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text); }
+  .nav-logo-reg { font-size: 0.58rem; letter-spacing: 2px; color: var(--accent); font-family: sans-serif; margin-top: 3px; }
 
-  h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 400; line-height: 1.3; margin-bottom: 16px; }
+  main { max-width: 700px; margin: 0 auto; padding: 64px 24px 96px; text-align: center; }
 
-  .subtitle { font-family: sans-serif; font-size: 1rem; color: #bbb; line-height: 1.7; max-width: 460px; margin: 0 auto 12px; }
+  .badge-confirmed {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,169,110,0.08); border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 100px; padding: 6px 18px;
+    font-family: sans-serif; font-size: 0.68rem; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 32px;
+  }
 
-  .instruction { font-family: sans-serif; font-size: 0.9rem; color: #888; line-height: 1.8; max-width: 440px; margin: 0 auto 40px; }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 400; line-height: 1.3; margin-bottom: 16px; }
 
-  .divider { width: 40px; height: 1px; background: var(--accent); opacity: 0.3; margin: 0 auto 40px; }
+  .subtitle {
+    font-family: sans-serif; font-size: 0.95rem; color: rgba(255,255,255,0.65);
+    line-height: 1.8; max-width: 480px; margin: 0 auto 48px;
+  }
 
-  .steps { list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 400px; margin: 0 auto 48px; text-align: left; font-family: sans-serif; font-size: 0.9rem; color: #888; }
-  .steps li { display: flex; align-items: flex-start; gap: 14px; line-height: 1.5; }
-  .steps li.active { color: var(--text); }
-  .step-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.2); }
-  .steps li.done .step-icon { background: rgba(200,169,110,0.15); border-color: var(--accent); color: var(--accent); }
+  .divider { width: 40px; height: 1px; background: var(--accent); opacity: 0.3; margin: 0 auto 48px; }
 
+  /* PHOTO GUIDE */
+  .guide-label {
+    font-family: sans-serif; font-size: 0.65rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent); opacity: 0.7; margin-bottom: 8px;
+  }
+  .guide-subtitle {
+    font-family: sans-serif; font-size: 0.82rem; color: var(--muted);
+    line-height: 1.6; margin-bottom: 32px;
+  }
+
+  .photo-guide {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .pg-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 24px 16px 20px; display: flex; flex-direction: column;
+    align-items: center; gap: 12px; transition: border-color 0.2s;
+  }
+  .pg-card:hover { border-color: rgba(200,169,110,0.25); }
+
+  .pg-step {
+    font-family: sans-serif; font-size: 0.6rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent); opacity: 0.6;
+  }
+
+  .pg-illustration { width: 100px; height: 100px; }
+
+  .pg-title {
+    font-size: 0.9rem; font-weight: 400; letter-spacing: 0.3px;
+  }
+  .pg-desc {
+    font-family: sans-serif; font-size: 0.72rem; color: var(--muted);
+    line-height: 1.5; text-align: center;
+  }
+
+  /* TIPS */
+  .tips-block {
+    background: var(--bg2); border: 1px solid var(--border);
+    padding: 24px 28px; margin-bottom: 48px; text-align: left;
+  }
+  .tips-title {
+    font-family: sans-serif; font-size: 0.65rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent); opacity: 0.7;
+    margin-bottom: 16px; text-align: center;
+  }
+  .tips-list {
+    list-style: none; display: flex; flex-direction: column; gap: 10px;
+  }
+  .tips-list li {
+    font-family: sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.65);
+    line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;
+  }
+  .tips-list li::before {
+    content: '·'; color: var(--accent); font-size: 1.2rem; line-height: 1.1; flex-shrink: 0;
+  }
+
+  /* WA BUTTON */
   .btn-whats {
     display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-    background: #25D366; color: #fff; font-family: sans-serif; font-size: 1rem; font-weight: 700;
-    padding: 18px 36px; border-radius: 4px; text-decoration: none; cursor: pointer; border: none;
+    background: #25D366; color: #fff; font-family: sans-serif;
+    font-size: 1rem; font-weight: 700; padding: 18px 40px;
+    text-decoration: none; cursor: pointer; border: none;
     transition: opacity .2s, transform .1s; letter-spacing: 0.3px;
+    width: 100%; max-width: 420px;
   }
-  .btn-whats:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-whats:hover { opacity: 0.92; transform: translateY(-1px); }
   .btn-whats:active { transform: translateY(0); }
-  .btn-whats:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  .post-click { display: none; margin-top: 28px; max-width: 440px; }
+  .post-click { display: none; margin-top: 24px; }
   .post-click.visible { display: block; }
-  .post-click-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.25); border-radius: 4px; padding: 12px 20px; font-family: sans-serif; font-size: 0.85rem; color: #25D366; margin-bottom: 16px; }
-  .post-click-text { font-family: sans-serif; font-size: 0.83rem; color: #666; line-height: 1.8; }
+  .post-click-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.2);
+    padding: 10px 20px; font-family: sans-serif; font-size: 0.82rem; color: #25D366;
+    margin-bottom: 12px;
+  }
+  .post-click-text {
+    font-family: sans-serif; font-size: 0.8rem; color: var(--muted); line-height: 1.8;
+  }
 
-  .footer-link { margin-top: 60px; font-family: sans-serif; font-size: 0.76rem; color: #333; }
-  .footer-link a { color: #555; text-decoration: none; }
-  .footer-link a:hover { color: var(--accent); }
+  footer {
+    border-top: 1px solid var(--border); padding: 28px; text-align: center;
+    font-family: sans-serif; font-size: 0.7rem; color: #444;
+  }
+  footer a { color: #555; text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    .photo-guide { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .pg-card { padding: 18px 10px 14px; }
+    .pg-illustration { width: 80px; height: 80px; }
+    main { padding: 48px 16px 72px; }
+  }
 </style>
 </head>
 <body>
 
-<p class="logo">Dra. Carol Mafra · CRO-MG 66417</p>
+<nav>
+  <a class="nav-logo" href="/labios">
+    <span class="nav-logo-name">Dra. Carol Mafra</span>
+    <span class="nav-logo-reg">CRO-MG 66417</span>
+  </a>
+</nav>
 
-<div class="badge-confirmed" id="t-badge">✔ Pagamento confirmado</div>
+<main>
 
-<h1 id="t-title">Pagamento confirmado!</h1>
-<p class="subtitle" id="t-subtitle">Agora falta apenas um último passo para iniciarmos sua análise personalizada.</p>
-<p class="instruction" id="t-instruction">Clique no botão abaixo para abrir uma conversa com a Dra. Carol Mafra no WhatsApp. Uma mensagem será preenchida automaticamente. Em seguida, basta enviar as fotos solicitadas para que sua análise possa ser iniciada.</p>
+  <div class="badge-confirmed" id="t-badge">✔ Pagamento confirmado</div>
 
-<div class="divider"></div>
+  <h1 id="t-title">Sua análise personalizada<br>está quase começando.</h1>
+  <p class="subtitle" id="t-subtitle">Agora prepare suas fotos e envie pelo WhatsApp. Veja abaixo como tirar cada uma corretamente.</p>
 
-<ul class="steps" id="t-steps"></ul>
+  <div class="divider"></div>
 
-<button class="btn-whats" id="whatsBtn" onclick="openWhats()">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  <span id="t-btn">Enviar Minhas Fotos Agora</span>
-</button>
+  <p class="guide-label" id="t-guide-label">Como tirar as fotos</p>
+  <p class="guide-subtitle" id="t-guide-subtitle">Você vai enviar 4 fotos pelo WhatsApp. Siga as instruções abaixo para cada uma.</p>
 
-<div class="post-click" id="postClick">
-  <div class="post-click-badge" id="t-post-badge">✅ WhatsApp aberto com sucesso!</div>
-  <p class="post-click-text" id="t-post-text">Agora basta enviar suas fotos na conversa iniciada para que a Dra. Carol Mafra possa começar sua análise personalizada.<br><br>Assim que todas as fotos forem recebidas, sua análise entrará na fila de atendimento.</p>
-</div>
+  <div class="photo-guide">
 
-<div class="footer-link"><a href="/labios" id="t-back">← Voltar para a página</a></div>
+    <!-- FRENTE -->
+    <div class="pg-card">
+      <p class="pg-step" id="t-step1">Foto 1</p>
+      <svg class="pg-illustration" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- neck -->
+        <rect x="42" y="68" width="16" height="16" rx="2" fill="#2a2a2a" stroke="rgba(200,169,110,0.3)" stroke-width="1"/>
+        <!-- head -->
+        <ellipse cx="50" cy="44" rx="22" ry="26" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1.2"/>
+        <!-- eyes -->
+        <ellipse cx="43" cy="40" rx="3" ry="2" fill="#c8a96e" opacity="0.7"/>
+        <ellipse cx="57" cy="40" rx="3" ry="2" fill="#c8a96e" opacity="0.7"/>
+        <!-- nose -->
+        <path d="M50 43 L47.5 51 Q50 53 52.5 51 Z" fill="none" stroke="rgba(200,169,110,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- mouth neutral -->
+        <path d="M44 57 Q50 59 56 57" stroke="rgba(200,169,110,0.6)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+        <!-- ears -->
+        <ellipse cx="28" cy="44" rx="3.5" ry="5" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1"/>
+        <ellipse cx="72" cy="44" rx="3.5" ry="5" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1"/>
+        <!-- center line -->
+        <line x1="50" y1="22" x2="50" y2="18" stroke="#c8a96e" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+        <line x1="50" y1="70" x2="50" y2="74" stroke="#c8a96e" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+        <!-- arrows indicating centered -->
+        <path d="M14 44 L20 44" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+        <path d="M80 44 L86 44" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <p class="pg-title" id="t-p1">Frente</p>
+      <p class="pg-desc" id="t-p1d">Olhe diretamente para a câmera. Rosto centralizado e reto.</p>
+    </div>
+
+    <!-- PERFIL DIREITO -->
+    <div class="pg-card">
+      <p class="pg-step" id="t-step2">Foto 2</p>
+      <svg class="pg-illustration" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- neck -->
+        <rect x="46" y="68" width="14" height="16" rx="2" fill="#2a2a2a" stroke="rgba(200,169,110,0.3)" stroke-width="1"/>
+        <!-- head profile right - facing right -->
+        <path d="M50 20 Q72 20 76 44 Q78 56 72 66 Q65 74 50 70 Z" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1.2"/>
+        <!-- ear left side (back) -->
+        <ellipse cx="50" cy="44" rx="3.5" ry="5" fill="#1e1e1e" stroke="rgba(200,169,110,0.4)" stroke-width="1"/>
+        <!-- eye -->
+        <ellipse cx="66" cy="40" rx="3" ry="2" fill="#c8a96e" opacity="0.7"/>
+        <!-- nose profile -->
+        <path d="M74 46 Q78 44 76 52 Q74 55 72 54" fill="none" stroke="rgba(200,169,110,0.5)" stroke-width="1" stroke-linecap="round"/>
+        <!-- mouth profile -->
+        <path d="M70 58 Q72 56 74 57" fill="none" stroke="rgba(200,169,110,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- rotation arrow -->
+        <path d="M30 44 Q32 30 44 26" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" fill="none" stroke-dasharray="3 2" opacity="0.6"/>
+        <path d="M44 26 L40 24 M44 26 L43 30" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <p class="pg-title" id="t-p2">Perfil Direito</p>
+      <p class="pg-desc" id="t-p2d">Gire o rosto completamente para a direita. Orelha visível.</p>
+    </div>
+
+    <!-- PERFIL ESQUERDO -->
+    <div class="pg-card">
+      <p class="pg-step" id="t-step3">Foto 3</p>
+      <svg class="pg-illustration" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- neck -->
+        <rect x="40" y="68" width="14" height="16" rx="2" fill="#2a2a2a" stroke="rgba(200,169,110,0.3)" stroke-width="1"/>
+        <!-- head profile left - facing left -->
+        <path d="M50 20 Q28 20 24 44 Q22 56 28 66 Q35 74 50 70 Z" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1.2"/>
+        <!-- ear right side (back) -->
+        <ellipse cx="50" cy="44" rx="3.5" ry="5" fill="#1e1e1e" stroke="rgba(200,169,110,0.4)" stroke-width="1"/>
+        <!-- eye -->
+        <ellipse cx="34" cy="40" rx="3" ry="2" fill="#c8a96e" opacity="0.7"/>
+        <!-- nose profile -->
+        <path d="M26 46 Q22 44 24 52 Q26 55 28 54" fill="none" stroke="rgba(200,169,110,0.5)" stroke-width="1" stroke-linecap="round"/>
+        <!-- mouth profile -->
+        <path d="M30 58 Q28 56 26 57" fill="none" stroke="rgba(200,169,110,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- rotation arrow -->
+        <path d="M70 44 Q68 30 56 26" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" fill="none" stroke-dasharray="3 2" opacity="0.6"/>
+        <path d="M56 26 L60 24 M56 26 L57 30" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <p class="pg-title" id="t-p3">Perfil Esquerdo</p>
+      <p class="pg-desc" id="t-p3d">Gire o rosto completamente para a esquerda. Orelha visível.</p>
+    </div>
+
+    <!-- SORRINDO -->
+    <div class="pg-card">
+      <p class="pg-step" id="t-step4">Foto 4</p>
+      <svg class="pg-illustration" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- neck -->
+        <rect x="42" y="68" width="16" height="16" rx="2" fill="#2a2a2a" stroke="rgba(200,169,110,0.3)" stroke-width="1"/>
+        <!-- head -->
+        <ellipse cx="50" cy="44" rx="22" ry="26" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1.2"/>
+        <!-- eyes with slight squint (smiling) -->
+        <path d="M40 39 Q43 37 46 39" fill="none" stroke="#c8a96e" stroke-width="1.4" stroke-linecap="round" opacity="0.8"/>
+        <path d="M54 39 Q57 37 60 39" fill="none" stroke="#c8a96e" stroke-width="1.4" stroke-linecap="round" opacity="0.8"/>
+        <!-- nose -->
+        <path d="M50 43 L47.5 51 Q50 53 52.5 51 Z" fill="none" stroke="rgba(200,169,110,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- big smile / open mouth -->
+        <path d="M43 56 Q50 65 57 56" fill="#0a0a0a" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- teeth suggestion -->
+        <path d="M44.5 57 Q50 62 55.5 57" fill="rgba(255,255,255,0.15)" stroke="none"/>
+        <!-- ears -->
+        <ellipse cx="28" cy="44" rx="3.5" ry="5" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1"/>
+        <ellipse cx="72" cy="44" rx="3.5" ry="5" fill="#1e1e1e" stroke="#c8a96e" stroke-width="1"/>
+        <!-- cheek glow -->
+        <ellipse cx="38" cy="54" rx="5" ry="3" fill="rgba(200,169,110,0.06)"/>
+        <ellipse cx="62" cy="54" rx="5" ry="3" fill="rgba(200,169,110,0.06)"/>
+      </svg>
+      <p class="pg-title" id="t-p4">Sorrindo</p>
+      <p class="pg-desc" id="t-p4d">Sorriso natural com os lábios visíveis.</p>
+    </div>
+
+  </div>
+
+  <div class="tips-block">
+    <p class="tips-title" id="t-tips-title">Para uma análise mais precisa</p>
+    <ul class="tips-list" id="t-tips"></ul>
+  </div>
+
+  <button class="btn-whats" id="whatsBtn" onclick="openWhats()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span id="t-btn">📲 Já tirei as fotos — abrir WhatsApp</span>
+  </button>
+
+  <div class="post-click" id="postClick">
+    <div class="post-click-badge" id="t-post-badge">✅ WhatsApp aberto com sucesso!</div>
+    <p class="post-click-text" id="t-post-text">Agora basta enviar as 4 fotos na conversa aberta.<br>A Dra. Carol iniciará sua análise assim que receber as imagens.</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="/labios">← Voltar para a página</a>
+  &nbsp;·&nbsp;
+  <a href="/privacidade">Privacidade</a>
+  &nbsp;·&nbsp;
+  <a href="/termos">Termos</a>
+  <br><br>
+  © 2025 Dra. Carol Mafra · CRO-MG 66417
+</footer>
 
 <script>
 const WHATS = '5533998514322';
@@ -79,136 +315,160 @@ const WHATS = '5533998514322';
 const i18n = {
   pt: {
     badge: '✔ Pagamento confirmado',
-    title: 'Pagamento confirmado!',
-    subtitle: 'Agora falta apenas um último passo para iniciarmos sua análise personalizada.',
-    instruction: 'Clique no botão abaixo para abrir uma conversa com a Dra. Carol Mafra no WhatsApp. Uma mensagem será preenchida automaticamente. Em seguida, basta enviar as fotos solicitadas para que sua análise possa ser iniciada.',
-    steps: [
-      { icon: '✔', text: 'Pagamento confirmado.', done: true },
-      { icon: '📷', text: 'Envie suas fotos pelo WhatsApp.', done: false },
-      { icon: '👩‍⚕️', text: 'A Dra. Carol realizará sua análise personalizada.', done: false },
-      { icon: '📄', text: 'Você receberá seu relatório em até 3 dias úteis.', done: false },
-    ],
-    btn: 'Enviar Minhas Fotos Agora',
+    title: 'Sua análise personalizada<br>está quase começando.',
+    subtitle: 'Agora prepare suas fotos e envie pelo WhatsApp. Veja abaixo como tirar cada uma corretamente.',
+    guideLabel: 'Como tirar as fotos',
+    guideSubtitle: 'Você vai enviar 4 fotos pelo WhatsApp. Siga as instruções abaixo para cada uma.',
+    step1: 'Foto 1', step2: 'Foto 2', step3: 'Foto 3', step4: 'Foto 4',
+    p1: 'Frente', p1d: 'Olhe diretamente para a câmera. Rosto centralizado e reto.',
+    p2: 'Perfil Direito', p2d: 'Gire o rosto completamente para a direita. Orelha visível.',
+    p3: 'Perfil Esquerdo', p3d: 'Gire o rosto completamente para a esquerda. Orelha visível.',
+    p4: 'Sorrindo', p4d: 'Sorriso natural com os lábios visíveis.',
+    tipsTitle: 'Para uma análise mais precisa',
+    tips: ['Sem filtros ou edições', 'Boa iluminação natural (evite contra-luz)', 'Rosto totalmente visível, sem óculos', 'Cabelo preso, se possível', 'Evite maquiagem muito carregada', 'Expressão neutra nas fotos de frente e perfil'],
+    btn: '📲 Já tirei as fotos — abrir WhatsApp',
     postBadge: '✅ WhatsApp aberto com sucesso!',
-    postText: 'Agora basta enviar suas fotos na conversa iniciada para que a Dra. Carol Mafra possa começar sua análise personalizada.\n\nAssim que todas as fotos forem recebidas, sua análise entrará na fila de atendimento.',
-    back: '← Voltar para a página',
-    waMsg: (pedido) => `Olá! Acabei de concluir minha compra da Avaliação Personalizada Labial.\n\nNome: \nE-mail: \nNúmero do pedido: ${pedido}\n\nGostaria de iniciar minha análise.`,
+    postText: 'Agora basta enviar as 4 fotos na conversa aberta.\nA Dra. Carol iniciará sua análise assim que receber as imagens.',
+    waMsg: (plano) => `Olá, Dra. Carol! Acabei de concluir meu pagamento da avaliação personalizada.\n\nPlano: ${plano}\n\nVou enviar as fotos agora para iniciar minha análise. 😊`,
   },
   en: {
     badge: '✔ Payment confirmed',
-    title: 'Payment confirmed!',
-    subtitle: 'There is just one last step to start your personalized analysis.',
-    instruction: 'Click the button below to open a conversation with Dr. Carol Mafra on WhatsApp. A message will be pre-filled automatically. Then just send the requested photos so your analysis can begin.',
-    steps: [
-      { icon: '✔', text: 'Payment confirmed.', done: true },
-      { icon: '📷', text: 'Send your photos via WhatsApp.', done: false },
-      { icon: '👩‍⚕️', text: 'Dr. Carol will perform your personalized analysis.', done: false },
-      { icon: '📄', text: 'You will receive your report within 3 business days.', done: false },
-    ],
-    btn: 'Send My Photos Now',
+    title: 'Your personalized analysis<br>is about to begin.',
+    subtitle: 'Now prepare your photos and send them via WhatsApp. See below how to take each one correctly.',
+    guideLabel: 'How to take the photos',
+    guideSubtitle: 'You will send 4 photos via WhatsApp. Follow the instructions below for each one.',
+    step1: 'Photo 1', step2: 'Photo 2', step3: 'Photo 3', step4: 'Photo 4',
+    p1: 'Front', p1d: 'Look directly at the camera. Face centered and straight.',
+    p2: 'Right Profile', p2d: 'Turn your face completely to the right. Ear visible.',
+    p3: 'Left Profile', p3d: 'Turn your face completely to the left. Ear visible.',
+    p4: 'Smiling', p4d: 'Natural smile with lips visible.',
+    tipsTitle: 'For a more accurate analysis',
+    tips: ['No filters or edits', 'Good natural lighting (avoid backlighting)', 'Face fully visible, no glasses', 'Hair pulled back if possible', 'Avoid heavy makeup', 'Neutral expression for front and profile photos'],
+    btn: '📲 Photos ready — open WhatsApp',
     postBadge: '✅ WhatsApp opened successfully!',
-    postText: 'Now just send your photos in the conversation started so Dr. Carol Mafra can begin your personalized analysis.\n\nOnce all photos are received, your analysis will enter the queue.',
-    back: '← Back to the page',
-    waMsg: (pedido) => `Hello! I just completed my purchase of the Personalized Lip Assessment.\n\nName: \nEmail: \nOrder number: ${pedido}\n\nI would like to start my analysis.`,
+    postText: 'Now just send the 4 photos in the conversation.\nDr. Carol will begin your analysis as soon as she receives them.',
+    waMsg: (plano) => `Hello Dr. Carol! I just completed my payment for the personalized assessment.\n\nPlan: ${plano}\n\nI'll send the photos now to start my analysis. 😊`,
   },
   es: {
     badge: '✔ Pago confirmado',
-    title: '¡Pago confirmado!',
-    subtitle: 'Solo falta un último paso para iniciar tu análisis personalizado.',
-    instruction: 'Haz clic en el botón de abajo para abrir una conversación con la Dra. Carol Mafra en WhatsApp. Un mensaje se completará automáticamente. Luego solo envía las fotos solicitadas para que tu análisis pueda comenzar.',
-    steps: [
-      { icon: '✔', text: 'Pago confirmado.', done: true },
-      { icon: '📷', text: 'Envía tus fotos por WhatsApp.', done: false },
-      { icon: '👩‍⚕️', text: 'La Dra. Carol realizará tu análisis personalizado.', done: false },
-      { icon: '📄', text: 'Recibirás tu informe en hasta 3 días hábiles.', done: false },
-    ],
-    btn: 'Enviar Mis Fotos Ahora',
+    title: 'Tu análisis personalizado<br>está a punto de comenzar.',
+    subtitle: 'Ahora prepara tus fotos y envíalas por WhatsApp. Mira abajo cómo tomarlas correctamente.',
+    guideLabel: 'Cómo tomar las fotos',
+    guideSubtitle: 'Enviarás 4 fotos por WhatsApp. Sigue las instrucciones para cada una.',
+    step1: 'Foto 1', step2: 'Foto 2', step3: 'Foto 3', step4: 'Foto 4',
+    p1: 'Frente', p1d: 'Mira directamente a la cámara. Rostro centrado y recto.',
+    p2: 'Perfil Derecho', p2d: 'Gira el rostro completamente hacia la derecha. Oreja visible.',
+    p3: 'Perfil Izquierdo', p3d: 'Gira el rostro completamente hacia la izquierda. Oreja visible.',
+    p4: 'Sonriendo', p4d: 'Sonrisa natural con los labios visibles.',
+    tipsTitle: 'Para un análisis más preciso',
+    tips: ['Sin filtros ni ediciones', 'Buena luz natural (evita el contraluz)', 'Rostro completamente visible, sin anteojos', 'Cabello recogido si es posible', 'Evita el maquillaje muy cargado', 'Expresión neutra en las fotos de frente y perfil'],
+    btn: '📲 Ya tengo las fotos — abrir WhatsApp',
     postBadge: '✅ ¡WhatsApp abierto con éxito!',
-    postText: 'Ahora solo envía tus fotos en la conversación iniciada para que la Dra. Carol Mafra pueda comenzar tu análisis personalizado.\n\nUna vez recibidas todas las fotos, tu análisis entrará en la cola de atención.',
-    back: '← Volver a la página',
-    waMsg: (pedido) => `¡Hola! Acabo de completar mi compra de la Evaluación Personalizada Labial.\n\nNombre: \nCorreo: \nNúmero de pedido: ${pedido}\n\nMe gustaría iniciar mi análisis.`,
+    postText: 'Ahora solo envía las 4 fotos en la conversación.\nLa Dra. Carol iniciará tu análisis en cuanto reciba las imágenes.',
+    waMsg: (plano) => `¡Hola Dra. Carol! Acabo de completar mi pago de la evaluación personalizada.\n\nPlan: ${plano}\n\nVoy a enviar las fotos ahora para iniciar mi análisis. 😊`,
   },
   fr: {
     badge: '✔ Paiement confirmé',
-    title: 'Paiement confirmé !',
-    subtitle: 'Il ne reste qu\'une dernière étape pour commencer votre analyse personnalisée.',
-    instruction: 'Cliquez sur le bouton ci-dessous pour ouvrir une conversation avec la Dr. Carol Mafra sur WhatsApp. Un message sera pré-rempli automatiquement. Envoyez ensuite les photos demandées pour que votre analyse puisse commencer.',
-    steps: [
-      { icon: '✔', text: 'Paiement confirmé.', done: true },
-      { icon: '📷', text: 'Envoyez vos photos via WhatsApp.', done: false },
-      { icon: '👩‍⚕️', text: 'La Dr. Carol effectuera votre analyse personnalisée.', done: false },
-      { icon: '📄', text: 'Vous recevrez votre rapport en 3 jours ouvrés.', done: false },
-    ],
-    btn: 'Envoyer Mes Photos Maintenant',
+    title: 'Votre analyse personnalisée<br>est sur le point de commencer.',
+    subtitle: 'Préparez vos photos et envoyez-les via WhatsApp. Voyez ci-dessous comment prendre chacune correctement.',
+    guideLabel: 'Comment prendre les photos',
+    guideSubtitle: 'Vous enverrez 4 photos via WhatsApp. Suivez les instructions pour chacune.',
+    step1: 'Photo 1', step2: 'Photo 2', step3: 'Photo 3', step4: 'Photo 4',
+    p1: 'Face', p1d: 'Regardez directement la caméra. Visage centré et droit.',
+    p2: 'Profil Droit', p2d: 'Tournez le visage entièrement vers la droite. Oreille visible.',
+    p3: 'Profil Gauche', p3d: 'Tournez le visage entièrement vers la gauche. Oreille visible.',
+    p4: 'En souriant', p4d: 'Sourire naturel avec les lèvres visibles.',
+    tipsTitle: 'Pour une analyse plus précise',
+    tips: ['Sans filtres ni retouches', 'Bonne lumière naturelle (évitez le contre-jour)', 'Visage entièrement visible, sans lunettes', 'Cheveux attachés si possible', 'Évitez le maquillage trop chargé', 'Expression neutre pour les photos de face et de profil'],
+    btn: '📲 Photos prêtes — ouvrir WhatsApp',
     postBadge: '✅ WhatsApp ouvert avec succès !',
-    postText: 'Envoyez maintenant vos photos dans la conversation ouverte pour que la Dr. Carol Mafra puisse commencer votre analyse personnalisée.\n\nUne fois toutes les photos reçues, votre analyse entrera dans la file d\'attente.',
-    back: '← Retour à la page',
-    waMsg: (pedido) => `Bonjour ! Je viens de finaliser mon achat de l'Évaluation Personnalisée des Lèvres.\n\nNom : \nE-mail : \nNuméro de commande : ${pedido}\n\nJe souhaite commencer mon analyse.`,
+    postText: 'Envoyez maintenant les 4 photos dans la conversation.\nLa Dr. Carol commencera votre analyse dès réception.',
+    waMsg: (plano) => `Bonjour Dr. Carol ! Je viens de finaliser mon paiement pour l'évaluation personnalisée.\n\nPlan : ${plano}\n\nJe vais envoyer les photos maintenant pour commencer mon analyse. 😊`,
   },
   it: {
     badge: '✔ Pagamento confermato',
-    title: 'Pagamento confermato!',
-    subtitle: 'Manca solo un ultimo passo per iniziare la tua analisi personalizzata.',
-    instruction: 'Clicca sul pulsante qui sotto per aprire una conversazione con la Dr.ssa Carol Mafra su WhatsApp. Un messaggio verrà compilato automaticamente. Poi basta inviare le foto richieste per avviare la tua analisi.',
-    steps: [
-      { icon: '✔', text: 'Pagamento confermato.', done: true },
-      { icon: '📷', text: 'Invia le tue foto tramite WhatsApp.', done: false },
-      { icon: '👩‍⚕️', text: 'La Dr.ssa Carol eseguirà la tua analisi personalizzata.', done: false },
-      { icon: '📄', text: 'Riceverai il tuo report entro 3 giorni lavorativi.', done: false },
-    ],
-    btn: 'Invia Le Mie Foto Ora',
+    title: 'La tua analisi personalizzata<br>sta per iniziare.',
+    subtitle: 'Ora prepara le tue foto e inviale via WhatsApp. Guarda sotto come scattare ciascuna correttamente.',
+    guideLabel: 'Come scattare le foto',
+    guideSubtitle: 'Invierai 4 foto via WhatsApp. Segui le istruzioni per ciascuna.',
+    step1: 'Foto 1', step2: 'Foto 2', step3: 'Foto 3', step4: 'Foto 4',
+    p1: 'Frontale', p1d: 'Guarda direttamente la fotocamera. Viso centrato e dritto.',
+    p2: 'Profilo Destro', p2d: 'Gira il viso completamente verso destra. Orecchio visibile.',
+    p3: 'Profilo Sinistro', p3d: 'Gira il viso completamente verso sinistra. Orecchio visibile.',
+    p4: 'Sorridente', p4d: 'Sorriso naturale con le labbra visibili.',
+    tipsTitle: 'Per un\'analisi più precisa',
+    tips: ['Senza filtri o modifiche', 'Buona luce naturale (evita il controluce)', 'Viso completamente visibile, senza occhiali', 'Capelli raccolti se possibile', 'Evita il trucco eccessivo', 'Espressione neutra per le foto frontali e di profilo'],
+    btn: '📲 Foto pronte — apri WhatsApp',
     postBadge: '✅ WhatsApp aperto con successo!',
-    postText: 'Ora invia le tue foto nella conversazione avviata affinché la Dr.ssa Carol Mafra possa iniziare la tua analisi personalizzata.\n\nAppena ricevute tutte le foto, la tua analisi entrerà nella coda di elaborazione.',
-    back: '← Torna alla pagina',
-    waMsg: (pedido) => `Ciao! Ho appena completato il mio acquisto della Valutazione Personalizzata delle Labbra.\n\nNome: \nE-mail: \nNumero ordine: ${pedido}\n\nVorrei iniziare la mia analisi.`,
-  }
+    postText: 'Ora invia le 4 foto nella conversazione.\nLa Dr.ssa Carol inizierà la tua analisi non appena le riceverà.',
+    waMsg: (plano) => `Ciao Dr.ssa Carol! Ho appena completato il pagamento della valutazione personalizzata.\n\nPiano: ${plano}\n\nInvierò ora le foto per iniziare la mia analisi. 😊`,
+  },
 };
 
 function detectLang() {
-  const p = new URLSearchParams(window.location.search).get('lang');
-  if (p && i18n[p]) return p;
-  const nav = (navigator.language || 'pt').toLowerCase();
-  if (nav.startsWith('pt')) return 'pt';
-  if (nav.startsWith('es')) return 'es';
-  if (nav.startsWith('fr')) return 'fr';
-  if (nav.startsWith('it')) return 'it';
-  return 'en';
+  const p = new URLSearchParams(location.search);
+  if (p.get('lang')) return p.get('lang');
+  const nav = (navigator.language || 'pt').toLowerCase().slice(0, 2);
+  return ['pt','en','es','fr','it'].includes(nav) ? nav : 'pt';
+}
+
+function getPlanoLabel(plano, lang) {
+  const labels = {
+    pt: { essencial: 'Essencial', completo: 'Completo', premium: 'Premium' },
+    en: { essencial: 'Essential', completo: 'Complete', premium: 'Premium' },
+    es: { essencial: 'Esencial', completo: 'Completo', premium: 'Premium' },
+    fr: { essencial: 'Essentiel', completo: 'Complet', premium: 'Premium' },
+    it: { essencial: 'Essenziale', completo: 'Completo', premium: 'Premium' },
+  };
+  return (labels[lang] || labels.pt)[plano] || plano;
 }
 
 const lang = detectLang();
-const t = i18n[lang];
-const params = new URLSearchParams(window.location.search);
-const pedido = params.get('session') || params.get('pedido') || '—';
+const tr = i18n[lang] || i18n.pt;
+document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
 
-// Renderizar
-document.getElementById('t-badge').textContent = t.badge;
-document.getElementById('t-title').textContent = t.title;
-document.getElementById('t-subtitle').textContent = t.subtitle;
-document.getElementById('t-instruction').textContent = t.instruction;
-document.getElementById('t-btn').textContent = t.btn;
-document.getElementById('t-post-badge').textContent = t.postBadge;
-document.getElementById('t-post-text').innerHTML = t.postText.replace(/\n/g, '<br>');
-document.getElementById('t-back').textContent = t.back;
+document.getElementById('t-badge').textContent = tr.badge;
+document.getElementById('t-title').innerHTML = tr.title;
+document.getElementById('t-subtitle').textContent = tr.subtitle;
+document.getElementById('t-guide-label').textContent = tr.guideLabel;
+document.getElementById('t-guide-subtitle').textContent = tr.guideSubtitle;
+document.getElementById('t-step1').textContent = tr.step1;
+document.getElementById('t-step2').textContent = tr.step2;
+document.getElementById('t-step3').textContent = tr.step3;
+document.getElementById('t-step4').textContent = tr.step4;
+document.getElementById('t-p1').textContent = tr.p1;
+document.getElementById('t-p1d').textContent = tr.p1d;
+document.getElementById('t-p2').textContent = tr.p2;
+document.getElementById('t-p2d').textContent = tr.p2d;
+document.getElementById('t-p3').textContent = tr.p3;
+document.getElementById('t-p3d').textContent = tr.p3d;
+document.getElementById('t-p4').textContent = tr.p4;
+document.getElementById('t-p4d').textContent = tr.p4d;
+document.getElementById('t-tips-title').textContent = tr.tipsTitle;
+document.getElementById('t-tips').innerHTML = tr.tips.map(t => `<li>${t}</li>`).join('');
+document.getElementById('t-btn').textContent = tr.btn;
+document.getElementById('t-post-badge').textContent = tr.postBadge;
+document.getElementById('t-post-text').textContent = tr.postText;
 
-const stepsEl = document.getElementById('t-steps');
-t.steps.forEach(s => {
-  const li = document.createElement('li');
-  li.className = s.done ? 'done' : '';
-  li.innerHTML = `<span class="step-icon">${s.icon}</span><span>${s.text}</span>`;
-  stepsEl.appendChild(li);
-});
+const params = new URLSearchParams(location.search);
+const plano = params.get('plano') || '';
+const planoLabel = getPlanoLabel(plano, lang);
 
-// WhatsApp
-const waMsg = encodeURIComponent(t.waMsg(pedido));
-const waUrl = `https://wa.me/${WHATS}?text=${waMsg}`;
+// Meta Pixel — Purchase event
+(function(){
+  const prices = { essencial: 97, completo: 247, premium: 347 };
+  const value = prices[plano] || 0;
+  if (typeof fbq !== 'undefined' && value > 0) {
+    fbq('track', 'Purchase', { value: value, currency: 'BRL', content_name: planoLabel });
+  }
+})();
 
 function openWhats() {
-  window.open(waUrl, '_blank');
-  const btn = document.getElementById('whatsBtn');
-  btn.disabled = true;
-  btn.style.display = 'none';
+  const msg = encodeURIComponent(tr.waMsg(planoLabel));
+  window.open(`https://wa.me/${WHATS}?text=${msg}`, '_blank');
   document.getElementById('postClick').classList.add('visible');
 }
 </script>
+
 </body>
 </html>

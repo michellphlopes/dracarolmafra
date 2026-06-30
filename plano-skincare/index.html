@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2933605756976484');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2933605756976484&ev=PageView&noscript=1"/></noscript>
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xee2975rv9");
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano Inteligente de Skincare · Dra. Carol Mafra</title>
+<meta name="description" content="Descubra o que a sua pele realmente precisa. Um plano de skincare desenvolvido especificamente para o seu perfil — pela Dra. Carol Mafra, CRO-MG 66417.">
+<link rel="icon" type="image/png" href="/carol-favicon.png">
+<link rel="canonical" href="https://www.dracarolmafra.com.br/plano-skincare">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.23/dist/lenis.css">
+<script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg2:#111;--bg3:#181818;
+  --text:#f0f0f0;--muted:#777;--accent:#c8a96e;
+  --border:rgba(255,255,255,0.07);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+/* ── TOP BAR ─────────────────────────────── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:64px;
+  background:rgba(8,8,8,0.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.topbar-logo{text-decoration:none;display:flex;flex-direction:column;line-height:1}
+.topbar-name{font-family:var(--serif);font-size:0.88rem;letter-spacing:3px;text-transform:uppercase;color:var(--text)}
+.topbar-reg{font-family:var(--sans);font-size:0.52rem;letter-spacing:2px;color:var(--muted);margin-top:3px;text-transform:uppercase}
+.topbar-spec{font-family:var(--sans);font-size:0.5rem;letter-spacing:1.5px;color:var(--accent);margin-top:2px;text-transform:uppercase;opacity:.8}
+.topbar-cta{
+  font-family:var(--sans);font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;
+  color:#000;background:var(--accent);padding:9px 22px;text-decoration:none;
+  transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .3s cubic-bezier(.22,1,.36,1);
+  border:none;cursor:pointer;
+}
+.topbar-cta:hover{opacity:.85;transform:translateY(-1px)}
+
+/* ── HERO ────────────────────────────────── */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding:0 40px;
+}
+.hero-bg{position:absolute;inset:0}
+.hero-bg video{width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(8,8,8,.85) 0%,rgba(8,8,8,.6) 50%,rgba(8,8,8,.85) 100%);
+}
+.hero-content{
+  position:relative;z-index:10;
+  max-width:820px;text-align:center;
+  margin-top:64px;
+}
+.hero-eyebrow{
+  font-family:var(--sans);font-size:.65rem;letter-spacing:5px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:24px;opacity:.9;
+}
+.hero-headline{
+  font-family:var(--serif);font-size:clamp(2.2rem,6vw,4.8rem);
+  font-weight:400;line-height:1.1;margin-bottom:28px;color:#fff;
+}
+.hero-headline em{font-style:italic;color:var(--accent)}
+.hero-sub{
+  font-family:var(--sans);font-size:clamp(.9rem,1.8vw,1.05rem);
+  color:rgba(255,255,255,.65);max-width:580px;margin:0 auto 40px;line-height:1.8;
+}
+.hero-cta{
+  display:inline-block;
+  background:var(--accent);color:#000;
+  font-family:var(--sans);font-size:.8rem;letter-spacing:2.5px;text-transform:uppercase;
+  padding:16px 48px;text-decoration:none;border:none;cursor:pointer;
+  transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1);
+  font-weight:500;
+}
+.hero-cta:hover{opacity:.88;transform:translateY(-3px)}
+.hero-microcopy{
+  margin-top:16px;font-family:var(--sans);font-size:.72rem;
+  color:rgba(255,255,255,.4);letter-spacing:.5px;
+}
+.hero-counter{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:20px;font-family:var(--sans);font-size:.7rem;
+  color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;
+}
+.hero-counter-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:rgba(255,255,255,.3);font-family:var(--sans);font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
+}
+.hero-scroll::after{content:'';display:block;width:1px;height:36px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);animation:scroll-line 2s infinite}
+@keyframes scroll-line{0%,100%{transform:scaleY(1);opacity:.3}50%{transform:scaleY(.5);opacity:.7}}
+
+/* ── SEÇÕES ──────────────────────────────── */
+section{padding:100px 40px}
+.section-label{
+  font-family:var(--sans);font-size:.62rem;letter-spacing:4px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:12px;opacity:.9;
+}
+.section-title{
+  font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:400;line-height:1.2;margin-bottom:24px;
+}
+.section-body{
+  font-family:var(--sans);font-size:.95rem;color:rgba(255,255,255,.6);
+  line-height:1.9;max-width:660px;
+}
+
+/* ── DOR ─────────────────────────────────── */
+#dor{background:var(--bg)}
+.dor-inner{max-width:800px;margin:0 auto}
+.dor-title{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:400;line-height:1.2;margin-bottom:52px;text-align:center}
+.dor-list{display:flex;flex-direction:column;gap:0;list-style:none}
+.dor-item{
+  border-left:2px solid rgba(200,169,110,.15);
+  padding:28px 0 28px 36px;position:relative;
+  transition:border-color .35s cubic-bezier(.22,1,.36,1);
+  cursor:default;
+}
+.dor-item:hover{border-left-color:var(--accent)}
+.dor-item+.dor-item{border-top:1px solid var(--border)}
+.dor-item-num{font-family:var(--sans);font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);opacity:.5;margin-bottom:8px}
+.dor-item-text{font-family:var(--serif);font-size:1.1rem;color:rgba(255,255,255,.8);line-height:1.5}
+.dor-close{
+  margin-top:52px;padding:32px 40px;
+  border-left:3px solid var(--accent);
+  background:rgba(200,169,110,.04);
+  font-family:var(--serif);font-size:1.2rem;
+  color:rgba(255,255,255,.8);line-height:1.6;font-style:italic;
+}
+
+/* ── QUEBRA ──────────────────────────────── */
+#quebra{background:var(--bg2);text-align:center;padding:90px 40px}
+.quebra-inner{max-width:720px;margin:0 auto}
+.quebra-eyebrow{font-family:var(--sans);font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;opacity:.8}
+.quebra-title{font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:400;line-height:1.3;margin-bottom:32px}
+.quebra-body{font-family:var(--sans);font-size:.95rem;color:rgba(255,255,255,.55);line-height:2;margin-bottom:40px;text-align:left}
+.quebra-divider{width:48px;height:1px;background:var(--accent);opacity:.4;margin:0 auto 32px}
+.quebra-punchline{font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:400;color:var(--accent);line-height:1.4;font-style:italic}
+
+/* ── SOLUÇÃO ─────────────────────────────── */
+#solucao{background:var(--bg)}
+.solucao-inner{max-width:960px;margin:0 auto}
+.solucao-header{margin-bottom:64px}
+.steps-vis{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+.steps-vis::before{
+  content:'';position:absolute;top:28px;left:16%;right:16%;
+  height:1px;background:var(--border);z-index:0;
+}
+.step-vis{text-align:center;padding:0 24px;position:relative;z-index:1}
+.step-vis-num{
+  width:56px;height:56px;margin:0 auto 24px;
+  border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:1rem;color:var(--accent);
+  background:var(--bg);font-weight:300;
+}
+.step-vis h3{font-family:var(--serif);font-size:1rem;font-weight:400;margin-bottom:10px;color:var(--text)}
+.step-vis p{font-family:var(--sans);font-size:.82rem;color:var(--muted);line-height:1.7}
+
+/* ── AUTORIDADE ──────────────────────────── */
+#autoridade{background:var(--bg2)}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto}
+.sobre-img{position:relative}
+.sobre-img::before{content:'';position:absolute;top:-16px;left:-16px;right:16px;bottom:16px;border:1px solid var(--accent);z-index:0}
+.sobre-img img{width:100%;height:520px;object-fit:cover;object-position:top;display:block;position:relative;z-index:1}
+.sobre-text .section-body{margin-bottom:20px}
+.sobre-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:36px 0;padding:28px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-n{font-family:var(--serif);font-size:2.2rem;color:var(--accent);line-height:1}
+.stat-l{font-family:var(--sans);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+/* ── VALOR ───────────────────────────────── */
+#valor{background:var(--bg)}
+.valor-header{text-align:center;max-width:600px;margin:0 auto 64px}
+.valor-header .section-title{margin-inline:auto}
+.valor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1080px;margin:0 auto}
+.valor-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-left:3px solid rgba(200,169,110,.35);
+  padding:32px 28px;
+  transition:border-color .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1);
+}
+.valor-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.valor-card-icon{width:36px;height:36px;color:var(--accent);opacity:.7;margin-bottom:20px}
+.valor-card h3{font-family:var(--serif);font-size:1rem;font-weight:400;margin-bottom:10px;color:var(--text)}
+.valor-card p{font-family:var(--sans);font-size:.83rem;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.valor-card-price{font-family:var(--sans);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);opacity:.65}
+.valor-total{
+  max-width:480px;margin:48px auto 0;padding:32px;
+  border:1px solid rgba(200,169,110,.2);border-top:2px solid var(--accent);
+  text-align:center;
+}
+.valor-total-was{font-family:var(--sans);font-size:.85rem;color:#555;text-decoration:line-through;margin-bottom:8px}
+.valor-total-price{font-family:var(--serif);font-size:3rem;color:#fff;line-height:1;margin-bottom:8px}
+.valor-total-price sup{font-size:1.4rem;vertical-align:top;margin-top:8px;font-family:var(--sans)}
+.valor-total-label{font-family:var(--sans);font-size:.72rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+
+/* ── PROVA ───────────────────────────────── */
+#prova{background:var(--bg2);padding:80px 0}
+.prova-header{text-align:center;margin-bottom:52px;padding:0 40px}
+.prova-header .section-title{margin-inline:auto}
+.fwa-wrap{position:relative;overflow:hidden}
+.fwa-track{display:flex;gap:20px;width:max-content;animation:fwa-left 55s linear infinite;will-change:transform}
+.fwa-wrap:hover .fwa-track{animation-play-state:paused}
+@keyframes fwa-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.fwa-card{flex-shrink:0;height:360px;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+.fwa-card img{height:100%;width:auto;display:block;object-fit:contain;background:#fff}
+.prova-badges{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:48px;padding:0 40px}
+.prova-badge{font-family:var(--sans);font-size:.78rem;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:8px}
+.prova-badge b{color:var(--text)}
+
+/* ── QUIZ ────────────────────────────────── */
+#quiz{background:var(--bg);padding:100px 40px}
+.quiz-wrap{max-width:640px;margin:0 auto}
+.quiz-header{text-align:center;margin-bottom:52px}
+.quiz-header .section-title{margin-inline:auto}
+.quiz-header .section-body{text-align:center;margin:0 auto}
+
+/* Quiz steps */
+.quiz-step-block{display:none}
+.quiz-step-block.active{display:block}
+.quiz-progress{height:2px;background:var(--border);margin-bottom:40px;border-radius:1px}
+.quiz-bar{height:100%;background:var(--accent);border-radius:1px;transition:width .5s cubic-bezier(.22,1,.36,1)}
+.quiz-q{font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:400;line-height:1.4;margin-bottom:28px;color:var(--text)}
+.quiz-opts{display:flex;flex-direction:column;gap:12px}
+.quiz-opt{
+  background:var(--bg3);border:1px solid var(--border);
+  color:rgba(255,255,255,.7);padding:16px 20px;text-align:left;
+  cursor:pointer;font-family:var(--sans);font-size:.9rem;
+  transition:border-color .25s,color .25s,background .25s;
+  display:flex;align-items:center;gap:14px;
+}
+.quiz-opt:hover{border-color:var(--accent);color:var(--text)}
+.quiz-opt.sel{border-color:var(--accent);color:var(--text);background:rgba(200,169,110,.06)}
+.quiz-opt-letter{
+  font-family:var(--sans);font-size:.65rem;letter-spacing:2px;
+  color:var(--accent);opacity:.7;min-width:16px;font-weight:500;
+}
+.quiz-step-label{font-family:var(--sans);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+
+/* Step 0 - lead */
+.quiz-lead-inputs{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.quiz-input{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text);
+  padding:14px 18px;font-family:var(--sans);font-size:.9rem;
+  outline:none;transition:border-color .25s;
+}
+.quiz-input:focus{border-color:var(--accent)}
+.quiz-input::placeholder{color:var(--muted)}
+.quiz-next{
+  width:100%;padding:15px;background:var(--accent);color:#000;
+  font-family:var(--sans);font-size:.78rem;letter-spacing:2px;
+  text-transform:uppercase;border:none;cursor:pointer;
+  transition:opacity .3s;font-weight:500;margin-top:8px;
+}
+.quiz-next:disabled{opacity:.35;cursor:not-allowed}
+.quiz-next:not(:disabled):hover{opacity:.88}
+
+/* Analyzing */
+.analyzing-block{text-align:center;padding:40px 0}
+.analyzing-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:32px}
+.az-item{font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.6);text-align:left;display:flex;align-items:center;gap:12px;margin-bottom:14px;transition:opacity .5s}
+.az-item::before{content:'✓';color:var(--accent);flex-shrink:0}
+.analyzing-bar-wrap{background:var(--border);height:2px;margin:28px 0 16px;border-radius:1px}
+.analyzing-bar{height:100%;background:var(--accent);width:0;transition:width 3s linear;border-radius:1px}
+.analyzing-wait{font-family:var(--sans);font-size:.78rem;color:var(--muted);text-align:center;transition:opacity .5s}
+
+/* Result */
+.quiz-result{display:none}
+.quiz-result.show{display:block}
+.result-tag{font-family:var(--sans);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:block}
+.result-title{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.8rem);font-weight:400;line-height:1.3;margin-bottom:16px}
+.result-body{font-family:var(--sans);font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:32px}
+.result-plan{background:var(--bg2);border:1px solid var(--accent);padding:32px;margin-bottom:28px}
+.result-plan-title{font-family:var(--sans);font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;opacity:.8}
+.result-plan-items{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:0}
+.result-plan-items li{font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.75);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.result-plan-items li::before{content:'✓';color:var(--accent);flex-shrink:0;margin-top:1px}
+.result-cta{
+  display:block;width:100%;padding:16px;background:var(--accent);color:#000;
+  font-family:var(--sans);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;
+  border:none;cursor:pointer;font-weight:500;
+  transition:opacity .3s;text-align:center;
+}
+.result-cta:hover{opacity:.88}
+
+/* ── OFERTA ──────────────────────────────── */
+#oferta{background:var(--bg2);text-align:center}
+.oferta-inner{max-width:520px;margin:0 auto}
+.oferta-anchor{
+  font-family:var(--sans);font-size:.85rem;color:rgba(255,255,255,.45);
+  line-height:1.8;margin-bottom:40px;font-style:italic;
+}
+.oferta-box{border:1px solid rgba(200,169,110,.25);border-top:2px solid var(--accent);padding:40px;margin-bottom:32px}
+.oferta-was{font-family:var(--sans);font-size:.9rem;color:#444;text-decoration:line-through;margin-bottom:6px}
+.oferta-price{font-family:var(--serif);font-size:4rem;color:#fff;line-height:1;margin-bottom:8px}
+.oferta-price sup{font-size:1.6rem;vertical-align:top;margin-top:12px;font-family:var(--sans);font-weight:300}
+.oferta-period{font-family:var(--sans);font-size:.75rem;color:var(--muted);margin-bottom:4px;letter-spacing:1px}
+.oferta-parcel{font-family:var(--sans);font-size:.72rem;color:var(--muted);margin-bottom:32px}
+.oferta-cta{
+  display:block;width:100%;padding:17px;background:var(--accent);color:#000;
+  font-family:var(--sans);font-size:.82rem;letter-spacing:2.5px;text-transform:uppercase;
+  border:none;cursor:pointer;font-weight:500;
+  transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1);
+}
+.oferta-cta:hover{opacity:.88;transform:translateY(-2px)}
+.oferta-micro{font-family:var(--sans);font-size:.7rem;color:#444;margin-top:12px;line-height:1.6}
+.trust-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.trust-item{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:.7rem;color:var(--muted)}
+.trust-item svg{color:var(--accent);flex-shrink:0}
+
+/* ── GARANTIA ────────────────────────────── */
+#garantia{background:var(--bg);padding:80px 40px;text-align:center}
+.garantia-inner{max-width:560px;margin:0 auto}
+.garantia-icon{font-size:3rem;margin-bottom:24px;display:block}
+.garantia-title{font-family:var(--serif);font-size:1.6rem;font-weight:400;margin-bottom:20px}
+.garantia-body{font-family:var(--sans);font-size:.92rem;color:rgba(255,255,255,.55);line-height:1.95;margin-bottom:20px}
+.garantia-assinatura{font-family:var(--sans);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.75}
+
+/* ── FAQ ─────────────────────────────────── */
+#faq{background:var(--bg2)}
+.faq-inner{max-width:720px;margin:0 auto}
+.faq-header{margin-bottom:48px}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{
+  width:100%;background:none;border:none;color:var(--text);
+  padding:22px 0;display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;font-family:var(--serif);font-size:1rem;text-align:left;gap:16px;
+}
+.faq-icon{color:var(--accent);font-size:1.4rem;flex-shrink:0;transition:transform .3s;line-height:1}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-ans{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-item.open .faq-ans{max-height:300px}
+.faq-ans p{font-family:var(--sans);font-size:.88rem;color:var(--muted);line-height:1.85;padding-bottom:22px}
+
+/* ── CTA FINAL ───────────────────────────── */
+#cta-final{background:var(--bg3);text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cta-final-inner{max-width:620px;margin:0 auto}
+.cta-final-headline{font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:400;line-height:1.3;margin-bottom:40px}
+.cta-final-headline em{font-style:italic;color:var(--accent)}
+.cta-checklist{list-style:none;display:inline-flex;flex-direction:column;gap:10px;text-align:left;margin:0 auto 40px}
+.cta-checklist li{font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px}
+.cta-checklist li::before{content:'✓';color:var(--accent);flex-shrink:0}
+.cta-final-btn{
+  display:inline-block;background:var(--accent);color:#000;
+  font-family:var(--sans);font-size:.82rem;letter-spacing:2.5px;text-transform:uppercase;
+  padding:17px 52px;border:none;cursor:pointer;font-weight:500;text-decoration:none;
+  transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1);
+}
+.cta-final-btn:hover{opacity:.88;transform:translateY(-2px)}
+.cta-final-micro{margin-top:16px;font-family:var(--sans);font-size:.7rem;color:#444;letter-spacing:.5px}
+
+/* ── FOOTER ──────────────────────────────── */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center}
+.footer-logo-text{font-family:var(--serif);font-size:.85rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.footer-links a{color:#444;text-decoration:none;font-family:var(--sans);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-family:var(--sans);font-size:.68rem;color:#444;margin-bottom:8px}
+.footer-disc{font-family:var(--sans);font-size:.65rem;color:#333;max-width:560px;margin:0 auto;line-height:1.7}
+
+/* ── CONSENT MODAL ───────────────────────── */
+#consentModal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px}
+#consentModal.show{display:flex}
+.consent-inner{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);max-width:520px;width:100%;padding:40px 36px}
+.consent-title{font-family:var(--serif);font-size:1.15rem;color:var(--text);margin-bottom:12px}
+.consent-text{font-family:var(--sans);font-size:.83rem;color:var(--muted);line-height:1.75;margin-bottom:24px}
+.consent-label{display:flex;gap:12px;align-items:flex-start;cursor:pointer;margin-bottom:28px}
+.consent-label input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);width:15px;height:15px;cursor:pointer}
+.consent-check-text{font-family:var(--sans);font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.75}
+.consent-check-text a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(200,169,110,.4)}
+.consent-btn{width:100%;padding:14px;background:var(--accent);color:#000;font-family:var(--sans);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s;font-weight:500}
+.consent-btn:disabled{opacity:.35;cursor:not-allowed}
+.consent-btn:not(:disabled):hover{opacity:.88}
+
+/* ── PAYMENT MODAL ───────────────────────── */
+#paymentModal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px}
+#paymentModal.show{display:flex}
+.payment-inner{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);max-width:560px;width:100%;padding:36px;max-height:90vh;overflow-y:auto;position:relative}
+.payment-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;transition:color .2s}
+.payment-close:hover{color:var(--text)}
+.payment-title{font-family:var(--serif);font-size:1.1rem;margin-bottom:24px}
+#mp-brick-container-skin{min-height:200px}
+.pix-panel{display:none;text-align:center}
+.pix-panel.show{display:block}
+.pix-qr{max-width:200px;margin:0 auto 16px;display:block}
+.pix-copy-btn{width:100%;padding:12px;background:var(--accent);color:#000;border:none;cursor:pointer;font-family:var(--sans);font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media(max-width:768px){
+  .topbar{padding:0 20px}
+  .topbar-spec{display:none}
+  section{padding:72px 24px}
+  .hero-content{margin-top:64px}
+  .sobre-grid{grid-template-columns:1fr;gap:48px}
+  .sobre-img::before{display:none}
+  .sobre-img img{height:320px}
+  .sobre-stats{grid-template-columns:repeat(3,1fr)}
+  .steps-vis{grid-template-columns:1fr;gap:32px}
+  .steps-vis::before{display:none}
+  .step-vis{text-align:left;padding:0 0 0 20px;border-left:2px solid rgba(200,169,110,.2)}
+  .step-vis-num{margin:0 0 16px 0}
+  .valor-grid{grid-template-columns:1fr}
+  #prova{padding:72px 0}
+  .prova-header{padding:0 24px}
+  .prova-badges{padding:0 24px}
+  .quiz-wrap{max-width:100%}
+  #dor,#quebra{padding:72px 24px}
+  #garantia{padding:72px 24px}
+  .consent-inner{padding:28px 20px}
+  .payment-inner{padding:24px 20px}
+}
+@media(max-width:480px){
+  .hero-headline{font-size:2rem}
+  .oferta-price{font-size:3rem}
+  .trust-row{gap:12px}
+  .prova-badges{gap:20px}
+}
+
+/* ── UTILS ───────────────────────────────── */
+.accent{color:var(--accent)}
+img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a href="/" class="topbar-logo">
+    <span class="topbar-name">Dra. Carol Mafra</span>
+    <span class="topbar-reg">CRO-MG 66417</span>
+    <span class="topbar-spec">Harmonização Orofacial</span>
+  </a>
+  <button class="topbar-cta" onclick="openConsent()">Quero meu plano →</button>
+</header>
+
+<!-- ── SEÇÃO 1: HERO ── -->
+<section class="hero">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-4ad3c27fa00a4e788849dca77fa660d9.r2.dev/carol-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:.8em;opacity:.75">Harmonização Orofacial — Especialista em Preenchimento Labial</span></p>
+    <h1 class="hero-headline" id="heroHeadline">Sua pele não tem o problema que você pensa.<br><em>O problema é que ninguém nunca olhou para ela de verdade.</em></h1>
+    <p class="hero-sub">Responda 6 perguntas e receba um plano de skincare desenvolvido especificamente para o seu perfil de pele — pela Dra. Carol Mafra.</p>
+    <a href="#quiz" class="hero-cta">Descobrir o que a minha pele precisa →</a>
+    <p class="hero-microcopy">⏱ Menos de 60 segundos &nbsp;·&nbsp; 🔒 Sem compromisso &nbsp;·&nbsp; ✨ Resultado imediato</p>
+    <div class="hero-counter">
+      <span class="hero-counter-dot"></span>
+      847 pessoas descobriram hoje
+    </div>
+  </div>
+  <div class="hero-scroll">Rolar</div>
+</section>
+
+<!-- ── SEÇÃO 2: DOR ── -->
+<section id="dor">
+  <div class="dor-inner">
+    <h2 class="dor-title">Reconhece alguma dessas situações?</h2>
+    <ul class="dor-list">
+      <li class="dor-item">
+        <div class="dor-item-num">01</div>
+        <p class="dor-item-text">Você comprou um produto porque alguém indicou — e a sua pele reagiu do jeito errado.</p>
+      </li>
+      <li class="dor-item">
+        <div class="dor-item-num">02</div>
+        <p class="dor-item-text">Tem 6, 7, 8 produtos na prateleira e não sabe se algum deles está funcionando de verdade.</p>
+      </li>
+      <li class="dor-item">
+        <div class="dor-item-num">03</div>
+        <p class="dor-item-text">Você trata a mancha. A mancha some. A mancha volta.</p>
+      </li>
+      <li class="dor-item">
+        <div class="dor-item-num">04</div>
+        <p class="dor-item-text">Já tentou sérum, ácido, retinol — e ainda não entende por que a sua pele não muda.</p>
+      </li>
+      <li class="dor-item">
+        <div class="dor-item-num">05</div>
+        <p class="dor-item-text">Toda vez que experimenta algo novo, fica com medo do que vai acontecer.</p>
+      </li>
+      <li class="dor-item">
+        <div class="dor-item-num">06</div>
+        <p class="dor-item-text">Nunca ninguém explicou, de forma clara, o que a sua pele realmente precisa.</p>
+      </li>
+    </ul>
+    <div class="dor-close">
+      Se você se reconheceu em qualquer uma dessas situações, o problema não é a sua pele.<br>É que você nunca teve um plano feito para você.
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 3: QUEBRA DE CRENÇA ── -->
+<section id="quebra">
+  <div class="quebra-inner">
+    <p class="quebra-eyebrow">O que ninguém te conta</p>
+    <h2 class="quebra-title">O mercado de skincare tem um problema sério — e ele está custando caro para você</h2>
+    <div class="quebra-body">
+      <p>Você não está errando. O sistema é que foi construído para te fazer errar.</p><br>
+      <p>A indústria de beleza fatura bilhões vendendo produtos para "pele oleosa", "pele seca", "pele sensível" — como se todas as peles oleosas fossem iguais. Como se todas as peles secas tivessem a mesma causa. Como se o seu rosto fosse uma categoria.</p><br>
+      <p>Ele não é.</p><br>
+      <p>Sua pele tem um histórico. Tem gatilhos específicos. Tem uma combinação única de características que nenhum rótulo de produto leva em conta. É por isso que a rotina que funcionou para a sua amiga não funcionou para você. Não é falta de disciplina. Não é azar. É que ela não é você.</p>
+    </div>
+    <div class="quebra-divider"></div>
+    <p class="quebra-punchline">A sua pele não precisa de mais produtos.<br>Ela precisa de um protocolo construído para ela.</p>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 4: SOLUÇÃO ── -->
+<section id="solucao">
+  <div class="solucao-inner">
+    <div class="solucao-header">
+      <p class="section-label">A solução</p>
+      <h2 class="section-title">Plano Inteligente de Skincare</h2>
+      <p class="section-body">Um plano de cuidados desenvolvido pela Dra. Carol Mafra com base no seu perfil de pele — não no de outra pessoa.</p>
+    </div>
+    <div class="steps-vis">
+      <div class="step-vis">
+        <div class="step-vis-num">01</div>
+        <h3>Você responde o quiz</h3>
+        <p>6 perguntas sobre a sua pele, suas queixas, seus hábitos e o que você já tentou. Simples, rápido, sem jargão técnico.</p>
+      </div>
+      <div class="step-vis">
+        <div class="step-vis-num">02</div>
+        <h3>O sistema analisa seu perfil</h3>
+        <p>Com base nas suas respostas, um plano é construído especificamente para o seu caso — tipo de pele, queixas, objetivos e orçamento.</p>
+      </div>
+      <div class="step-vis">
+        <div class="step-vis-num">03</div>
+        <h3>Você recebe o seu plano</h3>
+        <p>Guia completo em PDF com rotina de manhã e noite, ativos recomendados, ordem de aplicação e produtos em 3 faixas de preço.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 5: AUTORIDADE ── -->
+<section id="autoridade">
+  <div class="sobre-grid">
+    <div class="sobre-img">
+      <img src="/carol-about.jpg" alt="Dra. Carol Mafra">
+    </div>
+    <div class="sobre-text">
+      <p class="section-label">Quem desenvolveu o seu plano</p>
+      <h2 class="section-title">Dra. Carol Mafra</h2>
+      <p class="section-body">A Dra. Carol Mafra acredita que cuidar da pele não deveria ser complicado. Mas também não deveria ser genérico.</p>
+      <p class="section-body" style="margin-top:16px">Formada em Odontologia e especialista em Harmonização Orofacial pelo CETRO Belo Horizonte, ela passou anos observando o que acontece quando um profissional para de vender produto e começa a olhar para o caso individual. O resultado muda completamente.</p>
+      <p class="section-body" style="margin-top:16px">O Plano Inteligente de Skincare nasceu dessa percepção: a maioria das mulheres nunca teve uma análise real da própria pele. Elas têm produtos. Elas têm rotinas copiadas. Mas nunca tiveram um plano.</p>
+      <div class="sobre-stats">
+        <div><div class="stat-n">250+</div><div class="stat-l">Protocolos entregues</div></div>
+        <div><div class="stat-n">0</div><div class="stat-l">Complicações registradas</div></div>
+        <div><div class="stat-n">HOF</div><div class="stat-l">Especialista Certificada</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 6: STACK DE VALOR ── -->
+<section id="valor">
+  <div class="valor-header">
+    <p class="section-label">O que você recebe</p>
+    <h2 class="section-title">Tudo que está incluído no seu plano</h2>
+  </div>
+  <div class="valor-grid">
+    <div class="valor-card">
+      <svg class="valor-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <h3>Diagnóstico do seu perfil de pele</h3>
+      <p>Identificação do seu tipo real de pele — não o que você acha que tem, mas o que está acontecendo com ela hoje.</p>
+      <p class="valor-card-price">Valor: R$47 · Incluído</p>
+    </div>
+    <div class="valor-card">
+      <svg class="valor-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <h3>Rotina personalizada manhã e noite</h3>
+      <p>Cada etapa, na ordem certa, com o tempo de espera correto entre cada produto. Sem superposição errada de ativos.</p>
+      <p class="valor-card-price">Valor: R$67 · Incluído</p>
+    </div>
+    <div class="valor-card">
+      <svg class="valor-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.86 0 3.58.57 5 1.54"/></svg>
+      <h3>Ativos recomendados para o seu caso</h3>
+      <p>Quais ingredientes funcionam para o seu perfil, quais evitar e por quê — para você nunca mais errar na prateleira.</p>
+      <p class="valor-card-price">Valor: R$37 · Incluído</p>
+    </div>
+    <div class="valor-card">
+      <svg class="valor-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+      <h3>Sugestões em 3 faixas de preço</h3>
+      <p>Econômico, intermediário e premium — para você escolher o que cabe no seu momento sem abrir mão da eficácia.</p>
+      <p class="valor-card-price">Valor: R$57 · Incluído</p>
+    </div>
+    <div class="valor-card">
+      <svg class="valor-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <h3>Guia completo do seu perfil de pele</h3>
+      <p>Um documento para consultar sempre — o que a sua pele precisa, por que precisa, e o que fazer quando ela muda.</p>
+      <p class="valor-card-price">Valor: R$37 · Incluído</p>
+    </div>
+  </div>
+  <div class="valor-total">
+    <p class="valor-total-was">Valor total: R$245</p>
+    <div class="valor-total-price"><sup>R$</sup>68</div>
+    <p class="valor-total-label">Pagamento único · Acesso imediato</p>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 7: PROVA SOCIAL ── -->
+<section id="prova">
+  <div class="prova-header">
+    <p class="section-label">Resultados reais</p>
+    <h2 class="section-title">Quem já confiou no trabalho da Dra. Carol</h2>
+    <p style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin-top:12px">Não depoimentos. Conversas reais.</p>
+  </div>
+  <div class="fwa-wrap">
+    <div class="fwa-track" id="fwaTrackPlano"></div>
+  </div>
+  <div class="prova-badges">
+    <div class="prova-badge"><b>847+</b> planos entregues</div>
+    <div class="prova-badge"><b>98%</b> de satisfação declarada</div>
+    <div class="prova-badge"><b>"Finalmente</b> entendi minha pele"</div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 8: QUIZ ── -->
+<section id="quiz">
+  <div class="quiz-wrap">
+    <div class="quiz-header">
+      <p class="section-label">Diagnóstico gratuito</p>
+      <h2 class="section-title">Descubra agora o que a sua pele precisa</h2>
+      <p class="section-body">6 perguntas. Menos de 60 segundos. Um plano feito para você.</p>
+    </div>
+
+    <!-- STEP 0: LEAD -->
+    <div class="quiz-step-block active" id="qsStep0">
+      <p class="quiz-step-label">Para começar</p>
+      <h3 class="quiz-q">Para onde enviamos seu plano?</h3>
+      <div class="quiz-lead-inputs">
+        <input class="quiz-input" type="text" id="qName" placeholder="Seu nome">
+        <input class="quiz-input" type="tel" id="qWa" placeholder="WhatsApp com DDD">
+      </div>
+      <button class="quiz-next" id="qLeadBtn" disabled>Iniciar meu diagnóstico →</button>
+      <p style="font-family:var(--sans);font-size:.68rem;color:#444;margin-top:12px;text-align:center">Suas respostas são usadas exclusivamente para montar o seu plano.</p>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="quiz-step-block" id="qsStep1">
+      <div class="quiz-progress"><div class="quiz-bar" style="width:16%"></div></div>
+      <p class="quiz-step-label">Pergunta 1 de 6</p>
+      <h3 class="quiz-q">Qual é o seu maior desafio com a pele hoje?</h3>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-step="1" data-val="manchas"><span class="quiz-opt-letter">A</span> Manchas e tom irregular</button>
+        <button class="quiz-opt" data-step="1" data-val="acne"><span class="quiz-opt-letter">B</span> Acne e pele oleosa</button>
+        <button class="quiz-opt" data-step="1" data-val="rugas"><span class="quiz-opt-letter">C</span> Rugas e perda de firmeza</button>
+        <button class="quiz-opt" data-step="1" data-val="opaca"><span class="quiz-opt-letter">D</span> Pele opaca e sem brilho</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="quiz-step-block" id="qsStep2">
+      <div class="quiz-progress"><div class="quiz-bar" style="width:33%"></div></div>
+      <p class="quiz-step-label">Pergunta 2 de 6</p>
+      <h3 class="quiz-q">Você conhece o seu tipo de pele?</h3>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-step="2" data-val="oleosa"><span class="quiz-opt-letter">A</span> Oleosa — brilho constante, poros visíveis</button>
+        <button class="quiz-opt" data-step="2" data-val="seca"><span class="quiz-opt-letter">B</span> Seca — sensação de tensão, descamação</button>
+        <button class="quiz-opt" data-step="2" data-val="mista"><span class="quiz-opt-letter">C</span> Mista — oleosa na zona T, seca no restante</button>
+        <button class="quiz-opt" data-step="2" data-val="naosei"><span class="quiz-opt-letter">D</span> Não sei identificar</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="quiz-step-block" id="qsStep3">
+      <div class="quiz-progress"><div class="quiz-bar" style="width:50%"></div></div>
+      <p class="quiz-step-label">Pergunta 3 de 6</p>
+      <h3 class="quiz-q">Qual é o seu principal objetivo com a skincare?</h3>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-step="3" data-val="prevencao"><span class="quiz-opt-letter">A</span> Prevenir o envelhecimento</button>
+        <button class="quiz-opt" data-step="3" data-val="manchas"><span class="quiz-opt-letter">B</span> Tratar manchas e uniformizar o tom</button>
+        <button class="quiz-opt" data-step="3" data-val="acne"><span class="quiz-opt-letter">C</span> Controlar acne e oleosidade</button>
+        <button class="quiz-opt" data-step="3" data-val="brilho"><span class="quiz-opt-letter">D</span> Iluminar e hidratar</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="quiz-step-block" id="qsStep4">
+      <div class="quiz-progress"><div class="quiz-bar" style="width:66%"></div></div>
+      <p class="quiz-step-label">Pergunta 4 de 6</p>
+      <h3 class="quiz-q">Você já tentou montar uma rotina de skincare?</h3>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-step="4" data-val="nunca"><span class="quiz-opt-letter">A</span> Nunca — não sei por onde começar</button>
+        <button class="quiz-opt" data-step="4" data-val="tentei"><span class="quiz-opt-letter">B</span> Tentei, mas não consegui manter</button>
+        <button class="quiz-opt" data-step="4" data-val="tenho"><span class="quiz-opt-letter">C</span> Tenho uma rotina, mas não vejo resultado</button>
+        <button class="quiz-opt" data-step="4" data-val="otimizar"><span class="quiz-opt-letter">D</span> Tenho uma rotina e quero otimizá-la</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="quiz-step-block" id="qsStep5">
+      <div class="quiz-progress"><div class="quiz-bar" style="width:83%"></div></div>
+      <p class="quiz-step-label">Pergunta 5 de 6</p>
+      <h3 class="quiz-q">Quantos produtos você usa na pele hoje?</h3>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-step="5" data-val="nenhum"><span class="quiz-opt-letter">A</span> Nenhum ou quase nenhum</button>
+        <button class="quiz-opt" data-step="5" data-val="basico"><span class="quiz-opt-letter">B</span> Apenas limpador e hidratante</button>
+        <button class="quiz-opt" data-step="5" data-val="alguns"><span class="quiz-opt-letter">C</span> 3 a 5 produtos</button>
+        <button class="quiz-opt" data-step="5" data-val="muitos"><span class="quiz-opt-letter">D</span> 6 ou mais produtos</button>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="quiz-step-block" id="qsStep6">
+      <div class="quiz-progress"><div class="quiz-bar" style="width:100%"></div></div>
+      <p class="quiz-step-label">Pergunta 6 de 6</p>
+      <h3 class="quiz-q">O que mais te frustrou em relação à skincare?</h3>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-step="6" data-val="naosei"><span class="quiz-opt-letter">A</span> Não saber o que comprar</button>
+        <button class="quiz-opt" data-step="6" data-val="gasto"><span class="quiz-opt-letter">B</span> Gastar muito sem ver resultado</button>
+        <button class="quiz-opt" data-step="6" data-val="rotina"><span class="quiz-opt-letter">C</span> Rotina complicada demais para manter</button>
+        <button class="quiz-opt" data-step="6" data-val="irritacao"><span class="quiz-opt-letter">D</span> Produtos que irritam a minha pele</button>
+      </div>
+    </div>
+
+    <!-- ANALYZING -->
+    <div class="quiz-step-block" id="qsAnalyzing">
+      <div class="analyzing-block">
+        <h3 class="analyzing-title">Analisando o seu perfil de pele…</h3>
+        <div id="azItems">
+          <div class="az-item" style="opacity:0">Identificando seu tipo de pele real</div>
+          <div class="az-item" style="opacity:0">Mapeando suas principais queixas</div>
+          <div class="az-item" style="opacity:0">Cruzando com padrões clínicos</div>
+          <div class="az-item" style="opacity:0">Montando o seu protocolo personalizado</div>
+        </div>
+        <div class="analyzing-bar-wrap"><div class="analyzing-bar" id="azBar"></div></div>
+        <p class="analyzing-wait" id="azWait" style="opacity:0">Aguarde um momento…</p>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="quiz-result" id="qsResult">
+      <span class="result-tag">✅ Perfil de pele identificado</span>
+      <h3 class="result-title" id="resultTitle">Sua pele precisa de um protocolo personalizado.</h3>
+      <p class="result-body" id="resultBody">Com base nas suas respostas, a Dra. Carol Mafra desenvolveu um plano específico para o seu caso. O seu Plano Inteligente de Skincare inclui:</p>
+      <div class="result-plan">
+        <p class="result-plan-title">Seu plano inclui</p>
+        <ul class="result-plan-items">
+          <li>Diagnóstico do seu perfil de pele real</li>
+          <li>Rotina personalizada de manhã e noite</li>
+          <li>Ativos recomendados para o seu caso específico</li>
+          <li>Produtos em 3 faixas de preço (econômico, intermediário e premium)</li>
+          <li>Guia completo com tudo que a sua pele precisa</li>
+        </ul>
+      </div>
+      <button class="result-cta" onclick="openConsent()">Quero meu Plano Inteligente de Skincare · R$68 →</button>
+      <p style="font-family:var(--sans);font-size:.7rem;color:#444;margin-top:12px;text-align:center">🛡 Garantia de 7 dias · Acesso imediato · Pagamento seguro</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── SEÇÃO 9: OFERTA ── -->
+<section id="oferta">
+  <div class="oferta-inner">
+    <p class="section-label">A oferta</p>
+    <h2 class="section-title" style="margin-bottom:20px">Invista no único plano feito para a sua pele</h2>
+    <p class="oferta-anchor">O que você gastou no último produto que não funcionou?<br>O Plano Inteligente de Skincare custa menos — e vai te dizer exatamente o que funciona para você.</p>
+    <div class="oferta-box">
+      <p class="oferta-was">De R$245</p>
+      <div class="oferta-price"><sup>R$</sup>68</div>
+      <p class="oferta-period">Pagamento único</p>
+      <p class="oferta-parcel">ou 12x de R$5,67</p>
+      <button class="oferta-cta" onclick="openConsent()">Quero meu Plano Inteligente de Skincare →</button>
+      <p class="oferta-micro">Sem assinatura. Sem renovação automática.<br>Você paga uma vez e o plano é seu para sempre.</p>
+    </div>
+    <div class="trust-row">
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Pagamento 100% seguro
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 2 13 9 20 9"/><path d="M20 14.5v3.9a2 2 0 01-2 1.6H5.9a2 2 0 01-2-1.6V6a2 2 0 011.6-2h8l4 4"/></svg>
+        Acesso imediato
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Garantia de 7 dias
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 10: GARANTIA ── -->
+<section id="garantia">
+  <div class="garantia-inner">
+    <span class="garantia-icon">🛡</span>
+    <h2 class="garantia-title">Sem risco. Sem letra miúda.</h2>
+    <p class="garantia-body">Se você receber o seu plano, ler, aplicar — e por qualquer motivo sentir que não era o que esperava, basta me enviar uma mensagem em até 7 dias.<br><br>Devolvo 100% do valor. Sem perguntas. Sem burocracia. Sem julgamento.<br><br>Porque eu confio no que entrego. E você não deve pagar por algo que não te serviu.</p>
+    <p class="garantia-assinatura">Dra. Carol Mafra · CRO-MG 66417</p>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 11: FAQ ── -->
+<section id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <p class="section-label">Dúvidas frequentes</p>
+      <h2 class="section-title">Perguntas e respostas</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">O plano é genérico ou realmente personalizado para mim? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>É construído com base nas suas respostas. Duas pessoas com tipos de pele parecidos podem receber planos completamente diferentes dependendo das queixas, hábitos e histórico de cada uma.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Preciso ter conhecimento técnico de skincare? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>Nenhum. O plano foi escrito para ser lido e aplicado por qualquer pessoa — sem jargão, sem termos difíceis. Você vai entender tudo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Em quanto tempo recebo meu plano? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>O acesso é imediato após a confirmação do pagamento. Você faz o quiz, confirma a compra e recebe o plano na mesma sessão.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Os produtos sugeridos são caros? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>Não necessariamente. O plano inclui sugestões em três faixas de preço — econômico, intermediário e premium — para você escolher o que faz sentido no seu momento.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Funciona para qualquer tipo de pele? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>Sim. O quiz foi desenvolvido para identificar os principais perfis de pele e suas combinações — oleosa, seca, mista, sensível, com tendência à acne, com manchas, com sinais de envelhecimento, ou qualquer combinação entre eles.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">E se eu já tiver uma rotina de skincare? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>Melhor ainda. O plano vai te dizer o que no que você já faz está certo, o que está errado e o que está faltando — sem precisar jogar tudo fora e começar do zero.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">R$68 parece barato. O que tem de limitação? <span class="faq-icon">+</span></button>
+        <div class="faq-ans"><p>Nada. É o preço de lançamento. Enquanto você está lendo isso, o plano custa R$68. Não temos como garantir esse valor por muito tempo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 12: CTA FINAL ── -->
+<section id="cta-final">
+  <div class="cta-final-inner">
+    <h2 class="cta-final-headline">Você pode continuar testando produtos aleatórios.<br>Ou pode finalmente saber o que <em>a sua pele</em> precisa.</h2>
+    <ul class="cta-checklist">
+      <li>Diagnóstico do seu perfil de pele</li>
+      <li>Rotina personalizada manhã e noite</li>
+      <li>Ativos, produtos e ordem correta de aplicação</li>
+      <li>Guia completo do seu caso — para sempre</li>
+    </ul>
+    <p style="font-family:var(--sans);font-size:.82rem;color:var(--muted);margin-bottom:24px">R$68 · Pagamento único · Acesso imediato</p>
+    <button class="cta-final-btn" onclick="openConsent()">Quero meu Plano Inteligente de Skincare →</button>
+    <p class="cta-final-micro">🛡 Garantia de 7 dias &nbsp;·&nbsp; 🔒 Pagamento seguro &nbsp;·&nbsp; ⚡ Acesso imediato</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo-text">Dra. Carol Mafra</p>
+  <div class="footer-links">
+    <a href="/termos">Termos de Uso</a>
+    <a href="/privacidade">Privacidade</a>
+    <a href="/">Início</a>
+    <a href="/labios">Análise Labial</a>
+    <a href="/skincare">Skincare</a>
+  </div>
+  <p class="footer-copy">© 2025 Dra. Carol Mafra · CRO-MG 66417 · Harmonização Orofacial · Todos os direitos reservados</p>
+  <p class="footer-disc">Este serviço é informativo e educativo por natureza. Não constitui diagnóstico, prescrição ou tratamento clínico. Em conformidade com a LGPD e legislação aplicável.</p>
+</footer>
+
+<!-- CONSENT MODAL -->
+<div id="consentModal">
+  <div class="consent-inner">
+    <p class="consent-title">Antes de continuar</p>
+    <p class="consent-text">Ao adquirir este plano, você confirma que compreende sua natureza exclusivamente informativa e educativa.</p>
+    <label class="consent-label">
+      <input type="checkbox" id="consentCheck">
+      <span class="consent-check-text">Declaro que li e concordo com os <a href="/termos" target="_blank">Termos de Uso</a> e a <a href="/privacidade" target="_blank">Política de Privacidade</a>, e compreendo que este plano possui caráter exclusivamente informativo, não substituindo consulta presencial nem constituindo diagnóstico clínico.</span>
+    </label>
+    <button class="consent-btn" id="consentProceed" disabled>Prosseguir para o Pagamento</button>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal">
+  <div class="payment-inner">
+    <button class="payment-close" onclick="closePayment()">✕</button>
+    <p class="payment-title">Plano Inteligente de Skincare · R$68</p>
+    <div id="mp-brick-container-skin"></div>
+    <div class="pix-panel" id="pixPanel">
+      <p style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin-bottom:16px">Escaneie o QR Code ou copie o código Pix:</p>
+      <img class="pix-qr" id="pixQr" src="" alt="QR Code Pix">
+      <button class="pix-copy-btn" id="pixCopyBtn">Copiar código Pix</button>
+      <p style="font-family:var(--sans);font-size:.75rem;color:var(--muted);margin-top:12px">Após o pagamento, você recebe o acesso em instantes.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+// ── QUIZ ─────────────────────────────────────────────────────────────────────
+const qAnswers = {};
+let qLeadName = '';
+
+// Lead step validation
+const qNameEl = document.getElementById('qName');
+const qWaEl = document.getElementById('qWa');
+const qLeadBtn = document.getElementById('qLeadBtn');
+
+function checkLead() {
+  qLeadBtn.disabled = !(qNameEl.value.trim() && qWaEl.value.trim());
+}
+qNameEl.addEventListener('input', checkLead);
+qWaEl.addEventListener('input', checkLead);
+
+qLeadBtn.addEventListener('click', () => {
+  qLeadName = qNameEl.value.trim();
+  if (!qLeadName) return;
+  showStep(1);
+  if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+});
+
+function showStep(n) {
+  document.querySelectorAll('.quiz-step-block').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById('qsStep' + n);
+  if (el) el.classList.add('active');
+  el && el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.querySelectorAll('.quiz-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const step = parseInt(btn.dataset.step);
+    qAnswers['q' + step] = btn.dataset.val;
+    document.querySelectorAll(`[data-step="${step}"]`).forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    setTimeout(() => {
+      if (step < 6) showStep(step + 1);
+      else startAnalyzing();
+    }, 350);
+  });
+});
+
+function startAnalyzing() {
+  document.querySelectorAll('.quiz-step-block').forEach(el => el.classList.remove('active'));
+  document.getElementById('qsAnalyzing').classList.add('active');
+  document.getElementById('qsAnalyzing').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  const items = document.querySelectorAll('#azItems .az-item');
+  const bar = document.getElementById('azBar');
+  const wait = document.getElementById('azWait');
+
+  bar.style.transition = 'none'; bar.style.width = '0%';
+  setTimeout(() => { items[0].style.opacity = '1'; }, 400);
+  setTimeout(() => { items[1].style.opacity = '1'; }, 1100);
+  setTimeout(() => { items[2].style.opacity = '1'; }, 1900);
+  setTimeout(() => { items[3].style.opacity = '1'; }, 2700);
+  setTimeout(() => {
+    wait.style.opacity = '1';
+    bar.style.transition = 'width 3s linear'; bar.style.width = '100%';
+  }, 3200);
+  setTimeout(() => showResult(), 6500);
+}
+
+const RESULT_COPY = {
+  manchas: {
+    title: 'Sua pele tem padrão de hiperpigmentação e tom irregular.',
+    body: 'Com base nas suas respostas, identificamos que o seu caso principal envolve manchas e desuniformidade de tom — um padrão com causas específicas que precisam ser tratadas na raiz, não apenas na superfície. Seu plano vai mostrar exatamente o que está causando isso e o protocolo correto para tratar com eficiência.'
+  },
+  acne: {
+    title: 'Sua pele tem tendência oleosa com foco em acne.',
+    body: 'Com base nas suas respostas, seu perfil apresenta características de pele oleosa com predisposição à acne — uma condição que piora quando se usa produtos errados. Seu plano vai identificar os ativos certos, os que você deve evitar, e a rotina que vai equilibrar sua oleosidade sem agredir a barreira da pele.'
+  },
+  rugas: {
+    title: 'Sua pele está pedindo atenção à firmeza e ao colágeno.',
+    body: 'Com base nas suas respostas, seu perfil tem como prioridade a prevenção e o tratamento dos sinais do envelhecimento. Seu plano vai indicar os ativos com evidência científica para o seu caso — retinoides, peptídeos, vitamina C — na concentração certa e na ordem certa para maximizar resultados.'
+  },
+  opaca: {
+    title: 'Sua pele precisa de luminosidade e hidratação profunda.',
+    body: 'Com base nas suas respostas, seu perfil apresenta pele opaca e com falta de viço — geralmente causada por desidratação e falta de renovação celular. Seu plano vai mostrar como restaurar o brilho natural da sua pele com os ativos certos, na rotina certa.'
+  }
+};
+
+function showResult() {
+  document.getElementById('qsAnalyzing').classList.remove('active');
+  const result = document.getElementById('qsResult');
+  result.classList.add('show');
+  result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const painKey = qAnswers.q1 || 'manchas';
+  const copy = RESULT_COPY[painKey] || RESULT_COPY.manchas;
+  document.getElementById('resultTitle').textContent = copy.title;
+  document.getElementById('resultBody').textContent = copy.body;
+
+  if (typeof fbq !== 'undefined') fbq('track', 'ViewContent', { content_name: 'Plano Inteligente de Skincare', value: 68, currency: 'BRL' });
+}
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ── CONSENT + PAYMENT ─────────────────────────────────────────────────────────
+function openConsent() {
+  document.getElementById('consentModal').classList.add('show');
+  if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout', { value: 68, currency: 'BRL', content_name: 'Plano Inteligente de Skincare' });
+}
+
+document.getElementById('consentCheck').addEventListener('change', function() {
+  document.getElementById('consentProceed').disabled = !this.checked;
+});
+
+document.getElementById('consentProceed').addEventListener('click', function() {
+  if (!document.getElementById('consentCheck').checked) return;
+  document.getElementById('consentModal').classList.remove('show');
+  openPayment();
+});
+
+document.getElementById('consentModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+
+function openPayment() {
+  document.getElementById('paymentModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  initMpBrick();
+}
+
+function closePayment() {
+  document.getElementById('paymentModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('paymentModal').addEventListener('click', function(e) {
+  if (e.target === this) closePayment();
+});
+
+// ── MP BRICK ──────────────────────────────────────────────────────────────────
+let brickInitialized = false;
+async function initMpBrick() {
+  if (brickInitialized) return;
+  brickInitialized = true;
+  try {
+    const res = await fetch('/api/create-mp-preference', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: 'plano_skincare', name: qLeadName || 'Cliente', price: 68 })
+    });
+    const data = await res.json();
+    if (!data.preferenceId) { brickInitialized = false; return; }
+
+    const mp = new MercadoPago('APP_USR-5f26f879-6d6b-4a1d-ace2-d5e38e0f35b4', { locale: 'pt-BR' });
+    const bricksBuilder = mp.bricks();
+    await bricksBuilder.create('wallet', 'mp-brick-container-skin', {
+      initialization: { preferenceId: data.preferenceId },
+      callbacks: {
+        onReady: () => {},
+        onError: (err) => { console.warn('MP Brick error', err); brickInitialized = false; }
+      }
+    });
+  } catch(e) {
+    console.warn('MP init error', e);
+    brickInitialized = false;
+  }
+}
+
+// ── FWA CAROUSEL ──────────────────────────────────────────────────────────────
+(function() {
+  const imgs = Array.from({ length: 15 }, (_, i) => `../PNG%20CONVERSAS/${i + 1}.png`);
+  const track = document.getElementById('fwaTrackPlano');
+  if (!track) return;
+  [...imgs, ...imgs].forEach(src => {
+    const card = document.createElement('div');
+    card.className = 'fwa-card';
+    const img = document.createElement('img');
+    img.src = src; img.alt = 'Feedback de paciente'; img.loading = 'lazy';
+    card.appendChild(img);
+    track.appendChild(card);
+  });
+})();
+
+// ── GSAP + LENIS + SPLITTYPE ──────────────────────────────────────────────────
+const isMobile = window.matchMedia('(max-width:768px)').matches || 'ontouchstart' in window;
+
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+if (typeof Lenis !== 'undefined' && !isMobile) {
+  try {
+    const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, syncTouch: false });
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+  } catch(e) {}
+}
+
+if (typeof SplitType !== 'undefined' && typeof gsap !== 'undefined') {
+  try {
+    const heroTitle = new SplitType('#heroHeadline', { types: 'words' });
+    gsap.from(heroTitle.words, { opacity: 0, y: 30, duration: 1.2, stagger: 0.07, ease: 'cubic-bezier(0.22,1,0.36,1)', delay: 0.3 });
+  } catch(e) {}
+}
+
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  const cb = 'cubic-bezier(0.22,1,0.36,1)';
+
+  ['.section-label', '.section-title', '.quebra-title', '.quebra-punchline', '.dor-title', '.garantia-title', '.cta-final-headline'].forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      gsap.from(el, { opacity: 0, y: 28, duration: .85, ease: cb, scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } });
+    });
+  });
+
+  gsap.from(document.querySelectorAll('.dor-item'), { opacity: 0, x: -28, duration: .7, stagger: .1, ease: cb, scrollTrigger: { trigger: '.dor-list', start: 'top 82%', toggleActions: 'play none none none' } });
+
+  gsap.from(document.querySelectorAll('.step-vis'), { opacity: 0, y: 36, duration: .7, stagger: .12, ease: cb, scrollTrigger: { trigger: '.steps-vis', start: 'top 82%', toggleActions: 'play none none none' } });
+
+  gsap.from(document.querySelectorAll('.valor-card'), { opacity: 0, y: 32, duration: .7, stagger: .1, ease: cb, scrollTrigger: { trigger: '.valor-grid', start: 'top 82%', toggleActions: 'play none none none' } });
+
+  gsap.from('.sobre-img', { opacity: 0, x: -40, duration: 1, ease: cb, scrollTrigger: { trigger: '.sobre-grid', start: 'top 80%', toggleActions: 'play none none none' } });
+  gsap.from('.sobre-text', { opacity: 0, x: 40, duration: 1, ease: cb, scrollTrigger: { trigger: '.sobre-grid', start: 'top 80%', toggleActions: 'play none none none' } });
+
+  gsap.from('.oferta-box', { opacity: 0, y: 40, duration: .9, ease: cb, scrollTrigger: { trigger: '#oferta', start: 'top 80%', toggleActions: 'play none none none' } });
+
+  gsap.from('.garantia-inner', { opacity: 0, y: 30, duration: .85, ease: cb, scrollTrigger: { trigger: '#garantia', start: 'top 82%', toggleActions: 'play none none none' } });
+}
+</script>
+</body>
+</html>
