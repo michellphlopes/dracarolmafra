@@ -454,12 +454,15 @@ const params = new URLSearchParams(location.search);
 const plano = params.get('plano') || '';
 const planoLabel = getPlanoLabel(plano, lang);
 
-// Meta Pixel — Purchase event
+// Meta Pixel — Purchase event (só dispara se MP confirmou o pagamento)
 (function(){
   const prices = { essencial: 97, completo: 247, premium: 347 };
   const value = prices[plano] || 0;
-  if (typeof fbq !== 'undefined' && value > 0) {
-    fbq('track', 'Purchase', { value: value, currency: 'BRL', content_name: planoLabel });
+  const mpStatus = params.get('collection_status') || params.get('status');
+  const mpId = params.get('collection_id') || params.get('payment_id');
+  const paymentApproved = mpStatus === 'approved' && mpId;
+  if (typeof fbq !== 'undefined' && value > 0 && paymentApproved) {
+    fbq('track', 'Purchase', { value: value, currency: 'BRL', content_name: planoLabel, order_id: mpId });
   }
 })();
 

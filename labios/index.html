@@ -218,6 +218,49 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
   }
   .btn-filled:hover { opacity: 0.85; background: var(--accent); color: #000; }
 
+  /* ── Botão hero destaque ── */
+  .hero-btns .btn-filled {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 22px 44px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem; font-weight: 700; font-style: normal;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    border: none; border-radius: 6px;
+    background: linear-gradient(135deg, #e8b86d 0%, #d4922a 50%, #c17a18 100%);
+    color: #1a0f00;
+    box-shadow: 0 6px 28px rgba(212,146,42,0.6), 0 2px 8px rgba(0,0,0,0.2);
+    position: relative; overflow: hidden;
+    animation: heroPulse 2.6s ease-in-out infinite;
+    transition: transform 0.18s, box-shadow 0.18s;
+    max-width: 480px; width: 100%;
+  }
+  .hero-btns .btn-filled::after {
+    content: '';
+    position: absolute;
+    top: -60%; left: -80%;
+    width: 55%; height: 220%;
+    background: rgba(255,255,255,0.22);
+    transform: skewX(-20deg);
+    animation: heroBtnShine 2.6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .hero-btns .btn-filled:hover {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(212,146,42,0.75), 0 4px 14px rgba(0,0,0,0.25);
+    color: #1a0f00;
+  }
+  .hero-btns { justify-content: center; }
+  @keyframes heroPulse {
+    0%, 100% { box-shadow: 0 6px 28px rgba(212,146,42,0.6), 0 2px 8px rgba(0,0,0,0.2); }
+    50%       { box-shadow: 0 10px 44px rgba(212,146,42,0.85), 0 3px 12px rgba(0,0,0,0.25); }
+  }
+  @keyframes heroBtnShine {
+    0%   { left: -80%; opacity: 1; }
+    60%  { left: 130%; opacity: 1; }
+    100% { left: 130%; opacity: 0; }
+  }
+
   .scroll-hint {
     position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -470,6 +513,48 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
     background: none; width: 100%;
   }
   .plan-btn:hover, .plan-card.destaque .plan-btn { background: var(--accent); color: #000; }
+
+  /* ── CTA principal: botão destaque ── */
+  #ofertaMainBtn, #quizOfertaBtn {
+    background: linear-gradient(135deg, #e8b86d 0%, #d4922a 50%, #c17a18 100%);
+    color: #1a0f00;
+    border: none;
+    padding: 22px 32px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    border-radius: 6px;
+    box-shadow: 0 6px 28px rgba(212,146,42,0.55), 0 2px 8px rgba(0,0,0,0.18);
+    position: relative;
+    overflow: hidden;
+    animation: ctaPulse 2.4s ease-in-out infinite;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  #ofertaMainBtn::after, #quizOfertaBtn::after {
+    content: '';
+    position: absolute;
+    top: -60%; left: -80%;
+    width: 60%; height: 220%;
+    background: rgba(255,255,255,0.18);
+    transform: skewX(-20deg);
+    animation: btnShine 2.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  #ofertaMainBtn:hover, #quizOfertaBtn:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 36px rgba(212,146,42,0.7), 0 4px 12px rgba(0,0,0,0.22);
+    color: #1a0f00;
+  }
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 6px 28px rgba(212,146,42,0.55), 0 2px 8px rgba(0,0,0,0.18); }
+    50%       { box-shadow: 0 8px 40px rgba(212,146,42,0.8), 0 2px 12px rgba(0,0,0,0.22); }
+  }
+  @keyframes btnShine {
+    0%   { left: -80%; opacity: 1; }
+    60%  { left: 130%; opacity: 1; }
+    100% { left: 130%; opacity: 0; }
+  }
 
   .plan-service {
     font-family: Georgia, serif; font-size: 1.05rem; color: var(--text);
@@ -1304,10 +1389,10 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
   </div>
   <div class="hero-content">
     <p class="hero-eyebrow" data-i18n-html="hero.eyebrow">Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial — Especialista em Preenchimento Labial</span></p>
-    <h1 class="hero-title" data-i18n="hero.title">Será que Preenchimento Labial Combina com Você?</h1>
-    <p class="hero-sub" data-i18n-html="hero.sub">Você pode estar prestes a cometer o <em class="hero-sub-em">mesmo erro</em> que faz milhares de mulheres se arrependerem do preenchimento.</p>
+    <h1 class="hero-title" data-i18n="hero.title">Milhares de mulheres se arrependeram do preenchimento. Você não precisa ser uma delas.</h1>
+    <p class="hero-sub" data-i18n-html="hero.sub">Antes de qualquer decisão, entenda o que realmente valoriza o <em class="hero-sub-em">seu</em> rosto.</p>
     <div class="hero-btns">
-      <a href="#" class="btn btn-filled quiz-trigger" data-i18n="hero.btn1">Descobrir Se Combina Comigo →</a>
+      <a href="#" class="btn btn-filled quiz-trigger" data-i18n="hero.btn1">🎯 Descobrir o que realmente combina com meu rosto →</a>
     </div>
   </div>
   <div class="scroll-hint" data-i18n="hero.scroll">Scroll</div>
@@ -1373,8 +1458,8 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
 <!-- HOW IT WORKS -->
 <section id="como-funciona">
   <div class="steps-header reveal">
-    <p class="section-label" data-i18n="how.label">The process</p>
-    <h2 class="section-title" data-i18n="how.title">How it works</h2>
+    <p class="section-label" data-i18n="how.label">O processo</p>
+    <h2 class="section-title" data-i18n="how.title">Como funciona</h2>
   </div>
   <div class="steps reveal">
     <div class="step">
@@ -1416,103 +1501,6 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
 </section>
 
 <!-- PLANS & PRICING -->
-<section id="planos">
-  <div class="planos-header reveal">
-    <p class="section-label" data-i18n="plans.label">Escolha seu nível de clareza</p>
-    <h2 class="section-title" data-i18n="plans.title">Qual o nível de análise ideal para você?</h2>
-    <p class="plans-sub-highlight" data-i18n-html="plans.sub">Antes de investir <em class="plans-highlight-gold">milhares</em> em um procedimento estético, invista <em class="plans-highlight-soft">alguns reais</em> para descobrir o que realmente valoriza o seu rosto.</p>
-    <ul class="plans-benefits-list" aria-label="Benefícios">
-      <li data-i18n="plans.b1">Descubra exatamente o que combina com seu rosto.</li>
-      <li data-i18n="plans.b2">Tome sua decisão com muito mais segurança.</li>
-      <li data-i18n="plans.b3">Evite um resultado artificial ou um arrependimento que poderia custar muito mais.</li>
-    </ul>
-    <p class="plans-lead" data-i18n="plans.lead">Escolha abaixo a experiência ideal para você.</p>
-  </div>
-  <div class="plans-grid reveal">
-
-    <!-- ESSENCIAL -->
-    <div class="plan-card">
-      <p class="plan-service" data-i18n="plan1.service">Avaliação Labial</p>
-      <p class="plan-name" data-i18n="plan1.name">Essencial</p>
-      <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="97" data-usd="47" data-eur="44">97</span></div>
-      <p class="plan-period" data-i18n="plans.period">pagamento único</p>
-      <p class="plan-installment" data-i18n="plan1.installment">ou 12x de R$8,08</p>
-      <ul class="plan-features">
-        <li data-i18n="plan1.f1">Descubra se o preenchimento labial combina com você</li>
-        <li data-i18n="plan1.f2">Entenda o que valoriza sua beleza natural</li>
-        <li data-i18n="plan1.f3">Evite um resultado artificial ou desproporcional</li>
-        <li data-i18n="plan1.f4">Recomendações personalizadas para o seu caso</li>
-        <li data-i18n="plan1.f5">Relatório entregue em até 3 dias úteis</li>
-        <li class="no" data-i18n="plan1.f6">Avaliação facial completa</li>
-        <li class="no" data-i18n="plan1.f7">Videochamada com a Dra. Carol</li>
-      </ul>
-      <button class="plan-btn direct-plan-select" data-plan="essencial" data-i18n="plan1.btn">Escolher este plano →</button>
-    </div>
-
-    <!-- COMPLETO -->
-    <div class="plan-card destaque">
-      <div class="plan-badge" data-i18n="plans.popular">Mais Escolhido</div>
-      <p class="plan-service" data-i18n="plan2.service">Avaliação Facial Completa</p>
-      <p class="plan-name" data-i18n="plan2.name">Completo</p>
-      <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="147" data-usd="75" data-eur="69">147</span></div>
-      <p class="plan-period" data-i18n="plans.period">pagamento único</p>
-      <p class="plan-installment" data-i18n="plan2.installment">ou 12x de R$12,25</p>
-      <ul class="plan-features">
-        <li data-i18n="plan2.f1">Tudo da Avaliação Labial</li>
-        <li data-i18n="plan2.f2">Descubra quais características do seu rosto merecem atenção</li>
-        <li data-i18n="plan2.f3">Entenda como todo o rosto influencia o resultado do preenchimento</li>
-        <li data-i18n="plan2.f4">Tome sua decisão com muito mais segurança</li>
-        <li data-i18n="plan2.f5">Relatório detalhado com diagramas visuais</li>
-        <li data-i18n="plan2.f6">Entregue em até 3 dias úteis</li>
-        <li class="no" data-i18n="plan2.f7">Videochamada com a Dra. Carol</li>
-      </ul>
-      <button class="plan-btn direct-plan-select" data-plan="completo" data-i18n="plan2.btn">Escolher este plano →</button>
-    </div>
-
-    <!-- PREMIUM -->
-    <div class="plan-card plan-premium">
-      <p class="plan-crown" data-i18n="plan3.crown">🎥 ACESSO DIRETO À DRA. CAROL</p>
-      <p class="plan-service" data-i18n="plan3.service">Avaliação + Videochamada Exclusiva</p>
-      <p class="plan-name" data-i18n="plan3.name">Premium</p>
-      <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="247" data-usd="127" data-eur="117">247</span></div>
-      <p class="plan-period" data-i18n="plans.period">pagamento único</p>
-      <p class="plan-installment" data-i18n="plan3.installment">ou 12x de R$20,58</p>
-      <ul class="plan-features">
-        <li data-i18n="plan3.f1">Tudo da Avaliação Facial Completa</li>
-        <li class="plan-feature-highlight" data-i18n="plan3.f2">Videochamada individual com a Dra. Carol Mafra</li>
-        <li data-i18n="plan3.f3">Explicação completa da sua análise</li>
-        <li data-i18n="plan3.f4">Tire todas as suas dúvidas ao vivo</li>
-        <li data-i18n="plan3.f5">Receba orientações personalizadas para o seu caso</li>
-        <li data-i18n="plan3.f6">Entenda exatamente o que combina com o seu rosto</li>
-        <li data-i18n="plan3.f7">Tome sua decisão com muito mais segurança</li>
-        <li data-i18n="plan3.f8">Agendamento realizado em até 3 dias úteis</li>
-      </ul>
-      <button class="plan-btn direct-plan-select" data-plan="premium" data-i18n="plan3.btn">Escolher este plano →</button>
-      <p class="plan-premium-note" data-i18n="plan3.note">Videochamada individual de até 20 minutos. Agendamento realizado em até 3 dias úteis, conforme disponibilidade da Dra. Carol Mafra.</p>
-    </div>
-
-  </div>
-
-  <div class="plans-undecided reveal">
-    <p class="plans-undecided-title" data-i18n="plans.undecided.title">Ainda não sabe qual escolher?</p>
-    <p class="plans-undecided-text" data-i18n="plans.undecided.text">O Plano Completo reúne tudo o que a maioria das clientes procura antes de decidir realizar um preenchimento labial. É a opção ideal para quem deseja entender como todo o rosto influencia o resultado e tomar uma decisão com muito mais segurança.</p>
-  </div>
-
-  <div class="trust-badges reveal">
-    <div class="trust-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <span data-i18n="trust.secure">Secure Payment</span>
-    </div>
-    <div class="trust-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <span>Stripe · PayPal · Apple Pay · Google Pay</span>
-    </div>
-    <div class="trust-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span>GDPR & LGPD Compliant</span>
-    </div>
-  </div>
-</section>
 
 <!-- DEPOIMENTOS CARROSSEL -->
 <section id="depoimentos-texto">
@@ -1651,6 +1639,106 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
   </div>
 </div>
 
+
+<!-- DEPOIMENTOS TEXTO -->
+<section id="depoimentos-testi" style="padding:80px 40px;background:var(--bg)">
+  <div class="testi-header reveal">
+    <p class="section-label" data-i18n="testi.label">O que dizem nossas clientes</p>
+    <h2 class="section-title testi-title" data-i18n="testi.title">Quem já confiou na análise da Dra. Carol</h2>
+  </div>
+  <div class="testi-grid reveal" style="max-width:960px;margin:0 auto">
+    <div class="testi-card">
+      <span class="testi-quote">"</span>
+      <p class="testi-text" data-i18n="testi.1.text">Eu estava com muito medo de fazer o preenchimento e acabar com um resultado artificial. A análise da Dra. Carol me ajudou a entender por que os meus lábios ficavam estranhos em fotos — e o que realmente combinava com o meu rosto. Me senti muito mais segura para tomar a decisão.</p>
+      <p class="testi-author" data-i18n="testi.1.author">Fernanda, 32 anos</p>
+    </div>
+    <div class="testi-card">
+      <span class="testi-quote">"</span>
+      <p class="testi-text" data-i18n="testi.2.text">Nunca imaginei que uma avaliação online pudesse ser tão completa e personalizada. Ela identificou características do meu rosto que nem eu mesma havia percebido. Valeu muito mais do que eu esperava.</p>
+      <p class="testi-author" data-i18n="testi.2.author">Juliana, 27 anos</p>
+    </div>
+    <div class="testi-card" style="grid-column:1/-1">
+      <span class="testi-quote">"</span>
+      <p class="testi-text" data-i18n="test.3.text">O plano premium com consultoria por vídeo foi um divisor de águas. A Dra. Carol é incrivelmente atenciosa e profissional. Já recomendei para três amigas — e todas adoraram a experiência.</p>
+      <p class="testi-author" data-i18n="test.3.author">Camila T. — Los Angeles, CA</p>
+    </div>
+  </div>
+</section>
+
+<section id="planos">
+  <!-- HEADLINE DA OFERTA -->
+  <div style="text-align:center;max-width:640px;margin:0 auto 56px" class="reveal">
+    <p class="section-label">Oferta única · Sem complicação</p>
+    <h2 class="section-title" style="margin-inline:auto">A análise que custa R$47 pode evitar um arrependimento de R$1.500.</h2>
+    <p style="font-family:var(--sans);font-size:.92rem;color:rgba(255,255,255,.55);margin-top:16px;line-height:1.7">Análise personalizada da Dra. Carol Mafra — entregue em até 3 dias úteis. Sem consulta presencial. Sem espera.</p>
+  </div>
+
+  <!-- CARD ÚNICO -->
+  <div style="max-width:520px;margin:0 auto" class="reveal">
+    <div class="plan-card destaque" style="border:2px solid var(--accent);padding:40px 36px">
+
+      <p style="font-family:var(--sans);font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Avaliação Labial Personalizada</p>
+      <p style="font-family:var(--sans);font-size:.8rem;color:var(--muted);text-decoration:line-through;margin-bottom:4px">de R$97</p>
+      <div class="plan-price" style="margin-bottom:4px"><sup class="price-symbol">R$</sup><span class="price-val" id="ofertaPrecoDisplay" data-brl="47" data-usd="37" data-eur="34">47</span></div>
+      <p style="font-family:var(--sans);font-size:.75rem;color:var(--muted);margin-bottom:28px">pagamento único</p>
+
+      <ul class="plan-features" style="margin-bottom:32px">
+        <li>Se o preenchimento labial combina com o seu rosto</li>
+        <li>O que valoriza a sua beleza natural — sem resultado artificial</li>
+        <li>Quais características do seu rosto merecem atenção</li>
+        <li>O que esperar do resultado e o que evitar no seu caso</li>
+        <li>Recomendações personalizadas pela Dra. Carol Mafra</li>
+        <li>Relatório entregue em até 3 dias úteis</li>
+        <li>🛡 Garantia de reembolso em 7 dias</li>
+      </ul>
+
+      <!-- UPSELLS OPCIONAIS -->
+      <div style="border-top:1px solid var(--border);padding-top:24px;margin-bottom:28px">
+        <p style="font-family:var(--sans);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.8;margin-bottom:16px">Potencialize sua análise (opcional)</p>
+
+        <label id="upsellLabel1" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:14px 16px;border:1px solid var(--border);border-radius:4px;margin-bottom:10px;background:rgba(200,169,110,0.04);transition:border-color .2s">
+          <input type="checkbox" id="ofertaUpsell1" style="margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0">
+          <div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:3px">Avaliação Facial Completa <span style="color:var(--accent)">+R$50</span></div>
+            <div style="font-family:var(--sans);font-size:.73rem;color:var(--muted);line-height:1.5">A Dra. Carol analisa todo o seu rosto — não só os lábios. Entenda como cada proporção influencia o resultado.</div>
+          </div>
+        </label>
+
+        <label id="upsellLabel2" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:14px 16px;border:1px solid var(--border);border-radius:4px;background:rgba(200,169,110,0.04);transition:border-color .2s">
+          <input type="checkbox" id="ofertaUpsell2" style="margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0">
+          <div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:3px">Videochamada com a Dra. Carol <span style="color:var(--accent)">+R$100</span></div>
+            <div style="font-family:var(--sans);font-size:.73rem;color:var(--muted);line-height:1.5">20 minutos ao vivo. Tire todas as dúvidas, receba orientações personalizadas e chegue ao procedimento com total confiança. <em style="color:var(--accent)">(inclui Avaliação Facial Completa)</em></div>
+          </div>
+        </label>
+      </div>
+
+      <button id="ofertaMainBtn" class="plan-btn direct-plan-select" data-plan="essencial" style="width:100%">
+        🎯 Quero minha avaliação agora — R$47 →
+      </button>
+
+      <p style="font-family:var(--sans);font-size:.68rem;color:var(--muted);text-align:center;margin-top:14px;line-height:1.7">
+        🔒 Pagamento seguro · Stripe · Pix · Mercado Pago<br>🛡 Garantia de 7 dias sem perguntas
+      </p>
+    </div>
+  </div>
+
+  <div class="trust-badges reveal" style="margin-top:40px">
+    <div class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span data-i18n="trust.secure">Pagamento Seguro</span>
+    </div>
+    <div class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span>Stripe · PayPal · Apple Pay · Google Pay</span>
+    </div>
+    <div class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>GDPR & LGPD Compliant</span>
+    </div>
+  </div>
+</section>
+
 <!-- INSTAGRAM -->
 <section id="instagram">
   <div class="reveal" style="margin-bottom:40px">
@@ -1677,78 +1765,78 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
 <!-- FAQ -->
 <section id="faq">
   <div class="reveal">
-    <p class="section-label" data-i18n="faq.label">Questions</p>
-    <h2 class="section-title" data-i18n="faq.title">Frequently asked questions</h2>
+    <p class="section-label" data-i18n="faq.label">Dúvidas</p>
+    <h2 class="section-title" data-i18n="faq.title">Perguntas frequentes</h2>
   </div>
   <div class="faq-list reveal">
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.3.q">Does this replace an in-person consultation?</span>
+        <span data-i18n="faq.3.q">Isso substitui uma consulta presencial?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.3.a">No. This is an informational and educational service that helps you understand your facial features and aesthetic possibilities. It does not constitute a medical diagnosis, prescription, or treatment plan. For any procedure, always consult a qualified in-person professional.</p>
+        <p data-i18n="faq.3.a">Não. Este é um serviço informativo e educativo que ajuda você a entender suas características faciais e possibilidades estéticas. Não constitui diagnóstico médico, prescrição ou plano de tratamento. Para qualquer procedimento, sempre consulte um profissional qualificado presencialmente.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.1.q">What kind of photos do I need to send?</span>
+        <span data-i18n="faq.1.q">Que tipo de foto preciso enviar?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.1.a">You'll need 3 photos: one front-facing, one left profile, and one right profile. Photos should be taken in good natural lighting, without filters, with a clean face and hair pulled back. Detailed photo instructions are sent to your email immediately after purchase.</p>
+        <p data-i18n="faq.1.a">Você precisará de 3 fotos: uma de frente, uma de perfil esquerdo e uma de perfil direito. As fotos devem ser tiradas com boa iluminação natural, sem filtros, com o rosto limpo e o cabelo preso. As instruções detalhadas para as fotos são enviadas para o seu e-mail imediatamente após a compra.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.2.q">How long does it take to receive my assessment?</span>
+        <span data-i18n="faq.2.q">Quanto tempo leva para receber minha avaliação?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.2.a">Standard delivery is within 3 business days after we receive and approve your photos. The Premium plan includes priority processing with delivery within 3 business days.</p>
+        <p data-i18n="faq.2.a">A entrega padrão é em até 3 dias úteis após recebermos e aprovarmos suas fotos. O plano Premium inclui processamento prioritário com entrega em 3 dias úteis.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.4.q">What payment methods are accepted?</span>
+        <span data-i18n="faq.4.q">Quais formas de pagamento são aceitas?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.4.a">We accept all major credit and debit cards via Stripe, PayPal, Apple Pay, and Google Pay. For Brazilian customers, Pix and boleto are also available via Mercado Pago. All payments are processed securely with SSL encryption.</p>
+        <p data-i18n="faq.4.a">Aceitamos todos os principais cartões de crédito e débito via Stripe, PayPal, Apple Pay e Google Pay. Para clientes brasileiros, Pix e boleto também estão disponíveis via Mercado Pago. Todos os pagamentos são processados com segurança e criptografia SSL.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.5.q">Are my photos and personal data safe?</span>
+        <span data-i18n="faq.5.q">Minhas fotos e dados pessoais estão seguros?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.5.a">Absolutely. Your photos and personal information are handled with strict confidentiality, in compliance with GDPR and LGPD regulations. Your images are used exclusively to prepare your analysis and are never shared with third parties.</p>
+        <p data-i18n="faq.5.a">Com certeza. Suas fotos e informações pessoais são tratadas com total confidencialidade, em conformidade com as regulamentações GDPR e LGPD. Suas imagens são usadas exclusivamente para preparar sua análise e nunca são compartilhadas com terceiros.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.6.q">Can I get a refund?</span>
+        <span data-i18n="faq.6.q">Posso pedir reembolso?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.6.a">Yes. If you haven't submitted your photos yet, you're entitled to a full refund within 7 days of purchase — no questions asked. Once photo submission and analysis have begun, refunds are no longer available.</p>
+        <p data-i18n="faq.6.a">Sim. Se você ainda não enviou suas fotos, tem direito a reembolso integral em até 7 dias após a compra — sem perguntas. Uma vez que o envio de fotos e a análise tenham começado, os reembolsos não estão mais disponíveis.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question">
-        <span data-i18n="faq.7.q">What if I have follow-up questions after receiving my report?</span>
+        <span data-i18n="faq.7.q">E se eu tiver dúvidas após receber meu relatório?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        <p data-i18n="faq.7.a">Premium plan clients receive 7 days of post-analysis support and one free revision. For other plans, you can always reach us via the contact form below with any questions about your report.</p>
+        <p data-i18n="faq.7.a">Clientes do plano Premium recebem 7 dias de suporte pós-análise e uma revisão gratuita. Para outros planos, você sempre pode nos contatar pelo formulário abaixo com qualquer dúvida sobre seu relatório.</p>
       </div>
     </div>
 
@@ -1759,7 +1847,7 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
 <section id="cta-final">
   <div class="reveal">
     <p class="section-label" data-i18n="cta.label">Antes de qualquer decisão</p>
-    <h2 class="section-title" data-i18n="cta.title">Você merece chegar ao procedimento sabendo exatamente o que esperar.</h2>
+    <h2 class="section-title" data-i18n="cta.title">Antes de qualquer procedimento — descubra o que o seu rosto realmente precisa.</h2>
     <p data-i18n="cta.sub">Centenas de mulheres já fizeram essa descoberta. Responderam ao teste, entenderam seu rosto — e chegaram ao procedimento com muito mais segurança, clareza e confiança no resultado.</p>
     <a href="#" class="btn btn-filled quiz-trigger" data-i18n="cta.btn">Quero Saber o Que Combina com Mim →</a>
   </div>
@@ -1987,73 +2075,49 @@ fbq('track','ViewContent',{content_name:'Avaliação Labial',content_category:'L
 
     <!-- PLANS STEP -->
     <div id="quizStepPlans" class="quiz-step" style="display:none">
-      <p class="qp-progress-label" data-i18n="quiz.plans.progress">✅ Perfil identificado. Escolha seu plano.</p>
-      <h2 class="quiz-result-title" data-i18n="quiz.plans.title">Escolha o nível da sua análise personalizada.</h2>
-      <p class="qp-sub" data-i18n="quiz.plans.sub">Com base nas suas respostas, qualquer um dos planos pode ser realizado. A diferença está no nível de profundidade da análise e na experiência que você deseja ter.</p>
-      <div class="qp-cards-grid">
+      <p class="qp-progress-label" data-i18n="quiz.plans.progress">✅ Perfil identificado. Sua análise está pronta.</p>
+      <h2 class="quiz-result-title" style="margin-bottom:8px">Avaliação Labial Personalizada</h2>
+      <p class="qp-sub" style="margin-bottom:32px">Análise exclusiva da Dra. Carol Mafra para o seu rosto. Entregue em até 3 dias úteis.</p>
 
-        <!-- ESSENCIAL -->
-        <div class="plan-card">
-          <p class="plan-service" data-i18n="plan1.service">Avaliação Labial</p>
-          <p class="plan-name" data-i18n="plan1.name">Essencial</p>
-          <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="97" data-usd="47" data-eur="44">97</span></div>
-          <p class="plan-period" data-i18n="plans.period">pagamento único</p>
-          <p class="plan-installment" data-i18n="plan1.installment">ou 12x de R$8,08</p>
-          <ul class="plan-features">
-            <li data-i18n="plan1.f1">Descubra se o preenchimento labial combina com você</li>
-            <li data-i18n="plan1.f2">Entenda o que valoriza sua beleza natural</li>
-            <li data-i18n="plan1.f3">Evite um resultado artificial ou desproporcional</li>
-            <li data-i18n="plan1.f4">Recomendações personalizadas para o seu caso</li>
-            <li data-i18n="plan1.f5">Análise entregue em até 3 dias úteis</li>
-            <li class="no" data-i18n="plan1.f6">Avaliação facial completa</li>
-            <li class="no" data-i18n="plan1.f7">Videochamada com a Dra. Carol</li>
-          </ul>
-          <button class="plan-btn quiz-plan-select" data-plan="essencial" data-i18n="quiz.plans.btn">Continuar com este plano</button>
+      <!-- CARD ÚNICO NO QUIZ -->
+      <div class="plan-card destaque" style="max-width:440px;margin:0 auto;border:2px solid var(--accent);padding:32px 28px">
+        <p style="font-family:sans-serif;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:6px">Avaliação Personalizada</p>
+        <p style="font-family:sans-serif;font-size:.78rem;color:var(--muted);text-decoration:line-through;margin-bottom:2px">de R$97</p>
+        <div class="plan-price" style="margin-bottom:4px"><sup class="price-symbol">R$</sup><span id="quizPrecoDisplay">47</span></div>
+        <p style="font-family:sans-serif;font-size:.72rem;color:var(--muted);margin-bottom:24px">pagamento único</p>
+
+        <ul class="plan-features" style="margin-bottom:24px">
+          <li>Se o preenchimento labial combina com o seu rosto</li>
+          <li>O que valoriza a sua beleza natural</li>
+          <li>O que evitar para não ter resultado artificial</li>
+          <li>Recomendações personalizadas pela Dra. Carol</li>
+          <li>Relatório em até 3 dias úteis</li>
+          <li>🛡 Garantia de 7 dias</li>
+        </ul>
+
+        <!-- UPSELLS -->
+        <div style="border-top:1px solid var(--border);padding-top:18px;margin-bottom:20px">
+          <p style="font-family:sans-serif;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.8;margin-bottom:12px">Adicionar (opcional)</p>
+          <label id="quizUpsellLabel1" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:4px;margin-bottom:8px;background:rgba(200,169,110,0.04)">
+            <input type="checkbox" id="quizUpsell1" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="font-family:sans-serif;font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:2px">Avaliação Facial Completa <span style="color:var(--accent)">+R$50</span></div>
+              <div style="font-family:sans-serif;font-size:.7rem;color:var(--muted);line-height:1.4">Todo o rosto — não só os lábios.</div>
+            </div>
+          </label>
+          <label id="quizUpsellLabel2" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:4px;background:rgba(200,169,110,0.04)">
+            <input type="checkbox" id="quizUpsell2" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="font-family:sans-serif;font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:2px">Videochamada com a Dra. Carol <span style="color:var(--accent)">+R$100</span></div>
+              <div style="font-family:sans-serif;font-size:.7rem;color:var(--muted);line-height:1.4">20 min ao vivo · inclui Avaliação Facial Completa</div>
+            </div>
+          </label>
         </div>
 
-        <!-- COMPLETO -->
-        <div class="plan-card destaque">
-          <div class="plan-badge" data-i18n="plans.popular">Mais Escolhido</div>
-          <p class="plan-service" data-i18n="plan2.service">Avaliação Facial Completa</p>
-          <p class="plan-name" data-i18n="plan2.name">Completo</p>
-          <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="147" data-usd="75" data-eur="69">147</span></div>
-          <p class="plan-period" data-i18n="plans.period">pagamento único</p>
-          <p class="plan-installment" data-i18n="plan2.installment">ou 12x de R$12,25</p>
-          <p class="qp-completo-note" data-i18n="quiz.plans.note">Ideal para quem deseja analisar todo o rosto antes de decidir realizar um preenchimento labial.</p>
-          <ul class="plan-features">
-            <li data-i18n="plan2.f1">Tudo da Avaliação Labial</li>
-            <li data-i18n="plan2.f2">Descubra quais características do seu rosto merecem atenção</li>
-            <li data-i18n="plan2.f3">Entenda como todo o rosto influencia o resultado do preenchimento</li>
-            <li data-i18n="plan2.f4">Tome sua decisão com muito mais segurança</li>
-            <li data-i18n="plan2.f5">Análise detalhada com diagramas visuais</li>
-            <li data-i18n="plan2.f6">Entregue em até 3 dias úteis</li>
-            <li class="no" data-i18n="plan2.f7">Videochamada com a Dra. Carol</li>
-          </ul>
-          <button class="plan-btn quiz-plan-select" data-plan="completo" data-i18n="quiz.plans.btn">Continuar com este plano</button>
-        </div>
-
-        <!-- PREMIUM -->
-        <div class="plan-card plan-premium">
-          <p class="plan-crown" data-i18n="plan3.crown">🎥 ACESSO DIRETO À DRA. CAROL</p>
-          <p class="plan-service" data-i18n="plan3.service">Avaliação + Videochamada Exclusiva</p>
-          <p class="plan-name" data-i18n="plan3.name">Premium</p>
-          <div class="plan-price"><sup class="price-symbol">R$</sup><span class="price-val" data-brl="247" data-usd="127" data-eur="117">247</span></div>
-          <p class="plan-period" data-i18n="plans.period">pagamento único</p>
-          <p class="plan-installment" data-i18n="plan3.installment">ou 12x de R$20,58</p>
-          <ul class="plan-features">
-            <li data-i18n="plan3.f1">Tudo da Avaliação Facial Completa</li>
-            <li class="plan-feature-highlight" data-i18n="plan3.f2">Videochamada individual com a Dra. Carol Mafra</li>
-            <li data-i18n="plan3.f3">Explicação completa da sua análise</li>
-            <li data-i18n="plan3.f4">Tire todas as suas dúvidas ao vivo</li>
-            <li data-i18n="plan3.f5">Receba orientações personalizadas para o seu caso</li>
-            <li data-i18n="plan3.f6">Entenda exatamente o que combina com o seu rosto</li>
-            <li data-i18n="plan3.f7">Tome sua decisão com muito mais segurança</li>
-            <li data-i18n="plan3.f8">Agendamento realizado em até 3 dias úteis</li>
-          </ul>
-          <button class="plan-btn quiz-plan-select" data-plan="premium" data-i18n="quiz.plans.btn">Continuar com este plano</button>
-          <p class="plan-premium-note" data-i18n="plan3.note">Videochamada individual de até 20 minutos. Agendamento realizado em até 3 dias úteis, conforme disponibilidade da Dra. Carol Mafra.</p>
-        </div>
-
+        <button id="quizOfertaBtn" class="plan-btn quiz-plan-select" data-plan="essencial" style="width:100%">
+          🎯 Quero minha avaliação agora — R$47 →
+        </button>
+        <p style="font-family:sans-serif;font-size:.65rem;color:var(--muted);text-align:center;margin-top:10px">🔒 Pagamento seguro · 🛡 Garantia 7 dias</p>
       </div>
     </div>
 
@@ -2066,9 +2130,9 @@ const T = {
   pt: {
     'nav.works':'Como Funciona','nav.plans':'Planos','nav.about':'Sobre','nav.cta':'Descobrir Meu Resultado',
     'hero.eyebrow':'Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonização Orofacial — Especialista em Preenchimento Labial</span>',
-    'hero.title':'Será que Preenchimento Labial Combina com Você?',
+    'hero.title':'Milhares de mulheres se arrependeram do preenchimento. Você não precisa ser uma delas.',
     'hero.authority':'✦ Método da Dra. Carol Mafra · Especialista em resultados naturais em HOF',
-    'hero.sub':'Você pode estar prestes a cometer o <em class="hero-sub-em">mesmo erro</em> que faz milhares de mulheres se arrependerem do preenchimento.',
+    'hero.sub':'Antes de qualquer decisão, entenda o que realmente valoriza o <em class="hero-sub-em">seu</em> rosto.',
     'hero.btn1':'Descobrir Se Combina Comigo →','hero.scroll':'Rolar',
     'plans.ready':'',
     'hero.proof':'⏱ ~60 segundos · 🔒 Sem compromisso · ✨ Resultado personalizado',
@@ -2129,7 +2193,7 @@ const T = {
     'faq.5.q':'Minhas fotos e dados pessoais estão seguros?','faq.5.a':'Com certeza. Suas fotos e informações pessoais são tratadas com total confidencialidade, em conformidade com as regulamentações GDPR e LGPD. Suas imagens são usadas exclusivamente para preparar sua análise e nunca são compartilhadas com terceiros.',
     'faq.6.q':'Posso pedir reembolso?','faq.6.a':'Sim. Se você ainda não enviou suas fotos, tem direito a reembolso integral em até 7 dias após a compra — sem perguntas. Uma vez que o envio de fotos e a análise tenham começado, os reembolsos não estão mais disponíveis.',
     'faq.7.q':'E se eu tiver dúvidas após receber meu relatório?','faq.7.a':'Clientes do plano Premium recebem 7 dias de suporte pós-análise e uma revisão gratuita. Para outros planos, você sempre pode nos contatar pelo formulário abaixo com qualquer dúvida sobre seu relatório.',
-    'cta.label':'Antes de qualquer decisão','cta.title':'Você merece chegar ao procedimento sabendo exatamente o que esperar.','cta.sub':'Centenas de mulheres já fizeram essa descoberta. Responderam ao teste, entenderam seu rosto — e chegaram ao procedimento com muito mais segurança, clareza e confiança no resultado.','cta.btn':'Quero Saber o Que Combina com Mim →',
+    'cta.label':'Antes de qualquer decisão','cta.title':'Antes de qualquer procedimento — descubra o que o seu rosto realmente precisa.','cta.sub':'Centenas de mulheres já fizeram essa descoberta. Responderam ao teste, entenderam seu rosto — e chegaram ao procedimento com muito mais segurança, clareza e confiança no resultado.','cta.btn':'Quero Saber o Que Combina com Mim →',
     'disclaimer.text':'⚠️ <strong>Aviso importante:</strong> As avaliações fornecidas através deste serviço são estritamente informativas e educativas por natureza. Não constituem diagnóstico médico, prescrição ou recomendação profissional de tratamento. Para qualquer procedimento estético, sempre consulte um profissional qualificado e licenciado presencialmente.',
     'contact.label':'Entre em contato','contact.title':'Fale conosco','contact.name':'Nome Completo','contact.name.ph':'Seu nome completo','contact.email':'Endereço de E-mail','contact.subject':'Assunto','contact.select':'Selecione um assunto...','contact.opt1':'Dúvida sobre planos','contact.opt2':'Problema de pagamento','contact.opt3':'Status do pedido','contact.opt4':'Outro','contact.msg':'Mensagem','contact.msg.ph':'Como podemos ajudar?','contact.send':'Enviar Mensagem','contact.success':'Mensagem enviada!','contact.success2':'Retornaremos em até 24 horas.','contact.wa':'WhatsApp: <a href="#">Contato via Instagram</a>',
     'quiz.lead.title':'Para onde enviamos seu resultado?','quiz.lead.sub':'Informe seus dados para receber sua análise personalizada da Dra. Carol Mafra.','quiz.lead.name':'Seu nome completo','quiz.lead.wa':'WhatsApp com DDD','quiz.lead.btn':'Iniciar Avaliação',
@@ -2177,9 +2241,9 @@ const T = {
   en: {
     'nav.works':'How It Works','nav.plans':'Plans','nav.about':'About','nav.cta':'Discover My Result',
     'hero.eyebrow':'Dr. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Orofacial Harmonization — Lip Filler Specialist</span>',
-    'hero.title':'Does Lip Filler Really Suit You?',
+    'hero.title':'Thousands of women regretted their lip filler. You don\'t have to be one of them.',
     'hero.authority':'✦ Dr. Carol Mafra\'s Method · Specialist in natural HOF results',
-    'hero.sub':'You may be about to make the <em class="hero-sub-em">same mistake</em> that makes thousands of women regret their lip filler.',
+    'hero.sub':'Before any decision, understand what truly enhances <em class="hero-sub-em">your</em> face.',
     'hero.btn1':'Find Out If It Suits Me →','hero.scroll':'Scroll',
     'plans.ready':'',
     'hero.proof':'⏱ ~60 seconds · 🔒 No commitment · ✨ Personalized result',
@@ -2240,7 +2304,7 @@ const T = {
     'faq.5.q':'Are my photos and personal data safe?','faq.5.a':'Absolutely. Your photos and personal information are handled with strict confidentiality, in compliance with GDPR and LGPD regulations. Your images are used exclusively to prepare your analysis and are never shared with third parties.',
     'faq.6.q':'Can I get a refund?','faq.6.a':'Yes. If you haven\'t submitted your photos yet, you\'re entitled to a full refund within 7 days of purchase — no questions asked. Once photo submission and analysis have begun, refunds are no longer available.',
     'faq.7.q':'What if I have follow-up questions after receiving my report?','faq.7.a':'Premium plan clients receive 7 days of post-analysis support and one free revision. For other plans, you can always reach us via the contact form below with any questions about your report.',
-    'cta.label':'Before any decision','cta.title':'You deserve to arrive at your procedure knowing exactly what to expect.','cta.sub':'Hundreds of women have already made this discovery. They answered the test, understood their face — and arrived at their procedure with far more confidence, clarity, and certainty about the result.','cta.btn':'I Want to Know What Suits Me →',
+    'cta.label':'Before any decision','cta.title':'Before any procedure — discover what your face truly needs.','cta.sub':'Hundreds of women have already made this discovery. They answered the test, understood their face — and arrived at their procedure with far more confidence, clarity, and certainty about the result.','cta.btn':'I Want to Know What Suits Me →',
     'disclaimer.text':'⚠️ <strong>Important notice:</strong> The assessments provided through this service are strictly informational and educational in nature. They do not constitute a medical diagnosis, prescription, or professional treatment recommendation. For any aesthetic procedure, always consult a qualified, licensed professional in person.',
     'contact.label':'Get in touch','contact.title':'Contact us','contact.name':'Full Name','contact.name.ph':'Your full name','contact.email':'Email Address','contact.subject':'Subject','contact.select':'Select a topic...','contact.opt1':'Question about plans','contact.opt2':'Payment issue','contact.opt3':'Order status','contact.opt4':'Other','contact.msg':'Message','contact.msg.ph':'How can we help you?','contact.send':'Send Message','contact.success':'Message sent!','contact.success2':'We\'ll get back to you within 24 hours.','contact.wa':'WhatsApp: <a href="#">Contact via Instagram</a>',
     'quiz.lead.title':'Where should we send your result?','quiz.lead.sub':'Enter your details to receive your personalized analysis from Dr. Carol Mafra.','quiz.lead.name':'Your full name','quiz.lead.wa':'WhatsApp with country code','quiz.lead.btn':'Start Assessment',
@@ -2288,9 +2352,9 @@ const T = {
   es: {
     'nav.works':'Cómo Funciona','nav.plans':'Planes','nav.about':'Sobre mí','nav.cta':'Descubrir Mi Resultado',
     'hero.eyebrow':'Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Armonización Orofacial — Especialista en Relleno Labial</span>',
-    'hero.title':'¿El Relleno Labial Realmente Te Favorece?',
+    'hero.title':'Miles de mujeres se arrepintieron del relleno labial. Tú no tienes que ser una de ellas.',
     'hero.authority':'✦ Método de la Dra. Carol Mafra · Especialista en resultados naturales en HOF',
-    'hero.sub':'Puede que estés a punto de cometer el <em class="hero-sub-em">mismo error</em> que hace que miles de mujeres se arrepientan del relleno labial.',
+    'hero.sub':'Antes de cualquier decisión, descubre lo que realmente valoriza <em class="hero-sub-em">tu</em> rostro.',
     'hero.btn1':'Descubrir Si Me Favorece →','hero.scroll':'Bajar',
     'plans.ready':'',
     'hero.proof':'⏱ ~60 segundos · 🔒 Sin compromiso · ✨ Resultado personalizado',
@@ -2351,7 +2415,7 @@ const T = {
     'faq.5.q':'¿Están seguros mis fotos y datos personales?','faq.5.a':'Por supuesto. Tus fotos e información personal se manejan con estricta confidencialidad, cumpliendo con las regulaciones GDPR. Tus imágenes se utilizan exclusivamente para preparar tu análisis y nunca se comparten con terceros.',
     'faq.6.q':'¿Puedo solicitar un reembolso?','faq.6.a':'Sí. Si aún no has enviado tus fotos, tienes derecho a un reembolso completo dentro de los 7 días posteriores a la compra — sin preguntas. Una vez que el envío de fotos y el análisis hayan comenzado, los reembolsos ya no están disponibles.',
     'faq.7.q':'¿Qué pasa si tengo preguntas después de recibir mi informe?','faq.7.a':'Los clientes del plan Premium reciben 7 días de soporte post-análisis y una revisión gratuita. Para otros planes, siempre puede contactarnos a través del formulario de contacto a continuación.',
-    'cta.label':'Antes de cualquier decisión','cta.title':'Mereces llegar al procedimiento sabiendo exactamente qué esperar.','cta.sub':'Cientos de mujeres ya hicieron este descubrimiento. Respondieron el test, entendieron su rostro — y llegaron al procedimiento con mucha más seguridad, claridad y confianza en el resultado.','cta.btn':'Quiero Saber Qué Combina Conmigo →',
+    'cta.label':'Antes de cualquier decisión','cta.title':'Antes de cualquier procedimiento — descubre lo que tu rostro realmente necesita.','cta.sub':'Cientos de mujeres ya hicieron este descubrimiento. Respondieron el test, entendieron su rostro — y llegaron al procedimiento con mucha más seguridad, claridad y confianza en el resultado.','cta.btn':'Quiero Saber Qué Combina Conmigo →',
     'disclaimer.text':'⚠️ <strong>Aviso importante:</strong> Las evaluaciones proporcionadas a través de este servicio son estrictamente informativas y educativas por naturaleza. No constituyen diagnóstico médico, receta o recomendación profesional de tratamiento. Para cualquier procedimiento estético, consulte siempre a un profesional calificado y licenciado en persona.',
     'contact.label':'Contacto','contact.title':'Contáctenos','contact.name':'Nombre Completo','contact.name.ph':'Tu nombre completo','contact.email':'Correo Electrónico','contact.subject':'Asunto','contact.select':'Selecciona un tema...','contact.opt1':'Pregunta sobre planes','contact.opt2':'Problema de pago','contact.opt3':'Estado del pedido','contact.opt4':'Otro','contact.msg':'Mensaje','contact.msg.ph':'¿Cómo podemos ayudarte?','contact.send':'Enviar Mensaje','contact.success':'¡Mensaje enviado!','contact.success2':'Te responderemos en 24 horas.','contact.wa':'WhatsApp: <a href="#">Contacto vía Instagram</a>',
     'quiz.lead.title':'¿A dónde enviamos tu resultado?','quiz.lead.sub':'Ingresa tus datos para recibir tu análisis personalizado de la Dra. Carol Mafra.','quiz.lead.name':'Tu nombre completo','quiz.lead.wa':'WhatsApp con código de área','quiz.lead.btn':'Iniciar Evaluación',
@@ -2399,9 +2463,9 @@ const T = {
   fr: {
     'nav.works':'Comment ça marche','nav.plans':'Formules','nav.about':'À propos','nav.cta':'Découvrir Mon Résultat',
     'hero.eyebrow':'Dr. Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Harmonisation Orofaciale — Spécialiste en Filler Labial</span>',
-    'hero.title':'Le Filler Labial Est-il Vraiment Fait Pour Vous ?',
+    'hero.title':'Des milliers de femmes ont regretté leur filler labial. Vous n\'avez pas à en faire partie.',
     'hero.authority':'✦ Méthode de la Dr. Carol Mafra · Spécialiste en résultats naturels en HOF',
-    'hero.sub':'Vous êtes peut-être sur le point de commettre la <em class="hero-sub-em">même erreur</em> qui fait regretter le filler labial à des milliers de femmes.',
+    'hero.sub':'Avant toute décision, comprenez ce qui valorise vraiment <em class="hero-sub-em">votre</em> visage.',
     'hero.btn1':'Découvrir Si Ça Me Convient →','hero.scroll':'Défiler',
     'plans.ready':'',
     'hero.proof':'⏱ ~60 secondes · 🔒 Sans engagement · ✨ Résultat personnalisé',
@@ -2462,7 +2526,7 @@ const T = {
     'faq.5.q':'Mes photos et données personnelles sont-elles en sécurité ?','faq.5.a':'Absolument. Vos photos et informations personnelles sont traitées avec une stricte confidentialité, conformément au RGPD. Vos images sont utilisées exclusivement pour préparer votre analyse et ne sont jamais partagées avec des tiers.',
     'faq.6.q':'Puis-je obtenir un remboursement ?','faq.6.a':'Oui. Si vous n\'avez pas encore soumis vos photos, vous avez droit à un remboursement intégral dans les 7 jours suivant l\'achat — sans conditions. Une fois la soumission des photos et l\'analyse commencées, les remboursements ne sont plus disponibles.',
     'faq.7.q':'Que faire si j\'ai des questions après avoir reçu mon rapport ?','faq.7.a':'Les clients du plan Premium bénéficient de 7 jours de support post-analyse et d\'une révision gratuite. Pour les autres plans, vous pouvez toujours nous contacter via le formulaire ci-dessous.',
-    'cta.label':'Avant toute décision','cta.title':'Vous méritez d\'arriver au soin en sachant exactement à quoi vous attendre.','cta.sub':'Des centaines de femmes ont déjà fait cette découverte. Elles ont répondu au test, compris leur visage — et sont arrivées au soin avec beaucoup plus de confiance, de clarté et de certitude sur le résultat.','cta.btn':'Je Veux Savoir Ce Qui Me Convient →',
+    'cta.label':'Avant toute décision','cta.title':'Avant tout soin — découvrez ce dont votre visage a vraiment besoin.','cta.sub':'Des centaines de femmes ont déjà fait cette découverte. Elles ont répondu au test, compris leur visage — et sont arrivées au soin avec beaucoup plus de confiance, de clarté et de certitude sur le résultat.','cta.btn':'Je Veux Savoir Ce Qui Me Convient →',
     'disclaimer.text':'⚠️ <strong>Avis important :</strong> Les évaluations fournies via ce service sont strictement informatives et éducatives. Elles ne constituent pas un diagnostic médical, une ordonnance ou une recommandation de traitement professionnel. Pour tout procédure esthétique, consultez toujours un professionnel qualifié et agréé en personne.',
     'contact.label':'Nous contacter','contact.title':'Contactez-nous','contact.name':'Nom Complet','contact.name.ph':'Votre nom complet','contact.email':'Adresse E-mail','contact.subject':'Sujet','contact.select':'Sélectionnez un sujet...','contact.opt1':'Question sur les formules','contact.opt2':'Problème de paiement','contact.opt3':'Statut de commande','contact.opt4':'Autre','contact.msg':'Message','contact.msg.ph':'Comment pouvons-nous vous aider ?','contact.send':'Envoyer','contact.success':'Message envoyé !','contact.success2':'Nous vous répondrons dans les 24 heures.','contact.wa':'WhatsApp: <a href="#">Contact via Instagram</a>',
     'quiz.lead.title':'Où envoyons-nous votre résultat ?','quiz.lead.sub':'Entrez vos coordonnées pour recevoir votre analyse personnalisée de la Dr. Carol Mafra.','quiz.lead.name':'Votre nom complet','quiz.lead.wa':'WhatsApp avec indicatif','quiz.lead.btn':'Commencer l\'évaluation',
@@ -2510,9 +2574,9 @@ const T = {
   it: {
     'nav.works':'Come Funziona','nav.plans':'Piani','nav.about':'Chi sono','nav.cta':'Scoprire Il Mio Risultato',
     'hero.eyebrow':'Dr.ssa Carol Mafra · CRO-MG 66417<br><span style="font-size:0.8em;opacity:0.75">Armonizzazione Orofacciale — Specialista in Filler Labiale</span>',
-    'hero.title':'Il Filler Labiale È Davvero Adatto a Te?',
+    'hero.title':'Migliaia di donne si sono pentite del filler labiale. Tu non devi essere tra loro.',
     'hero.authority':'✦ Metodo della Dr.ssa Carol Mafra · Specialista in risultati naturali in HOF',
-    'hero.sub':'Potresti essere sul punto di commettere lo <em class="hero-sub-em">stesso errore</em> che fa pentire migliaia di donne del filler labiale.',
+    'hero.sub':'Prima di qualsiasi decisione, scopri cosa valorizza davvero <em class="hero-sub-em">il tuo</em> viso.',
     'hero.btn1':'Scoprire Se Mi Si Addice →','hero.scroll':'Scorri',
     'hero.proof':'⏱ ~60 secondi · 🔒 Senza impegno · ✨ Risultato personalizzato',
     'ben.pretitle':'Prima di qualsiasi decisione sulle tue labbra, rispondi prima:',
@@ -2573,7 +2637,7 @@ const T = {
     'faq.5.q':'Le mie foto e dati personali sono al sicuro?','faq.5.a':'Assolutamente. Le tue foto e informazioni personali sono gestite con rigorosa riservatezza, in conformità con il GDPR. Le tue immagini sono utilizzate esclusivamente per preparare la tua analisi e non vengono mai condivise con terze parti.',
     'faq.6.q':'Posso ottenere un rimborso?','faq.6.a':'Sì. Se non hai ancora inviato le tue foto, hai diritto a un rimborso completo entro 7 giorni dall\'acquisto — senza domande. Una volta iniziato l\'invio delle foto e l\'analisi, i rimborsi non sono più disponibili.',
     'faq.7.q':'Cosa succede se ho domande dopo aver ricevuto il mio report?','faq.7.a':'I clienti del piano Premium ricevono 7 giorni di supporto post-analisi e una revisione gratuita. Per altri piani, puoi sempre contattarci tramite il modulo di contatto qui sotto.',
-    'cta.label':'Prima di qualsiasi decisione','cta.title':'Meriti di arrivare alla procedura sapendo esattamente cosa aspettarti.','cta.sub':'Centinaia di donne hanno già fatto questa scoperta. Hanno risposto al test, capito il loro viso — e sono arrivate alla procedura con molta più sicurezza, chiarezza e certezza sul risultato.','cta.btn':'Voglio Sapere Cosa Mi Si Addice →',
+    'cta.label':'Prima di qualsiasi decisione','cta.title':'Prima di qualsiasi procedura — scopri di cosa ha davvero bisogno il tuo viso.','cta.sub':'Centinaia di donne hanno già fatto questa scoperta. Hanno risposto al test, capito il loro viso — e sono arrivate alla procedura con molta più sicurezza, chiarezza e certezza sul risultato.','cta.btn':'Voglio Sapere Cosa Mi Si Addice →',
     'disclaimer.text':'⚠️ <strong>Avviso importante:</strong> Le valutazioni fornite tramite questo servizio sono strettamente informative ed educative per natura. Non costituiscono una diagnosi medica, prescrizione o raccomandazione professionale di trattamento. Per qualsiasi procedura estetica, consulta sempre un professionista qualificato e abilitato di persona.',
     'contact.label':'Contattaci','contact.title':'Contattaci','contact.name':'Nome Completo','contact.name.ph':'Il tuo nome completo','contact.email':'Indirizzo Email','contact.subject':'Oggetto','contact.select':'Seleziona un argomento...','contact.opt1':'Domanda sui piani','contact.opt2':'Problema di pagamento','contact.opt3':'Stato dell\'ordine','contact.opt4':'Altro','contact.msg':'Messaggio','contact.msg.ph':'Come possiamo aiutarti?','contact.send':'Invia Messaggio','contact.success':'Messaggio inviato!','contact.success2':'Ti risponderemo entro 24 ore.','contact.wa':'WhatsApp: <a href="#">Contatto via Instagram</a>',
     'quiz.lead.title':'Dove inviamo il tuo risultato?','quiz.lead.sub':'Inserisci i tuoi dati per ricevere la tua analisi personalizzata dalla Dr.ssa Carol Mafra.','quiz.lead.name':'Il tuo nome completo','quiz.lead.wa':'WhatsApp con prefisso','quiz.lead.btn':'Inizia la valutazione',
@@ -2890,6 +2954,7 @@ function selectQOpt(step, val) {
   document.querySelectorAll('#quizStep' + step + ' .quiz-opt').forEach(b =>
     b.classList.toggle('selected', b.dataset.val === val)
   );
+  if (step === 1 && typeof fbq !== 'undefined') fbq('track', 'ViewContent', { content_name: 'Quiz Iniciado', currency: 'BRL', value: 47 });
   setTimeout(() => {
     if (step < TOTAL_STEPS) { showQStep(step + 1); applyQuizLang(); }
     else showQResult();
@@ -2915,6 +2980,7 @@ function showQResult() {
     if (bar) { bar.style.transition = 'width 3s linear'; bar.style.width = '100%'; }
   }, 3000);
   setTimeout(() => {
+    if (typeof fbq !== 'undefined') fbq('track', 'ViewContent', { content_name: 'Quiz Concluído', currency: 'BRL', value: 47 });
     showQStep('Plans');
     applyQuizLang();
   }, 6200);
@@ -2965,10 +3031,83 @@ document.getElementById('consentCheck').addEventListener('change', function() {
 });
 
 const PLAN_INFO = {
-  essencial: { name: 'Avaliação Labial Essencial', price: 97 },
-  completo:  { name: 'Avaliação Facial Completa', price: 147 },
-  premium:   { name: 'Avaliação + Videochamada Exclusiva', price: 247 },
+  essencial: { name: 'Avaliação Labial Essencial', price: 47 },
+  completo:  { name: 'Avaliação Facial Completa', price: 97 },
+  premium:   { name: 'Avaliação + Videochamada Exclusiva', price: 197 },
 };
+
+// ── UPSELL LOGIC (quiz modal) ────────────────────────────────────────────────
+(function() {
+  const qu1 = document.getElementById('quizUpsell1');
+  const qu2 = document.getElementById('quizUpsell2');
+  const qBtn = document.getElementById('quizOfertaBtn');
+  const qPrice = document.getElementById('quizPrecoDisplay');
+  if (!qu1 || !qu2 || !qBtn) return;
+
+  function calcQuizPlan() {
+    if (qu2.checked) return { plan: 'premium', price: 197 };
+    if (qu1.checked) return { plan: 'completo', price: 97 };
+    return { plan: 'essencial', price: 47 };
+  }
+
+  function updateQuiz() {
+    const { plan, price } = calcQuizPlan();
+    qBtn.dataset.plan = plan;
+    qBtn.textContent = `Continuar — R$${price} →`;
+    if (qPrice) qPrice.textContent = price;
+  }
+
+  qu1.addEventListener('change', function() {
+    if (!this.checked && qu2.checked) qu2.checked = false;
+    updateQuiz();
+  });
+  qu2.addEventListener('change', function() {
+    if (this.checked) qu1.checked = true;
+    updateQuiz();
+  });
+})();
+
+// ── UPSELL LOGIC (seção de oferta única) ─────────────────────────────────────
+(function() {
+  const u1 = document.getElementById('ofertaUpsell1');
+  const u2 = document.getElementById('ofertaUpsell2');
+  const btn = document.getElementById('ofertaMainBtn');
+  const priceDisplay = document.getElementById('ofertaPrecoDisplay');
+  if (!u1 || !u2 || !btn) return;
+
+  function calcPlan() {
+    if (u2.checked) return { plan: 'premium', price: 197 };
+    if (u1.checked) return { plan: 'completo', price: 97 };
+    return { plan: 'essencial', price: 47 };
+  }
+
+  function update() {
+    const { plan, price } = calcPlan();
+    btn.dataset.plan = plan;
+    btn.textContent = `Quero minha avaliação — R$${price} →`;
+    if (priceDisplay) priceDisplay.textContent = price;
+    // upsell2 auto-marca upsell1
+    if (u2.checked && !u1.checked) u1.checked = true;
+  }
+
+  u1.addEventListener('change', function() {
+    if (!this.checked && u2.checked) u2.checked = false;
+    update();
+  });
+  u2.addEventListener('change', function() {
+    if (this.checked) u1.checked = true;
+    update();
+  });
+
+  // hover visual nos labels
+  document.getElementById('upsellLabel1').addEventListener('mouseenter', () => document.getElementById('upsellLabel1').style.borderColor = 'rgba(200,169,110,0.4)');
+  document.getElementById('upsellLabel1').addEventListener('mouseleave', () => document.getElementById('upsellLabel1').style.borderColor = u1.checked ? 'var(--accent)' : 'var(--border)');
+  document.getElementById('upsellLabel2').addEventListener('mouseenter', () => document.getElementById('upsellLabel2').style.borderColor = 'rgba(200,169,110,0.4)');
+  document.getElementById('upsellLabel2').addEventListener('mouseleave', () => document.getElementById('upsellLabel2').style.borderColor = u2.checked ? 'var(--accent)' : 'var(--border)');
+
+  u1.addEventListener('change', () => { document.getElementById('upsellLabel1').style.borderColor = u1.checked ? 'var(--accent)' : 'var(--border)'; });
+  u2.addEventListener('change', () => { document.getElementById('upsellLabel2').style.borderColor = u2.checked ? 'var(--accent)' : 'var(--border)'; });
+})();
 const MP_LOCALE_MAP = { pt: 'pt-BR', en: 'en-US', es: 'es-AR', fr: 'pt-BR', it: 'pt-BR' };
 let mpBrickController = null;
 
@@ -3118,6 +3257,8 @@ document.getElementById('qLeadBtn').addEventListener('click', () => {
     return;
   }
   qLeadName = name; qLeadWa = waNum;
+  fetch('/api/leads', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name, wa: waNum, source: 'labios' }) }).catch(() => {});
+  if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Quiz Labial', currency: 'BRL', value: 47 });
   showQStep(1); applyQuizLang();
 });
 document.querySelectorAll('.quiz-opt').forEach(btn =>

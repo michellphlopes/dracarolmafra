@@ -84,15 +84,15 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
   line-height:2;
 }
 .hero-headline{
-  font-family:var(--serif);font-size:clamp(1.75rem,3.6vw,2.9rem);
-  font-weight:400;line-height:1.25;margin-bottom:0;color:#fff;
+  font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);
+  font-weight:400;line-height:1.2;margin-bottom:0;color:#fff;
 }
 .hero-divider{
   width:36px;height:1px;background:var(--accent);opacity:.45;
   margin:32px auto;
 }
 .hero-sub-headline{
-  font-family:var(--serif);font-size:clamp(1.75rem,3.6vw,2.9rem);
+  font-family:var(--serif);font-size:clamp(1.9rem,4vw,3.1rem);
   font-weight:400;line-height:1.25;margin-bottom:72px;
   color:var(--accent);font-style:italic;
 }
@@ -257,6 +257,7 @@ section{padding:100px 40px}
 /* ── QUIZ ────────────────────────────────── */
 #quiz{background:#c8a96e;padding:100px 40px}
 #quiz .section-label{color:rgba(0,0,0,.5)}
+.quiz-start-badge{display:inline-block;background:#000;color:#fff;font-family:var(--sans);font-size:1.1rem;font-weight:700;letter-spacing:3px;padding:10px 24px;margin-bottom:20px;}
 #quiz .section-title{color:#000}
 #quiz .section-body{color:rgba(0,0,0,.65)}
 #quiz .quiz-step-label{color:rgba(0,0,0,.5)}
@@ -749,9 +750,9 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
   </div>
   <div class="hero-content">
     <p class="hero-eyebrow">Dra. Carol Mafra · CRO-MG 66417<br><span style="font-size:.85em;letter-spacing:3px">Harmonização Orofacial · Especialista em Preenchimento Labial</span></p>
-    <h1 class="hero-headline" id="heroHeadline">Chega de gastar com produtos e nunca ter o resultado desejado.</h1>
+    <h1 class="hero-headline" id="heroHeadline">Já tentou de tudo e sua pele continua igual?</h1>
     <div class="hero-divider"></div>
-    <p class="hero-sub-headline">Te ajudo a simplificar seu skincare.</p>
+    <p class="hero-sub-headline">O problema não é você — nenhuma rotina foi feita para a <em>sua</em> pele.</p>
     <a href="#quiz" class="hero-cta">Quero descobrir o que minha pele realmente precisa →</a>
   </div>
   <div class="hero-scroll">Rolar</div>
@@ -814,13 +815,12 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
 <!-- ── SEÇÃO 3: QUEBRA DE CRENÇA ── -->
 <section id="quebra">
   <div class="quebra-inner">
-    <p class="quebra-eyebrow">O problema nunca foi você</p>
-    <h2 class="quebra-title">Ninguém nunca te ensinou a entender a sua própria pele.</h2>
+    <h2 class="quebra-title">O maior erro do skincare moderno é tratar todas as peles como se fossem iguais.</h2>
     <div class="quebra-body">
-      <p>Você seguiu rotinas.<br>Comprou produtos por indicação.<br>Tentou o que funcionou para outras pessoas.<br><br>Mas nenhuma delas conhecia a sua pele.</p>
+      <p>A sua não é.</p>
+      <p>Cada pele reage de forma diferente.<br>Cada pele envelhece de forma diferente.<br>Cada pele precisa de ativos diferentes.</p>
+      <p>Sem entender isso, qualquer rotina vira tentativa e erro.</p>
     </div>
-    <div class="quebra-divider"></div>
-    <p class="quebra-punchline">Sua próxima compra não deveria ser outro cosmético.<br><em>Deveria ser uma decisão mais inteligente.</em></p>
   </div>
 </section>
 
@@ -905,7 +905,7 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
 <section id="valor">
   <div class="valor-header">
     <p class="section-label">O que está incluído</p>
-    <h2 class="section-title">O seu Plano Inteligente inclui:</h2>
+    <h2 class="section-title">Sua pele é seu cartão de visita.<br>Vamos te entregar:</h2>
   </div>
   <ul class="valor-checklist">
     <li><span class="vcl-check">✓</span>Mapa completo do seu perfil de pele</li>
@@ -947,7 +947,7 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
 <section id="quiz">
   <div class="quiz-wrap">
     <div class="quiz-header">
-      <p class="section-label">Seu autoexame de pele</p>
+      <span class="quiz-start-badge">VAMOS COMEÇAR?</span>
       <h2 class="section-title">6 perguntas que vão revelar o que nenhum produto te contou sobre a sua pele</h2>
       <p class="section-body">Responda com honestidade. Quanto mais preciso você for, mais específico será o que você vai descobrir.</p>
     </div>
@@ -1142,6 +1142,17 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
         <span>Declaro que compreendo que este guia tem caráter educativo e não substitui consulta presencial. Li os <a href="/termos" target="_blank">Termos de Uso</a> e a <a href="/privacidade" target="_blank">Política de Privacidade</a>.</span>
       </label>
 
+      <!-- Upsell: Avaliação Labial -->
+      <div id="upsellWrap" style="display:none;margin:14px 0;background:rgba(200,169,110,0.06);border:1px solid rgba(200,169,110,0.25);padding:14px 16px;border-radius:4px">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+          <input type="checkbox" id="upsellLabial" style="margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0">
+          <div>
+            <div style="font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:3px">💋 Adicionar Avaliação Labial — <span style="color:var(--accent)">+R$47</span></div>
+            <div style="font-family:var(--sans);font-size:.73rem;color:var(--muted);line-height:1.5">Descubra se o preenchimento labial combina com você · Relatório personalizado da Dra. Carol</div>
+          </div>
+        </label>
+      </div>
+
       <!-- Cupom — aparece só após aceitar os termos -->
       <div class="result-coupon-wrap" id="resultCouponWrap" style="display:none">
         <div class="result-coupon-row">
@@ -1175,8 +1186,40 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
 
 <!-- #oferta removido — preço revelado apenas no resultado do quiz -->
 
-<!-- ── SEÇÃO 10: GARANTIA ── -->
-<!-- seção garantia removida -->
+<!-- ── SEÇÃO 10: DEPOIMENTOS TEXTO ── -->
+<section id="depoimentos-texto" style="padding:80px 40px;background:var(--bg)">
+  <div style="text-align:center;max-width:600px;margin:0 auto 52px">
+    <p class="section-label">O que dizem quem já recebeu o guia</p>
+    <h2 class="section-title" style="margin-inline:auto">Resultados que falam por si</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px;margin:0 auto">
+    <div style="background:var(--bg3);border:1px solid var(--border);padding:36px 32px;position:relative;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(200,169,110,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-family:Georgia,serif;font-size:3.5rem;color:var(--accent);opacity:.25;line-height:1;display:block;margin-bottom:16px">"</span>
+      <p style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:20px;font-style:italic">Sempre comprei produto por produto sem saber se era o certo pra mim. Com o guia finalmente entendi o meu tipo de pele e parei de gastar à toa — minha rotina hoje tem 4 passos e funciona de verdade.</p>
+      <p style="font-family:var(--sans);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.7">Mariana S. · Belo Horizonte</p>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);padding:36px 32px;position:relative;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(200,169,110,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-family:Georgia,serif;font-size:3.5rem;color:var(--accent);opacity:.25;line-height:1;display:block;margin-bottom:16px">"</span>
+      <p style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:20px;font-style:italic">Minha pele mista me dava trabalho há anos. O guia me mostrou que eu estava hidratando errado e usando ativos que pioravam a oleosidade. Em três semanas já vi diferença. Não acreditei que R$47 poderia mudar tanto.</p>
+      <p style="font-family:var(--sans);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.7">Camila R. · São Paulo</p>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);padding:36px 32px;position:relative;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(200,169,110,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-family:Georgia,serif;font-size:3.5rem;color:var(--accent);opacity:.25;line-height:1;display:block;margin-bottom:16px">"</span>
+      <p style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:20px;font-style:italic">Pele seca e sensível. Já tentei tantas coisas que irritaram mais do que ajudaram. A Dra. Carol listou exatamente os ativos compatíveis com o meu perfil e me avisou o que evitar. Pela primeira vez minha pele ficou calma.</p>
+      <p style="font-family:var(--sans);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.7">Luísa M. · Curitiba</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 10B: GARANTIA ── -->
+<section id="garantia">
+  <div class="garantia-inner">
+    <span class="garantia-icon">🛡</span>
+    <h2 class="garantia-title">Garantia de 7 Dias</h2>
+    <p class="garantia-body">Se por qualquer motivo você não se sentir satisfeita com o seu Guia Inteligente, devolvo 100% do valor em até 7 dias — sem burocracia e sem perguntas. Basta entrar em contato.</p>
+    <p class="garantia-assinatura">Dra. Carol Mafra · CRO-MG 66417</p>
+  </div>
+</section>
 
 <!-- ── SEÇÃO 11: FAQ ── -->
 <section id="faq">
@@ -1218,7 +1261,22 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
   </div>
 </section>
 
-<!-- seção cta-final removida -->
+<!-- ── CTA FINAL ── -->
+<section id="cta-final" style="background:var(--bg3);text-align:center;padding:96px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div style="max-width:620px;margin:0 auto">
+    <p class="section-label" style="margin-bottom:24px">Pronta para começar?</p>
+    <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:400;line-height:1.3;margin-bottom:40px">Pare de adivinhar. <em style="font-style:italic;color:var(--accent)">Descubra</em> o que a sua pele realmente precisa.</h2>
+    <ul style="list-style:none;display:inline-flex;flex-direction:column;gap:10px;text-align:left;margin:0 auto 40px">
+      <li style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px"><span style="color:var(--accent)">✓</span> Rotina personalizada para o seu tipo de pele</li>
+      <li style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px"><span style="color:var(--accent)">✓</span> Ativos e produtos certos para o seu perfil</li>
+      <li style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px"><span style="color:var(--accent)">✓</span> Sem tentativa e erro — com critério e ciência</li>
+      <li style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px"><span style="color:var(--accent)">✓</span> Garantia de 7 dias sem perguntas</li>
+    </ul>
+    <br>
+    <a href="#quiz" class="hero-cta" style="display:inline-block;max-width:520px">Quero descobrir o que minha pele precisa →</a>
+    <p style="font-family:var(--sans);font-size:.68rem;color:var(--muted);margin-top:16px;letter-spacing:.5px">Autoexame gratuito · R$47 após o resultado · Garantia de 7 dias</p>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
@@ -1281,6 +1339,7 @@ qWaEl.addEventListener('input', checkLead);
 qLeadBtn.addEventListener('click', () => {
   qLeadName = qNameEl.value.trim();
   if (!qLeadName) return;
+  fetch('/api/leads', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name: qLeadName, wa: qWaEl.value.trim(), source: 'skincare' }) }).catch(() => {});
   showStep(1);
   if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 });
@@ -1459,15 +1518,23 @@ document.querySelectorAll('.faq-item').forEach(item => {
 const resultConsentCheck = document.getElementById('resultConsentCheck');
 const resultCta = document.getElementById('resultCta');
 
+function updateCtaLabel() {
+  if (!resultConsentCheck.checked || activeCoupon) return;
+  const total = getCheckoutTotal();
+  resultCta.textContent = `🔓 Continuar — R$${total} →`;
+}
+
 resultConsentCheck.addEventListener('change', function() {
   const couponWrap = document.getElementById('resultCouponWrap');
   const countdownWrap = document.getElementById('resultCountdownWrap');
   if (this.checked) {
+    const upsellWrap = document.getElementById('upsellWrap');
+    if (upsellWrap) upsellWrap.style.display = '';
     if (couponWrap) couponWrap.style.display = '';
     if (countdownWrap) countdownWrap.style.display = '';
     resultCta.style.display = '';
     resultCta.disabled = false;
-    if (!activeCoupon) resultCta.textContent = '🔓 Escolher forma de pagamento →';
+    if (!activeCoupon) updateCtaLabel();
   } else {
     if (couponWrap) couponWrap.style.display = 'none';
     if (countdownWrap) countdownWrap.style.display = 'none';
@@ -1574,6 +1641,34 @@ function applyCoupon() {
   }
 }
 
+// ── UPSELL — AVALIAÇÃO LABIAL ─────────────────────────────────────────────────
+const UPSELL_LABIAL = { price: 47, name: 'Avaliação Labial' };
+let upsellActive = false;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const upsellCheck = document.getElementById('upsellLabial');
+  if (!upsellCheck) return;
+  upsellCheck.addEventListener('change', function() {
+    upsellActive = this.checked;
+    updateCtaLabel();
+    // Se o brick já estava aberto, reinicia com novo valor
+    if (brickInitialized) {
+      brickInitialized = false;
+      const brick = document.getElementById('mp-brick-container-skin');
+      if (brick) { brick.classList.remove('pix-active'); brick.innerHTML = ''; }
+      const pixPanel = document.getElementById('pixPanel');
+      if (pixPanel) pixPanel.classList.remove('show');
+      mpStatus('');
+      initMpBrick();
+    }
+  });
+});
+
+function getCheckoutTotal() {
+  const base = PRODUCT._discountedPrice || PRODUCT.price;
+  return upsellActive ? base + UPSELL_LABIAL.price : base;
+}
+
 // Sobrescrever o preço no fetch do MP se houver desconto
 const _origInitMpBrick = initMpBrick;;
 
@@ -1627,7 +1722,7 @@ function initMpBrick() {
 
   const cta = document.getElementById('resultCta');
   const container = document.getElementById('mp-brick-container-skin');
-  const finalPrice = PRODUCT._discountedPrice || PRODUCT.price;
+  const finalPrice = getCheckoutTotal();
 
   // Esconde o botão fallback — o brick vai renderizar o formulário
   if (cta) cta.style.display = 'none';
