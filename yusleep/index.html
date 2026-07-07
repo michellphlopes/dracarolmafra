@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yu Sleep — Sleep Through the Night, Starting Tonight</title>
+<meta name="description" content="Discover the little-known reason behind 3 AM wake-ups — and the simple bedtime ritual helping thousands sleep straight through until morning. 60-day money-back guarantee.">
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ClickBank hoplink CONFIGURED: 623026u8tdxj0j7ovcw8on8l9d
+  (const HOPLINK in <script> fills every ADD TO CART / buy button)
+  VSL: condensed video already embedded (vsl-condensed.mp4)
+  ═══════════════════════════════════════════════════════════════
+-->
+
+<!-- ══════════ Meta Pixel ══════════ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1019715100603217');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1019715100603217&ev=PageView&noscript=1"/></noscript>
+<!-- ══════════ End Meta Pixel ══════════ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.23/dist/lenis.css">
+<script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"></script>
+
+<style>
+/* ══════════ TOKENS ══════════ */
+:root {
+  --bg: #0A0E1A;
+  --bg-elevated: #111627;
+  --surface: #181E33;
+  --text: #EDEDF2;
+  --muted: #8B92AC;
+  --accent: #7C8CF8;
+  --accent-2: #3B4470;
+  --gold: #F5C97B;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-display: 'Bricolage Grotesque', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-elevated) 100%);
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2.25rem, 6vw, 5rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 3.5rem); }
+h3 { font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 600; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+.container { max-width: 1200px; margin: 0 auto; padding-inline: 24px; }
+@media (min-width: 768px) { .container { padding-inline: 40px; } }
+
+section { padding-block: 60px; background: var(--bg); }
+@media (min-width: 768px) { section { padding-block: 96px; } }
+@media (min-width: 1024px) { section { padding-block: 140px; } }
+
+.section-elevated { background: var(--bg-elevated); }
+
+/* ══════════ CTA ROW (repeatable) ══════════ */
+.cta-row { text-align: center; margin-top: 56px; }
+.cta-sub {
+  margin-top: 14px; font-size: 0.85rem; color: var(--muted);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+/* ══════════ NAV ══════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(10, 14, 26, 0.72);
+  border-bottom: 1px solid rgba(139, 146, 172, 0.12);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.25rem;
+  color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px;
+}
+.logo svg { color: var(--accent); }
+.nav-links { display: none; gap: 32px; align-items: center; }
+.nav-links a {
+  color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 400;
+  position: relative; transition: color 0.3s var(--ease);
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px;
+  background: var(--accent); transition: width 0.3s var(--ease);
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em;
+  color: var(--bg) !important; background: var(--gold);
+  padding: 10px 20px; border-radius: 100px; text-decoration: none; font-weight: 500;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+.nav-cta:hover { transform: translateY(-2px); background: #f8d799; }
+.nav-cta::after { display: none; }
+@media (min-width: 1024px) { .nav-links { display: flex; } .hamburger { display: none !important; } }
+
+.hamburger {
+  display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px;
+}
+.hamburger span { width: 22px; height: 1.5px; background: var(--text); transition: transform 0.3s var(--ease), opacity 0.3s var(--ease); }
+
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 99; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+  transform: translateY(-100%); transition: transform 0.5s var(--ease);
+}
+.mobile-menu.open { transform: translateY(0); }
+.mobile-menu a {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 600;
+  color: var(--text); text-decoration: none; transition: color 0.3s var(--ease);
+}
+.mobile-menu a:hover { color: var(--accent); }
+body.menu-open .hamburger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+body.menu-open .hamburger span:nth-child(2) { opacity: 0; }
+body.menu-open .hamburger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ══════════ HERO ══════════ */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding-top: 96px; padding-bottom: 60px; position: relative; overflow: hidden;
+}
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: 55% 45%; gap: 64px; } }
+
+.hero-eyebrow { margin-bottom: 24px; }
+.hero h1 { margin-bottom: 24px; font-size: clamp(2rem, 5vw, 4.2rem); }
+.hero h1 .hl { color: var(--accent); }
+.hero-sub { color: var(--muted); font-size: clamp(1.05rem, 1.6vw, 1.2rem); max-width: 540px; margin-bottom: 40px; }
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--gold); color: var(--bg);
+  font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
+  padding: 18px 36px; border-radius: 100px; text-decoration: none; border: none; cursor: pointer;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.btn-primary:hover { transform: translateY(-2px) scale(1.02); background: #f8d799; box-shadow: 0 12px 40px rgba(245, 201, 123, 0.25); }
+.btn-primary svg { transition: transform 0.3s var(--ease); }
+.btn-primary:hover svg { transform: translateX(4px); }
+
+.guarantee-line {
+  margin-top: 18px; font-size: 0.85rem; color: var(--muted);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.hero-visual { position: relative; min-height: 40vh; display: flex; align-items: center; justify-content: center; }
+@media (min-width: 1024px) { .hero-visual { min-height: 70vh; } }
+#hero-canvas {
+  position: absolute; inset: -10%; width: 120%; height: 120%; z-index: 0; pointer-events: none;
+}
+.hero-glow {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(124, 140, 248, 0.14) 0%, transparent 65%);
+}
+.hero-bottle {
+  position: relative; z-index: 2; width: min(340px, 72%); border-radius: 20px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+video.hero-bottle {
+  height: auto;
+  width: min(700px, 125%);
+  max-height: 92vh;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 48%, transparent 74%);
+  mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 48%, transparent 74%);
+}
+
+/* ══════════ VSL ══════════ */
+.vsl-section { background: var(--bg-elevated); }
+.vsl-head { text-align: center; max-width: 760px; margin: 0 auto 16px; }
+.vsl-head h2 { margin: 24px 0 16px; }
+.vsl-note {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold); text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 40px;
+}
+.vsl-frame {
+  max-width: 880px; margin: 0 auto; aspect-ratio: 16 / 9;
+  background: var(--surface); border: 1px solid rgba(139, 146, 172, 0.2);
+  border-radius: 24px; overflow: hidden; position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+}
+.vsl-frame iframe, .vsl-frame video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vsl-placeholder-icon {
+  width: 84px; height: 84px; border-radius: 50%;
+  background: rgba(245, 201, 123, 0.12); border: 1px solid rgba(245, 201, 123, 0.4);
+  display: flex; align-items: center; justify-content: center; color: var(--gold);
+  transition: transform 0.3s var(--ease);
+}
+.vsl-frame:hover .vsl-placeholder-icon { transform: scale(1.06); }
+.vsl-placeholder-text { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.vsl-frame { cursor: pointer; }
+.vsl-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: rgba(10, 14, 26, 0.35);
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.vsl-frame.playing .vsl-overlay { opacity: 0; }
+.vsl-play-btn {
+  width: 84px; height: 84px; border-radius: 50%;
+  background: rgba(245, 201, 123, 0.14); border: 1px solid rgba(245, 201, 123, 0.5);
+  display: flex; align-items: center; justify-content: center; color: var(--gold);
+  transition: transform 0.3s var(--ease);
+}
+.vsl-frame:hover .vsl-play-btn { transform: scale(1.06); }
+.vsl-overlay-hint {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text); text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+}
+
+/* ══════════ BELIEF BREAK ══════════ */
+.belief-grid { max-width: 720px; margin: 0 auto; text-align: center; }
+.belief-grid h2 { margin: 24px 0 40px; }
+.belief-grid p { color: var(--muted); margin-bottom: 22px; font-size: clamp(1.05rem, 1.7vw, 1.25rem); }
+.belief-grid p strong { color: var(--text); font-weight: 500; }
+.belief-punch {
+  font-family: var(--font-display); font-weight: 200; font-style: italic;
+  font-size: clamp(1.4rem, 2.8vw, 2rem); color: var(--accent);
+  margin-top: 40px; line-height: 1.35;
+}
+
+/* ══════════ PAIN BLOCKS ══════════ */
+.pain-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+.pain-head h2 { margin: 24px 0 0; }
+.pain-cards { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 960px; margin: 0 auto; }
+@media (min-width: 768px) { .pain-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .pain-cards { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.pain-card {
+  background: var(--bg-elevated); border: 1px solid rgba(139, 146, 172, 0.12);
+  border-radius: 20px; padding: 32px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.pain-card:hover { border-color: rgba(124, 140, 248, 0.45); transform: translateY(-4px); }
+.pain-tag {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 14px;
+}
+.pain-card p { color: var(--text); font-weight: 300; font-size: 1rem; }
+.pain-bridge {
+  text-align: center; max-width: 620px; margin: 56px auto 0;
+  font-family: var(--font-display); font-weight: 200; font-style: italic;
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem); color: var(--accent); line-height: 1.4;
+}
+
+/* ══════════ WHY EVERYTHING FAILED ══════════ */
+.failed-section { background: var(--bg-elevated); }
+.failed-head { text-align: center; max-width: 760px; margin: 0 auto 64px; }
+.failed-head h2 { margin: 24px 0 0; }
+.failed-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 960px; margin: 0 auto; }
+@media (min-width: 768px) { .failed-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+.failed-card {
+  background: var(--surface); border: 1px solid rgba(139, 146, 172, 0.14);
+  border-radius: 20px; padding: 32px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.failed-card:hover { border-color: rgba(124, 140, 248, 0.4); transform: translateY(-4px); }
+.failed-card h3 { margin-bottom: 12px; }
+.failed-card p { color: var(--muted); font-size: 0.95rem; }
+.failed-punch {
+  text-align: center; max-width: 720px; margin: 64px auto 0;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 2.2rem); color: var(--text); line-height: 1.25;
+}
+.failed-punch .hl { color: var(--gold); }
+
+/* ══════════ RESET (PINNED WOW) ══════════ */
+.reset-section { background: var(--bg); }
+.reset-pin { position: relative; }
+.reset-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+.reset-head h2 { margin: 24px 0 20px; }
+.reset-head p { color: var(--muted); }
+
+.reset-stage { position: relative; max-width: 860px; margin: 0 auto; }
+.reset-stage.stacked { height: 420px; }
+.reset-stage.stacked .reset-phase { position: absolute; inset: 0; }
+
+.reset-phase {
+  background: var(--surface); border: 1px solid rgba(139, 146, 172, 0.14);
+  border-radius: 24px; padding: 32px; margin-bottom: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+@media (min-width: 768px) { .reset-phase { padding: 48px; } }
+.phase-num {
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+  color: var(--gold); text-transform: uppercase;
+}
+.reset-phase h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; }
+.reset-phase p { color: var(--muted); max-width: 560px; }
+.phase-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.phase-tags span {
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
+  border: 1px solid rgba(124, 140, 248, 0.35); border-radius: 100px; padding: 6px 14px;
+}
+
+.reset-progress { max-width: 860px; margin: 32px auto 0; height: 1px; background: rgba(139, 146, 172, 0.2); display: none; }
+.reset-progress-bar { height: 100%; width: 0%; background: var(--gold); }
+.reset-stage.stacked ~ .reset-progress { display: block; }
+
+.ingredients-strip { max-width: 860px; margin: 64px auto 0; text-align: center; }
+.ingredients-strip .strip-label {
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 24px; display: block;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.chips span {
+  font-size: 0.85rem; color: var(--text); font-weight: 400;
+  background: var(--bg-elevated); border: 1px solid rgba(139, 146, 172, 0.18);
+  border-radius: 100px; padding: 8px 18px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.chips span:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+/* ══════════ BRIDGE IMAGE ══════════ */
+.bridge { padding-block: 0 !important; }
+.bridge-inner { position: relative; max-width: 1200px; margin: 0 auto; padding-inline: 24px; }
+.bridge img { width: 100%; border-radius: 24px; filter: saturate(0.85); }
+.bridge-caption {
+  position: absolute; bottom: 24px; left: 48px; right: 48px;
+  font-family: var(--font-display); font-weight: 200; font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--text);
+  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+}
+
+/* ══════════ TIMELINE / DISCOVERIES ══════════ */
+.timeline-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+.timeline-head h2 { margin: 24px 0 0; }
+.timeline { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 768px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .timeline { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+.t-card {
+  background: var(--bg-elevated); border: 1px solid rgba(139, 146, 172, 0.12);
+  border-radius: 20px; padding: 32px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.t-card:hover { border-color: rgba(124, 140, 248, 0.45); transform: translateY(-4px); }
+.t-when {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 16px;
+}
+.t-card h3 { margin-bottom: 12px; }
+.t-card p { color: var(--muted); font-size: 0.95rem; }
+
+/* ══════════ TESTIMONIALS ══════════ */
+.reviews-head { text-align: center; max-width: 720px; margin: 0 auto 24px; }
+.reviews-head h2 { margin: 24px 0 16px; }
+.stars-line {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  color: var(--muted); font-size: 0.9rem; margin-bottom: 56px; flex-wrap: wrap;
+}
+.stars-line .stars { color: var(--gold); letter-spacing: 2px; }
+
+.carousel { position: relative; }
+.carousel-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  gap: 24px; scrollbar-width: none; padding-bottom: 8px;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-slide { flex: 0 0 100%; scroll-snap-align: start; }
+@media (min-width: 768px) { .carousel-slide { flex: 0 0 calc(50% - 12px); } }
+@media (min-width: 1024px) { .carousel-slide { flex: 0 0 calc(33.333% - 16px); } }
+
+.review-card {
+  background: var(--bg-elevated); border: 1px solid rgba(139, 146, 172, 0.12);
+  border-radius: 20px; padding: 32px; height: 100%;
+  display: flex; flex-direction: column; gap: 20px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.review-card:hover { border-color: rgba(124, 140, 248, 0.45); transform: translateY(-4px); }
+.review-card .stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; }
+.review-card blockquote { color: var(--text); font-weight: 300; font-size: 1rem; flex: 1; }
+.review-meta { display: flex; align-items: center; gap: 14px; }
+.review-meta img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.review-meta .who { font-weight: 500; font-size: 0.9rem; }
+.review-meta .badge {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent);
+  display: flex; align-items: center; gap: 5px; margin-top: 2px;
+}
+
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--surface); border: 1px solid rgba(139, 146, 172, 0.2);
+  color: var(--text); cursor: pointer; font-size: 1.1rem;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.carousel-btn:hover { background: var(--accent-2); border-color: var(--accent); }
+.carousel-prev { left: -24px; }
+.carousel-next { right: -24px; }
+@media (max-width: 768px) { .carousel-btn { display: none; } }
+.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+.carousel-dot {
+  width: 8px; height: 8px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(139, 146, 172, 0.3); transition: background 0.3s var(--ease);
+}
+.carousel-dot.active { background: var(--accent); }
+
+/* ══════════ TRUST STRIP ══════════ */
+.trust-strip {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 36px;
+  margin-top: 56px; font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.trust-strip span { display: flex; align-items: center; gap: 8px; }
+.trust-strip svg { color: var(--accent); opacity: 0.8; flex-shrink: 0; }
+
+/* ══════════ PRICING ══════════ */
+.pricing-section { background: var(--bg-elevated); }
+.pricing-head { text-align: center; max-width: 760px; margin: 0 auto 24px; }
+.pricing-head h2 { margin: 24px 0 20px; }
+.pricing-anchor { color: var(--muted); text-align: center; max-width: 620px; margin: 0 auto 56px; font-size: 0.95rem; }
+.pricing-anchor strong { color: var(--gold); font-weight: 500; }
+
+.pricing-product { max-width: 620px; margin: 0 auto 56px; }
+.pricing-product img {
+  width: 100%; border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.plans { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1080px; margin: 0 auto; }
+.plans-note { text-align: center; color: var(--muted); font-size: 0.85rem; max-width: 460px; margin: 56px auto 0; }
+@media (min-width: 1024px) { .plans { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+
+.plan {
+  background: var(--surface); border: 1px solid rgba(139, 146, 172, 0.14);
+  border-radius: 24px; padding: 40px 32px; text-align: center;
+  display: flex; flex-direction: column; gap: 8px; position: relative;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.plan:hover { transform: translateY(-4px); border-color: rgba(124, 140, 248, 0.4); }
+.plan.featured { border-color: var(--gold); }
+.plan-flag {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--gold); color: var(--bg); padding: 6px 16px; border-radius: 100px; white-space: nowrap; font-weight: 500;
+}
+.plan-name { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.plan-off { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: var(--accent); }
+.plan.featured .plan-off { color: var(--gold); }
+.plan-price { font-family: var(--font-display); font-weight: 800; font-size: 3.2rem; line-height: 1; margin: 12px 0 2px; }
+.plan-price sub { font-size: 1rem; font-weight: 400; color: var(--muted); vertical-align: baseline; }
+.plan-total { color: var(--muted); font-size: 0.88rem; margin-bottom: 20px; }
+.plan-perks { list-style: none; text-align: left; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.plan-perks li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; color: var(--text); font-weight: 400; }
+.plan-perks li.na { color: var(--muted); opacity: 0.55; }
+.plan-perks svg { flex-shrink: 0; margin-top: 4px; }
+.plan .btn-primary { width: 100%; justify-content: center; }
+.plan:not(.featured) .btn-primary { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+.plan:not(.featured) .btn-primary:hover { background: var(--gold); color: var(--bg); box-shadow: none; }
+
+/* ══════════ BONUS — PREMIUM CARDS ══════════ */
+.bonus-head { text-align: center; max-width: 720px; margin: 80px auto 16px; }
+.bonus-head h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; }
+.bonus-head p {
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold); margin-top: 12px;
+}
+.bonus-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1080px; margin: 48px auto 0; }
+@media (min-width: 1024px) { .bonus-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+.bonus-card {
+  background: var(--surface); border: 1px dashed rgba(245, 201, 123, 0.4);
+  border-radius: 24px; padding: 40px 32px; position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.bonus-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.bonus-num {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold);
+}
+.bonus-card h4 { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; line-height: 1.2; }
+.bonus-card p { color: var(--muted); font-size: 0.92rem; flex: 1; }
+.bonus-price {
+  display: flex; align-items: baseline; gap: 10px; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 0.8rem;
+}
+.bonus-price s { color: var(--muted); opacity: 0.7; }
+.bonus-price em { color: var(--gold); font-style: normal; font-weight: 500; letter-spacing: 0.08em; }
+.bonus-card svg { color: var(--muted); }
+
+.guarantee-band {
+  max-width: 1080px; margin: 48px auto 0; text-align: center;
+  background: var(--surface); border-radius: 24px; padding: 40px 32px;
+  border: 1px solid rgba(139, 146, 172, 0.14);
+}
+.guarantee-band h3 { margin: 16px 0 12px; }
+.guarantee-band p { color: var(--muted); max-width: 620px; margin: 0 auto; font-size: 0.95rem; }
+
+/* ══════════ FAQ ══════════ */
+.faq-wrap { max-width: 760px; margin: 0 auto; }
+.faq-wrap > h2 { margin: 24px 0 48px; }
+.faq-item { border-bottom: 1px solid rgba(139, 146, 172, 0.15); }
+.faq-q {
+  width: 100%; background: none; border: none; color: var(--text);
+  font-family: var(--font-display); font-weight: 600; font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  text-align: left; padding: 26px 0; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  transition: color 0.3s var(--ease);
+}
+.faq-q:hover { color: var(--accent); }
+.faq-q svg { flex-shrink: 0; transition: transform 0.4s var(--ease); color: var(--muted); }
+.faq-item.open .faq-q svg { transform: rotate(45deg); color: var(--accent); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease); }
+.faq-a p { color: var(--muted); padding: 0 40px 26px 0; font-size: 0.98rem; }
+
+/* ══════════ FINAL CTA ══════════ */
+.final { text-align: center; position: relative; overflow: hidden; }
+.final-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, rgba(124, 140, 248, 0.12) 0%, transparent 60%);
+}
+.final .container { position: relative; max-width: 820px; }
+.final h2 { margin: 24px 0 28px; }
+.final p { color: var(--muted); margin-bottom: 20px; }
+.final p strong { color: var(--text); font-weight: 500; }
+.urgency-note {
+  font-size: 0.88rem; color: var(--gold); max-width: 560px; margin: 32px auto;
+  border: 1px solid rgba(245, 201, 123, 0.3); border-radius: 16px; padding: 16px 24px;
+}
+.final-badges {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 24px; margin-top: 48px;
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--muted);
+}
+.final-badges span { display: flex; align-items: center; gap: 8px; }
+
+/* ══════════ FOOTER ══════════ */
+footer { background: var(--bg-elevated); padding-block: 48px; border-top: 1px solid rgba(139, 146, 172, 0.1); }
+.footer-inner { max-width: 900px; margin: 0 auto; padding-inline: 24px; text-align: center; }
+.footer-inner .logo { justify-content: center; margin-bottom: 24px; }
+.disclaimer { font-size: 0.75rem; color: var(--muted); opacity: 0.75; margin-bottom: 16px; line-height: 1.7; }
+.footer-copy { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); opacity: 0.6; margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      Yu Sleep
+    </a>
+    <div class="nav-links">
+      <a href="#vsl">Watch</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pricing" class="nav-cta">GET UP TO 60% OFF</a>
+    </div>
+    <button class="hamburger" aria-label="Menu" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#vsl">Watch</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#faq">FAQ</a>
+  <a href="#pricing" class="nav-cta">GET UP TO 60% OFF</a>
+</div>
+
+<!-- ══════════ 1. HERO — curiosity, no mechanism reveal ══════════ -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow hero-eyebrow">For anyone who keeps waking up between 2 and 4 AM</span>
+      <h1 class="hero-headline">Why do you wake up at the <span class="hl">exact same time</span> every night?</h1>
+      <p class="hero-sub">It's not random — and it's <strong>not stress</strong>. The short presentation below reveals the real reason, and the simple bedtime ritual helping thousands finally sleep through until morning.</p>
+      <a href="#vsl" class="btn-primary">
+        WATCH THE FREE PRESENTATION
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+      <p class="guarantee-line">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent); opacity: 0.8;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Backed by a 60-day money-back guarantee.
+      </p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-glow"></div>
+      <canvas id="hero-canvas"></canvas>
+      <video class="hero-bottle" autoplay muted loop playsinline preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3EHuqslbIDFyG44gzQn12tmS1QA/hf_20260702_105934_aaf74a2f-9f12-4c1f-acc5-e0841eeeec92.png" aria-label="Yu Sleep — cinematic product video">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3EHuqslbIDFyG44gzQn12tmS1QA/hf_20260702_110338_e05c4dab-71bb-44a3-91d6-2c1e7f33741e.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ 2. VSL ══════════ -->
+<section class="vsl-section" id="vsl">
+  <div class="container">
+    <div class="vsl-head">
+      <span class="eyebrow" style="justify-content:center;">The Presentation</span>
+      <h2 class="section-headline">The 3 AM "sleep switch" — explained in plain English.</h2>
+    </div>
+    <p class="vsl-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      Sound on — the beginning explains everything
+    </p>
+    <!-- ═══════════════════════════════════════════
+         VSL: official vendor GLP video (best converting) streamed
+         from their CDN via hls.js. To switch to the standard VSL,
+         replace the video id below with 307132b2-19e5-412b-8068-71a0017f4144
+         ═══════════════════════════════════════════ -->
+    <div class="vsl-frame" id="vslFrame">
+      <video id="vslPlayer" playsinline preload="metadata" poster="vsl-poster.jpg" disablepictureinpicture controlslist="nodownload noplaybackrate noremoteplayback" oncontextmenu="return false"></video>
+      <div class="vsl-overlay" id="vslOverlay">
+        <div class="vsl-play-btn">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <span class="vsl-overlay-hint">Click to play — click again to pause</span>
+      </div>
+    </div>
+    <div class="cta-row vsl-cta">
+      <a href="#pricing" class="btn-primary" data-scroll>
+        I'M READY TO SLEEP THROUGH THE NIGHT
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="cta-sub">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        60-day money-back guarantee · Ships within 24h
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3. BELIEF BREAK ══════════ -->
+<section id="belief">
+  <div class="container belief-grid">
+    <span class="eyebrow" style="justify-content:center;">Think About It</span>
+    <h2 class="section-headline">Everyone blames stress. The evidence points somewhere else.</h2>
+    <p>Here's the strange part: <strong>you CAN fall asleep.</strong> You just can't <strong>stay</strong> asleep.</p>
+    <p>If stress were the whole story, you'd struggle at 11 PM — not snap awake at 3 AM like clockwork.</p>
+    <p class="belief-punch">"Something else is waking you up. And once you see what it is, your nights finally make sense."</p>
+  </div>
+</section>
+
+<!-- ══════════ BRIDGE — morning after ══════════ -->
+<section class="bridge">
+  <div class="bridge-inner">
+    <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3EHuqslbIDFyG44gzQn12tmS1QA/hf_20260704_045101_c2d00977-6873-4404-bb44-b3bb8e1b42bf.png" alt="Woman waking up refreshed in warm morning light" width="2048" height="1152">
+    <p class="bridge-caption">Mornings, after the reset.</p>
+  </div>
+</section>
+
+<!-- ══════════ 8. REVIEWS + TRUST ══════════ -->
+<section class="section-elevated" id="reviews">
+  <div class="container">
+    <div class="reviews-head">
+      <span class="eyebrow" style="justify-content:center;">Verified Reviews</span>
+      <h2 class="section-headline">Real people. Real nights back.</h2>
+    </div>
+    <div class="stars-line"><span class="stars">★★★★★</span><span>36,498+ five-star reviews</span></div>
+    <div class="carousel" data-carousel>
+      <button class="carousel-btn carousel-prev" aria-label="Previous">←</button>
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="review-card">
+            <span class="stars">★★★★★</span>
+            <blockquote>"After just a few days, I sleep through the entire night and wake up rested like I did in my twenties."</blockquote>
+            <div class="review-meta">
+              <img src="https://i.pravatar.cc/88?img=47" alt="Mary D." width="44" height="44">
+              <div>
+                <div class="who">Mary D. — Tampa, FL</div>
+                <div class="badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  Verified Purchase
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="review-card">
+            <span class="stars">★★★★★</span>
+            <blockquote>"The very first night I fell asleep in minutes. After 2 weeks, my husband and I are finally sleeping in the same room again."</blockquote>
+            <div class="review-meta">
+              <img src="https://i.pravatar.cc/88?img=32" alt="Lisa M." width="44" height="44">
+              <div>
+                <div class="who">Lisa M. — Chicago, IL</div>
+                <div class="badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  Verified Purchase
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="review-card">
+            <span class="stars">★★★★★</span>
+            <blockquote>"My Oura ring doesn't lie: deep sleep went from 37 to 60+ minutes. My readiness score jumped from the 50s to the 80s."</blockquote>
+            <div class="review-meta">
+              <img src="https://i.pravatar.cc/88?img=26" alt="Jenna N." width="44" height="44">
+              <div>
+                <div class="who">Jenna N. — Boston, MA</div>
+                <div class="badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  Verified Purchase
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-btn carousel-next" aria-label="Next">→</button>
+      <div class="carousel-dots"></div>
+    </div>
+    <div class="trust-strip">
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg>
+        Ships from the US in 24h
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        60-day money-back guarantee
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+        Discreet packaging
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Ingredient research on PubMed
+      </span>
+    </div>
+    <div class="cta-row">
+      <a href="#pricing" class="btn-primary">
+        JOIN THEM TONIGHT
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 9. OFFER ══════════ -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="pricing-head">
+      <span class="eyebrow" style="justify-content:center;">Your Package</span>
+      <h2 class="section-headline">You're not buying a bottle. You're buying your nights back.</h2>
+    </div>
+    <p class="pricing-anchor">A sleep specialist visit runs $200+. A clinical sleep study, $1,000+. Yu Sleep costs a small fraction of that — and today, packages are discounted <strong>up to 60% off</strong> with free bonuses.</p>
+    <div class="pricing-product">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3EHuqslbIDFyG44gzQn12tmS1QA/hf_20260702_105936_c0679381-446d-4cf9-9a1d-fbed1e3f0609.png" alt="Yu Sleep supply packages">
+    </div>
+    <div class="cta-row">
+      <a class="btn-primary" data-hoplink href="https://623026u8tdxj0j7ovcw8on8l9d.hop.clickbank.net">
+        GET YU SLEEP — UP TO 60% OFF
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="cta-sub">Plus 3 free bonuses on select packages · Choose your package on the next page.</p>
+    </div>
+    <div class="guarantee-band">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--accent);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      <h3>Test it for 60 full nights</h3>
+      <p>If you're not sleeping better, one email gets you a full refund. No questions, no hoops. The risk is entirely ours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 10. FAQ ══════════ -->
+<section id="faq">
+  <div class="container faq-wrap">
+    <span class="eyebrow">Before You Decide</span>
+    <h2 class="section-headline">Questions people ask before their first bottle</h2>
+    <div class="faq-item">
+      <button class="faq-q">Is this just another melatonin?
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><p>No — and that's the point. Melatonin is 1 of 10 actives, at a 0.9 mg microdose. The rest of the formula does the heavy lifting.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How fast will I notice something?
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><p>Most people notice calmer nights within the first week. The full reset builds over 3–6 months of consistent use.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Will I feel groggy in the morning?
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><p>No. Yu Sleep is designed to work with your body clock — not sedate you.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">I take medication — can I use it?
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><p>Show the formula to your doctor first. It takes two minutes and buys total peace of mind.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What if it doesn't work for me?
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><p>You have 60 nights to test it. Didn't work? One email, full refund.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How long does shipping take?
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><p>Orders ship within 24 hours. 5–7 business days in the US, in discreet packaging.</p></div>
+    </div>
+    <div class="cta-row">
+      <a href="#pricing" class="btn-primary">
+        CLAIM MY DISCOUNT — UP TO 60% OFF
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 11. FINAL CTA ══════════ -->
+<section class="final section-elevated">
+  <div class="final-glow"></div>
+  <div class="container">
+    <span class="eyebrow" style="justify-content:center;">Tonight's Decision</span>
+    <h2 class="section-headline">Tonight, you'll be in bed either way.</h2>
+    <p>The only question is whether it looks like every other night — <strong>or like the first night of something new.</strong></p>
+    <p>With 60 nights to test it, the only thing you risk is one more 3 AM.</p>
+    <p class="urgency-note">The 60% discount (up to $360 in savings) applies to the current inventory batch — when pricing conditions change, this page will be updated with the new offer.</p>
+    <a href="https://623026u8tdxj0j7ovcw8on8l9d.hop.clickbank.net" data-hoplink class="btn-primary">
+      START USING YU SLEEP TONIGHT
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="final-badges">
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        60-DAY GUARANTEE
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg>
+        SHIPS IN 24H
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        36,498+ 5-STAR REVIEWS
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      Yu Sleep
+    </a>
+    <p class="disclaimer"><strong>Affiliate Disclosure:</strong> This page is operated by an independent affiliate of Yu Sleep. If you purchase through links on this page, the affiliate may earn a commission at no additional cost to you.</p>
+    <p class="disclaimer">These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease. Individual results may vary. If you are pregnant, nursing, taking medication, or have a medical condition, consult your physician before use.</p>
+    <p class="disclaimer">ClickBank is the retailer of products on this site. CLICKBANK® is a registered trademark of Click Sales, Inc., a Delaware corporation located at 1444 S. Entertainment Ave., Suite 410 Boise, ID 83709, USA and used by permission. ClickBank's role as retailer does not constitute an endorsement, approval or review of these products or any claim, statement or opinion used in promotion of these products.</p>
+    <p class="footer-copy">© 2026 · All rights reserved · Results may vary from person to person.</p>
+  </div>
+</footer>
+
+<script>
+// ══════════ HOPLINK — replace with your real ClickBank hoplink ══════════
+const HOPLINK = 'https://623026u8tdxj0j7ovcw8on8l9d.hop.clickbank.net';
+document.querySelectorAll('a[data-hoplink]').forEach(a => {
+  a.href = HOPLINK;
+  // Meta Pixel: fire InitiateCheckout when a visitor clicks through to the offer
+  a.addEventListener('click', () => { if (typeof fbq === 'function') fbq('track', 'InitiateCheckout'); });
+});
+
+// ══════════ VSL PLAYER ══════════
+// Atual: VSL condensada local (3:49, melhores momentos das VSLs oficiais).
+// Pra voltar à VSL completa (74 min) do vendor, troque src pelo m3u8:
+//   'https://media.trackplay.io/154b03a7-58de-4fd5-af28-7fdb7ef30c6e/720p/video.m3u8'
+// e reative o bloco hls.js (Hls.isSupported() → loadSource/attachMedia).
+(function () {
+  const video = document.getElementById('vslPlayer');
+  if (!video) return;
+  const src = 'vsl-condensed.mp4';
+  if (src.endsWith('.m3u8') && typeof Hls !== 'undefined' && Hls.isSupported()) {
+    try {
+      const hls = new Hls({ maxBufferLength: 30 });
+      hls.loadSource(src);
+      hls.attachMedia(video);
+    } catch (e) { video.src = src; }
+  } else {
+    video.src = src;
+  }
+
+  // ── VSL lock: sem controles nativos, só play/pause por clique ──
+  const frame = document.getElementById('vslFrame');
+  frame.addEventListener('click', () => {
+    if (video.paused) { video.play(); } else { video.pause(); }
+  });
+  let vslTracked = false;
+  video.addEventListener('play', () => {
+    frame.classList.add('playing');
+    if (!vslTracked && typeof fbq === 'function') { fbq('track', 'ViewContent'); vslTracked = true; }
+  });
+  video.addEventListener('pause', () => frame.classList.remove('playing'));
+
+  // Anti-seek: bloqueia pular pra frente (teclado, console, gestos).
+  // Permite voltar; ao terminar, libera replay do zero.
+  let maxWatched = 0, ended = false;
+  video.addEventListener('timeupdate', () => {
+    if (!video.seeking && video.currentTime > maxWatched) maxWatched = video.currentTime;
+  });
+  video.addEventListener('seeking', () => {
+    if (!ended && video.currentTime > maxWatched + 1.5) video.currentTime = maxWatched;
+  });
+  video.addEventListener('ended', () => { ended = true; frame.classList.remove('playing'); });
+})();
+
+// ══════════ SETUP ══════════
+const isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+// Lenis smooth scroll — desktop only
+if (typeof Lenis !== 'undefined' && !isMobile) {
+  try {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false,
+    });
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
+  } catch (e) { /* native scroll continues */ }
+}
+
+// ══════════ THREE.JS — night particle field in hero ══════════
+if (typeof THREE !== 'undefined') {
+  try {
+    const canvas = document.getElementById('hero-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+    camera.position.z = 14;
+
+    function sizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      renderer.setSize(rect.width * 1.2, rect.height * 1.2, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      camera.aspect = rect.width / rect.height;
+      camera.updateProjectionMatrix();
+    }
+    sizeCanvas();
+    window.addEventListener('resize', sizeCanvas);
+
+    function makeCloud(count, color, size, spread) {
+      const geo = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        pos[i] = (Math.random() - 0.5) * spread;
+        pos[i + 1] = (Math.random() - 0.5) * spread;
+        pos[i + 2] = (Math.random() - 0.5) * spread * 0.6;
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color, size, transparent: true, opacity: 0.75,
+        blending: THREE.AdditiveBlending, depthWrite: false
+      });
+      return new THREE.Points(geo, mat);
+    }
+
+    const lavender = makeCloud(isMobile ? 250 : 600, 0x7C8CF8, 0.06, 22);
+    const amber = makeCloud(isMobile ? 40 : 90, 0xF5C97B, 0.1, 20);
+    scene.add(lavender, amber);
+
+    let mouseX = 0, mouseY = 0;
+    if (!isMobile) {
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+    }
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      lavender.rotation.y = t * 0.02 + mouseX * 0.06;
+      lavender.rotation.x = Math.sin(t * 0.1) * 0.04 + mouseY * 0.04;
+      amber.rotation.y = -t * 0.015 + mouseX * 0.04;
+      amber.position.y = Math.sin(t * 0.3) * 0.4;
+      renderer.render(scene, camera);
+    })();
+  } catch (e) { /* CSS glow remains as fallback */ }
+}
+
+// ══════════ HEADLINE KINETIC — SplitType ══════════
+if (typeof SplitType !== 'undefined' && typeof gsap !== 'undefined') {
+  try {
+    const heroTitle = new SplitType('.hero-headline', { types: 'words' });
+    gsap.from(heroTitle.words, {
+      opacity: 0, y: 30, duration: 1.2, stagger: 0.08,
+      ease: 'power3.out'
+    });
+
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.utils.toArray('.section-headline').forEach(el => {
+        const split = new SplitType(el, { types: 'words' });
+        gsap.from(split.words, {
+          opacity: 0, y: 30, duration: 0.8, stagger: 0.06,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        });
+      });
+    }
+  } catch (e) { /* headlines stay visible */ }
+}
+
+// ══════════ REVEAL STAGGERED ══════════
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  // Hero non-headline elements
+  const heroEls = '.hero-eyebrow, .hero-sub, .hero-text .btn-primary, .guarantee-line';
+  gsap.from(heroEls, {
+    opacity: 0, y: 30, duration: 0.8, stagger: 0.09, delay: 0.5, ease: 'power3.out',
+    onComplete() { gsap.set(heroEls, { clearProps: 'transform,opacity' }); }
+  });
+  gsap.from('.hero-bottle', {
+    opacity: 0, y: 60, scale: 0.94, duration: 1.4, delay: 0.3, ease: 'power3.out',
+    onComplete() { gsap.set('.hero-bottle', { clearProps: 'transform,opacity' }); }
+  });
+
+  // Section content cascades
+  [
+    ['#vsl', '.vsl-note, .vsl-frame'],
+    ['#belief', '.belief-grid p'],
+    ['#pain', '.pain-card, .pain-bridge'],
+    ['#failed', '.failed-card, .failed-punch'],
+    ['#timeline', '.t-card'],
+    ['#reviews', '.stars-line, .carousel-slide, .trust-strip span'],
+    ['#pricing', '.pricing-anchor, .pricing-product, .plan, .plans-note, .bonus-head, .bonus-card, .guarantee-band'],
+    ['#faq', '.faq-item'],
+    ['.final', '.final p, .final .btn-primary, .final-badges'],
+    ['.ingredients-strip', '.chips span']
+  ].forEach(([trigger, items]) => {
+    const els = document.querySelectorAll(items);
+    if (!els.length) return;
+    gsap.from(els, {
+      opacity: 0, y: 40, duration: 0.8, stagger: 0.08, ease: 'power3.out',
+      scrollTrigger: { trigger, start: 'top 80%', toggleActions: 'play none none none' },
+      onComplete() { gsap.set(els, { clearProps: 'transform,opacity' }); }
+    });
+  });
+
+  // CTA rows reveal individually
+  document.querySelectorAll('.cta-row').forEach(row => {
+    gsap.from(row, {
+      opacity: 0, y: 30, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: row, start: 'top 88%' }
+    });
+  });
+
+  document.querySelectorAll('.bridge').forEach(b => {
+    const im = b.querySelector('img');
+    if (!im) return;
+    gsap.from(im, {
+      opacity: 0, scale: 0.97, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: b, start: 'top 80%' }
+    });
+  });
+}
+
+// ══════════ PIN + SCRUB — 3 fronts reveal (desktop only, THE wow) ══════════
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !isMobile) {
+  try {
+    const stage = document.getElementById('resetStage');
+    stage.classList.add('stacked');
+    const phases = gsap.utils.toArray('.reset-phase');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.reset-pin',
+        start: 'top top',
+        end: '+=2200',
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1
+      }
+    });
+
+    phases.forEach((ph, i) => {
+      if (i > 0) tl.from(ph, { autoAlpha: 0, y: 70, duration: 1 });
+      tl.to(ph, { duration: 1.4 }); // hold
+      if (i < phases.length - 1) tl.to(ph, { autoAlpha: 0, y: -70, duration: 1 });
+    });
+
+    gsap.to('#resetBar', {
+      width: '100%', ease: 'none',
+      scrollTrigger: { trigger: '.reset-pin', start: 'top top', end: '+=2200', scrub: true }
+    });
+  } catch (e) { /* phases stay stacked and visible */ }
+}
+
+// ══════════ MOBILE MENU ══════════
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    document.body.classList.toggle('menu-open', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    document.body.classList.remove('menu-open');
+  }));
+}
+
+// ══════════ CAROUSEL ══════════
+document.querySelectorAll('[data-carousel]').forEach(carousel => {
+  const track = carousel.querySelector('.carousel-track');
+  const slides = carousel.querySelectorAll('.carousel-slide');
+  const prevBtn = carousel.querySelector('.carousel-prev');
+  const nextBtn = carousel.querySelector('.carousel-next');
+  const dotsContainer = carousel.querySelector('.carousel-dots');
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+    dot.addEventListener('click', () => {
+      const slideWidth = slides[0].offsetWidth + 24;
+      track.scrollTo({ left: slideWidth * i, behavior: 'smooth' });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    const slideWidth = slides[0].offsetWidth + 24;
+    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+  });
+  nextBtn?.addEventListener('click', () => {
+    const slideWidth = slides[0].offsetWidth + 24;
+    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
+  });
+
+  let scrollTimeout;
+  track.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const slideWidth = slides[0].offsetWidth + 24;
+      const activeIndex = Math.round(track.scrollLeft / slideWidth);
+      dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === activeIndex);
+      });
+    }, 100);
+  });
+});
+
+// ══════════ FAQ ACCORDION ══════════
+document.querySelectorAll('.faq-item').forEach(item => {
+  const btn = item.querySelector('.faq-q');
+  const ans = item.querySelector('.faq-a');
+  btn.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o => {
+      o.classList.remove('open');
+      o.querySelector('.faq-a').style.maxHeight = '0px';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
+  });
+});
+</script>
+</body>
+</html>
