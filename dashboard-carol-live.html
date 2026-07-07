@@ -117,6 +117,8 @@
   <div class="kpi"><div class="kpi-label" id="kpi-vendas-label">Vendas — Hoje</div><div class="kpi-value green" id="kpi-vendas">—</div></div>
   <div class="kpi"><div class="kpi-label">CTR Médio</div><div class="kpi-value green" id="kpi-ctr">—</div></div>
   <div class="kpi"><div class="kpi-label">CPC Médio</div><div class="kpi-value" id="kpi-cpc">—</div></div>
+  <div class="kpi"><div class="kpi-label">Quiz Abertos</div><div class="kpi-value" id="kpi-quiz-open">—</div><div class="kpi-sub" id="kpi-quiz-sub">lábios + skincare</div></div>
+  <div class="kpi"><div class="kpi-label">Leads Capturados</div><div class="kpi-value blue" id="kpi-quiz-leads">—</div><div class="kpi-sub" id="kpi-quiz-conv">conversão —</div></div>
 </div>
 
 <div class="section-label carol">Carol Mafra — Lábios &amp; Skincare</div>
@@ -382,7 +384,13 @@ async function refreshLeads() {
     });
 
     const totalContacts = realLeads.length;
+    const totalOpens = opens.labios + opens.skincare;
     document.getElementById('leads-count').textContent = totalContacts;
+    document.getElementById('kpi-quiz-open').textContent = totalOpens || '—';
+    document.getElementById('kpi-quiz-leads').textContent = totalContacts || '—';
+    document.getElementById('kpi-quiz-conv').textContent = totalOpens
+      ? Math.round(totalContacts / totalOpens * 100) + '% conversão'
+      : 'conversão —';
 
     function pct(a, b) { return b ? ' (' + Math.round(a/b*100) + '%)' : ''; }
 
