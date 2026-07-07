@@ -142,7 +142,7 @@
 <div class="error-box" id="error-box"></div>
 
 <script>
-const TOKEN = 'EAAXef9WXEqwBR4ImzMTtKCCzposVBOG6IY8wLYQqIiBqmZBSZCEzsVyqT3KBDNPoXGAJXP0RuFSHZBImZAKwHv6yeAXWvEZBZALZCz8bovzKNdJy6E1GaE2YYF4fDhrdxozIChZBTM1z0sVLzBtFGEsJSym4DYQVMrGgY2oncPLjecSFcPpAJYMPZA2DhIlqNeqZCQMesQeZBPtzwcBO1SgHnuO6lm3hi7b7TBdVAhDk8lU6XpwoiZB2';
+const TOKEN = 'EAAXef9WXEqwBR8grihtLNySojtzpDTqlGXlBHZBxF0GZBHGWdjkZCqabwznPtW2Lrto1fdPJCXCl9oz3GS5xuHchJ40wW9dMe35kPpR2o3xXoOGSiUe2QC31ERDU6dehEOGy5vr562gkjxg4nqadhOkb3P7G9Y90ZAc7X7HtmcBth3wDJT9gxru8ukZAsugZDZD';
 const ACC_CAROL = 'act_1573441606911874';
 const ACC_SLEEP = 'act_876818259861749';
 const API = 'https://graph.facebook.com/v21.0';
@@ -367,19 +367,50 @@ async function refreshLeads() {
   try {
     const r = await fetch('https://dracarolmafra.com.br/api/leads');
     if (!r.ok) throw new Error('status ' + r.status);
-    const leads = await r.json();
-    document.getElementById('leads-count').textContent = leads.length;
-    if (!leads.length) {
-      document.getElementById('leads-body').innerHTML = '<div style="color:#8B949E;font-size:13px">Nenhum lead ainda.</div>';
+    const all = await r.json();
+
+    const opens    = { labios: 0, skincare: 0 };
+    const contacts = { labios: 0, skincare: 0 };
+    const realLeads = [];
+
+    all.forEach(l => {
+      if (l.source === 'labios-open')    { opens.labios++;    return; }
+      if (l.source === 'skincare-open')  { opens.skincare++;  return; }
+      if (l.source === 'labios')         contacts.labios++;
+      if (l.source === 'skincare')       contacts.skincare++;
+      realLeads.push(l);
+    });
+
+    const totalContacts = realLeads.length;
+    document.getElementById('leads-count').textContent = totalContacts;
+
+    function pct(a, b) { return b ? ' (' + Math.round(a/b*100) + '%)' : ''; }
+
+    const funnelHtml = `
+      <div style="display:flex;gap:24px;margin-bottom:16px;flex-wrap:wrap">
+        <div style="background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;min-width:160px">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B949E;margin-bottom:8px">💋 Lábios</div>
+          <div style="font-size:13px;color:#ccc;margin-bottom:4px">Abriram quiz: <strong style="color:#fff">${opens.labios}</strong></div>
+          <div style="font-size:13px;color:#ccc">Deixaram contato: <strong style="color:#58a6ff">${contacts.labios}</strong><span style="color:#8B949E;font-size:11px">${pct(contacts.labios, opens.labios)}</span></div>
+        </div>
+        <div style="background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;min-width:160px">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B949E;margin-bottom:8px">✨ Skincare</div>
+          <div style="font-size:13px;color:#ccc;margin-bottom:4px">Abriram quiz: <strong style="color:#fff">${opens.skincare}</strong></div>
+          <div style="font-size:13px;color:#ccc">Deixaram contato: <strong style="color:#58a6ff">${contacts.skincare}</strong><span style="color:#8B949E;font-size:11px">${pct(contacts.skincare, opens.skincare)}</span></div>
+        </div>
+      </div>`;
+
+    if (!realLeads.length) {
+      document.getElementById('leads-body').innerHTML = funnelHtml + '<div style="color:#8B949E;font-size:13px">Nenhum lead ainda.</div>';
       return;
     }
-    document.getElementById('leads-body').innerHTML = `
+    document.getElementById('leads-body').innerHTML = funnelHtml + `
       <table class="leads-table">
         <thead><tr>
           <th>Nome</th><th>WhatsApp</th><th>Origem</th><th>Data</th>
         </tr></thead>
         <tbody>
-          ${leads.slice(0, 50).map(l => `<tr>
+          ${realLeads.slice(0, 50).map(l => `<tr>
             <td>${l.name}</td>
             <td><span class="lead-wa">${l.wa}</span></td>
             <td><span class="lead-source ${l.source}">${l.source}</span></td>
@@ -399,4 +430,6 @@ setInterval(refreshLeads, 120000);
 </script>
 </body>
 </html>
+
+
 

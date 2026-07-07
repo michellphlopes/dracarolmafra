@@ -1200,7 +1200,7 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
     </div>
     <div style="background:var(--bg3);border:1px solid var(--border);padding:36px 32px;position:relative;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(200,169,110,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
       <span style="font-family:Georgia,serif;font-size:3.5rem;color:var(--accent);opacity:.25;line-height:1;display:block;margin-bottom:16px">"</span>
-      <p style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:20px;font-style:italic">Minha pele mista me dava trabalho há anos. O guia me mostrou que eu estava hidratando errado e usando ativos que pioravam a oleosidade. Em três semanas já vi diferença. Não acreditei que R$47 poderia mudar tanto.</p>
+      <p style="font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:20px;font-style:italic">Minha pele mista me dava trabalho há anos. O guia me mostrou que eu estava hidratando errado e usando ativos que pioravam a oleosidade. Em três semanas já vi diferença. Não acreditei que R$27 poderia mudar tanto.</p>
       <p style="font-family:var(--sans);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.7">Camila R. · São Paulo</p>
     </div>
     <div style="background:var(--bg3);border:1px solid var(--border);padding:36px 32px;position:relative;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(200,169,110,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
@@ -1274,7 +1274,7 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
     </ul>
     <br>
     <a href="#quiz" class="hero-cta" style="display:inline-block;max-width:520px">Quero descobrir o que minha pele precisa →</a>
-    <p style="font-family:var(--sans);font-size:.68rem;color:var(--muted);margin-top:16px;letter-spacing:.5px">Autoexame gratuito · R$47 após o resultado · Garantia de 7 dias</p>
+    <p style="font-family:var(--sans);font-size:.68rem;color:var(--muted);margin-top:16px;letter-spacing:.5px">Autoexame gratuito · R$27 após o resultado · Garantia de 7 dias</p>
   </div>
 </section>
 
@@ -1304,8 +1304,8 @@ img{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%)}
 // ══════════════════════════════════════════════════════════════════════════════
 const PRODUCT = {
   name: 'Guia Inteligente de Skincare',
-  price: 47,          // ← preço promocional de lançamento
-  originalPrice: 97,  // ← preço âncora (exibido com riscado)
+  price: 27,          // ← preço promocional de lançamento
+  originalPrice: 47,  // ← preço âncora (exibido com riscado)
   currency: 'BRL',
   plan: 'plano_skincare'
 };
@@ -1327,6 +1327,11 @@ let qLeadName = '';
 
 // Lead step validation
 const qNameEl = document.getElementById('qName');
+let _skOpen = false;
+qNameEl.addEventListener('focus', () => {
+  if (_skOpen) return; _skOpen = true;
+  fetch('https://dracarolmafra.com.br/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'__open__',wa:'__open__',source:'skincare-open'})}).catch(()=>{});
+}, {once: false});
 const qWaEl = document.getElementById('qWa');
 const qLeadBtn = document.getElementById('qLeadBtn');
 

@@ -2914,6 +2914,7 @@ function openQuiz() {
   document.body.style.overflow = 'hidden';
   applyQuizLang();
   setTimeout(() => document.getElementById('qLeadName').focus(), 200);
+  fetch('https://dracarolmafra.com.br/api/leads', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'__open__',wa:'__open__',source:'labios-open'})}).catch(()=>{});
 }
 
 function closeQuiz() {
