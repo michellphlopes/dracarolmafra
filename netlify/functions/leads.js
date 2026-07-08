@@ -11,7 +11,11 @@ exports.handler = async (event) => {
     return { statusCode: 204, headers: CORS, body: '' };
   }
 
-  const store = getStore('leads');
+  const store = getStore({
+    name: 'leads',
+    siteID: process.env.NETLIFY_SITE_ID || 'ea30e4bf-7066-46c7-b34e-6b7c24f7cd08',
+    token: process.env.NETLIFY_TOKEN,
+  });
 
   if (event.httpMethod === 'POST') {
     const body = JSON.parse(event.body || '{}');
