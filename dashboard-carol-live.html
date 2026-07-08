@@ -373,13 +373,18 @@ async function refreshLeads() {
 
     const opens    = { labios: 0, skincare: 0 };
     const contacts = { labios: 0, skincare: 0 };
+    const funnel   = { started: 0, lead: 0, result: 0, checkout: 0, purchase: 0 };
     const realLeads = [];
 
     all.forEach(l => {
-      if (l.source === 'labios-open')    { opens.labios++;    return; }
-      if (l.source === 'skincare-open')  { opens.skincare++;  return; }
-      if (l.source === 'labios')         contacts.labios++;
-      if (l.source === 'skincare')       contacts.skincare++;
+      if (l.source === 'labios-open')       { opens.labios++;       return; }
+      if (l.source === 'skincare-open')     { opens.skincare++;     return; }
+      if (l.source === 'skincare-started')  { funnel.started++;     return; }
+      if (l.source === 'skincare-result')   { funnel.result++;      return; }
+      if (l.source === 'skincare-checkout') { funnel.checkout++;    return; }
+      if (l.source === 'skincare-purchase') { funnel.purchase++;    return; }
+      if (l.source === 'labios')            contacts.labios++;
+      if (l.source === 'skincare' || l.source === 'skincare-quiz') { contacts.skincare++; }
       realLeads.push(l);
     });
 
@@ -392,19 +397,35 @@ async function refreshLeads() {
       ? Math.round(totalContacts / totalOpens * 100) + '% conversão'
       : 'conversão —';
 
-    function pct(a, b) { return b ? ' (' + Math.round(a/b*100) + '%)' : ''; }
+    function pct(a, b) { return b ? ' <span style="color:#8B949E;font-size:11px">(' + Math.round(a/b*100) + '%)</span>' : ''; }
+    function arrow(n) { return n ? `<span style="color:#444;font-size:18px;margin:0 6px">→</span><strong style="color:#fff">${n}</strong>` : `<span style="color:#444;font-size:18px;margin:0 6px">→</span><strong style="color:#444">0</strong>`; }
 
     const funnelHtml = `
-      <div style="display:flex;gap:24px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="display:flex;gap:24px;margin-bottom:20px;flex-wrap:wrap">
         <div style="background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;min-width:160px">
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B949E;margin-bottom:8px">💋 Lábios</div>
           <div style="font-size:13px;color:#ccc;margin-bottom:4px">Abriram quiz: <strong style="color:#fff">${opens.labios}</strong></div>
-          <div style="font-size:13px;color:#ccc">Deixaram contato: <strong style="color:#58a6ff">${contacts.labios}</strong><span style="color:#8B949E;font-size:11px">${pct(contacts.labios, opens.labios)}</span></div>
+          <div style="font-size:13px;color:#ccc">Deixaram contato: <strong style="color:#58a6ff">${contacts.labios}</strong>${pct(contacts.labios, opens.labios)}</div>
         </div>
-        <div style="background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;min-width:160px">
-          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B949E;margin-bottom:8px">✨ Skincare</div>
-          <div style="font-size:13px;color:#ccc;margin-bottom:4px">Abriram quiz: <strong style="color:#fff">${opens.skincare}</strong></div>
-          <div style="font-size:13px;color:#ccc">Deixaram contato: <strong style="color:#58a6ff">${contacts.skincare}</strong><span style="color:#8B949E;font-size:11px">${pct(contacts.skincare, opens.skincare)}</span></div>
+        <div style="background:#161B22;border:1px solid #21262D;border-radius:8px;padding:16px 20px;flex:1;min-width:300px">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B949E;margin-bottom:14px">✨ Skincare — Funil completo</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;text-align:center">
+            ${[
+              { label: 'Abriu',    n: opens.skincare,   color: '#8B949E', base: null },
+              { label: 'Lead',     n: contacts.skincare, color: '#58a6ff', base: opens.skincare },
+              { label: 'Iniciou',  n: funnel.started,   color: '#a78bfa', base: opens.skincare },
+              { label: 'Concluiu', n: funnel.result,    color: '#f59e0b', base: funnel.started || opens.skincare },
+              { label: 'Checkout', n: funnel.checkout,  color: '#fb923c', base: funnel.result },
+              { label: 'Comprou',  n: funnel.purchase,  color: '#4ade80', base: funnel.checkout },
+            ].map((s,i,arr) => `
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="font-size:20px;font-weight:700;color:${s.color};font-variant-numeric:tabular-nums">${s.n}</div>
+                <div style="font-size:10px;color:#8B949E;letter-spacing:.5px;text-transform:uppercase">${s.label}</div>
+                ${s.base != null ? `<div style="font-size:10px;color:#444">${s.base ? Math.round(s.n/s.base*100)+'%' : '—'}</div>` : '<div style="font-size:10px;color:transparent">—</div>'}
+                ${i < arr.length-1 ? '' : ''}
+              </div>
+            `).join('<div style="color:#333;font-size:16px;display:flex;align-items:center;padding-bottom:18px">›</div>')}
+          </div>
         </div>
       </div>`;
 
@@ -427,7 +448,7 @@ async function refreshLeads() {
         </tbody>
       </table>`;
   } catch (e) {
-    document.getElementById('leads-body').innerHTML = `<div style="color:#8B949E;font-size:12px">Leads disponíveis após deploy no site.</div>`;
+    document.getElementById('leads-body').innerHTML = `<div style="color:#8B949E;font-size:12px">⚠️ Erro ao carregar leads — tentando novamente em 2 min.</div>`;
   }
 }
 
