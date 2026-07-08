@@ -336,11 +336,11 @@ async function refresh() {
     document.getElementById('kpi-cpc').textContent = fmt(avgCpc);
 
     // Carol cards
-    const carolActive = carolCampaigns.filter(c => c.status === 'ACTIVE' || insightsOf(c));
+    const carolActive = carolCampaigns.filter(c => c.status === 'ACTIVE');
     const carolData = await Promise.all(carolActive.map(c => fetchAds(c.id).then(ads => ({campaign:c, ads}))));
 
     // Sleep cards
-    const sleepActive = sleepCampaigns.filter(c => c.status === 'ACTIVE' || insightsOf(c));
+    const sleepActive = sleepCampaigns.filter(c => c.status === 'ACTIVE');
     const sleepData = await Promise.all(sleepActive.map(c => fetchAds(c.id).then(ads => ({campaign:c, ads}))));
 
     const alerts = [];
