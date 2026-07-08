@@ -3,6 +3,18 @@
   functions = "netlify/functions"
 
 [[redirects]]
+  from = "/skincare/"
+  to = "/skincare-quiz/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/skincare"
+  to = "/skincare-quiz/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
