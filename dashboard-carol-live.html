@@ -367,37 +367,33 @@ async function refresh() {
 
 async function refreshLeads() {
   try {
-    // Lê direto da Netlify Blobs REST API (bypass da função com problema de env var)
+    // Lê da env var LEADS_DATA via API Netlify (armazenamento improvisado com CORS liberado)
     const NLFY_TOKEN = 'nfc_qzz3fbwFGPgCihqffcng9VzxLifRSHKe4de8';
+    const NLFY_ACC   = '6a3d5a6539a2162e0ede93c9';
     const NLFY_SITE  = 'ea30e4bf-7066-46c7-b34e-6b7c24f7cd08';
-    const meta = await fetch(`https://api.netlify.com/api/v1/sites/${NLFY_SITE}/blobs/leads/all`, {
+    const r = await fetch(`https://api.netlify.com/api/v1/accounts/${NLFY_ACC}/env/LEADS_DATA?site_id=${NLFY_SITE}`, {
       headers: { Authorization: `Bearer ${NLFY_TOKEN}` }
     });
-    let all = [];
-    if (meta.ok) {
-      const { url } = await meta.json();
-      const data = await fetch(url);
-      if (data.ok) all = await data.json();
-    }
+    if (!r.ok) throw new Error('status ' + r.status);
+    const env = await r.json();
+    let d = { c: {}, l: [] };
+    try { d = JSON.parse(env.values[0].value) || d; } catch (_) {}
+    const c = d.c || {};
 
-    const opens    = { labios: 0, skincare: 0 };
-    const contacts = { labios: 0, skincare: 0 };
-    const funnel   = { started: 0, lead: 0, result: 0, checkout: 0, purchase: 0 };
-    const realLeads = [];
+    const opens    = { labios: c['labios-open'] || 0, skincare: c['skincare-open'] || 0 };
+    const contacts = {
+      labios:   c['labios'] || 0,
+      skincare: (c['skincare'] || 0) + (c['skincare-quiz'] || 0),
+    };
+    const funnel = {
+      started:  c['skincare-started']  || 0,
+      result:   c['skincare-result']   || 0,
+      checkout: c['skincare-checkout'] || 0,
+      purchase: c['skincare-purchase'] || 0,
+    };
+    const realLeads = d.l || [];
 
-    all.forEach(l => {
-      if (l.source === 'labios-open')       { opens.labios++;       return; }
-      if (l.source === 'skincare-open')     { opens.skincare++;     return; }
-      if (l.source === 'skincare-started')  { funnel.started++;     return; }
-      if (l.source === 'skincare-result')   { funnel.result++;      return; }
-      if (l.source === 'skincare-checkout') { funnel.checkout++;    return; }
-      if (l.source === 'skincare-purchase') { funnel.purchase++;    return; }
-      if (l.source === 'labios')            contacts.labios++;
-      if (l.source === 'skincare' || l.source === 'skincare-quiz') { contacts.skincare++; }
-      realLeads.push(l);
-    });
-
-    const totalContacts = realLeads.length;
+    const totalContacts = contacts.labios + contacts.skincare;
     document.getElementById('leads-count').textContent = totalContacts;
     document.getElementById('kpi-quiz-open').textContent = opens.skincare || '—';
     document.getElementById('kpi-quiz-leads').textContent = contacts.skincare || '—';
