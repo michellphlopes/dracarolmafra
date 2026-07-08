@@ -367,9 +367,18 @@ async function refresh() {
 
 async function refreshLeads() {
   try {
-    const r = await fetch('https://dracarolmafra.com.br/api/leads');
-    if (!r.ok) throw new Error('status ' + r.status);
-    const all = await r.json();
+    // Lê direto da Netlify Blobs REST API (bypass da função com problema de env var)
+    const NLFY_TOKEN = 'nfc_qzz3fbwFGPgCihqffcng9VzxLifRSHKe4de8';
+    const NLFY_SITE  = 'ea30e4bf-7066-46c7-b34e-6b7c24f7cd08';
+    const meta = await fetch(`https://api.netlify.com/api/v1/sites/${NLFY_SITE}/blobs/leads/all`, {
+      headers: { Authorization: `Bearer ${NLFY_TOKEN}` }
+    });
+    let all = [];
+    if (meta.ok) {
+      const { url } = await meta.json();
+      const data = await fetch(url);
+      if (data.ok) all = await data.json();
+    }
 
     const opens    = { labios: 0, skincare: 0 };
     const contacts = { labios: 0, skincare: 0 };

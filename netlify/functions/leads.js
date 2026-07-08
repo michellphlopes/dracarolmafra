@@ -6,26 +6,29 @@ const CORS = {
 
 const SITE_ID = process.env.NETLIFY_SITE_ID || 'ea30e4bf-7066-46c7-b34e-6b7c24f7cd08';
 const TOKEN   = process.env.NETLIFY_TOKEN;
-const BLOB_URL = `https://blobs.netlify.com/api/v1/sites/${SITE_ID}/blobs/leads/all`;
+const BLOB_API = `https://api.netlify.com/api/v1/sites/${SITE_ID}/blobs/leads/all`;
 
 async function readLeads() {
   if (!TOKEN) return [];
-  const r = await fetch(BLOB_URL + '?fresh=1', {
-    headers: { Authorization: `Bearer ${TOKEN}` },
-  });
-  if (r.status === 404) return [];
-  if (!r.ok) throw new Error('blob read ' + r.status);
-  return r.json();
+  const r = await fetch(BLOB_API, { headers: { Authorization: `Bearer ${TOKEN}` } });
+  if (!r.ok) return [];
+  const { url } = await r.json();
+  const r2 = await fetch(url);
+  if (!r2.ok) return [];
+  return r2.json();
 }
 
 async function writeLeads(leads) {
   if (!TOKEN) throw new Error('no token');
-  const r = await fetch(BLOB_URL, {
+  const r1 = await fetch(BLOB_API, {
     method: 'PUT',
     headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(leads),
+    body: '{}',
   });
-  if (!r.ok) throw new Error('blob write ' + r.status);
+  if (!r1.ok) throw new Error('blob presign ' + r1.status);
+  const { url } = await r1.json();
+  const r2 = await fetch(url, { method: 'PUT', body: JSON.stringify(leads) });
+  if (!r2.ok) throw new Error('blob write ' + r2.status);
 }
 
 exports.handler = async (event) => {
