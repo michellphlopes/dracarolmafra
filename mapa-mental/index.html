@@ -321,6 +321,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
 #nodes.dragging .node{transition:left .16s ease,top .16s ease}
 #nodes .node.drag-src{transition:none;z-index:30;box-shadow:var(--shadow-lg);
   opacity:.93;cursor:grabbing;pointer-events:none}
+.node.drop-hint{box-shadow:0 0 0 3px var(--accent),var(--shadow-md)}
 .drag-ghost{position:fixed;left:0;top:0;z-index:80;pointer-events:none;opacity:.8;
   transform-origin:top left;box-shadow:var(--shadow-lg);animation:none}
 .ghost-count{position:absolute;top:-9px;right:-9px;background:var(--accent);color:var(--accent-ink);
@@ -386,6 +387,9 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
       </button>
       <div class="tb-title" id="mapTitle" contenteditable="true" spellcheck="false"></div>
       <div class="tb-spacer"></div>
+      <button class="iconbtn" id="arrangeBtn" title="Organizar automaticamente (arruma a árvore)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h8M4 12h12M4 18h8M19 4v16M16 7l3-3 3 3M16 17l3 3 3-3"/></svg>
+      </button>
       <button class="iconbtn" id="fitBtn" title="Centralizar (0)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
       </button>
@@ -404,7 +408,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> arraste um tópico pra reorganizar — solte em cima de outro pra virar sub-tópico, ou puxe pro lado esquerdo da ideia central · marcados vão juntos · <kbd>Ctrl+Z</kbd> desfaz · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copiar · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
+      <span id="hintBody"><b>Dica:</b> arraste e solte a tag onde quiser — perto empurra, esticou demais puxa · solte em cima de outra pra virar sub-tópico · marcados vão juntos · botão ⇅ do topo organiza sozinho · <kbd>Ctrl+Z</kbd> desfaz · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copiar · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -611,10 +615,27 @@ function addNode(parentId,text){
   const id=uid();
   const ci=Object.values(m.nodes).filter(n=>n.parentId===parentId).length;
   m.nodes[id]={id,text:text||'Novo tópico',parentId,ci,note:'',done:false,collapsed:false};
+  placeNear(m,id,parentId);
   if(p.collapsed)p.collapsed=false;
   save();return id;
 }
 function children(m,id){return Object.values(m.nodes).filter(n=>n.parentId===id).sort((a,b)=>(a.ci||0)-(b.ci||0));}
+function placeNear(m,id,parentId){
+  // posição inicial de um nó novo: ao lado do pai, abaixo dos irmãos
+  const n=m.nodes[id],p=m.nodes[parentId]||m.nodes[m.rootId],root=m.nodes[m.rootId];
+  const dir=(typeof p.fx==='number'&&typeof root.fx==='number'&&p.fx+60<root.fx)?-1:1;
+  const sibs=children(m,parentId).filter(c=>c.id!==id&&typeof c.fy==='number');
+  n.fx=(p.fx||0)+dir*COL;
+  n.fy=sibs.length?Math.max(...sibs.map(s=>s.fy))+46:(p.fy||0);
+}
+function placeSubtree(m,id,parentId){
+  placeNear(m,id,parentId);
+  (function rec(pid){
+    const p=m.nodes[pid],root=m.nodes[m.rootId];
+    const dir=(typeof p.fx==='number'&&typeof root.fx==='number'&&p.fx+60<root.fx)?-1:1;
+    children(m,pid).forEach((c,i)=>{c.fx=(p.fx||0)+dir*COL;c.fy=(p.fy||0)+i*46;rec(c.id);});
+  })(id);
+}
 function syncDerivedDone(m){
   // pai é automático: verde só quando TODOS os sub-tópicos estão verdes
   let changed=false;
@@ -633,6 +654,7 @@ function addSiblingAfter(id,text){
   children(m,n.parentId).forEach(s=>{if((s.ci||0)>(n.ci||0))s.ci=(s.ci||0)+1;});
   const nid=uid();
   m.nodes[nid]={id:nid,text:text||'Novo tópico',parentId:n.parentId,ci:(n.ci||0)+1,note:'',done:false,collapsed:false};
+  m.nodes[nid].fx=n.fx;m.nodes[nid].fy=(n.fy||0)+46; // nasce logo abaixo do irmão
   save();return nid;
 }
 function insertBetween(id,text){
@@ -641,6 +663,7 @@ function insertBetween(id,text){
   const kids=children(m,id);
   const nid=uid();
   m.nodes[nid]={id:nid,text:text||'Novo tópico',parentId:id,ci:0,note:'',done:false,collapsed:false};
+  placeNear(m,nid,id);
   kids.forEach((k,i)=>{k.parentId=nid;k.ci=i;});
   n.collapsed=false;
   save();return nid;
@@ -708,17 +731,70 @@ function layout(m,H){
   layout._LX=LX;
   return {w:LX+mdR*COL+280,h:Htot};
 }
-// converte xr/side em x final (lado esquerdo espelha em torno da raiz)
-function applyPositions(m,els){
+// escreve o layout arrumado (xr/side espelhado) nas posições livres fx/fy
+function applyPositionsTidy(m,els){
   const LX=layout._LX||0;
   const rootEl=els[m.rootId];
   const axis=LX+(rootEl?rootEl.offsetWidth/2:60);
   Object.keys(els).forEach(id=>{
     const p=_pos[id];if(!p)return;
     const rx=LX+p.xr;
-    p.x=(p.side==='left'&&id!==m.rootId)?(2*axis-rx-els[id].offsetWidth):rx;
-    els[id].style.left=p.x+'px';els[id].style.top=p.y+'px';
+    const x=(p.side==='left'&&id!==m.rootId)?(2*axis-rx-els[id].offsetWidth):rx;
+    m.nodes[id].fx=x;m.nodes[id].fy=p.y;
   });
+}
+
+/* ---------- física: perto empurra, esticado demais puxa ---------- */
+const GAP=13, LMAX=430;
+function settleCollisions(m,els,iters,pinned,ignoreId){
+  const ids=Object.keys(els).filter(id=>_pos[id]);
+  const mv=(id,dx,dy)=>{const p=_pos[id];p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;};
+  const box=id=>{const p=_pos[id],w=els[id].offsetWidth,h=els[id].offsetHeight;
+    return{x1:p.x-GAP/2,y1:p.y-h/2-GAP/2,x2:p.x+w+GAP/2,y2:p.y+h/2+GAP/2};};
+  for(let k=0;k<iters;k++){
+    let moved=false;
+    for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){
+      const a=ids[i],b=ids[j];
+      if(pinned.has(a)&&pinned.has(b))continue;
+      // o alvo sob o ponteiro não é empurrado pelo grupo (pra dar pra soltar em cima)
+      if(ignoreId&&(a===ignoreId||b===ignoreId)&&(pinned.has(a)||pinned.has(b)))continue;
+      const A=box(a),B=box(b);
+      const ox=Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1);
+      const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1);
+      if(ox<=0||oy<=0)continue;
+      moved=true;
+      let dx=0,dy=0; // empurra pelo eixo de menor penetração
+      if(ox<oy)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
+      else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
+      if(pinned.has(a))mv(b,-dx,-dy);
+      else if(pinned.has(b))mv(a,dx,dy);
+      else{mv(a,dx/2,dy/2);mv(b,-dx/2,-dy/2);}
+    }
+    if(!moved)break;
+  }
+}
+function settleSprings(m,els,pinned){
+  // as linhas são molas: esticou além do limite, o outro lado vem junto
+  let moved=false;
+  const mv=(id,dx,dy)=>{const p=_pos[id];p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;};
+  Object.keys(els).forEach(id=>{
+    if(!_pos[id])return;
+    children(m,id).forEach(ch=>{
+      if(!_pos[ch.id]||!els[ch.id])return;
+      const p=_pos[id],c=_pos[ch.id];
+      const dx=(c.x+els[ch.id].offsetWidth/2)-(p.x+els[id].offsetWidth/2);
+      const dy=c.y-p.y;
+      const d=Math.hypot(dx,dy);
+      if(d<=LMAX)return;
+      if(pinned.has(id)&&pinned.has(ch.id))return;
+      moved=true;
+      const ex=(d-LMAX)/d, px=dx*ex, py=dy*ex;
+      if(pinned.has(id))mv(ch.id,-px,-py);
+      else if(pinned.has(ch.id))mv(id,px,py);
+      else{mv(ch.id,-px/2,-py/2);mv(id,px/2,py/2);}
+    });
+  });
+  return moved;
 }
 
 /* ============================================================
@@ -728,7 +804,7 @@ const nodesLayer=$('#nodes'),edges=$('#edges'),world=$('#world');
 function render(){
   const m=currentMap();
   syncDerivedDone(m);
-  // 1ª passada: monta os nós numa área larga e mede as alturas reais
+  // 1ª passada: monta os nós e mede
   nodesLayer.innerHTML='';
   world.style.width='20000px';world.style.height='20000px';
   const els={},visible=[];
@@ -736,17 +812,36 @@ function render(){
   visible.forEach(id=>{const el=makeNode(m,m.nodes[id]);el.style.left='0px';el.style.top='0px';els[id]=el;nodesLayer.appendChild(el);});
   const Hs={};visible.forEach(id=>{Hs[id]=els[id].offsetHeight;});
 
-  // 2ª passada: layout com as alturas medidas e aplica posições
-  const dim=layout(m,Hs);
-  world.style.width=dim.w+'px';world.style.height=dim.h+'px';
-  edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
-  edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
-  applyPositions(m,els);
-
+  // posições LIVRES: quem não tem (1ª vez, migração ou "Organizar") ganha do layout arrumado
+  if(render._tidy||visible.some(id=>typeof m.nodes[id].fx!=='number')){
+    layout(m,Hs);
+    applyPositionsTidy(m,els);
+    render._tidy=false;
+    save();
+  }
+  _pos={};visible.forEach(id=>{_pos[id]={x:m.nodes[id].fx,y:m.nodes[id].fy};});
+  settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
+  visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
+  const b=boundsOf(els);render._bounds=b;
+  const W=Math.max(b.maxX+300,800),H2=Math.max(b.maxY+220,600);
+  world.style.width=W+'px';world.style.height=H2+'px';
+  edges.setAttribute('width',W);edges.setAttribute('height',H2);
+  edges.setAttribute('viewBox',`0 0 ${W} ${H2}`);
   drawEdges(m,els);
   applyTransform();
   renderMapList();
   $('#mapTitle').textContent=m.name;
+}
+function boundsOf(els){
+  let minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
+  Object.keys(els).forEach(id=>{
+    const p=_pos[id];if(!p)return;
+    const w=els[id].offsetWidth,h=els[id].offsetHeight;
+    minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x+w);
+    minY=Math.min(minY,p.y-h/2);maxY=Math.max(maxY,p.y+h/2);
+  });
+  if(minX>maxX){minX=0;maxX=800;minY=0;maxY=600;}
+  return {minX,minY,maxX,maxY};
 }
 
 // cada ramo principal tem sua COR nas linhas (fácil de seguir);
@@ -767,9 +862,10 @@ function drawEdges(m,els){
       if(!_pos[ch.id])return;
       const c=_pos[ch.id];
       const cw=els[ch.id]?els[ch.id].offsetWidth:0;
-      // lado esquerdo: sai da borda esquerda do pai e chega na borda direita do filho
-      const x1=c.side==='left'?p.x:p.x+pw;
-      const x2=c.side==='left'?c.x+cw:c.x;
+      // o lado vem da posição real: filho à esquerda liga borda esquerda↔direita
+      const esq=(c.x+cw/2)<(p.x+pw/2);
+      const x1=esq?p.x:p.x+pw;
+      const x2=esq?c.x+cw:c.x;
       const y1=p.y,y2=c.y,mx=x1+(x2-x1)*0.5;
       const s=edgeStyle(m,ch.id);
       d+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
@@ -778,19 +874,6 @@ function drawEdges(m,els){
   edges.innerHTML=d;
 }
 
-// re-layout SEM recriar os nós: usado durante o arrasto pra empurrar
-// os vizinhos com animação (transition de left/top)
-function repositionAll(){
-  const m=currentMap();
-  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
-  const Hs={};Object.keys(els).forEach(id=>{Hs[id]=els[id].offsetHeight;});
-  const dim=layout(m,Hs);
-  world.style.width=dim.w+'px';world.style.height=dim.h+'px';
-  edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
-  edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
-  applyPositions(m,els);
-  drawEdges(m,els);
-}
 
 function makeNode(m,node){
   const el=document.createElement('div');
@@ -928,14 +1011,16 @@ function applyTransform(){
   $('#zlabel').textContent=Math.round(view.scale*100)+'%';
 }
 function fitView(){
-  const dim={w:parseFloat(world.style.width),h:parseFloat(world.style.height)};
   const vw=viewport.clientWidth,vh=viewport.clientHeight;
   if(!vw||!vh){setTimeout(fitView,60);return;} // viewport ainda sem dimensões (boot)
+  const b=render._bounds;
+  if(!b){view.scale=1;view.tx=0;view.ty=0;applyTransform();return;}
   const pad=90;
-  const s=Math.min((vw-pad*2)/dim.w,(vh-pad*2)/dim.h,1.1);
-  view.scale=Math.max(0.2,s);
-  view.tx=(vw-dim.w*view.scale)/2;
-  view.ty=(vh-dim.h*view.scale)/2;
+  const w=Math.max(b.maxX-b.minX,1),h=Math.max(b.maxY-b.minY,1);
+  const s=Math.min((vw-pad*2)/w,(vh-pad*2)/h,1.1);
+  view.scale=Math.max(0.18,s);
+  view.tx=vw/2-((b.minX+b.maxX)/2)*view.scale;
+  view.ty=vh/2-((b.minY+b.maxY)/2)*view.scale;
   applyTransform();
 }
 function zoomAt(factor,cx,cy){
@@ -961,6 +1046,7 @@ stage.addEventListener('wheel',e=>{
 $('#zoomIn').onclick=()=>zoomAt(1.15,viewport.clientWidth/2,viewport.clientHeight/2);
 $('#zoomOut').onclick=()=>zoomAt(0.87,viewport.clientWidth/2,viewport.clientHeight/2);
 $('#fitBtn').onclick=fitView;
+$('#arrangeBtn').onclick=()=>{render._tidy=true;render();fitView();toast('Mapa organizado automaticamente');};
 
 /* ============================================================
    KEYBOARD
@@ -1052,6 +1138,7 @@ function pasteInto(parentId,afterId){
   else ci0=sibs.length;
   if(m.nodes[parentId])m.nodes[parentId].collapsed=false;
   const ids=clipboard.map((snap,i)=>buildFromSnap(m,snap,parentId,ci0+i));
+  ids.forEach(nid=>placeSubtree(m,nid,parentId));
   save();return ids;
 }
 function doPaste(){
@@ -1092,38 +1179,18 @@ function toast(msg){
    ============================================================ */
 let drag=null, suppressClick=false;
 
-function dropTarget(px,py,dragIds){
+// só detecta "soltar em cima de uma tag" (vira sub-tópico); o resto é física
+function dropHover(px,py,dragIds){
   const m=currentMap();
   const forb=new Set();
   dragIds.forEach(did=>{(function rec(id){forb.add(id);children(m,id).forEach(c=>rec(c.id));})(did);});
-  // ponteiro sobre a caixa de um nó → soltar vira sub-tópico dele
   for(const id of Object.keys(_pos)){
     if(forb.has(id))continue;
     const el=nodesLayer.querySelector(`.node[data-id="${id}"]`);if(!el)continue;
     const p=_pos[id],w=el.offsetWidth,h=el.offsetHeight;
-    if(px>=p.x&&px<=p.x+w&&py>=p.y-h/2&&py<=p.y+h/2){
-      if(id===m.rootId)return{mode:'child',ref:id,side:px<p.x+w/2?'left':'right'};
-      return{mode:'child',ref:id};
-    }
+    if(px>=p.x&&px<=p.x+w&&py>=p.y-h/2&&py<=p.y+h/2)return id;
   }
-  // de que lado da ideia central o ponteiro está?
-  const rootP=_pos[m.rootId];
-  const rootEl=nodesLayer.querySelector(`.node[data-id="${m.rootId}"]`);
-  const axis=rootP.x+(rootEl?rootEl.offsetWidth/2:60);
-  const side=px<axis?'left':'right';
-  const livres=Object.keys(_pos).filter(id=>!forb.has(id)&&m.nodes[id].parentId
-    &&!forb.has(m.nodes[id].parentId)&&(_pos[id].side||'right')===side);
-  if(!livres.length)return{mode:'rootside',side}; // lado vazio: vira ramo de topo desse lado
-  let best=null,bd=Infinity;
-  livres.forEach(id=>{
-    const p=_pos[id];
-    const el=nodesLayer.querySelector(`.node[data-id="${id}"]`);
-    const w=el?el.offsetWidth:100;
-    const dx=px<p.x?p.x-px:(px>p.x+w?px-(p.x+w):0);
-    const d=Math.abs(p.y-py)+dx*0.5;
-    if(d<bd){bd=d;best=id;}
-  });
-  return{mode:py<_pos[best].y?'before':'after',ref:best};
+  return null;
 }
 function moveNodes(ids,newParent,index){
   const m=currentMap();
@@ -1139,33 +1206,6 @@ function moveNodes(ids,newParent,index){
   save();
 }
 function moveNode(id,newParent,index){moveNodes([id],newParent,index);}
-function applyMove(ids,t){
-  const m=currentMap();
-  let newParent,index,side=null;
-  if(t.mode==='child'){
-    if(ids.length===1&&t.ref===m.nodes[ids[0]].parentId&&t.ref!==m.rootId)return false;
-    newParent=t.ref;index=children(m,t.ref).filter(c=>!ids.includes(c.id)).length;
-    if(t.ref===m.rootId)side=t.side||'right';
-  }else if(t.mode==='rootside'){
-    newParent=m.rootId;index=children(m,m.rootId).filter(c=>!ids.includes(c.id)).length;side=t.side;
-  }else{
-    newParent=m.nodes[t.ref].parentId;
-    const sibs=children(m,newParent).filter(c=>!ids.includes(c.id));
-    const i=sibs.findIndex(s=>s.id===t.ref);
-    index=t.mode==='before'?i:i+1;
-    if(newParent===m.rootId)side=m.nodes[t.ref].side||'right';
-  }
-  // já está exatamente assim? não mexe (evita re-layout à toa)
-  const first=m.nodes[ids[0]];
-  if(ids.every(id=>m.nodes[id].parentId===newParent)){
-    const antes=children(m,newParent).filter(c=>!ids.includes(c.id)&&(c.ci||0)<(first.ci||0)).length;
-    const mesmoLado=side===null||ids.every(id=>(m.nodes[id].side||'right')===side);
-    if(antes===index&&mesmoLado)return false;
-  }
-  if(side!==null)ids.forEach(id=>{m.nodes[id].side=side;});
-  moveNodes(ids,newParent,index);
-  return true;
-}
 function killGhosts(){document.querySelectorAll('.drag-ghost,.ghost-count').forEach(g=>g.remove());}
 nodesLayer.addEventListener('pointerdown',e=>{
   if(e.button!==0||editingId)return;
@@ -1194,7 +1234,13 @@ function dragMove(e){
     if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<7)return;
     drag.active=true;histPause=true;
     nodesLayer.classList.add('dragging');
-    // guarda o ponto onde a mão "pegou" a tag (pra ela flutuar grudada no mouse)
+    const mA=currentMap();
+    // grupo rígido: os arrastados + suas sub-árvores, com posições de origem
+    drag.grupo=new Set();
+    drag.ids.forEach(did=>{(function rec(id){if(_pos[id])drag.grupo.add(id);children(mA,id).forEach(c=>rec(c.id));})(did);});
+    drag.orig={};drag.grupo.forEach(id=>{drag.orig[id]={x:_pos[id].x,y:_pos[id].y};});
+    drag.hover=null;
+    // ponto onde a mão "pegou" a tag (pra ela flutuar grudada no mouse)
     const r0=stage.getBoundingClientRect();
     const px0=(drag.startX-r0.left-view.tx)/view.scale;
     const py0=(drag.startY-r0.top-view.ty)/view.scale;
@@ -1209,26 +1255,35 @@ function dragMove(e){
   const px=(e.clientX-rect.left-view.tx)/view.scale;
   const py=(e.clientY-rect.top-view.ty)/view.scale;
   try{ // um erro aqui não pode travar o gesto
-    const t=dropTarget(px,py,drag.ids);
-    if(t&&applyMove(drag.ids,t))repositionAll();
+    const m=currentMap();
+    const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+    // 1. o grupo arrastado gruda no mouse (rígido, a partir do ponto onde pegou)
+    const o0=drag.orig[drag.pressed];
+    const dx=(px-drag.offX)-o0.x, dy=(py-drag.offY)-o0.y;
+    drag.grupo.forEach(id=>{
+      const o=drag.orig[id];if(!o||!_pos[id])return;
+      _pos[id].x=o.x+dx;_pos[id].y=o.y+dy;
+      m.nodes[id].fx=_pos[id].x;m.nodes[id].fy=_pos[id].y;
+    });
+    // 2. em cima de uma tag? ela vira alvo e NÃO é empurrada (dá pra soltar nela)
+    const hov=dropHover(px,py,drag.ids);
+    // 3. física: chegou perto → empurra; esticou demais → puxa junto
+    settleCollisions(m,els,2,drag.grupo,hov);
+    for(let k=0;k<3;k++)if(!settleSprings(m,els,drag.grupo))break;
+    settleCollisions(m,els,1,drag.grupo,hov);
+    // 4. aplica no DOM e estica as linhas
+    Object.keys(els).forEach(id=>{
+      if(!_pos[id])return;
+      els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';
+      if(drag.grupo.has(id))els[id].classList.add('drag-src');
+    });
+    drawEdges(m,els);
+    if(hov!==drag.hover){
+      nodesLayer.querySelectorAll('.drop-hint').forEach(el=>el.classList.remove('drop-hint'));
+      if(hov){const el=nodesLayer.querySelector(`.node[data-id="${hov}"]`);if(el)el.classList.add('drop-hint');}
+      drag.hover=hov;
+    }
   }catch(err){console.error('drag:',err);}
-  pinDragged(px,py); // a tag de verdade segue o mouse; linhas esticam junto
-}
-// pendura a(s) tag(s) arrastada(s) no cursor e redesenha as linhas esticando
-function pinDragged(px,py){
-  if(!drag||!drag.active)return;
-  const m=currentMap();
-  const base=_pos[drag.pressed];if(!base)return;
-  const dx=(px-drag.offX)-base.x, dy=(py-drag.offY)-base.y;
-  const grupo=new Set();
-  drag.ids.forEach(did=>{(function rec(id){if(_pos[id])grupo.add(id);children(m,id).forEach(c=>rec(c.id));})(did);});
-  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
-  grupo.forEach(id=>{
-    const p=_pos[id];p.x+=dx;p.y+=dy;
-    const el=els[id];
-    if(el){el.style.left=p.x+'px';el.style.top=p.y+'px';el.classList.add('drag-src');}
-  });
-  drawEdges(m,els);
 }
 function dragEnd(){
   window.removeEventListener('pointermove',dragMove);
@@ -1236,18 +1291,27 @@ function dragEnd(){
   window.removeEventListener('pointercancel',dragEnd);
   window.removeEventListener('blur',dragEnd);
   killGhosts();
-  const moved=drag&&drag.active,id=drag&&drag.pressed;
-  drag=null;histPause=false;
-  if(moved){
-    suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
-    saveNow();selectedId=id;
-    // solta a tag flutuante: ela ASSENTA animada no lugar organizado
-    nodesLayer.querySelectorAll('.drag-src').forEach(el=>el.classList.remove('drag-src'));
-    repositionAll();
-    setTimeout(()=>{nodesLayer.classList.remove('dragging');render();},200);
-  }else{
-    nodesLayer.classList.remove('dragging');
+  nodesLayer.querySelectorAll('.drop-hint').forEach(el=>el.classList.remove('drop-hint'));
+  const d0=drag;drag=null;histPause=false;
+  if(!(d0&&d0.active)){nodesLayer.classList.remove('dragging');return;}
+  suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
+  const m=currentMap();
+  if(d0.hover){ // soltou em cima de uma tag: os arrastados viram sub-tópicos dela
+    moveNodes(d0.ids,d0.hover,children(m,d0.hover).filter(c=>!d0.ids.includes(c.id)).length);
   }
+  // a tag FICA onde foi solta; só registra o lado (pro botão Organizar) e a ordem
+  d0.ids.forEach(id=>{
+    const n=m.nodes[id];
+    if(n&&n.parentId===m.rootId)n.side=(n.fx<m.nodes[m.rootId].fx?'left':'right');
+  });
+  const pais=[...new Set(d0.ids.map(id=>m.nodes[id]&&m.nodes[id].parentId).filter(Boolean))];
+  pais.forEach(p=>{children(m,p).sort((a,b)=>(a.fy||0)-(b.fy||0)).forEach((c,i)=>{c.ci=i;});});
+  // assenta: garante só que nada ficou sobreposto
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  settleCollisions(m,els,25,new Set());
+  saveNow();selectedId=d0.pressed;
+  nodesLayer.classList.remove('dragging');
+  render();
 }
 
 /* ============================================================
