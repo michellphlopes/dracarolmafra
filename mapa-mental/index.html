@@ -810,6 +810,31 @@ function settleSprings(m,els,pinned){
   });
   return moved;
 }
+const FRONT_GAP=26;
+// filho sempre NA FRENTE do pai (no sentido do ramo), nunca atrás/embaixo
+function settleFront(m,els,pinned){
+  let moved=false;
+  const root=m.rootId;
+  const cx=id=>_pos[id].x+els[id].offsetWidth/2;
+  Object.keys(els).forEach(pid=>{
+    if(!_pos[pid])return;
+    const pw=els[pid].offsetWidth;
+    children(m,pid).forEach(ch=>{
+      const id=ch.id;if(!_pos[id]||!els[id])return;
+      const dir=(pid===root?cx(id)>=cx(root):cx(pid)>=cx(root))?1:-1;
+      const cw=els[id].offsetWidth;
+      let viol=0;
+      if(dir>0){const need=_pos[pid].x+pw+FRONT_GAP;if(_pos[id].x<need)viol=need-_pos[id].x;}
+      else{const need=_pos[pid].x-FRONT_GAP;if(_pos[id].x+cw>need)viol=_pos[id].x+cw-need;}
+      if(viol<=0.5)return;
+      moved=true;
+      const push=dir>0?viol:-viol;
+      if(pinned.has(id)&&!pinned.has(pid)){_pos[pid].x-=push;m.nodes[pid].fx=_pos[pid].x;}
+      else if(!pinned.has(id)){_pos[id].x+=push;m.nodes[id].fx=_pos[id].x;}
+    });
+  });
+  return moved;
+}
 const SNAP=16;
 // ímã de alinhamento: irmão quase alinhado (±16px) gruda na coluna do de cima
 function snapSiblings(m,els){
@@ -863,7 +888,9 @@ function render(){
   }
   _pos={};visible.forEach(id=>{_pos[id]={x:m.nodes[id].fx,y:m.nodes[id].fy};});
   snapSiblings(m,els); // ímã: quase alinhado gruda na coluna
+  for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break; // filho sempre à frente
   settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
+  if(settleFront(m,els,new Set()))settleCollisions(m,els,2,new Set());
   visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
   // tag à esquerda do pai: espelha botões (+ na frente, recolher) e a barrinha de cor
   visible.forEach(id=>{
@@ -926,13 +953,14 @@ function drawEdges(m,els){
         const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
         path=`M${x1},${p.y} C${x1-a1},${p.y} ${x1-a2},${c.y} ${x2},${c.y}`;
       }else{
-        // filho EMPILHADO (quase na vertical): sai por baixo/cima da tag e
-        // entra pelo topo/fundo do filho — nunca embola nem faz laço
+        // transitório do arrasto (a física logo leva o filho pra frente):
+        // sai por baixo/cima com barriga lateral — SEMPRE curva, nunca fio reto
         const baixo=c.y>=p.y;
         const y1=p.y+(baixo?ph/2:-ph/2), y2=c.y+(baixo?-chh/2:chh/2);
-        const k=Math.max(14,Math.abs(y2-y1)*0.45);
+        const k=Math.max(18,Math.abs(y2-y1)*0.45);
         const x1=p.x+pw/2, x2=c.x+cw/2;
-        path=`M${x1},${y1} C${x1},${y1+(baixo?k:-k)} ${x2},${y2+(baixo?-k:k)} ${x2},${y2}`;
+        const bow=(x2>=x1?1:-1)*34;
+        path=`M${x1},${y1} C${x1+bow},${y1+(baixo?k:-k)} ${x2+bow},${y2+(baixo?-k:k)} ${x2},${y2}`;
       }
       d+=`<path d="${path}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
@@ -1352,9 +1380,11 @@ function dragMove(e){
     });
     // 2. em cima de uma tag? ela vira alvo e NÃO é empurrada (dá pra soltar nela)
     const hov=dropHover(px,py,drag.ids);
-    // 3. física: chegou perto → empurra; esticou demais → puxa junto
+    // 3. física: filho à frente do pai; perto empurra; esticou demais puxa
+    settleFront(m,els,drag.grupo);
     settleCollisions(m,els,2,drag.grupo,hov);
     for(let k=0;k<3;k++)if(!settleSprings(m,els,drag.grupo))break;
+    settleFront(m,els,drag.grupo);
     settleCollisions(m,els,1,drag.grupo,hov);
     // 4. aplica no DOM e estica as linhas
     Object.keys(els).forEach(id=>{
@@ -1391,10 +1421,12 @@ function dragEnd(){
   });
   const pais=[...new Set(d0.ids.map(id=>m.nodes[id]&&m.nodes[id].parentId).filter(Boolean))];
   pais.forEach(p=>{children(m,p).sort((a,b)=>(a.fy||0)-(b.fy||0)).forEach((c,i)=>{c.ci=i;});});
-  // assenta: ímã de alinhamento + garante que nada ficou sobreposto
+  // assenta: filho à frente + ímã de alinhamento + nada sobreposto
   const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  for(let k=0;k<4;k++)if(!settleFront(m,els,new Set()))break;
   settleCollisions(m,els,25,new Set());
   snapSiblings(m,els);
+  for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break;
   settleCollisions(m,els,6,new Set());
   saveNow();selectedId=d0.pressed;
   nodesLayer.classList.remove('dragging');
