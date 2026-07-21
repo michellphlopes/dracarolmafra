@@ -682,6 +682,14 @@ function render(){
   $('#mapTitle').textContent=m.name;
 }
 
+// cor da linha conta o status do tópico aonde ela chega:
+// verde = concluído · vermelho = pendente · cinza tracejado = em andamento
+function edgeStyle(m,id){
+  const n=m.nodes[id];
+  if(n.done)return{col:cvar('--ok'),op:.75,extra:''};
+  if(children(m,id).length)return{col:cvar('--faint'),op:.55,extra:' stroke-dasharray="7 6"'};
+  return{col:cvar('--todo'),op:.6,extra:''};
+}
 function drawEdges(m,els){
   let d='';
   Object.keys(els).forEach(id=>{
@@ -691,8 +699,8 @@ function drawEdges(m,els){
       if(!_pos[ch.id])return;
       const c=_pos[ch.id];
       const x1=p.x+pw,y1=p.y,x2=c.x,y2=c.y,mx=x1+(x2-x1)*0.5;
-      const col=cvar(branchColorVar(m,ch.id));
-      d+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" stroke="${col}" stroke-width="2.2" opacity="0.62"/>`;
+      const s=edgeStyle(m,ch.id);
+      d+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
   });
   edges.innerHTML=d;
