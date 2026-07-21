@@ -416,7 +416,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> arraste e solte a tag onde quiser — perto empurra, esticou demais puxa · solte em cima de outra pra virar sub-tópico · marcados vão juntos · botão ⇅ do topo organiza sozinho · <kbd>Ctrl+Z</kbd> desfaz · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copiar · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
+      <span id="hintBody"><b>Dica:</b> arraste e solte a tag onde quiser — perto empurra, esticou demais puxa · solte em cima de outra pra virar sub-tópico · marcados vão juntos · botão ⇅ do topo organiza sozinho · <kbd>Ctrl+Z</kbd> desfaz · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copia a tag (<kbd>C</kbd> de novo leva os sub-tópicos) · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -563,6 +563,7 @@ let selectedId=null, editingId=null;
 let multiSel=new Set();   // seleção múltipla (Ctrl+clique)
 let clipboard=null;       // sub-árvores copiadas (Ctrl+C)
 let cutIds=null,cutMapId=null; // recorte pendente (Ctrl+X): originais saem ao colar
+const copyTap={t:0,n:0};  // toques seguidos de Ctrl+C: 1º só a tag, 2º+ com sub-tópicos
 let saveTimer=null;
 
 /* ---------- persistence ---------- */
@@ -764,12 +765,12 @@ function applyPositionsTidy(m,els){
 }
 
 /* ---------- física: perto empurra, esticado demais puxa ---------- */
-const GAP=13, LMAX=430;
+const GAP=13, GROUP_GAP=34, LMAX=430;
 function settleCollisions(m,els,iters,pinned,ignoreId,bias){
   const ids=Object.keys(els).filter(id=>_pos[id]);
   const mv=(id,dx,dy)=>{const p=_pos[id];p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;};
   const box=id=>{const p=_pos[id],w=els[id].offsetWidth,h=els[id].offsetHeight;
-    return{x1:p.x-GAP/2,y1:p.y-h/2-GAP/2,x2:p.x+w+GAP/2,y2:p.y+h/2+GAP/2};};
+    return{x1:p.x,y1:p.y-h/2,x2:p.x+w,y2:p.y+h/2};};
   for(let k=0;k<iters;k++){
     let moved=false;
     for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){
@@ -777,9 +778,14 @@ function settleCollisions(m,els,iters,pinned,ignoreId,bias){
       if(pinned.has(a)&&pinned.has(b))continue;
       // o alvo sob o ponteiro não é empurrado pelo grupo (pra dar pra soltar em cima)
       if(ignoreId&&(a===ignoreId||b===ignoreId)&&(pinned.has(a)||pinned.has(b)))continue;
+      // folga por parentesco: mesmo conjunto fica junto (13px);
+      // grupos DIFERENTES ganham respiro maior (34px) pra diferenciar fácil
+      const na=m.nodes[a],nb=m.nodes[b];
+      const parentes=na.parentId===nb.parentId||na.parentId===b||nb.parentId===a;
+      const marg=parentes?GAP:GROUP_GAP;
       const A=box(a),B=box(b);
-      const ox=Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1);
-      const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1);
+      const ox=Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1)+marg;
+      const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1)+marg;
       if(ox<=0||oy<=0)continue;
       moved=true;
       // TROCA DE ORDEM: arrastando por cima de um irmão, ele desliza pro
@@ -787,8 +793,8 @@ function settleCollisions(m,els,iters,pinned,ignoreId,bias){
       const free=pinned.has(a)?b:(pinned.has(b)?a:null);
       if(free&&bias&&bias.dy&&m.nodes[free]&&m.nodes[free].parentId===bias.parentId&&!(ox<oy*0.5)){
         const P=free===b?A:B, F=free===b?B:A;
-        if(bias.dy>0)mv(free,0,-(F.y2-P.y1));
-        else mv(free,0,(P.y2-F.y1));
+        if(bias.dy>0)mv(free,0,-(F.y2-P.y1+marg));
+        else mv(free,0,(P.y2-F.y1+marg));
         continue;
       }
       let dx=0,dy=0; // prefere empurrar na VERTICAL (preserva colunas alinhadas)
@@ -880,17 +886,24 @@ function snapSiblings(m,els){
         prevL=curL;prevR=curR;prevFinal=cur;
       }
     }
-    // fecha buracos: na mesma coluna, vão entre 15 e 80px (tag excluída do
-    // meio, por exemplo) faz o de baixo escorregar pra cima até encostar
-    for(let i=1;i<kids.length;i++){
-      const a=kids[i-1],b=kids[i];
-      if(Math.abs(edge(a.id)-edge(b.id))>1)continue;
-      const bottomA=_pos[a.id].y+els[a.id].offsetHeight/2;
-      const topB=_pos[b.id].y-els[b.id].offsetHeight/2;
-      const gap=topB-bottomA;
-      if(gap>15&&gap<=80){
-        const ny=bottomA+PACK_GAP+els[b.id].offsetHeight/2;
-        _pos[b.id].y=ny;m.nodes[b.id].fy=ny;
+    // fecha buracos: na mesma coluna, distância à toa entre irmãos (vão
+    // ORIGINAL de até 400px) faz o de baixo escorregar em cascata — SEM
+    // trocar a ordem; obstáculos as colisões devolvem só o necessário
+    if(kids.length>1){
+      let prevOrigBottom=_pos[kids[0].id].y+els[kids[0].id].offsetHeight/2;
+      let prevNewBottom=prevOrigBottom;
+      for(let i=1;i<kids.length;i++){
+        const a=kids[i-1],b=kids[i];
+        const hb=els[b.id].offsetHeight;
+        const topOrig=_pos[b.id].y-hb/2;
+        const gapOrig=topOrig-prevOrigBottom;
+        const alinhado=Math.abs(edge(a.id)-edge(b.id))<=1;
+        if(alinhado&&gapOrig>15&&gapOrig<=400){
+          const ny=prevNewBottom+PACK_GAP+hb/2;
+          _pos[b.id].y=ny;m.nodes[b.id].fy=ny;
+        }
+        prevOrigBottom=topOrig+hb;
+        prevNewBottom=_pos[b.id].y+hb/2;
       }
     }
   });
@@ -1237,7 +1250,14 @@ document.addEventListener('keydown',e=>{
     }
   }
   else if(e.key===' '){const k=children(m,selectedId);if(k.length){e.preventDefault();n.collapsed=!n.collapsed;save();render();}}
-  else if((e.ctrlKey||e.metaKey)&&(e.key==='c'||e.key==='C')){e.preventDefault();copySel();}
+  else if((e.ctrlKey||e.metaKey)&&(e.key==='c'||e.key==='C')){
+    e.preventDefault();
+    // Ctrl+C: 1º toque copia só a tag; C de novo (CC/CCC) leva os sub-tópicos
+    const agora=Date.now();
+    copyTap.n=(agora-copyTap.t<900)?copyTap.n+1:1;
+    copyTap.t=agora;
+    copySel(false,copyTap.n>=2);
+  }
   else if((e.ctrlKey||e.metaKey)&&(e.key==='x'||e.key==='X')){e.preventDefault();cutSel();}
   else if((e.ctrlKey||e.metaKey)&&(e.key==='v'||e.key==='V')){e.preventDefault();doPaste();}
   else if(e.key==='0'){fitView();}
@@ -1250,17 +1270,22 @@ document.addEventListener('keydown',e=>{
 /* ============================================================
    COPIAR / COLAR
    ============================================================ */
-function snapNode(m,id){const n=m.nodes[id];return{text:n.text,note:n.note||'',done:!!n.done,children:children(m,id).map(c=>snapNode(m,c.id))};}
-function copySel(quiet){
+function snapNode(m,id,deep){const n=m.nodes[id];return{text:n.text,note:n.note||'',done:!!n.done,children:deep?children(m,id).map(c=>snapNode(m,c.id,true)):[]};}
+function copySel(quiet,deep){
   const m=currentMap();
   let ids=multiSel.size?[...multiSel]:(selectedId?[selectedId]:[]);
   if(!ids.length)return null;
   // se um ancestral também está marcado, a sub-árvore dele já leva os filhos junto
   ids=ids.filter(id=>{let p=m.nodes[id]&&m.nodes[id].parentId;while(p){if(ids.includes(p))return false;p=m.nodes[p]&&m.nodes[p].parentId;}return true;});
   ids.sort((a,b)=>((_pos[a]&&_pos[a].y)||0)-((_pos[b]&&_pos[b].y)||0)); // ordem visual
-  clipboard=ids.map(id=>snapNode(m,id));
+  clipboard=ids.map(id=>snapNode(m,id,!!deep));
   if(cutIds){cutIds=null;render();} // copiar normal cancela recorte pendente
-  if(!quiet)toast(clipboard.length===1?'1 tópico copiado':clipboard.length+' tópicos copiados');
+  if(!quiet){
+    const n=clipboard.length;
+    const temSub=ids.some(id=>children(m,id).length);
+    if(deep)toast(n===1?'Copiado COM os sub-tópicos':n+' tópicos copiados COM sub-tópicos');
+    else toast((n===1?'1 tópico copiado':n+' tópicos copiados')+(temSub?' — aperte C de novo pra levar os sub-tópicos':''));
+  }
   return ids;
 }
 function removeSubtree(map,id){
@@ -1277,11 +1302,11 @@ function removeSubtree(map,id){
 }
 function cutSel(){
   const m=currentMap();
-  const ids=copySel(true);
+  const ids=copySel(true,true); // recortar sempre leva a sub-árvore inteira
   if(!ids)return;
   const semRaiz=ids.filter(id=>id!==m.rootId);
   if(!semRaiz.length){toast('A ideia central não pode ser recortada');return;}
-  if(semRaiz.length!==ids.length)clipboard=semRaiz.map(id=>snapNode(m,id));
+  if(semRaiz.length!==ids.length)clipboard=semRaiz.map(id=>snapNode(m,id,true));
   cutIds=semRaiz;cutMapId=DB.currentId;
   render();
   toast((semRaiz.length===1?'1 tópico recortado':semRaiz.length+' tópicos recortados')+' — Ctrl+V move · Esc cancela');
