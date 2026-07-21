@@ -777,8 +777,8 @@ function settleCollisions(m,els,iters,pinned,ignoreId){
       const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1);
       if(ox<=0||oy<=0)continue;
       moved=true;
-      let dx=0,dy=0; // empurra pelo eixo de menor penetração
-      if(ox<oy)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
+      let dx=0,dy=0; // prefere empurrar na VERTICAL (preserva colunas alinhadas)
+      if(ox<oy*0.5)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
       else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
       if(pinned.has(a))mv(b,-dx,-dy);
       else if(pinned.has(b))mv(a,dx,dy);
@@ -810,6 +810,34 @@ function settleSprings(m,els,pinned){
   });
   return moved;
 }
+const SNAP=16;
+// ímã de alinhamento: irmão quase alinhado (±16px) gruda na coluna do de cima
+function snapSiblings(m,els){
+  const leftOf=id=>{
+    const n=m.nodes[id];
+    if(!n||!n.parentId||!els[n.parentId]||!els[id]||!_pos[id]||!_pos[n.parentId])return false;
+    return _pos[id].x+els[id].offsetWidth/2 < _pos[n.parentId].x+els[n.parentId].offsetWidth/2;
+  };
+  const edge=id=>leftOf(id)?_pos[id].x+els[id].offsetWidth:_pos[id].x;
+  const setEdge=(id,e)=>{const x=leftOf(id)?e-els[id].offsetWidth:e;_pos[id].x=x;m.nodes[id].fx=x;};
+  const pais=[...new Set(Object.keys(els).map(id=>m.nodes[id]&&m.nodes[id].parentId).filter(Boolean))];
+  pais.forEach(p=>{
+    const kids=children(m,p).filter(c=>els[c.id]&&_pos[c.id]).sort((a,b)=>_pos[a.id].y-_pos[b.id].y);
+    if(!kids.length)return;
+    // compara com a posição ORIGINAL do vizinho de cima: escadinha longa
+    // colapsa inteira na mesma coluna, sem quebrar a corrente no meio
+    let prevOrig=edge(kids[0].id),prevFinal=prevOrig;
+    for(let i=1;i<kids.length;i++){
+      const cur=edge(kids[i].id);
+      if(Math.abs(cur-prevOrig)<=SNAP){
+        if(Math.abs(cur-prevFinal)>0.5)setEdge(kids[i].id,prevFinal);
+        prevOrig=cur;
+      }else{
+        prevOrig=cur;prevFinal=cur;
+      }
+    }
+  });
+}
 
 /* ============================================================
    RENDER
@@ -834,6 +862,7 @@ function render(){
     save();
   }
   _pos={};visible.forEach(id=>{_pos[id]={x:m.nodes[id].fx,y:m.nodes[id].fy};});
+  snapSiblings(m,els); // ímã: quase alinhado gruda na coluna
   settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
   visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
   // tag à esquerda do pai: espelha botões (+ na frente, recolher) e a barrinha de cor
@@ -1283,7 +1312,26 @@ function dragMove(e){
     const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
     // 1. o grupo arrastado gruda no mouse (rígido, a partir do ponto onde pegou)
     const o0=drag.orig[drag.pressed];
-    const dx=(px-drag.offX)-o0.x, dy=(py-drag.offY)-o0.y;
+    let dx=(px-drag.offX)-o0.x;
+    const dy=(py-drag.offY)-o0.y;
+    // ímã: perto da coluna de um irmão, a tag gruda no alinhamento dele
+    const pn=m.nodes[drag.pressed];
+    if(pn&&pn.parentId&&_pos[pn.parentId]&&els[pn.parentId]&&els[drag.pressed]){
+      const w=els[drag.pressed].offsetWidth;
+      const alvoX=o0.x+dx;
+      const paiCx=_pos[pn.parentId].x+els[pn.parentId].offsetWidth/2;
+      const minhaEsq=(alvoX+w/2)<paiCx;
+      const minhaBorda=minhaEsq?alvoX+w:alvoX;
+      let melhor=null,md=SNAP+1;
+      children(m,pn.parentId).forEach(s=>{
+        if(drag.grupo.has(s.id)||!_pos[s.id]||!els[s.id])return;
+        const sEsq=(_pos[s.id].x+els[s.id].offsetWidth/2)<paiCx;
+        const se=sEsq?_pos[s.id].x+els[s.id].offsetWidth:_pos[s.id].x;
+        const df=Math.abs(se-minhaBorda);
+        if(df<md){md=df;melhor=se;}
+      });
+      if(melhor!==null&&md<=SNAP)dx+=(melhor-minhaBorda);
+    }
     drag.grupo.forEach(id=>{
       const o=drag.orig[id];if(!o||!_pos[id])return;
       _pos[id].x=o.x+dx;_pos[id].y=o.y+dy;
@@ -1330,9 +1378,11 @@ function dragEnd(){
   });
   const pais=[...new Set(d0.ids.map(id=>m.nodes[id]&&m.nodes[id].parentId).filter(Boolean))];
   pais.forEach(p=>{children(m,p).sort((a,b)=>(a.fy||0)-(b.fy||0)).forEach((c,i)=>{c.ci=i;});});
-  // assenta: garante só que nada ficou sobreposto
+  // assenta: ímã de alinhamento + garante que nada ficou sobreposto
   const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
   settleCollisions(m,els,25,new Set());
+  snapSiblings(m,els);
+  settleCollisions(m,els,6,new Set());
   saveNow();selectedId=d0.pressed;
   nodesLayer.classList.remove('dragging');
   render();
