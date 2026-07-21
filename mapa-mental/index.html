@@ -314,6 +314,9 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
 .tstat{font-size:12px;padding:3px 0}
 .tstat.ok{color:var(--b5)} .tstat.bad{color:var(--b4)}
 
+/* recortado (Ctrl+X): esmaecido e tracejado até colar */
+.node.cut{opacity:.45;border-style:dashed}
+
 /* arrasto: vizinhos empurram com animação; fantasma segue o mouse */
 #nodes.dragging .node{transition:left .16s ease,top .16s ease}
 .drag-ghost{position:fixed;left:0;top:0;z-index:80;pointer-events:none;opacity:.8;
@@ -396,7 +399,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> arraste um tópico pra reorganizar (solte em cima de outro pra virar sub-tópico) · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd>/<kbd>Ctrl+V</kbd> copiar e colar</span>
+      <span id="hintBody"><b>Dica:</b> arraste um tópico pra reorganizar (solte em cima de outro pra virar sub-tópico) · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copiar · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -542,6 +545,7 @@ let view={scale:1,tx:0,ty:0};
 let selectedId=null, editingId=null;
 let multiSel=new Set();   // seleção múltipla (Ctrl+clique)
 let clipboard=null;       // sub-árvores copiadas (Ctrl+C)
+let cutIds=null,cutMapId=null; // recorte pendente (Ctrl+X): originais saem ao colar
 let saveTimer=null;
 
 /* ---------- persistence ---------- */
@@ -730,6 +734,10 @@ function makeNode(m,node){
   el.className='node'+(isRoot?' is-root':status)+((node.id===selectedId||multiSel.has(node.id))?' sel':'');
   el.style.setProperty('--bc',cvar(colVar));
   el.dataset.id=node.id;
+  if(cutIds&&cutMapId===DB.currentId){ // recortado: esmaecido até colar
+    let p=node.id;
+    while(p){if(cutIds.includes(p)){el.classList.add('cut');break;}p=m.nodes[p]&&m.nodes[p].parentId;}
+  }
 
   if(!isRoot){
     const t=document.createElement('button');t.className='tick';t.textContent='✓';
@@ -911,24 +919,53 @@ document.addEventListener('keydown',e=>{
   }
   else if(e.key===' '){const k=children(m,selectedId);if(k.length){e.preventDefault();n.collapsed=!n.collapsed;save();render();}}
   else if((e.ctrlKey||e.metaKey)&&(e.key==='c'||e.key==='C')){e.preventDefault();copySel();}
+  else if((e.ctrlKey||e.metaKey)&&(e.key==='x'||e.key==='X')){e.preventDefault();cutSel();}
   else if((e.ctrlKey||e.metaKey)&&(e.key==='v'||e.key==='V')){e.preventDefault();doPaste();}
   else if(e.key==='0'){fitView();}
-  else if(e.key==='Escape'){selectedId=null;multiSel.clear();$('#pasteOverlay').classList.remove('show');render();closePanel();}
+  else if(e.key==='Escape'){
+    if(cutIds){cutIds=null;cutMapId=null;toast('Recorte cancelado');}
+    selectedId=null;multiSel.clear();$('#pasteOverlay').classList.remove('show');render();closePanel();
+  }
 });
 
 /* ============================================================
    COPIAR / COLAR
    ============================================================ */
 function snapNode(m,id){const n=m.nodes[id];return{text:n.text,note:n.note||'',done:!!n.done,children:children(m,id).map(c=>snapNode(m,c.id))};}
-function copySel(){
+function copySel(quiet){
   const m=currentMap();
   let ids=multiSel.size?[...multiSel]:(selectedId?[selectedId]:[]);
-  if(!ids.length)return;
+  if(!ids.length)return null;
   // se um ancestral também está marcado, a sub-árvore dele já leva os filhos junto
   ids=ids.filter(id=>{let p=m.nodes[id]&&m.nodes[id].parentId;while(p){if(ids.includes(p))return false;p=m.nodes[p]&&m.nodes[p].parentId;}return true;});
   ids.sort((a,b)=>((_pos[a]&&_pos[a].y)||0)-((_pos[b]&&_pos[b].y)||0)); // ordem visual
   clipboard=ids.map(id=>snapNode(m,id));
-  toast(clipboard.length===1?'1 tópico copiado':clipboard.length+' tópicos copiados');
+  if(cutIds){cutIds=null;render();} // copiar normal cancela recorte pendente
+  if(!quiet)toast(clipboard.length===1?'1 tópico copiado':clipboard.length+' tópicos copiados');
+  return ids;
+}
+function removeSubtree(map,id){
+  const n=map.nodes[id];if(!n)return;
+  const pid=n.parentId;
+  const stack=[id];
+  while(stack.length){
+    const x=stack.pop();
+    Object.values(map.nodes).filter(c=>c.parentId===x).forEach(c=>stack.push(c.id));
+    delete map.nodes[x];
+  }
+  if(pid)Object.values(map.nodes).filter(c=>c.parentId===pid)
+    .sort((a,b)=>(a.ci||0)-(b.ci||0)).forEach((c,i)=>c.ci=i);
+}
+function cutSel(){
+  const m=currentMap();
+  const ids=copySel(true);
+  if(!ids)return;
+  const semRaiz=ids.filter(id=>id!==m.rootId);
+  if(!semRaiz.length){toast('A ideia central não pode ser recortada');return;}
+  if(semRaiz.length!==ids.length)clipboard=semRaiz.map(id=>snapNode(m,id));
+  cutIds=semRaiz;cutMapId=DB.currentId;
+  render();
+  toast((semRaiz.length===1?'1 tópico recortado':semRaiz.length+' tópicos recortados')+' — Ctrl+V move · Esc cancela');
 }
 function buildFromSnap(m,snap,pid,ci){
   const nid=uid();
@@ -947,14 +984,27 @@ function pasteInto(parentId,afterId){
   save();return ids;
 }
 function doPaste(){
-  if(!clipboard||!clipboard.length){toast('Nada copiado ainda — marque um tópico e aperte Ctrl+C');return;}
+  if(!clipboard||!clipboard.length){toast('Nada copiado ainda — marque um tópico e aperte Ctrl+C ou Ctrl+X');return;}
   const m=currentMap(),n=selectedId?m.nodes[selectedId]:null;
   if(!n){toast('Selecione um tópico pra colar nele');return;}
+  if(cutIds&&cutMapId===DB.currentId){ // não pode colar dentro do que foi recortado
+    let p=selectedId;
+    while(p){if(cutIds.includes(p)){toast('Não dá pra colar dentro do que foi recortado');return;}p=m.nodes[p]&&m.nodes[p].parentId;}
+  }
   if(!n.parentId){finishPaste(pasteInto(selectedId,null));return;} // raiz não tem irmão: cola na frente
   $('#pasteInfo').textContent=(clipboard.length===1?'1 tópico':clipboard.length+' tópicos')+' · destino: "'+n.text+'"';
   $('#pasteOverlay').classList.add('show');
 }
-function finishPaste(ids){if(ids&&ids.length){render();selectNode(ids[0]);}}
+function finishPaste(ids){
+  if(!ids||!ids.length)return;
+  if(cutIds){ // recorte: remove os originais do mapa de origem (mesmo se for outro mapa)
+    const src=DB.maps[cutMapId];
+    if(src)cutIds.forEach(cid=>removeSubtree(src,cid));
+    cutIds=null;cutMapId=null;saveNow();
+    toast('Movido!');
+  }
+  render();selectNode(ids[0]);
+}
 $('#pasteFront').onclick=()=>{$('#pasteOverlay').classList.remove('show');finishPaste(pasteInto(selectedId,null));};
 $('#pasteBelow').onclick=()=>{$('#pasteOverlay').classList.remove('show');const n=currentMap().nodes[selectedId];if(n)finishPaste(pasteInto(n.parentId,selectedId));};
 $('#pasteCancel').onclick=()=>$('#pasteOverlay').classList.remove('show');
