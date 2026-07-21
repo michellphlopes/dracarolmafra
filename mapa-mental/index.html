@@ -165,8 +165,9 @@ button{font-family:inherit;cursor:pointer}
 .node:hover .hplus{display:flex}
 .node.sel .hplus{display:none}
 .hplus:hover{color:#fff;background:var(--accent);border-color:var(--accent);transform-origin:center;scale:1.15}
-.hplus.right{right:-32px;top:50%;transform:translateY(-50%)}
-.hplus.down{bottom:-27px;left:50%;transform:translateX(-50%)}
+.hplus.right{right:-10px;top:50%;transform:translateY(-50%)}
+.node.haskids .hplus.right{right:-32px} /* encostado no toggle de recolher */
+.hplus.down{bottom:-17px;left:50%;transform:translateX(-50%)}
 
 /* collapse toggle */
 .toggle{
@@ -656,6 +657,7 @@ function makeNode(m,node){
 
   const kids=children(m,node.id);
   if(kids.length){
+    el.classList.add('haskids');
     const tg=document.createElement('button');
     tg.className='toggle'+(node.collapsed?' collapsed':'');
     tg.textContent=node.collapsed?kids.length:'–';
