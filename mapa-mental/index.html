@@ -192,7 +192,13 @@ button{font-family:inherit;cursor:pointer}
 /* helper legend bottom-left */
 .hint{position:absolute;left:16px;bottom:16px;z-index:14;font-size:11.5px;color:var(--faint);
   background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(6px);
-  border:1px solid var(--line);border-radius:9px;padding:7px 11px;line-height:1.7;max-width:260px}
+  border:1px solid var(--line);border-radius:9px;padding:7px 11px;line-height:1.7;max-width:260px;
+  display:flex;align-items:flex-start;gap:8px}
+.hint .hint-x{border:none;background:none;color:var(--faint);font-size:14px;line-height:1.3;padding:0 3px;border-radius:6px;flex:none}
+.hint .hint-x:hover{color:var(--ink);background:var(--surface-2)}
+.hint.mini{padding:0;max-width:none;cursor:pointer}
+.hint.mini #hintBody{display:none}
+.hint.mini .hint-x{width:30px;height:30px;font-size:14px;font-weight:600;color:var(--muted)}
 .hint b{color:var(--muted);font-weight:600}
 .hint kbd{font-family:var(--font-ui);background:var(--surface-2);border:1px solid var(--line-strong);
   border-radius:5px;padding:0 5px;font-size:10.5px;color:var(--muted)}
@@ -351,7 +357,8 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher
+      <span id="hintBody"><b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher</span>
+      <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
     <div id="apibanner">
@@ -935,7 +942,7 @@ function updKeyHelp(){
   const prov=$('#provSeg').querySelector('.on').dataset.p;
   $('#keyHelp').innerHTML=prov==='anthropic'
     ?'Pegue em <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> → API Keys.'
-    :'Pegue em <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a> → API keys.';
+    :'Pegue em <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a> (entre com a mesma conta do ChatGPT). Atenção: a assinatura do ChatGPT Plus NÃO inclui a API — é preciso ter crédito em <a href="https://platform.openai.com/settings/organization/billing/overview" target="_blank" rel="noopener">Billing</a> (a partir de US$ 5).';
 }
 $('#settingsBtn').onclick=openSettings;
 $('#setCancel').onclick=closeSettings;
@@ -962,6 +969,18 @@ $('#setTest').onclick=async()=>{
 function updateBanner(){$('#apibanner').classList.toggle('show',!SET.key);}
 $('#bannerConnect').onclick=openSettings;
 $('#bannerClose').onclick=()=>$('#apibanner').classList.remove('show');
+
+/* barra de dicas encurtável */
+function setHintMini(mini){
+  $('#hint').classList.toggle('mini',mini);
+  const t=$('#hintToggle');
+  t.textContent=mini?'?':'–';
+  t.title=mini?'Mostrar dicas':'Encurtar';
+  localStorage.setItem('clareza.hint',mini?'1':'0');
+}
+$('#hintToggle').onclick=e=>{e.stopPropagation();setHintMini(!$('#hint').classList.contains('mini'));};
+$('#hint').addEventListener('click',()=>{if($('#hint').classList.contains('mini'))setHintMini(false);});
+setHintMini(localStorage.getItem('clareza.hint')==='1');
 
 /* ============================================================
    EXPORT / IMPORT
