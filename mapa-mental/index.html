@@ -155,6 +155,11 @@ button{font-family:inherit;cursor:pointer}
   border-color:color-mix(in srgb,var(--todo) 40%,var(--line));border-left-color:var(--todo)}
 .node.done{background:color-mix(in srgb,var(--ok) 11%,var(--surface));
   border-color:color-mix(in srgb,var(--ok) 45%,var(--line));border-left-color:var(--ok)}
+/* pai com sub-tópicos pendentes: cinza, check travado (verde vem sozinho) */
+.node.part{background:color-mix(in srgb,var(--muted) 8%,var(--surface));
+  border-color:color-mix(in srgb,var(--muted) 28%,var(--line));border-left-color:var(--faint)}
+.node.part .tick{border-color:var(--line-strong);background:var(--surface-2);cursor:not-allowed}
+.node.part .tick:hover{color:transparent;transform:none}
 .node .badge{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
 
 /* + de hover: frente = sub-tópico, baixo = irmão */
@@ -563,6 +568,18 @@ function addNode(parentId,text){
   save();return id;
 }
 function children(m,id){return Object.values(m.nodes).filter(n=>n.parentId===id).sort((a,b)=>(a.ci||0)-(b.ci||0));}
+function syncDerivedDone(m){
+  // pai é automático: verde só quando TODOS os sub-tópicos estão verdes
+  let changed=false;
+  (function rec(id){
+    const kids=children(m,id);
+    if(!kids.length)return !!m.nodes[id].done;
+    let all=true;kids.forEach(k=>{if(!rec(k.id))all=false;});
+    if(id!==m.rootId&&m.nodes[id].done!==all){m.nodes[id].done=all;changed=true;}
+    return all;
+  })(m.rootId);
+  if(changed)save();
+}
 function addSiblingAfter(id,text){
   // novo nó entra como irmão logo abaixo de `id`
   const m=currentMap(),n=m.nodes[id];if(!n||!n.parentId)return null;
@@ -638,6 +655,7 @@ function layout(m,H){
 const nodesLayer=$('#nodes'),edges=$('#edges'),world=$('#world');
 function render(){
   const m=currentMap();
+  syncDerivedDone(m);
   // 1ª passada: monta os nós numa área larga e mede as alturas reais
   nodesLayer.innerHTML='';
   world.style.width='20000px';world.style.height='20000px';
@@ -675,15 +693,23 @@ function render(){
 function makeNode(m,node){
   const el=document.createElement('div');
   const isRoot=node.id===m.rootId;
+  const kids=children(m,node.id);
   const colVar=branchColorVar(m,node.id);
-  el.className='node'+(isRoot?' is-root':(node.done?' done':' todo'))+((node.id===selectedId||multiSel.has(node.id))?' sel':'');
+  // pai incompleto fica cinza (part); só folhas alternam vermelho/verde na mão
+  const status=node.done?' done':(kids.length?' part':' todo');
+  el.className='node'+(isRoot?' is-root':status)+((node.id===selectedId||multiSel.has(node.id))?' sel':'');
   el.style.setProperty('--bc',cvar(colVar));
   el.dataset.id=node.id;
 
   if(!isRoot){
     const t=document.createElement('button');t.className='tick';t.textContent='✓';
-    t.title=node.done?'Feito — clique pra desmarcar':'Marcar como feito';
-    t.onclick=e=>{e.stopPropagation();node.done=!node.done;save();render();if(panel.classList.contains('open')&&selectedId===node.id)fillPanel();};
+    if(kids.length){ // status automático: depende dos sub-tópicos
+      t.title=node.done?'Concluído automaticamente — todos os sub-tópicos verdes':'Fica verde sozinho quando todos os sub-tópicos estiverem verdes';
+      t.onclick=e=>{e.stopPropagation();toast(node.done?'Verde automático — desmarque um sub-tópico pra reabrir':'Complete os sub-tópicos: o verde vem sozinho');};
+    }else{
+      t.title=node.done?'Feito — clique pra desmarcar':'Marcar como feito';
+      t.onclick=e=>{e.stopPropagation();node.done=!node.done;save();render();if(panel.classList.contains('open')&&selectedId===node.id)fillPanel();};
+    }
     el.appendChild(t);
   }
 
@@ -691,7 +717,6 @@ function makeNode(m,node){
   label.className='label';label.textContent=node.text;label.dataset.id=node.id;
   el.appendChild(label);
 
-  const kids=children(m,node.id);
   if(kids.length){
     el.classList.add('haskids');
     const tg=document.createElement('button');
@@ -927,7 +952,9 @@ function fillPanel(){
   const kids=children(m,n.id);
   $('#pChildren').textContent=kids.length+(kids.length===1?' sub-tópico':' sub-tópicos');
   $('#pDone').className='chip act'+(n.done?' on':'');
-  $('#pDone').textContent=(n.done?'✓ Feito':'○ Marcar como feito');
+  $('#pDone').textContent=kids.length
+    ?(n.done?'✓ Concluído (automático)':'○ Conclui quando os sub-tópicos completarem')
+    :(n.done?'✓ Feito':'○ Marcar como feito');
   // swatches
   const sw=$('#pSwatches');sw.innerHTML='';
   if(n.id===m.rootId){sw.style.display='none';}else{sw.style.display='flex';
@@ -938,7 +965,11 @@ function fillPanel(){
 }
 $('#pTitle').addEventListener('input',e=>{autoGrow(e.target);const m=currentMap(),n=m.nodes[selectedId];if(n){n.text=e.target.value.trim()||'(sem título)';save();render();}});
 $('#pNote').addEventListener('input',e=>{const m=currentMap(),n=m.nodes[selectedId];if(n){n.note=e.target.value;save();}});
-$('#pDone').onclick=()=>{const m=currentMap(),n=m.nodes[selectedId];if(n){n.done=!n.done;save();render();fillPanel();}};
+$('#pDone').onclick=()=>{
+  const m=currentMap(),n=m.nodes[selectedId];if(!n)return;
+  if(children(m,n.id).length){toast(n.done?'Verde automático — desmarque um sub-tópico pra reabrir':'Complete os sub-tópicos: o verde vem sozinho');return;}
+  n.done=!n.done;save();render();fillPanel();
+};
 function autoGrow(t){t.style.height='auto';t.style.height=t.scrollHeight+'px';}
 
 /* ============================================================
