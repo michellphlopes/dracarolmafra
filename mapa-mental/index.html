@@ -351,7 +351,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher
+      <b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher
     </div>
 
     <div id="apibanner">
@@ -510,6 +510,16 @@ function addNode(parentId,text){
   save();return id;
 }
 function children(m,id){return Object.values(m.nodes).filter(n=>n.parentId===id).sort((a,b)=>(a.ci||0)-(b.ci||0));}
+function insertBetween(id,text){
+  // novo nó vira filho de `id` e adota todos os filhos atuais dele
+  const m=currentMap(),n=m.nodes[id];if(!n)return null;
+  const kids=children(m,id);
+  const nid=uid();
+  m.nodes[nid]={id:nid,text:text||'Novo tópico',parentId:id,ci:0,note:'',done:false,collapsed:false};
+  kids.forEach((k,i)=>{k.parentId=nid;k.ci=i;});
+  n.collapsed=false;
+  save();return nid;
+}
 function deleteNode(id){
   const m=currentMap();if(id===m.rootId)return;
   const stack=[id],rm=[];
@@ -615,9 +625,12 @@ function makeNode(m,node){
     const bar=document.createElement('div');bar.className='node-actions';
     bar.innerHTML=`
       <button class="na add" title="Sub-tópico (Tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></button>
+      ${kids.length?`<button class="na mid" title="Inserir tópico entre este e os sub-tópicos (Shift+Tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h5M17 12h5"/><rect x="8" y="7.5" width="8" height="9" rx="2.5"/></svg></button>`:''}
       <button class="na ai" title="Assistente de ideias"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.4 4.6L18 8l-4.6 1.4L12 14l-1.4-4.6L6 8l4.6-1.4L12 2z"/></svg></button>`;
-    bar.children[0].onclick=e=>{e.stopPropagation();const id=addNode(node.id);render();selectNode(id);setTimeout(()=>startEdit(id),30);};
-    bar.children[1].onclick=e=>{e.stopPropagation();selectNode(node.id);openPanel();};
+    bar.querySelector('.add').onclick=e=>{e.stopPropagation();const id=addNode(node.id);render();selectNode(id);setTimeout(()=>startEdit(id),30);};
+    const mid=bar.querySelector('.mid');
+    if(mid)mid.onclick=e=>{e.stopPropagation();const id=insertBetween(node.id);render();selectNode(id);setTimeout(()=>startEdit(id),30);};
+    bar.querySelector('.ai').onclick=e=>{e.stopPropagation();selectNode(node.id);openPanel();};
     el.appendChild(bar);
   }
 
@@ -708,7 +721,7 @@ document.addEventListener('keydown',e=>{
   const m=currentMap();
   if(!selectedId){if(e.key==='0'){fitView();}return;}
   const n=m.nodes[selectedId];if(!n)return;
-  if(e.key==='Tab'){e.preventDefault();const id=addNode(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}
+  if(e.key==='Tab'){e.preventDefault();const id=e.shiftKey?insertBetween(selectedId):addNode(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}
   else if(e.key==='Enter'){e.preventDefault();if(n.parentId){const id=addNode(n.parentId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}}
   else if(e.key==='F2'){e.preventDefault();startEdit(selectedId);}
   else if(e.key==='Delete'||e.key==='Backspace'){if(selectedId!==m.rootId){e.preventDefault();const pid=n.parentId;deleteNode(selectedId);selectedId=pid;render();if($('#panel').classList.contains('open'))fillPanel();}}
