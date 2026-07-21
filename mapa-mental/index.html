@@ -384,7 +384,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
         <button class="btn ghost sm" id="themeBtn" style="flex:1">◐ Tema</button>
       </div>
       <button class="btn ghost sm" id="exportBtn" style="width:100%">⭳ Exportar / Importar</button>
-      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v40 · motor por ramo</div>
+      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v41 · motor por ramo</div>
     </div>
   </aside>
 
@@ -769,7 +769,7 @@ function applyPositionsTidy(m,els){
 }
 
 /* ---------- ARRUMAÇÃO POR RAMO: dentro do ramo tudo é automático ---------- */
-const HGAP=56, SUBPAD=12, BRANCH_GAP=40;
+const HGAP=56, SUBPAD=12, BRANCH_GAP=24;
 // arruma um ramo inteiro relativo à âncora do topo: filhos na frente,
 // bandas verticais pela altura real, ordem SEMPRE pela sequência (ci)
 function layoutBranch(m,els,topId,dir){
@@ -817,48 +817,46 @@ function branchNodes(m,id){
 // ramos inteiros são corpos RÍGIDOS: não se encavalam entre si nem com a
 // raiz; arrastar um ramo só afasta outro se realmente esbarrar nele
 function settleBranches(m,els,pinnedTops){
+  // colisão TAG A TAG entre ramos: dá pra ocupar bolsão vazio de outro ramo;
+  // o empurrão (rígido, do ramo inteiro) só acontece encostando em tag real
   const tops=children(m,m.rootId).filter(t=>els[t.id]&&_pos[t.id]);
-  const items=tops.map(t=>({id:t.id,ids:branchNodes(m,t.id)}));
-  const boxOf=ids=>{
-    let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
-    ids.forEach(id=>{const p=_pos[id];if(!p||!els[id])return;
-      x1=Math.min(x1,p.x);x2=Math.max(x2,p.x+els[id].offsetWidth);
-      y1=Math.min(y1,p.y-els[id].offsetHeight/2);y2=Math.max(y2,p.y+els[id].offsetHeight/2);});
-    return {x1,y1,x2,y2};
-  };
-  items.forEach(it=>{it.box=boxOf(it.ids);});
-  const rEl=els[m.rootId],rp=_pos[m.rootId];
-  const rootBox=rEl&&rp?{x1:rp.x,x2:rp.x+rEl.offsetWidth,y1:rp.y-rEl.offsetHeight/2,y2:rp.y+rEl.offsetHeight/2}:null;
-  const shift=(it,dx,dy)=>{
-    it.ids.forEach(id=>{const p=_pos[id];if(!p)return;p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;});
-    it.box.x1+=dx;it.box.x2+=dx;it.box.y1+=dy;it.box.y2+=dy;
-  };
+  const items=tops.map(t=>({id:t.id,ids:branchNodes(m,t.id).filter(id=>els[id]&&_pos[id])}));
+  const nb=id=>{const p=_pos[id];return{x1:p.x,y1:p.y-els[id].offsetHeight/2,x2:p.x+els[id].offsetWidth,y2:p.y+els[id].offsetHeight/2};};
+  const shift=(it,dx,dy)=>{it.ids.forEach(id=>{const p=_pos[id];p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;});};
   const solta=id=>!(pinnedTops&&pinnedTops.has(id));
-  for(let k=0;k<6;k++){
-    let moved=false;
-    items.forEach(it=>{ // contra a raiz (raiz é imóvel)
-      if(!rootBox||!solta(it.id))return;
-      const ox=Math.min(it.box.x2,rootBox.x2)-Math.max(it.box.x1,rootBox.x1)+BRANCH_GAP;
-      const oy=Math.min(it.box.y2,rootBox.y2)-Math.max(it.box.y1,rootBox.y1)+BRANCH_GAP;
-      if(ox<=0||oy<=0)return;
-      moved=true;
-      if(ox<oy)shift(it,ox*((it.box.x1+it.box.x2)<(rootBox.x1+rootBox.x2)?-1:1),0);
-      else shift(it,0,oy*((it.box.y1+it.box.y2)<(rootBox.y1+rootBox.y2)?-1:1));
-    });
-    for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){
-      const A=items[i].box,B=items[j].box;
+  function pior(idsA,idsB){ // pior sobreposição entre dois conjuntos de tags
+    let best=null;
+    idsA.forEach(a=>{const A=nb(a);idsB.forEach(b=>{
+      const B=nb(b);
       const ox=Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1)+BRANCH_GAP;
       const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1)+BRANCH_GAP;
-      if(ox<=0||oy<=0)continue;
+      if(ox<=0||oy<=0)return;
+      const pen=Math.min(ox,oy);
+      if(!best||pen>best.pen){
+        let dx=0,dy=0;
+        if(ox<oy)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
+        else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
+        best={pen,dx,dy}; // (dx,dy) afasta o conjunto A
+      }
+    });});
+    return best;
+  }
+  for(let k=0;k<8;k++){
+    let moved=false;
+    items.forEach(it=>{ // contra a raiz (imóvel)
+      if(!solta(it.id))return;
+      const w=pior(it.ids,[m.rootId]);
+      if(w){shift(it,w.dx,w.dy);moved=true;}
+    });
+    for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){
       const iL=solta(items[i].id),jL=solta(items[j].id);
       if(!iL&&!jL)continue;
+      const w=pior(items[i].ids,items[j].ids);
+      if(!w)continue;
       moved=true;
-      let dx=0,dy=0;
-      if(ox<oy)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
-      else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
-      if(!iL)shift(items[j],-dx,-dy);
-      else if(!jL)shift(items[i],dx,dy);
-      else{shift(items[i],dx/2,dy/2);shift(items[j],-dx/2,-dy/2);}
+      if(!iL)shift(items[j],-w.dx,-w.dy);
+      else if(!jL)shift(items[i],w.dx,w.dy);
+      else{shift(items[i],w.dx/2,w.dy/2);shift(items[j],-w.dx/2,-w.dy/2);}
     }
     if(!moved)break;
   }
@@ -1105,13 +1103,14 @@ function edgeBezier(m,els,pid,cid){
   })();
   if(c.x>=p.x+pw-6){ // filho à DIREITA: curva metrô (pistas coladas, 8px)
     const x1=p.x+pw,x2=c.x,adx=x2-x1;
-    const a2=Math.min(34+lane*8,adx*0.8);
+    // a descida fica a >=24px da coluna das tags: nunca encosta no leque
+    const a2=Math.max(10,Math.min(34+lane*8,adx-24,adx*0.8));
     const a1=Math.min(30,a2*0.6);
     return [[x1,p.y],[x1+a1,p.y],[x1+a2,c.y],[x2,c.y]];
   }
   if(c.x+cw<=p.x+6){ // filho à ESQUERDA: espelhado
     const x1=p.x,x2=c.x+cw,adx=x1-x2;
-    const a2=Math.min(34+lane*8,adx*0.8);
+    const a2=Math.max(10,Math.min(34+lane*8,adx-24,adx*0.8));
     const a1=Math.min(30,a2*0.6);
     return [[x1,p.y],[x1-a1,p.y],[x1-a2,c.y],[x2,c.y]];
   }
@@ -1133,8 +1132,11 @@ function firstObstacle(m,els,bz,pid,cid){
   let best=null,bestCnt=0;
   Object.keys(els).forEach(tid=>{
     if(tid===pid||tid===cid||!_pos[tid])return;
+    // irmão do filho (mesmo leque) nunca é obstáculo: o corredor de descida
+    // já passa com folga — desviar dele é que causava cruzamento
+    if(m.nodes[tid]&&m.nodes[cid]&&m.nodes[tid].parentId===m.nodes[cid].parentId)return;
     const t=_pos[tid],w=els[tid].offsetWidth,h=els[tid].offsetHeight;
-    const x1=t.x-8,x2=t.x+w+8,y1=t.y-h/2-8,y2=t.y+h/2+8;
+    const x1=t.x-6,x2=t.x+w+6,y1=t.y-h/2-6,y2=t.y+h/2+6;
     let cnt=0;
     for(let s=1;s<16;s++){
       const [bx,by]=bezXY(bz,s/16);
@@ -1410,8 +1412,42 @@ function compactar(){
         :rp.x-HGAP-34-(els[t.id]?els[t.id].offsetWidth:100);
     });
   });
+  saveNow();render();
+  // GRAVIDADE: puxa cada ramo em passinhos na direção da raiz até quase
+  // encostar em outra tag — o mapa fica o mais junto possível na tela
+  const els2={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els2[el.dataset.id]=el;});
+  const m2=currentMap();
+  const rp2=_pos[m2.rootId],rEl2=els2[m2.rootId];
+  if(rp2&&rEl2){
+    const rcx=rp2.x+rEl2.offsetWidth/2,rcy=rp2.y;
+    const nb=id=>{const p=_pos[id];return{x1:p.x,y1:p.y-els2[id].offsetHeight/2,x2:p.x+els2[id].offsetWidth,y2:p.y+els2[id].offsetHeight/2};};
+    const colide=(meus,outros)=>{
+      for(const a of meus){const A=nb(a);
+        for(const b of outros){const B=nb(b);
+          if(Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1)+BRANCH_GAP>0&&
+             Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1)+BRANCH_GAP>0)return true;
+        }}
+      return false;
+    };
+    const tops2=children(m2,m2.rootId).filter(t=>els2[t.id]&&_pos[t.id]);
+    tops2.forEach(t=>{
+      const meus=branchNodes(m2,t.id).filter(id=>els2[id]&&_pos[id]);
+      const outros=[m2.rootId,...tops2.filter(o=>o.id!==t.id)
+        .flatMap(o=>branchNodes(m2,o.id))].filter(id=>els2[id]&&_pos[id]);
+      for(let s=0;s<70;s++){
+        const cx=_pos[t.id].x+els2[t.id].offsetWidth/2,cy=_pos[t.id].y;
+        let vx=rcx-cx,vy=rcy-cy;
+        const d=Math.hypot(vx,vy);
+        if(d<60)break;
+        vx=vx/d*16;vy=vy/d*16;
+        meus.forEach(id=>{_pos[id].x+=vx;_pos[id].y+=vy;});
+        if(colide(meus,outros)){meus.forEach(id=>{_pos[id].x-=vx;_pos[id].y-=vy;});break;}
+      }
+      meus.forEach(id=>{m2.nodes[id].fx=_pos[id].x;m2.nodes[id].fy=_pos[id].y;});
+    });
+  }
   saveNow();render();fitView();
-  toast('Reorganizado: compacto, mesma ordem e disposição');
+  toast('Reorganizado: tudo aproximado ao máximo');
 }
 $('#compactBtn').onclick=compactar;
 
