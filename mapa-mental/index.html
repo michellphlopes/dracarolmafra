@@ -889,8 +889,13 @@ function render(){
   _pos={};visible.forEach(id=>{_pos[id]={x:m.nodes[id].fx,y:m.nodes[id].fy};});
   snapSiblings(m,els); // ímã: quase alinhado gruda na coluna
   for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break; // filho sempre à frente
+  for(let k=0;k<4;k++)if(!settleSprings(m,els,new Set()))break; // longe demais? puxa de volta
   settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
   if(settleFront(m,els,new Set()))settleCollisions(m,els,2,new Set());
+  for(let k=0;k<2;k++){ // tag em cima de linha? empurra pra fora
+    if(!settleLines(m,els,new Set()))break;
+    settleCollisions(m,els,3,new Set());
+  }
   visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
   // tag à esquerda do pai: espelha botões (+ na frente, recolher) e a barrinha de cor
   visible.forEach(id=>{
@@ -930,42 +935,73 @@ function edgeStyle(m,id){
   if(children(m,id).length)return{col,op:.4,extra:' stroke-dasharray="7 6"'};
   return{col,op:.6,extra:''};
 }
+// geometria única da curva (usada pra desenhar E pra física afastar tags)
+function edgeBezier(m,els,pid,cid){
+  const p=_pos[pid],c=_pos[cid];
+  if(!p||!c||!els[pid]||!els[cid])return null;
+  const pw=els[pid].offsetWidth,cw=els[cid].offsetWidth;
+  const ph=els[pid].offsetHeight,chh=els[cid].offsetHeight;
+  if(c.x>=p.x+pw-6){ // filho à DIREITA: curva metrô
+    const x1=p.x+pw,x2=c.x,adx=x2-x1;
+    const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
+    return [[x1,p.y],[x1+a1,p.y],[x1+a2,c.y],[x2,c.y]];
+  }
+  if(c.x+cw<=p.x+6){ // filho à ESQUERDA: espelhado
+    const x1=p.x,x2=c.x+cw,adx=x1-x2;
+    const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
+    return [[x1,p.y],[x1-a1,p.y],[x1-a2,c.y],[x2,c.y]];
+  }
+  // transitório do arrasto: sai por baixo/cima com barriga — sempre curva
+  const baixo=c.y>=p.y;
+  const y1=p.y+(baixo?ph/2:-ph/2),y2=c.y+(baixo?-chh/2:chh/2);
+  const k=Math.max(18,Math.abs(y2-y1)*0.45);
+  const x1=p.x+pw/2,x2=c.x+cw/2;
+  const bow=(x2>=x1?1:-1)*34;
+  return [[x1,y1],[x1+bow,y1+(baixo?k:-k)],[x2+bow,y2+(baixo?-k:k)],[x2,y2]];
+}
 function drawEdges(m,els){
   let d='';
   Object.keys(els).forEach(id=>{
     const node=m.nodes[id];if(!node||node.collapsed||!_pos[id])return;
-    const pw=els[id].offsetWidth, p=_pos[id];
     children(m,id).forEach(ch=>{
-      if(!_pos[ch.id]||!els[ch.id])return;
-      const c=_pos[ch.id];
-      const cw=els[ch.id].offsetWidth, chh=els[ch.id].offsetHeight;
-      const ph=els[id].offsetHeight;
+      const bz=edgeBezier(m,els,id,ch.id);if(!bz)return;
       const s=edgeStyle(m,ch.id);
-      let path;
-      if(c.x>=p.x+pw-6){
-        // filho à DIREITA: curva metrô — dobra logo após a tag, chega na horizontal
-        const x1=p.x+pw,x2=c.x,adx=x2-x1;
-        const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
-        path=`M${x1},${p.y} C${x1+a1},${p.y} ${x1+a2},${c.y} ${x2},${c.y}`;
-      }else if(c.x+cw<=p.x+6){
-        // filho à ESQUERDA: espelhado
-        const x1=p.x,x2=c.x+cw,adx=x1-x2;
-        const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
-        path=`M${x1},${p.y} C${x1-a1},${p.y} ${x1-a2},${c.y} ${x2},${c.y}`;
-      }else{
-        // transitório do arrasto (a física logo leva o filho pra frente):
-        // sai por baixo/cima com barriga lateral — SEMPRE curva, nunca fio reto
-        const baixo=c.y>=p.y;
-        const y1=p.y+(baixo?ph/2:-ph/2), y2=c.y+(baixo?-chh/2:chh/2);
-        const k=Math.max(18,Math.abs(y2-y1)*0.45);
-        const x1=p.x+pw/2, x2=c.x+cw/2;
-        const bow=(x2>=x1?1:-1)*34;
-        path=`M${x1},${y1} C${x1+bow},${y1+(baixo?k:-k)} ${x2+bow},${y2+(baixo?-k:k)} ${x2},${y2}`;
-      }
-      d+=`<path d="${path}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
+      d+=`<path d="M${bz[0][0]},${bz[0][1]} C${bz[1][0]},${bz[1][1]} ${bz[2][0]},${bz[2][1]} ${bz[3][0]},${bz[3][1]}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
   });
   edges.innerHTML=d;
+}
+// tag não pode ficar em cima de linha: amostra cada curva e empurra a tag
+// intrusa na vertical até desencostar
+function settleLines(m,els,pinned){
+  let moved=false;
+  const M=10;
+  Object.keys(els).forEach(pid=>{
+    const node=m.nodes[pid];if(!node||node.collapsed||!_pos[pid])return;
+    children(m,pid).forEach(ch=>{
+      const bz=edgeBezier(m,els,pid,ch.id);if(!bz)return;
+      Object.keys(els).forEach(tid=>{
+        if(tid===pid||tid===ch.id||tid===m.rootId||pinned.has(tid)||!_pos[tid])return;
+        const t=_pos[tid],w=els[tid].offsetWidth,h=els[tid].offsetHeight;
+        const bx1=t.x-M,bx2=t.x+w+M,by1=t.y-h/2-M,by2=t.y+h/2+M;
+        let needUp=0,needDown=0;
+        for(let sN=1;sN<12;sN++){
+          const u=sN/12,v=1-u;
+          const bx=v*v*v*bz[0][0]+3*v*v*u*bz[1][0]+3*v*u*u*bz[2][0]+u*u*u*bz[3][0];
+          const by=v*v*v*bz[0][1]+3*v*v*u*bz[1][1]+3*v*u*u*bz[2][1]+u*u*u*bz[3][1];
+          if(bx>bx1&&bx<bx2&&by>by1&&by<by2){
+            needDown=Math.max(needDown,by-by1+1); // descer a tag libera por cima
+            needUp=Math.max(needUp,by2-by+1);     // subir a tag libera por baixo
+          }
+        }
+        if(!needUp&&!needDown)return;
+        moved=true;
+        const push=needDown<=needUp?needDown:-needUp;
+        _pos[tid].y+=push;m.nodes[tid].fy=_pos[tid].y;
+      });
+    });
+  });
+  return moved;
 }
 
 
@@ -1380,11 +1416,13 @@ function dragMove(e){
     });
     // 2. em cima de uma tag? ela vira alvo e NÃO é empurrada (dá pra soltar nela)
     const hov=dropHover(px,py,drag.ids);
-    // 3. física: filho à frente do pai; perto empurra; esticou demais puxa
+    // 3. física: filho à frente do pai; perto empurra; esticou demais puxa;
+    //    tag intrusa sai de cima das linhas
     settleFront(m,els,drag.grupo);
     settleCollisions(m,els,2,drag.grupo,hov);
     for(let k=0;k<3;k++)if(!settleSprings(m,els,drag.grupo))break;
     settleFront(m,els,drag.grupo);
+    settleLines(m,els,drag.grupo);
     settleCollisions(m,els,1,drag.grupo,hov);
     // 4. aplica no DOM e estica as linhas
     Object.keys(els).forEach(id=>{
@@ -1421,13 +1459,18 @@ function dragEnd(){
   });
   const pais=[...new Set(d0.ids.map(id=>m.nodes[id]&&m.nodes[id].parentId).filter(Boolean))];
   pais.forEach(p=>{children(m,p).sort((a,b)=>(a.fy||0)-(b.fy||0)).forEach((c,i)=>{c.ci=i;});});
-  // assenta: filho à frente + ímã de alinhamento + nada sobreposto
+  // assenta: filho à frente + mola + ímã + tags fora das linhas + sem sobrepor
   const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
   for(let k=0;k<4;k++)if(!settleFront(m,els,new Set()))break;
+  for(let k=0;k<4;k++)if(!settleSprings(m,els,new Set()))break;
   settleCollisions(m,els,25,new Set());
   snapSiblings(m,els);
   for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break;
   settleCollisions(m,els,6,new Set());
+  for(let k=0;k<2;k++){
+    if(!settleLines(m,els,new Set()))break;
+    settleCollisions(m,els,3,new Set());
+  }
   saveNow();selectedId=d0.pressed;
   nodesLayer.classList.remove('dragging');
   render();
