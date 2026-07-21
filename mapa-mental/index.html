@@ -310,6 +310,12 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
 .tstat{font-size:12px;padding:3px 0}
 .tstat.ok{color:var(--b5)} .tstat.bad{color:var(--b4)}
 
+/* toast */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);
+  background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:10px;font-size:13px;
+  opacity:0;pointer-events:none;transition:.2s;z-index:60;box-shadow:var(--shadow-md)}
+#toast.show{opacity:1;transform:translateX(-50%)}
+
 /* scrollbars */
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:10px;border:2px solid var(--surface)}
@@ -381,7 +387,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher</span>
+      <span id="hintBody"><b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Ctrl+C</kbd>/<kbd>Ctrl+V</kbd> copiar e colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -489,6 +495,21 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
   </div>
 </div>
 
+<!-- PASTE MODAL -->
+<div class="overlay" id="pasteOverlay">
+  <div class="modal" style="width:min(380px,100%)">
+    <div class="modal-head">
+      <h2>Colar onde?</h2>
+      <p id="pasteInfo"></p>
+    </div>
+    <div class="modal-body">
+      <button class="btn wide" id="pasteFront">➡ Na frente — vira sub-tópico dele</button>
+      <button class="btn wide" id="pasteBelow">⬇ Abaixo — vira irmão, logo embaixo</button>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" id="pasteCancel">Cancelar</button></div>
+  </div>
+</div>
+
 <script>
 "use strict";
 /* ============================================================
@@ -510,6 +531,8 @@ let DB={maps:{},order:[],currentId:null};
 let SET={provider:'anthropic',key:'',model:'claude-sonnet-5'};
 let view={scale:1,tx:0,ty:0};
 let selectedId=null, editingId=null;
+let multiSel=new Set();   // seleção múltipla (Ctrl+clique)
+let clipboard=null;       // sub-árvores copiadas (Ctrl+C)
 let saveTimer=null;
 
 /* ---------- persistence ---------- */
@@ -654,7 +677,7 @@ function makeNode(m,node){
   const el=document.createElement('div');
   const isRoot=node.id===m.rootId;
   const colVar=branchColorVar(m,node.id);
-  el.className='node'+(isRoot?' is-root':(node.done?' done':' todo'))+(node.id===selectedId?' sel':'');
+  el.className='node'+(isRoot?' is-root':(node.done?' done':' todo'))+((node.id===selectedId||multiSel.has(node.id))?' sel':'');
   el.style.setProperty('--bc',cvar(colVar));
   el.dataset.id=node.id;
 
@@ -680,7 +703,7 @@ function makeNode(m,node){
     el.appendChild(tg);
   }
 
-  if(node.id===selectedId){
+  if(node.id===selectedId&&multiSel.size<=1){
     const bar=document.createElement('div');bar.className='node-actions';
     bar.innerHTML=`
       <button class="na add" title="Sub-tópico (Tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -703,7 +726,16 @@ function makeNode(m,node){
     el.appendChild(pd);
   }
 
-  el.onclick=e=>{if(editingId)return;selectNode(node.id);};
+  el.onclick=e=>{
+    if(editingId)return;
+    if(e.ctrlKey||e.metaKey){ // Ctrl+clique: marca/desmarca vários
+      if(selectedId&&!multiSel.size)multiSel.add(selectedId);
+      if(multiSel.has(node.id))multiSel.delete(node.id);else multiSel.add(node.id);
+      selectedId=node.id;render();
+      return;
+    }
+    selectNode(node.id);
+  };
   el.ondblclick=e=>{e.stopPropagation();startEdit(node.id);};
   label.addEventListener('blur',()=>commitEdit(node.id,label.textContent));
   label.addEventListener('keydown',e=>{
@@ -715,6 +747,7 @@ function makeNode(m,node){
 
 /* ---------- selection & editing ---------- */
 function selectNode(id){
+  multiSel.clear();
   selectedId=id;render();
   if($('#panel').classList.contains('open'))fillPanel();
 }
@@ -767,7 +800,7 @@ stage.addEventListener('pointerdown',e=>{
   if(e.target.closest('.node')||e.target.closest('#topbar')||e.target.closest('.hint')||e.target.closest('#apibanner'))return;
   panning=true;stage.classList.add('panning');psx=e.clientX;psy=e.clientY;ptx=view.tx;pty=view.ty;
   stage.setPointerCapture(e.pointerId);
-  if(!editingId){selectedId=null;render();}
+  if(!editingId){selectedId=null;multiSel.clear();render();}
 });
 stage.addEventListener('pointermove',e=>{if(!panning)return;view.tx=ptx+(e.clientX-psx);view.ty=pty+(e.clientY-psy);applyTransform();});
 stage.addEventListener('pointerup',e=>{panning=false;stage.classList.remove('panning');});
@@ -793,11 +826,72 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Tab'){e.preventDefault();const id=e.shiftKey?insertBetween(selectedId):addNode(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}
   else if(e.key==='Enter'){e.preventDefault();if(n.parentId){const id=addSiblingAfter(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}}
   else if(e.key==='F2'){e.preventDefault();startEdit(selectedId);}
-  else if(e.key==='Delete'||e.key==='Backspace'){if(selectedId!==m.rootId){e.preventDefault();const pid=n.parentId;deleteNode(selectedId);selectedId=pid;render();if($('#panel').classList.contains('open'))fillPanel();}}
+  else if(e.key==='Delete'||e.key==='Backspace'){
+    e.preventDefault();
+    if(multiSel.size){
+      [...multiSel].filter(id=>id!==m.rootId).forEach(id=>{if(m.nodes[id])deleteNode(id);});
+      multiSel.clear();selectedId=null;render();closePanel();
+    }else if(selectedId!==m.rootId){
+      const pid=n.parentId;deleteNode(selectedId);selectedId=pid;render();
+      if($('#panel').classList.contains('open'))fillPanel();
+    }
+  }
   else if(e.key===' '){const k=children(m,selectedId);if(k.length){e.preventDefault();n.collapsed=!n.collapsed;save();render();}}
+  else if((e.ctrlKey||e.metaKey)&&(e.key==='c'||e.key==='C')){e.preventDefault();copySel();}
+  else if((e.ctrlKey||e.metaKey)&&(e.key==='v'||e.key==='V')){e.preventDefault();doPaste();}
   else if(e.key==='0'){fitView();}
-  else if(e.key==='Escape'){selectedId=null;render();closePanel();}
+  else if(e.key==='Escape'){selectedId=null;multiSel.clear();$('#pasteOverlay').classList.remove('show');render();closePanel();}
 });
+
+/* ============================================================
+   COPIAR / COLAR
+   ============================================================ */
+function snapNode(m,id){const n=m.nodes[id];return{text:n.text,note:n.note||'',done:!!n.done,children:children(m,id).map(c=>snapNode(m,c.id))};}
+function copySel(){
+  const m=currentMap();
+  let ids=multiSel.size?[...multiSel]:(selectedId?[selectedId]:[]);
+  if(!ids.length)return;
+  // se um ancestral também está marcado, a sub-árvore dele já leva os filhos junto
+  ids=ids.filter(id=>{let p=m.nodes[id]&&m.nodes[id].parentId;while(p){if(ids.includes(p))return false;p=m.nodes[p]&&m.nodes[p].parentId;}return true;});
+  ids.sort((a,b)=>((_pos[a]&&_pos[a].y)||0)-((_pos[b]&&_pos[b].y)||0)); // ordem visual
+  clipboard=ids.map(id=>snapNode(m,id));
+  toast(clipboard.length===1?'1 tópico copiado':clipboard.length+' tópicos copiados');
+}
+function buildFromSnap(m,snap,pid,ci){
+  const nid=uid();
+  m.nodes[nid]={id:nid,text:snap.text,parentId:pid,ci,note:snap.note,done:snap.done,collapsed:false};
+  (snap.children||[]).forEach((c,j)=>buildFromSnap(m,c,nid,j));
+  return nid;
+}
+function pasteInto(parentId,afterId){
+  const m=currentMap();
+  const sibs=children(m,parentId);
+  let ci0;
+  if(afterId&&m.nodes[afterId]){ci0=(m.nodes[afterId].ci||0)+1;sibs.forEach(s=>{if((s.ci||0)>=ci0)s.ci=(s.ci||0)+clipboard.length;});}
+  else ci0=sibs.length;
+  if(m.nodes[parentId])m.nodes[parentId].collapsed=false;
+  const ids=clipboard.map((snap,i)=>buildFromSnap(m,snap,parentId,ci0+i));
+  save();return ids;
+}
+function doPaste(){
+  if(!clipboard||!clipboard.length){toast('Nada copiado ainda — marque um tópico e aperte Ctrl+C');return;}
+  const m=currentMap(),n=selectedId?m.nodes[selectedId]:null;
+  if(!n){toast('Selecione um tópico pra colar nele');return;}
+  if(!n.parentId){finishPaste(pasteInto(selectedId,null));return;} // raiz não tem irmão: cola na frente
+  $('#pasteInfo').textContent=(clipboard.length===1?'1 tópico':clipboard.length+' tópicos')+' · destino: "'+n.text+'"';
+  $('#pasteOverlay').classList.add('show');
+}
+function finishPaste(ids){if(ids&&ids.length){render();selectNode(ids[0]);}}
+$('#pasteFront').onclick=()=>{$('#pasteOverlay').classList.remove('show');finishPaste(pasteInto(selectedId,null));};
+$('#pasteBelow').onclick=()=>{$('#pasteOverlay').classList.remove('show');const n=currentMap().nodes[selectedId];if(n)finishPaste(pasteInto(n.parentId,selectedId));};
+$('#pasteCancel').onclick=()=>$('#pasteOverlay').classList.remove('show');
+$('#pasteOverlay').addEventListener('click',e=>{if(e.target.id==='pasteOverlay')e.currentTarget.classList.remove('show');});
+function toast(msg){
+  let t=document.querySelector('#toast');
+  if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),1800);
+}
 
 /* ============================================================
    RIGHT PANEL
