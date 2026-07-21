@@ -116,12 +116,12 @@ button{font-family:inherit;cursor:pointer}
 #world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
 #edges{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
 #edges path{fill:none;stroke-linecap:round}
-#nodes{position:absolute;left:0;top:0}
+#nodes{position:absolute;left:0;top:0;width:100%;height:100%}
 
 /* ---- NODE ---- */
 .node{
   position:absolute;transform:translateY(-50%);
-  max-width:210px;min-height:34px;display:flex;align-items:center;gap:8px;
+  width:max-content;max-width:210px;min-height:34px;display:flex;align-items:center;gap:8px;
   padding:8px 13px;background:var(--surface);border:1.5px solid var(--line);
   border-left:4px solid var(--bc,var(--accent));border-radius:11px;
   font-size:13.5px;line-height:1.3;color:var(--ink);box-shadow:var(--shadow-sm);
@@ -132,7 +132,7 @@ button{font-family:inherit;cursor:pointer}
 .node:hover{box-shadow:var(--shadow-md)}
 .node.sel{border-color:var(--bc,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--bc,var(--accent)) 28%,transparent),var(--shadow-md)}
 .node.done .label{text-decoration:line-through;color:var(--faint)}
-.node .label{outline:none;white-space:pre-wrap;overflow-wrap:anywhere;flex:1;min-width:14px}
+.node .label{outline:none;white-space:pre-wrap;overflow-wrap:break-word;flex:1;min-width:14px}
 .node .label[contenteditable="true"]{cursor:text;min-width:60px}
 .node.is-root{
   background:linear-gradient(135deg,var(--ink),var(--ink-soft));color:#fff;border:none;
