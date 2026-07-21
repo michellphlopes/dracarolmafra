@@ -395,6 +395,9 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
       </button>
       <div class="tb-title" id="mapTitle" contenteditable="true" spellcheck="false"></div>
       <div class="tb-spacer"></div>
+      <button class="iconbtn" id="compactBtn" title="Reorganizar: aproxima e compacta tudo SEM mudar a ordem nem a disposição">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4L5 8l4 4M5 8h7M15 20l4-4-4-4M19 16h-7"/></svg>
+      </button>
       <button class="iconbtn" id="arrangeBtn" title="Organizar automaticamente (arruma a árvore)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h8M4 12h12M4 18h8M19 4v16M16 7l3-3 3 3M16 17l3 3 3-3"/></svg>
       </button>
@@ -800,7 +803,10 @@ function settleCollisions(m,els,iters,pinned,ignoreId,bias){
       let dx=0,dy=0; // prefere empurrar na VERTICAL (preserva colunas alinhadas)
       if(ox<oy*0.5)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
       else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
-      if(pinned.has(a))mv(b,-dx,-dy);
+      // filho nunca move o pai: colisão pai↔filho desloca só o filho
+      if(na.parentId===b){if(!pinned.has(a))mv(a,dx,dy);}
+      else if(nb.parentId===a){if(!pinned.has(b))mv(b,-dx,-dy);}
+      else if(pinned.has(a))mv(b,-dx,-dy);
       else if(pinned.has(b))mv(a,dx,dy);
       else{mv(a,dx/2,dy/2);mv(b,-dx/2,-dy/2);}
     }
@@ -820,12 +826,12 @@ function settleSprings(m,els,pinned){
       const dy=c.y-p.y;
       const d=Math.hypot(dx,dy);
       if(d<=LMAX)return;
-      if(pinned.has(id)&&pinned.has(ch.id))return;
+      // filho NUNCA puxa o pai: só o filho volta pra perto; se o filho está
+      // pinado (sendo arrastado), a linha simplesmente cresce
+      if(pinned.has(ch.id))return;
       moved=true;
       const ex=(d-LMAX)/d, px=dx*ex, py=dy*ex;
-      if(pinned.has(id))mv(ch.id,-px,-py);
-      else if(pinned.has(ch.id))mv(id,px,py);
-      else{mv(ch.id,-px/2,-py/2);mv(id,px/2,py/2);}
+      mv(ch.id,-px,-py);
     });
   });
   return moved;
@@ -847,10 +853,12 @@ function settleFront(m,els,pinned){
       if(dir>0){const need=_pos[pid].x+pw+FRONT_GAP;if(_pos[id].x<need)viol=need-_pos[id].x;}
       else{const need=_pos[pid].x-FRONT_GAP;if(_pos[id].x+cw>need)viol=_pos[id].x+cw-need;}
       if(viol<=0.5)return;
+      // filho NUNCA empurra o pai: enquanto o filho arrastado estiver atrás,
+      // a linha só cresce; ao soltar, é o filho que desliza pra frente
+      if(pinned.has(id))return;
       moved=true;
       const push=dir>0?viol:-viol;
-      if(pinned.has(id)&&!pinned.has(pid)){_pos[pid].x-=push;m.nodes[pid].fx=_pos[pid].x;}
-      else if(!pinned.has(id)){_pos[id].x+=push;m.nodes[id].fx=_pos[id].x;}
+      _pos[id].x+=push;m.nodes[id].fx=_pos[id].x;
     });
   });
   return moved;
@@ -937,10 +945,6 @@ function render(){
   for(let k=0;k<4;k++)if(!settleSprings(m,els,new Set()))break; // longe demais? puxa de volta
   settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
   if(settleFront(m,els,new Set()))settleCollisions(m,els,2,new Set());
-  for(let k=0;k<2;k++){ // tag em cima de linha? empurra pra fora
-    if(!settleLines(m,els,new Set()))break;
-    settleCollisions(m,els,3,new Set());
-  }
   visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
   // tag à esquerda do pai: espelha botões (+ na frente, recolher) e a barrinha de cor
   visible.forEach(id=>{
@@ -993,16 +997,16 @@ function edgeBezier(m,els,pid,cid){
     const ordem=sibs.slice().sort((a,b)=>Math.abs(_pos[a.id].y-p.y)-Math.abs(_pos[b.id].y-p.y));
     return Math.max(0,ordem.findIndex(s=>s.id===cid));
   })();
-  if(c.x>=p.x+pw-6){ // filho à DIREITA: curva metrô
+  if(c.x>=p.x+pw-6){ // filho à DIREITA: curva metrô (pistas coladas, 8px)
     const x1=p.x+pw,x2=c.x,adx=x2-x1;
-    const a2=Math.min(40+lane*26,adx*0.8);
-    const a1=Math.min(34,a2*0.6);
+    const a2=Math.min(34+lane*8,adx*0.8);
+    const a1=Math.min(30,a2*0.6);
     return [[x1,p.y],[x1+a1,p.y],[x1+a2,c.y],[x2,c.y]];
   }
   if(c.x+cw<=p.x+6){ // filho à ESQUERDA: espelhado
     const x1=p.x,x2=c.x+cw,adx=x1-x2;
-    const a2=Math.min(40+lane*26,adx*0.8);
-    const a1=Math.min(34,a2*0.6);
+    const a2=Math.min(34+lane*8,adx*0.8);
+    const a1=Math.min(30,a2*0.6);
     return [[x1,p.y],[x1-a1,p.y],[x1-a2,c.y],[x2,c.y]];
   }
   // transitório do arrasto: sai por baixo/cima com barriga — sempre curva
@@ -1047,10 +1051,15 @@ function edgePath(m,els,pid,cid){
   const Wy=Math.abs(cima-refY)<=Math.abs(baixo-refY)?cima:baixo;
   const x1=bz[0][0],x2=bz[3][0],y1=bz[0][1],y2=bz[3][1];
   const dir=Math.sign(x2-x1)||1;
-  // trecho RETO por cima/baixo da tag inteira: entra antes, atravessa, sai depois
-  const Wa=dir>0?t.x-14:t.x+w+14;       // borda de entrada
-  const Wb=dir>0?t.x+w+14:t.x-14;       // borda de saída
-  if(dir*(Wa-x1)<28||dir*(x2-Wb)<28)return reto; // sem espaço pro desvio
+  if(Math.abs(x2-x1)<40)return reto; // curto demais
+  const dentro=(X,Y)=>X>t.x-14&&X<t.x+w+14&&Y>t.y-h/2-14&&Y<t.y+h/2+14;
+  if(dentro(x1,y1)||dentro(x2,y2))return reto; // ponta dentro da tag: sem rota
+  // a linha CRESCE o quanto precisar pra dar a volta POR TRÁS da tag —
+  // entra antes, atravessa RETA, sai depois (mesmo que passe do destino
+  // e volte); nada se move, nada muda de ordem
+  let Wa=dir>0?t.x-14:t.x+w+14;
+  const Wb=dir>0?t.x+w+14:t.x-14;
+  if(dir*(Wa-x1)<20)Wa=x1+dir*20;
   return `M${x1},${y1} C${x1+(Wa-x1)*0.35},${y1} ${x1+(Wa-x1)*0.75},${Wy} ${Wa},${Wy}`+
          ` L${Wb},${Wy}`+
          ` C${Wb+(x2-Wb)*0.25},${Wy} ${Wb+(x2-Wb)*0.65},${y2} ${x2},${y2}`;
@@ -1273,6 +1282,37 @@ $('#zoomIn').onclick=()=>zoomAt(1.15,viewport.clientWidth/2,viewport.clientHeigh
 $('#zoomOut').onclick=()=>zoomAt(0.87,viewport.clientWidth/2,viewport.clientHeight/2);
 $('#fitBtn').onclick=fitView;
 $('#arrangeBtn').onclick=()=>{render._tidy=true;render();fitView();toast('Mapa organizado automaticamente');};
+// Reorganizar: aproxima cada sub-árvore do pai (rigidamente), fecha vãos e
+// resolve sobreposições — SEM mudar lados, disposições nem ordem de nada
+function compactar(){
+  const m=currentMap();
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  const COMPACT=48;
+  (function rec(pid){
+    children(m,pid).forEach(ch=>{
+      if(!els[ch.id]||!_pos[ch.id]||!_pos[pid]){rec(ch.id);return;}
+      const pw=els[pid].offsetWidth,cw=els[ch.id].offsetWidth;
+      const dir=(_pos[ch.id].x+cw/2>=_pos[pid].x+pw/2)?1:-1;
+      const alvoX=dir>0?_pos[pid].x+pw+COMPACT:_pos[pid].x-COMPACT-cw;
+      const dx=alvoX-_pos[ch.id].x;
+      if(Math.abs(dx)>1){
+        (function shift(id2){ // a sub-árvore inteira vai junto
+          if(_pos[id2]){_pos[id2].x+=dx;m.nodes[id2].fx=_pos[id2].x;}
+          children(m,id2).forEach(c2=>shift(c2.id));
+        })(ch.id);
+      }
+      rec(ch.id);
+    });
+  })(m.rootId);
+  snapSiblings(m,els);
+  for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break;
+  settleCollisions(m,els,25,new Set());
+  snapSiblings(m,els);
+  settleCollisions(m,els,8,new Set());
+  saveNow();render();fitView();
+  toast('Reorganizado: mais compacto, mesma ordem de tudo');
+}
+$('#compactBtn').onclick=compactar;
 
 /* ============================================================
    KEYBOARD
@@ -1533,7 +1573,6 @@ function dragMove(e){
     settleCollisions(m,els,2,drag.grupo,hov,bias);
     for(let k=0;k<3;k++)if(!settleSprings(m,els,drag.grupo))break;
     settleFront(m,els,drag.grupo);
-    settleLines(m,els,drag.grupo);
     settleCollisions(m,els,1,drag.grupo,hov,bias);
     // 4. aplica no DOM e estica as linhas
     Object.keys(els).forEach(id=>{
@@ -1578,10 +1617,6 @@ function dragEnd(){
   snapSiblings(m,els);
   for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break;
   settleCollisions(m,els,6,new Set());
-  for(let k=0;k<2;k++){
-    if(!settleLines(m,els,new Set()))break;
-    settleCollisions(m,els,3,new Set());
-  }
   saveNow();selectedId=d0.pressed;
   nodesLayer.classList.remove('dragging');
   render();
