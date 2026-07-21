@@ -314,6 +314,11 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
 .tstat{font-size:12px;padding:3px 0}
 .tstat.ok{color:var(--b5)} .tstat.bad{color:var(--b4)}
 
+/* arrasto: vizinhos empurram com animação; fantasma segue o mouse */
+#nodes.dragging .node{transition:left .16s ease,top .16s ease}
+.drag-ghost{position:fixed;left:0;top:0;z-index:80;pointer-events:none;opacity:.8;
+  transform-origin:top left;box-shadow:var(--shadow-lg);animation:none}
+
 /* toast */
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);
   background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:10px;font-size:13px;
@@ -391,7 +396,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd>/<kbd>Ctrl+V</kbd> copiar e colar</span>
+      <span id="hintBody"><b>Dica:</b> arraste um tópico pra reorganizar (solte em cima de outro pra virar sub-tópico) · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd>/<kbd>Ctrl+V</kbd> copiar e colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -671,10 +676,16 @@ function render(){
   edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
   visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
 
-  // edges (measure widths)
+  drawEdges(m,els);
+  applyTransform();
+  renderMapList();
+  $('#mapTitle').textContent=m.name;
+}
+
+function drawEdges(m,els){
   let d='';
-  visible.forEach(id=>{
-    const node=m.nodes[id];if(node.collapsed)return;
+  Object.keys(els).forEach(id=>{
+    const node=m.nodes[id];if(!node||node.collapsed||!_pos[id])return;
     const pw=els[id].offsetWidth, p=_pos[id];
     children(m,id).forEach(ch=>{
       if(!_pos[ch.id])return;
@@ -685,9 +696,20 @@ function render(){
     });
   });
   edges.innerHTML=d;
-  applyTransform();
-  renderMapList();
-  $('#mapTitle').textContent=m.name;
+}
+
+// re-layout SEM recriar os nós: usado durante o arrasto pra empurrar
+// os vizinhos com animação (transition de left/top)
+function repositionAll(){
+  const m=currentMap();
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  const Hs={};Object.keys(els).forEach(id=>{Hs[id]=els[id].offsetHeight;});
+  const dim=layout(m,Hs);
+  world.style.width=dim.w+'px';world.style.height=dim.h+'px';
+  edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
+  edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
+  Object.keys(els).forEach(id=>{if(_pos[id]){els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';}});
+  drawEdges(m,els);
 }
 
 function makeNode(m,node){
@@ -751,7 +773,7 @@ function makeNode(m,node){
   }
 
   el.onclick=e=>{
-    if(editingId)return;
+    if(editingId||suppressClick)return;
     if(e.shiftKey&&selectedId&&selectedId!==node.id){ // Shift+clique: intervalo
       rangeSelect(selectedId,node.id);
       return;
@@ -934,6 +956,107 @@ function toast(msg){
   if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t);}
   t.textContent=msg;t.classList.add('show');
   clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+/* ============================================================
+   ARRASTAR PRA REORGANIZAR
+   ============================================================ */
+let drag=null, suppressClick=false;
+
+function dropTarget(px,py,dragId){
+  const m=currentMap();
+  const forb=new Set();(function rec(id){forb.add(id);children(m,id).forEach(c=>rec(c.id));})(dragId);
+  // ponteiro sobre a caixa de um nó → soltar vira sub-tópico dele
+  for(const id of Object.keys(_pos)){
+    if(forb.has(id))continue;
+    const el=nodesLayer.querySelector(`.node[data-id="${id}"]`);if(!el)continue;
+    const p=_pos[id],w=el.offsetWidth,h=el.offsetHeight;
+    if(px>=p.x&&px<=p.x+w&&py>=p.y-h/2&&py<=p.y+h/2)return{mode:'child',ref:id};
+  }
+  // senão: coluna mais próxima → inserir entre os irmãos daquela altura
+  const livres=Object.keys(_pos).filter(id=>!forb.has(id)&&m.nodes[id].parentId&&!forb.has(m.nodes[id].parentId));
+  if(!livres.length)return null;
+  const depths=[...new Set(livres.map(id=>_pos[id].depth))];
+  let depth=Math.round(px/COL);
+  depth=depths.reduce((a,b)=>Math.abs(b-depth)<Math.abs(a-depth)?b:a);
+  const cands=livres.filter(id=>_pos[id].depth===depth);
+  let best=null,bd=Infinity;
+  cands.forEach(id=>{const d=Math.abs(_pos[id].y-py);if(d<bd){bd=d;best=id;}});
+  if(!best)return null;
+  return{mode:py<_pos[best].y?'before':'after',ref:best};
+}
+function moveNode(id,newParent,index){
+  const m=currentMap(),n=m.nodes[id];
+  children(m,n.parentId).filter(c=>c.id!==id).forEach((c,i)=>c.ci=i);
+  n.parentId=newParent;
+  const sibs=children(m,newParent).filter(c=>c.id!==id);
+  index=Math.max(0,Math.min(index,sibs.length));
+  sibs.forEach((c,i)=>{c.ci=i>=index?i+1:i;});
+  n.ci=index;
+  if(m.nodes[newParent])m.nodes[newParent].collapsed=false;
+  save();
+}
+function applyMove(id,t){
+  const m=currentMap(),n=m.nodes[id];
+  let newParent,index;
+  if(t.mode==='child'){
+    if(t.ref===n.parentId)return false; // já é filho dele
+    newParent=t.ref;index=children(m,t.ref).filter(c=>c.id!==id).length;
+  }else{
+    newParent=m.nodes[t.ref].parentId;
+    const sibs=children(m,newParent).filter(c=>c.id!==id);
+    const i=sibs.findIndex(s=>s.id===t.ref);
+    index=t.mode==='before'?i:i+1;
+  }
+  if(n.parentId===newParent){
+    const atual=children(m,newParent).filter(c=>c.id!==id&&(c.ci||0)<(n.ci||0)).length;
+    if(atual===index)return false; // já está nesse lugar
+  }
+  moveNode(id,newParent,index);
+  return true;
+}
+nodesLayer.addEventListener('pointerdown',e=>{
+  if(e.button!==0||editingId)return;
+  const nel=e.target.closest('.node');if(!nel)return;
+  if(e.target.closest('button'))return;
+  const m=currentMap(),id=nel.dataset.id;
+  if(!id||id===m.rootId)return;
+  drag={id,startX:e.clientX,startY:e.clientY,active:false,ghost:null};
+  window.addEventListener('pointermove',dragMove);
+  window.addEventListener('pointerup',dragEnd);
+});
+function dragMove(e){
+  if(!drag)return;
+  if(!drag.active){
+    if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<7)return;
+    drag.active=true;
+    nodesLayer.classList.add('dragging');
+    const src=nodesLayer.querySelector(`.node[data-id="${drag.id}"]`);
+    if(src){
+      const g=src.cloneNode(true);
+      g.classList.add('drag-ghost');g.classList.remove('sel');
+      const acts=g.querySelector('.node-actions');if(acts)acts.remove();
+      g.style.left='0px';g.style.top='0px';g.style.width=src.offsetWidth+'px';
+      document.body.appendChild(g);drag.ghost=g;
+    }
+  }
+  if(drag.ghost)drag.ghost.style.transform=`translate(${e.clientX+12}px,${e.clientY+10}px) scale(${Math.min(view.scale,1)})`;
+  const rect=stage.getBoundingClientRect();
+  const px=(e.clientX-rect.left-view.tx)/view.scale;
+  const py=(e.clientY-rect.top-view.ty)/view.scale;
+  const t=dropTarget(px,py,drag.id);
+  if(t&&applyMove(drag.id,t))repositionAll();
+}
+function dragEnd(){
+  window.removeEventListener('pointermove',dragMove);
+  window.removeEventListener('pointerup',dragEnd);
+  if(drag&&drag.ghost)drag.ghost.remove();
+  const moved=drag&&drag.active,id=drag&&drag.id;
+  drag=null;nodesLayer.classList.remove('dragging');
+  if(moved){
+    suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
+    saveNow();selectedId=id;render();
+  }
 }
 
 /* ============================================================
