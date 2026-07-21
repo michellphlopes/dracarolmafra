@@ -767,6 +767,102 @@ function applyPositionsTidy(m,els){
   });
 }
 
+/* ---------- ARRUMAÇÃO POR RAMO: dentro do ramo tudo é automático ---------- */
+const HGAP=56, SUBPAD=12, BRANCH_GAP=40;
+// arruma um ramo inteiro relativo à âncora do topo: filhos na frente,
+// bandas verticais pela altura real, ordem SEMPRE pela sequência (ci)
+function layoutBranch(m,els,topId,dir){
+  const SH={};
+  const sh=id=>{
+    if(SH[id]!=null)return SH[id];
+    const own=(els[id]?els[id].offsetHeight:34)+VGAP;
+    const n=m.nodes[id];
+    const kids=n.collapsed?[]:children(m,id);
+    let s=0;kids.forEach(k=>{s+=sh(k.id);});
+    return SH[id]=kids.length?Math.max(s,own)+SUBPAD:own;
+  };
+  (function place(id){
+    const n=m.nodes[id];
+    const kids=n.collapsed?[]:children(m,id);
+    if(!kids.length)return;
+    const p=_pos[id],pw=els[id]?els[id].offsetWidth:100;
+    let total=0;kids.forEach(k=>{total+=sh(k.id);});
+    let cur=p.y-total/2;
+    kids.forEach(k=>{
+      const band=sh(k.id);
+      const w=els[k.id]?els[k.id].offsetWidth:100;
+      _pos[k.id]={x:dir>0?p.x+pw+HGAP:p.x-HGAP-w,y:cur+band/2};
+      cur+=band;
+      m.nodes[k.id].fx=_pos[k.id].x;m.nodes[k.id].fy=_pos[k.id].y;
+      place(k.id);
+    });
+  })(topId);
+}
+function branchHeight(m,els,topId){
+  const rec=id=>{
+    const own=(els[id]?els[id].offsetHeight:34)+VGAP;
+    const n=m.nodes[id];
+    const kids=n.collapsed?[]:children(m,id);
+    let s=0;kids.forEach(k=>{s+=rec(k.id);});
+    return kids.length?Math.max(s,own)+SUBPAD:own;
+  };
+  return rec(topId);
+}
+function branchNodes(m,id){
+  const out=[];
+  (function rec(x){out.push(x);if(!m.nodes[x].collapsed)children(m,x).forEach(c=>rec(c.id));})(id);
+  return out;
+}
+// ramos inteiros são corpos RÍGIDOS: não se encavalam entre si nem com a
+// raiz; arrastar um ramo só afasta outro se realmente esbarrar nele
+function settleBranches(m,els,pinnedTops){
+  const tops=children(m,m.rootId).filter(t=>els[t.id]&&_pos[t.id]);
+  const items=tops.map(t=>({id:t.id,ids:branchNodes(m,t.id)}));
+  const boxOf=ids=>{
+    let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
+    ids.forEach(id=>{const p=_pos[id];if(!p||!els[id])return;
+      x1=Math.min(x1,p.x);x2=Math.max(x2,p.x+els[id].offsetWidth);
+      y1=Math.min(y1,p.y-els[id].offsetHeight/2);y2=Math.max(y2,p.y+els[id].offsetHeight/2);});
+    return {x1,y1,x2,y2};
+  };
+  items.forEach(it=>{it.box=boxOf(it.ids);});
+  const rEl=els[m.rootId],rp=_pos[m.rootId];
+  const rootBox=rEl&&rp?{x1:rp.x,x2:rp.x+rEl.offsetWidth,y1:rp.y-rEl.offsetHeight/2,y2:rp.y+rEl.offsetHeight/2}:null;
+  const shift=(it,dx,dy)=>{
+    it.ids.forEach(id=>{const p=_pos[id];if(!p)return;p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;});
+    it.box.x1+=dx;it.box.x2+=dx;it.box.y1+=dy;it.box.y2+=dy;
+  };
+  const solta=id=>!(pinnedTops&&pinnedTops.has(id));
+  for(let k=0;k<6;k++){
+    let moved=false;
+    items.forEach(it=>{ // contra a raiz (raiz é imóvel)
+      if(!rootBox||!solta(it.id))return;
+      const ox=Math.min(it.box.x2,rootBox.x2)-Math.max(it.box.x1,rootBox.x1)+BRANCH_GAP;
+      const oy=Math.min(it.box.y2,rootBox.y2)-Math.max(it.box.y1,rootBox.y1)+BRANCH_GAP;
+      if(ox<=0||oy<=0)return;
+      moved=true;
+      if(ox<oy)shift(it,ox*((it.box.x1+it.box.x2)<(rootBox.x1+rootBox.x2)?-1:1),0);
+      else shift(it,0,oy*((it.box.y1+it.box.y2)<(rootBox.y1+rootBox.y2)?-1:1));
+    });
+    for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){
+      const A=items[i].box,B=items[j].box;
+      const ox=Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1)+BRANCH_GAP;
+      const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1)+BRANCH_GAP;
+      if(ox<=0||oy<=0)continue;
+      const iL=solta(items[i].id),jL=solta(items[j].id);
+      if(!iL&&!jL)continue;
+      moved=true;
+      let dx=0,dy=0;
+      if(ox<oy)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
+      else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
+      if(!iL)shift(items[j],-dx,-dy);
+      else if(!jL)shift(items[i],dx,dy);
+      else{shift(items[i],dx/2,dy/2);shift(items[j],-dx/2,-dy/2);}
+    }
+    if(!moved)break;
+  }
+}
+
 /* ---------- física: perto empurra, esticado demais puxa ---------- */
 const GAP=13, GROUP_GAP=34, LMAX=430;
 function settleCollisions(m,els,iters,pinned,ignoreId,bias){
@@ -932,20 +1028,29 @@ function render(){
   visible.forEach(id=>{const el=makeNode(m,m.nodes[id]);el.style.left='0px';el.style.top='0px';els[id]=el;nodesLayer.appendChild(el);});
   const Hs={};visible.forEach(id=>{Hs[id]=els[id].offsetHeight;});
 
-  // posições LIVRES: quem não tem (1ª vez, migração ou "Organizar") ganha do layout arrumado
-  if(render._tidy||visible.some(id=>typeof m.nodes[id].fx!=='number')){
+  // ÂNCORAS LIVRES só na raiz e nos ramos de topo; DENTRO de cada ramo a
+  // arrumação é automática e perfeita: nada encavala, filhos na frente,
+  // ordem sempre pela sequência — e pais nunca se movem por causa de filhos
+  if(render._tidy||typeof m.nodes[m.rootId].fx!=='number'){
     layout(m,Hs);
     applyPositionsTidy(m,els);
     render._tidy=false;
     save();
   }
-  _pos={};visible.forEach(id=>{_pos[id]={x:m.nodes[id].fx,y:m.nodes[id].fy};});
-  snapSiblings(m,els); // ímã: quase alinhado gruda na coluna
-  for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break; // filho sempre à frente
-  for(let k=0;k<4;k++)if(!settleSprings(m,els,new Set()))break; // longe demais? puxa de volta
-  settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
-  if(settleFront(m,els,new Set()))settleCollisions(m,els,2,new Set());
-  visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
+  _pos={};
+  _pos[m.rootId]={x:m.nodes[m.rootId].fx,y:m.nodes[m.rootId].fy};
+  const tops=children(m,m.rootId).filter(t=>els[t.id]);
+  tops.forEach(t=>{
+    if(typeof t.fx!=='number')placeNear(m,t.id,m.rootId);
+    _pos[t.id]={x:t.fx,y:t.fy};
+  });
+  tops.forEach(t=>{
+    const dir=(_pos[t.id].x+els[t.id].offsetWidth/2>=_pos[m.rootId].x+els[m.rootId].offsetWidth/2)?1:-1;
+    t.side=dir>0?'right':'left';
+    layoutBranch(m,els,t.id,dir);
+  });
+  settleBranches(m,els,null); // ramos inteiros não se encavalam (rígidos)
+  visible.forEach(id=>{if(_pos[id]){els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';}});
   // tag à esquerda do pai: espelha botões (+ na frente, recolher) e a barrinha de cor
   visible.forEach(id=>{
     const n=m.nodes[id];if(!n.parentId)return;
@@ -1287,30 +1392,25 @@ $('#arrangeBtn').onclick=()=>{render._tidy=true;render();fitView();toast('Mapa o
 function compactar(){
   const m=currentMap();
   const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
-  const COMPACT=48;
-  (function rec(pid){
-    children(m,pid).forEach(ch=>{
-      if(!els[ch.id]||!_pos[ch.id]||!_pos[pid]){rec(ch.id);return;}
-      const pw=els[pid].offsetWidth,cw=els[ch.id].offsetWidth;
-      const dir=(_pos[ch.id].x+cw/2>=_pos[pid].x+pw/2)?1:-1;
-      const alvoX=dir>0?_pos[pid].x+pw+COMPACT:_pos[pid].x-COMPACT-cw;
-      const dx=alvoX-_pos[ch.id].x;
-      if(Math.abs(dx)>1){
-        (function shift(id2){ // a sub-árvore inteira vai junto
-          if(_pos[id2]){_pos[id2].x+=dx;m.nodes[id2].fx=_pos[id2].x;}
-          children(m,id2).forEach(c2=>shift(c2.id));
-        })(ch.id);
-      }
-      rec(ch.id);
+  const rEl=els[m.rootId],rp=_pos[m.rootId];
+  if(!rEl||!rp)return;
+  ['left','right'].forEach(side=>{
+    // empilha os ramos desse lado colados, na ORDEM VERTICAL atual
+    const tops=children(m,m.rootId).filter(t=>els[t.id]&&(t.side||'right')===side)
+      .sort((a,b)=>(a.fy||0)-(b.fy||0));
+    if(!tops.length)return;
+    const hs=tops.map(t=>branchHeight(m,els,t.id));
+    const total=hs.reduce((a,b)=>a+b,0)+(tops.length-1)*24;
+    let cur=rp.y-total/2;
+    tops.forEach((t,i)=>{
+      t.fy=cur+hs[i]/2;cur+=hs[i]+24;
+      t.fx=side==='right'
+        ?rp.x+rEl.offsetWidth+HGAP+34
+        :rp.x-HGAP-34-(els[t.id]?els[t.id].offsetWidth:100);
     });
-  })(m.rootId);
-  snapSiblings(m,els);
-  for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break;
-  settleCollisions(m,els,25,new Set());
-  snapSiblings(m,els);
-  settleCollisions(m,els,8,new Set());
+  });
   saveNow();render();fitView();
-  toast('Reorganizado: mais compacto, mesma ordem de tudo');
+  toast('Reorganizado: compacto, mesma ordem e disposição');
 }
 $('#compactBtn').onclick=compactar;
 
@@ -1513,10 +1613,12 @@ function dragMove(e){
     drag.active=true;histPause=true;
     nodesLayer.classList.add('dragging');
     const mA=currentMap();
-    // grupo rígido: os arrastados + suas sub-árvores, com posições de origem
+    // MODO: ramo de topo se move LIVRE; nó interno é arrasto ESTRUTURAL
+    // (reordena entre irmãos / solta em outra tag) — o pai nunca se move
+    drag.mode=drag.ids.every(x=>mA.nodes[x]&&mA.nodes[x].parentId===mA.rootId)?'free':'struct';
+    if(drag.mode==='struct')drag.ids=[drag.pressed];
     drag.grupo=new Set();
     drag.ids.forEach(did=>{(function rec(id){if(_pos[id])drag.grupo.add(id);children(mA,id).forEach(c=>rec(c.id));})(did);});
-    drag.orig={};drag.grupo.forEach(id=>{drag.orig[id]={x:_pos[id].x,y:_pos[id].y};});
     drag.hover=null;
     // ponto onde a mão "pegou" a tag (pra ela flutuar grudada no mouse)
     const r0=stage.getBoundingClientRect();
@@ -1535,46 +1637,39 @@ function dragMove(e){
   try{ // um erro aqui não pode travar o gesto
     const m=currentMap();
     const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
-    // 1. o grupo arrastado gruda no mouse (rígido, a partir do ponto onde pegou)
-    const o0=drag.orig[drag.pressed];
-    let dx=(px-drag.offX)-o0.x;
-    const dy=(py-drag.offY)-o0.y;
-    // ímã: perto da coluna de um irmão, a tag gruda no alinhamento dele
-    const pn=m.nodes[drag.pressed];
-    if(pn&&pn.parentId&&_pos[pn.parentId]&&els[pn.parentId]&&els[drag.pressed]){
-      const w=els[drag.pressed].offsetWidth;
-      const alvoX=o0.x+dx;
-      const paiCx=_pos[pn.parentId].x+els[pn.parentId].offsetWidth/2;
-      const minhaEsq=(alvoX+w/2)<paiCx;
-      const minhaBorda=minhaEsq?alvoX+w:alvoX;
-      let melhor=null,md=SNAP+1;
-      children(m,pn.parentId).forEach(s=>{
-        if(drag.grupo.has(s.id)||!_pos[s.id]||!els[s.id])return;
-        const sEsq=(_pos[s.id].x+els[s.id].offsetWidth/2)<paiCx;
-        const se=sEsq?_pos[s.id].x+els[s.id].offsetWidth:_pos[s.id].x;
-        const df=Math.abs(se-minhaBorda);
-        if(df<md){md=df;melhor=se;}
-      });
-      if(melhor!==null&&md<=SNAP)dx+=(melhor-minhaBorda);
-    }
-    drag.grupo.forEach(id=>{
-      const o=drag.orig[id];if(!o||!_pos[id])return;
-      _pos[id].x=o.x+dx;_pos[id].y=o.y+dy;
-      m.nodes[id].fx=_pos[id].x;m.nodes[id].fy=_pos[id].y;
-    });
-    // 2. em cima de uma tag? ela vira alvo e NÃO é empurrada (dá pra soltar nela)
-    //    EXCEÇÃO: irmão nunca vira alvo — entre irmãos o arrasto TROCA A ORDEM
+    // 1. alvo pra virar sub-tópico (nunca irmão, nunca descendente)
     let hov=dropHover(px,py,drag.ids);
     if(hov&&m.nodes[hov]&&m.nodes[hov].parentId===m.nodes[drag.pressed].parentId)hov=null;
-    // 3. física: filho à frente do pai; perto empurra; esticou demais puxa;
-    //    tag intrusa sai de cima das linhas; irmão troca de ordem
-    const bias={dy:Math.sign(dy),parentId:m.nodes[drag.pressed].parentId};
-    settleFront(m,els,drag.grupo);
-    settleCollisions(m,els,2,drag.grupo,hov,bias);
-    for(let k=0;k<3;k++)if(!settleSprings(m,els,drag.grupo))break;
-    settleFront(m,els,drag.grupo);
-    settleCollisions(m,els,1,drag.grupo,hov,bias);
-    // 4. aplica no DOM e estica as linhas
+    // 2. ESTRUTURAL: reordena ao vivo entre irmãos pela altura do ponteiro —
+    //    os irmãos deslizam animados, o PAI não se move um pixel
+    if(drag.mode==='struct'){
+      const n=m.nodes[drag.pressed],par=n.parentId;
+      const outros=children(m,par).filter(s=>s.id!==drag.pressed&&_pos[s.id]);
+      const idx=outros.filter(s=>_pos[s.id].y<py).length;
+      const atual=children(m,par).filter(s=>s.id!==drag.pressed&&(s.ci||0)<(n.ci||0)).length;
+      if(idx!==atual){
+        const lista=[...outros.slice(0,idx),n,...outros.slice(idx)];
+        lista.forEach((c,i)=>{c.ci=i;});
+        save();
+      }
+      let top=n;while(top.parentId&&top.parentId!==m.rootId)top=m.nodes[top.parentId];
+      if(top.parentId===m.rootId&&_pos[top.id]&&els[top.id]){
+        const dir=(_pos[top.id].x+els[top.id].offsetWidth/2>=_pos[m.rootId].x+els[m.rootId].offsetWidth/2)?1:-1;
+        layoutBranch(m,els,top.id,dir);
+      }
+    }
+    // 3. o grupo arrastado flutua grudado no cursor (por cima do layout)
+    const base=_pos[drag.pressed];
+    if(base){
+      const dx=(px-drag.offX)-base.x, dy=(py-drag.offY)-base.y;
+      drag.grupo.forEach(id=>{const p=_pos[id];if(!p)return;p.x+=dx;p.y+=dy;});
+    }
+    // 4. ramo LIVRE: persiste a posição e afasta outros ramos (rígidos)
+    if(drag.mode==='free'){
+      drag.grupo.forEach(id=>{if(_pos[id]){m.nodes[id].fx=_pos[id].x;m.nodes[id].fy=_pos[id].y;}});
+      settleBranches(m,els,new Set(drag.ids));
+    }
+    // 5. aplica no DOM e estica as linhas
     Object.keys(els).forEach(id=>{
       if(!_pos[id])return;
       els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';
@@ -1602,21 +1697,13 @@ function dragEnd(){
   if(d0.hover){ // soltou em cima de uma tag: os arrastados viram sub-tópicos dela
     moveNodes(d0.ids,d0.hover,children(m,d0.hover).filter(c=>!d0.ids.includes(c.id)).length);
   }
-  // a tag FICA onde foi solta; só registra o lado (pro botão Organizar) e a ordem
-  d0.ids.forEach(id=>{
-    const n=m.nodes[id];
-    if(n&&n.parentId===m.rootId)n.side=(n.fx<m.nodes[m.rootId].fx?'left':'right');
-  });
-  const pais=[...new Set(d0.ids.map(id=>m.nodes[id]&&m.nodes[id].parentId).filter(Boolean))];
-  pais.forEach(p=>{children(m,p).sort((a,b)=>(a.fy||0)-(b.fy||0)).forEach((c,i)=>{c.ci=i;});});
-  // assenta: filho à frente + mola + ímã + tags fora das linhas + sem sobrepor
-  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
-  for(let k=0;k<4;k++)if(!settleFront(m,els,new Set()))break;
-  for(let k=0;k<4;k++)if(!settleSprings(m,els,new Set()))break;
-  settleCollisions(m,els,25,new Set());
-  snapSiblings(m,els);
-  for(let k=0;k<3;k++)if(!settleFront(m,els,new Set()))break;
-  settleCollisions(m,els,6,new Set());
+  if(d0.mode==='free'){ // ramo fica onde foi solto; só registra o lado
+    d0.ids.forEach(id=>{
+      const n=m.nodes[id];
+      if(n&&n.parentId===m.rootId)n.side=(n.fx<m.nodes[m.rootId].fx?'left':'right');
+    });
+  }
+  // estrutural: a ordem (ci) já foi ajustada ao vivo; o render arruma o ramo
   saveNow();selectedId=d0.pressed;
   nodesLayer.classList.remove('dragging');
   render();
