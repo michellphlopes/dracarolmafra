@@ -887,9 +887,12 @@ function drawEdges(m,els){
       const esq=(c.x+cw/2)<(p.x+pw/2);
       const x1=esq?p.x:p.x+pw;
       const x2=esq?c.x+cw:c.x;
-      const y1=p.y,y2=c.y,mx=x1+(x2-x1)*0.5;
+      const y1=p.y,y2=c.y;
+      // curva sempre em "S": barriga horizontal mínima mesmo quando quase vertical
+      const k=Math.max(Math.abs(x2-x1)*0.5,50);
+      const c1=esq?x1-k:x1+k, c2=esq?x2+k:x2-k;
       const s=edgeStyle(m,ch.id);
-      d+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
+      d+=`<path d="M${x1},${y1} C${c1},${y1} ${c2},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
   });
   edges.innerHTML=d;
