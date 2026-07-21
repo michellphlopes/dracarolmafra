@@ -629,12 +629,17 @@ function addNode(parentId,text){
 }
 function children(m,id){return Object.values(m.nodes).filter(n=>n.parentId===id).sort((a,b)=>(a.ci||0)-(b.ci||0));}
 function placeNear(m,id,parentId){
-  // posição inicial de um nó novo: ao lado do pai, abaixo dos irmãos
+  // nó novo nasce NA COLUNA dos irmãos (alinhado), logo abaixo do último;
+  // sem irmãos, ao lado do pai no sentido do ramo
   const n=m.nodes[id],p=m.nodes[parentId]||m.nodes[m.rootId],root=m.nodes[m.rootId];
-  const dir=(typeof p.fx==='number'&&typeof root.fx==='number'&&p.fx+60<root.fx)?-1:1;
   const sibs=children(m,parentId).filter(c=>c.id!==id&&typeof c.fy==='number');
-  n.fx=(p.fx||0)+dir*COL;
-  n.fy=sibs.length?Math.max(...sibs.map(s=>s.fy))+46:(p.fy||0);
+  if(sibs.length){
+    const ultimo=sibs.reduce((a,s)=>s.fy>a.fy?s:a);
+    n.fx=ultimo.fx;n.fy=ultimo.fy+46;
+  }else{
+    const dir=(typeof p.fx==='number'&&typeof root.fx==='number'&&p.fx+60<root.fx)?-1:1;
+    n.fx=(p.fx||0)+dir*COL;n.fy=p.fy||0;
+  }
 }
 function placeSubtree(m,id,parentId){
   placeNear(m,id,parentId);
@@ -760,7 +765,7 @@ function applyPositionsTidy(m,els){
 
 /* ---------- física: perto empurra, esticado demais puxa ---------- */
 const GAP=13, LMAX=430;
-function settleCollisions(m,els,iters,pinned,ignoreId){
+function settleCollisions(m,els,iters,pinned,ignoreId,bias){
   const ids=Object.keys(els).filter(id=>_pos[id]);
   const mv=(id,dx,dy)=>{const p=_pos[id];p.x+=dx;p.y+=dy;m.nodes[id].fx=p.x;m.nodes[id].fy=p.y;};
   const box=id=>{const p=_pos[id],w=els[id].offsetWidth,h=els[id].offsetHeight;
@@ -777,6 +782,15 @@ function settleCollisions(m,els,iters,pinned,ignoreId){
       const oy=Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1);
       if(ox<=0||oy<=0)continue;
       moved=true;
+      // TROCA DE ORDEM: arrastando por cima de um irmão, ele desliza pro
+      // espaço que a tag arrastada deixou (sobe se desço, desce se subo)
+      const free=pinned.has(a)?b:(pinned.has(b)?a:null);
+      if(free&&bias&&bias.dy&&m.nodes[free]&&m.nodes[free].parentId===bias.parentId&&!(ox<oy*0.5)){
+        const P=free===b?A:B, F=free===b?B:A;
+        if(bias.dy>0)mv(free,0,-(F.y2-P.y1));
+        else mv(free,0,(P.y2-F.y1));
+        continue;
+      }
       let dx=0,dy=0; // prefere empurrar na VERTICAL (preserva colunas alinhadas)
       if(ox<oy*0.5)dx=ox*((A.x1+A.x2)<(B.x1+B.x2)?-1:1);
       else dy=oy*((A.y1+A.y2)<(B.y1+B.y2)?-1:1);
@@ -835,8 +849,9 @@ function settleFront(m,els,pinned){
   });
   return moved;
 }
-const SNAP=16;
-// ímã de alinhamento: irmão quase alinhado (±16px) gruda na coluna do de cima
+const SNAP=16, SNAP_REST=44, PACK_GAP=14;
+// ímã de alinhamento: no repouso, desalinhamento sem razão (±44px) escorrega
+// pra coluna do vizinho de cima; e buraco de tag excluída se fecha sozinho
 function snapSiblings(m,els){
   const leftOf=id=>{
     const n=m.nodes[id];
@@ -851,14 +866,31 @@ function snapSiblings(m,els){
     if(!kids.length)return;
     // compara com a posição ORIGINAL do vizinho de cima: escadinha longa
     // colapsa inteira na mesma coluna, sem quebrar a corrente no meio
-    let prevOrig=edge(kids[0].id),prevFinal=prevOrig;
+    // corrente do ímã olha AS DUAS bordas (esquerda e direita): larguras de
+    // texto diferentes não podem impedir o alinhamento
+    const eL=id=>_pos[id].x, eR=id=>_pos[id].x+els[id].offsetWidth;
+    let prevL=eL(kids[0].id),prevR=eR(kids[0].id),prevFinal=edge(kids[0].id);
     for(let i=1;i<kids.length;i++){
-      const cur=edge(kids[i].id);
-      if(Math.abs(cur-prevOrig)<=SNAP){
-        if(Math.abs(cur-prevFinal)>0.5)setEdge(kids[i].id,prevFinal);
-        prevOrig=cur;
+      const id2=kids[i].id;
+      const curL=eL(id2),curR=eR(id2),cur=edge(id2);
+      if(Math.min(Math.abs(curL-prevL),Math.abs(curR-prevR))<=SNAP_REST){
+        if(Math.abs(cur-prevFinal)>0.5)setEdge(id2,prevFinal);
+        prevL=curL;prevR=curR;
       }else{
-        prevOrig=cur;prevFinal=cur;
+        prevL=curL;prevR=curR;prevFinal=cur;
+      }
+    }
+    // fecha buracos: na mesma coluna, vão entre 15 e 80px (tag excluída do
+    // meio, por exemplo) faz o de baixo escorregar pra cima até encostar
+    for(let i=1;i<kids.length;i++){
+      const a=kids[i-1],b=kids[i];
+      if(Math.abs(edge(a.id)-edge(b.id))>1)continue;
+      const bottomA=_pos[a.id].y+els[a.id].offsetHeight/2;
+      const topB=_pos[b.id].y-els[b.id].offsetHeight/2;
+      const gap=topB-bottomA;
+      if(gap>15&&gap<=80){
+        const ny=bottomA+PACK_GAP+els[b.id].offsetHeight/2;
+        _pos[b.id].y=ny;m.nodes[b.id].fy=ny;
       }
     }
   });
@@ -1415,15 +1447,18 @@ function dragMove(e){
       m.nodes[id].fx=_pos[id].x;m.nodes[id].fy=_pos[id].y;
     });
     // 2. em cima de uma tag? ela vira alvo e NÃO é empurrada (dá pra soltar nela)
-    const hov=dropHover(px,py,drag.ids);
+    //    EXCEÇÃO: irmão nunca vira alvo — entre irmãos o arrasto TROCA A ORDEM
+    let hov=dropHover(px,py,drag.ids);
+    if(hov&&m.nodes[hov]&&m.nodes[hov].parentId===m.nodes[drag.pressed].parentId)hov=null;
     // 3. física: filho à frente do pai; perto empurra; esticou demais puxa;
-    //    tag intrusa sai de cima das linhas
+    //    tag intrusa sai de cima das linhas; irmão troca de ordem
+    const bias={dy:Math.sign(dy),parentId:m.nodes[drag.pressed].parentId};
     settleFront(m,els,drag.grupo);
-    settleCollisions(m,els,2,drag.grupo,hov);
+    settleCollisions(m,els,2,drag.grupo,hov,bias);
     for(let k=0;k<3;k++)if(!settleSprings(m,els,drag.grupo))break;
     settleFront(m,els,drag.grupo);
     settleLines(m,els,drag.grupo);
-    settleCollisions(m,els,1,drag.grupo,hov);
+    settleCollisions(m,els,1,drag.grupo,hov,bias);
     // 4. aplica no DOM e estica as linhas
     Object.keys(els).forEach(id=>{
       if(!_pos[id])return;
