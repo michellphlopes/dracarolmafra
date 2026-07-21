@@ -158,6 +158,16 @@ button{font-family:inherit;cursor:pointer}
   border-color:color-mix(in srgb,var(--ok) 45%,var(--line));border-left-color:var(--ok)}
 .node .badge{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
 
+/* + de hover: frente = sub-tópico, baixo = irmão */
+.hplus{position:absolute;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line-strong);
+  background:var(--surface);color:var(--muted);font-size:14px;font-weight:600;line-height:1;
+  display:none;align-items:center;justify-content:center;padding:0;z-index:4;box-shadow:var(--shadow-sm);transition:.12s}
+.node:hover .hplus{display:flex}
+.node.sel .hplus{display:none}
+.hplus:hover{color:#fff;background:var(--accent);border-color:var(--accent);transform-origin:center;scale:1.15}
+.hplus.right{right:-32px;top:50%;transform:translateY(-50%)}
+.hplus.down{bottom:-27px;left:50%;transform:translateX(-50%)}
+
 /* collapse toggle */
 .toggle{
   position:absolute;right:-11px;top:50%;transform:translateY(-50%);
@@ -530,6 +540,14 @@ function addNode(parentId,text){
   save();return id;
 }
 function children(m,id){return Object.values(m.nodes).filter(n=>n.parentId===id).sort((a,b)=>(a.ci||0)-(b.ci||0));}
+function addSiblingAfter(id,text){
+  // novo nó entra como irmão logo abaixo de `id`
+  const m=currentMap(),n=m.nodes[id];if(!n||!n.parentId)return null;
+  children(m,n.parentId).forEach(s=>{if((s.ci||0)>(n.ci||0))s.ci=(s.ci||0)+1;});
+  const nid=uid();
+  m.nodes[nid]={id:nid,text:text||'Novo tópico',parentId:n.parentId,ci:(n.ci||0)+1,note:'',done:false,collapsed:false};
+  save();return nid;
+}
 function insertBetween(id,text){
   // novo nó vira filho de `id` e adota todos os filhos atuais dele
   const m=currentMap(),n=m.nodes[id];if(!n)return null;
@@ -659,6 +677,16 @@ function makeNode(m,node){
     el.appendChild(bar);
   }
 
+  // + de hover: frente cria sub-tópico, baixo cria irmão logo abaixo
+  const pr=document.createElement('button');pr.className='hplus right';pr.textContent='+';pr.title='Adicionar sub-tópico na frente';
+  pr.onclick=e=>{e.stopPropagation();const id=addNode(node.id);render();selectNode(id);setTimeout(()=>startEdit(id),30);};
+  el.appendChild(pr);
+  if(!isRoot){
+    const pd=document.createElement('button');pd.className='hplus down';pd.textContent='+';pd.title='Adicionar tópico abaixo';
+    pd.onclick=e=>{e.stopPropagation();const id=addSiblingAfter(node.id);render();selectNode(id);setTimeout(()=>startEdit(id),30);};
+    el.appendChild(pd);
+  }
+
   el.onclick=e=>{if(editingId)return;selectNode(node.id);};
   el.ondblclick=e=>{e.stopPropagation();startEdit(node.id);};
   label.addEventListener('blur',()=>commitEdit(node.id,label.textContent));
@@ -747,7 +775,7 @@ document.addEventListener('keydown',e=>{
   if(!selectedId){if(e.key==='0'){fitView();}return;}
   const n=m.nodes[selectedId];if(!n)return;
   if(e.key==='Tab'){e.preventDefault();const id=e.shiftKey?insertBetween(selectedId):addNode(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}
-  else if(e.key==='Enter'){e.preventDefault();if(n.parentId){const id=addNode(n.parentId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}}
+  else if(e.key==='Enter'){e.preventDefault();if(n.parentId){const id=addSiblingAfter(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}}
   else if(e.key==='F2'){e.preventDefault();startEdit(selectedId);}
   else if(e.key==='Delete'||e.key==='Backspace'){if(selectedId!==m.rootId){e.preventDefault();const pid=n.parentId;deleteNode(selectedId);selectedId=pid;render();if($('#panel').classList.contains('open'))fillPanel();}}
   else if(e.key===' '){const k=children(m,selectedId);if(k.length){e.preventDefault();n.collapsed=!n.collapsed;save();render();}}
