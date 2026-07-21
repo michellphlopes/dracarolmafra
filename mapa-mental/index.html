@@ -321,6 +321,9 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
 #nodes.dragging .node{transition:left .16s ease,top .16s ease}
 .drag-ghost{position:fixed;left:0;top:0;z-index:80;pointer-events:none;opacity:.8;
   transform-origin:top left;box-shadow:var(--shadow-lg);animation:none}
+.ghost-count{position:absolute;top:-9px;right:-9px;background:var(--accent);color:var(--accent-ink);
+  font-size:11px;font-weight:700;width:21px;height:21px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)}
 
 /* toast */
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);
@@ -399,7 +402,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> arraste um tópico pra reorganizar (solte em cima de outro pra virar sub-tópico) · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copiar · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
+      <span id="hintBody"><b>Dica:</b> arraste um tópico pra reorganizar — solte em cima de outro pra virar sub-tópico, ou puxe pro lado esquerdo da ideia central · marcados vão juntos · <kbd>Ctrl+Z</kbd> desfaz · clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd> copiar · <kbd>Ctrl+X</kbd> recortar (move ao colar) · <kbd>Ctrl+V</kbd> colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -549,8 +552,41 @@ let cutIds=null,cutMapId=null; // recorte pendente (Ctrl+X): originais saem ao c
 let saveTimer=null;
 
 /* ---------- persistence ---------- */
-function save(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>localStorage.setItem(LS_DB,JSON.stringify(DB)),250);}
-function saveNow(){localStorage.setItem(LS_DB,JSON.stringify(DB));}
+function save(){histRecord();clearTimeout(saveTimer);saveTimer=setTimeout(()=>localStorage.setItem(LS_DB,JSON.stringify(DB)),250);}
+function saveNow(){histRecord();localStorage.setItem(LS_DB,JSON.stringify(DB));}
+
+/* ---------- desfazer / refazer (Ctrl+Z / Ctrl+Y) ---------- */
+let undoStack=[],redoStack=[],lastPush=0,histPause=false;
+function histInit(){undoStack=[JSON.stringify(currentMap())];redoStack=[];lastPush=0;}
+function histRecord(){
+  if(histPause||!DB.currentId||!DB.maps[DB.currentId])return;
+  const s=JSON.stringify(currentMap());
+  if(s===undoStack[undoStack.length-1])return;
+  const now=Date.now();
+  if(now-lastPush<450&&undoStack.length>1)undoStack[undoStack.length-1]=s; // digitação vira 1 passo
+  else undoStack.push(s);
+  lastPush=now;
+  if(undoStack.length>120)undoStack.shift();
+  redoStack=[];
+}
+function restoreState(s){
+  const m=JSON.parse(s);
+  DB.maps[m.id]=m;DB.currentId=m.id;
+  localStorage.setItem(LS_DB,JSON.stringify(DB)); // direto, sem passar pelo histórico
+  selectedId=null;multiSel.clear();cutIds=null;cutMapId=null;
+  render();
+}
+function undo(){
+  if(undoStack.length<2){toast('Nada pra desfazer');return;}
+  redoStack.push(undoStack.pop());
+  restoreState(undoStack[undoStack.length-1]);
+  toast('Desfeito (Ctrl+Y refaz)');
+}
+function redo(){
+  if(!redoStack.length){toast('Nada pra refazer');return;}
+  const s=redoStack.pop();undoStack.push(s);restoreState(s);
+  toast('Refeito');
+}
 function saveSet(){localStorage.setItem(LS_SET,JSON.stringify(SET));}
 function load(){
   try{const s=JSON.parse(localStorage.getItem(LS_SET));if(s)SET={...SET,...s};}catch(e){}
@@ -565,7 +601,7 @@ function currentMap(){return DB.maps[DB.currentId];}
 function newMap(name){
   const id=uid(), rootId=uid();
   DB.maps[id]={id,name:name||'Novo mapa',rootId,nodes:{[rootId]:{id:rootId,text:name||'Ideia central',parentId:null,ci:0,note:'',done:false,collapsed:false}}};
-  DB.order.unshift(id); DB.currentId=id; save();
+  DB.order.unshift(id); DB.currentId=id; histInit(); save();
   return id;
 }
 function addNode(parentId,text){
@@ -633,8 +669,8 @@ function nodePath(m,id){
    ============================================================ */
 let _maxDepth=0,_pos={};
 function layout(m,H){
-  // layout ciente da altura real de cada nó: cada subárvore ganha uma faixa
-  // vertical do tamanho que precisa, então nada sobrepõe nada
+  // layout ciente da altura real de cada nó, com DOIS LADOS: ramos de topo
+  // com side:'left' espelham pra esquerda da ideia central
   _pos={};_maxDepth=0;
   const SH={};
   const sh=id=>{
@@ -645,17 +681,42 @@ function layout(m,H){
     let s=0;kids.forEach(k=>{s+=sh(k.id);});
     return SH[id]=kids.length?Math.max(s,own):own;
   };
-  (function place(id,top,depth){
+  function place(id,top,depth,side){
     _maxDepth=Math.max(_maxDepth,depth);
     const n=m.nodes[id];const band=sh(id);
     const kids=n.collapsed?[]:children(m,id);
-    if(!kids.length){_pos[id]={x:depth*COL,y:top+band/2,depth};return;}
+    if(!kids.length){_pos[id]={xr:depth*COL,y:top+band/2,depth,side};return;}
     let kidsSum=0;kids.forEach(k=>{kidsSum+=sh(k.id);});
     let cur=top+(band-kidsSum)/2;
-    kids.forEach(k=>{place(k.id,cur,depth+1);cur+=sh(k.id);});
-    _pos[id]={x:depth*COL,y:(_pos[kids[0].id].y+_pos[kids[kids.length-1].id].y)/2,depth};
-  })(m.rootId,0,0);
-  return {w:_maxDepth*COL+280,h:Math.max(sh(m.rootId),40)};
+    kids.forEach(k=>{place(k.id,cur,depth+1,side);cur+=sh(k.id);});
+    _pos[id]={xr:depth*COL,y:(_pos[kids[0].id].y+_pos[kids[kids.length-1].id].y)/2,depth,side};
+  }
+  const tops=children(m,m.rootId);
+  const R=tops.filter(t=>t.side!=='left'),L=tops.filter(t=>t.side==='left');
+  const hR=R.reduce((a,t)=>a+sh(t.id),0),hL=L.reduce((a,t)=>a+sh(t.id),0);
+  const Htot=Math.max(hR,hL,(H[m.rootId]||40)+VGAP);
+  let cur=(Htot-hR)/2;R.forEach(t=>{place(t.id,cur,1,'right');cur+=sh(t.id);});
+  const mdR=_maxDepth;_maxDepth=0;
+  cur=(Htot-hL)/2;L.forEach(t=>{place(t.id,cur,1,'left');cur+=sh(t.id);});
+  const mdL=_maxDepth;_maxDepth=Math.max(mdR,mdL);
+  const ys=tops.filter(t=>_pos[t.id]).map(t=>_pos[t.id].y);
+  const rootY=ys.length?(Math.min(...ys)+Math.max(...ys))/2:Htot/2;
+  _pos[m.rootId]={xr:0,y:rootY,depth:0,side:'right'};
+  const LX=mdL?mdL*COL+270:0;
+  layout._LX=LX;
+  return {w:LX+mdR*COL+280,h:Htot};
+}
+// converte xr/side em x final (lado esquerdo espelha em torno da raiz)
+function applyPositions(m,els){
+  const LX=layout._LX||0;
+  const rootEl=els[m.rootId];
+  const axis=LX+(rootEl?rootEl.offsetWidth/2:60);
+  Object.keys(els).forEach(id=>{
+    const p=_pos[id];if(!p)return;
+    const rx=LX+p.xr;
+    p.x=(p.side==='left'&&id!==m.rootId)?(2*axis-rx-els[id].offsetWidth):rx;
+    els[id].style.left=p.x+'px';els[id].style.top=p.y+'px';
+  });
 }
 
 /* ============================================================
@@ -678,7 +739,7 @@ function render(){
   world.style.width=dim.w+'px';world.style.height=dim.h+'px';
   edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
   edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
-  visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
+  applyPositions(m,els);
 
   drawEdges(m,els);
   applyTransform();
@@ -686,13 +747,14 @@ function render(){
   $('#mapTitle').textContent=m.name;
 }
 
-// cor da linha conta o status do tópico aonde ela chega:
-// verde = concluído · vermelho = pendente · cinza tracejado = em andamento
+// cada ramo principal tem sua COR nas linhas (fácil de seguir);
+// o status aparece no traço: forte = concluído · tracejado = em andamento
 function edgeStyle(m,id){
+  const col=cvar(branchColorVar(m,id));
   const n=m.nodes[id];
-  if(n.done)return{col:cvar('--ok'),op:.75,extra:''};
-  if(children(m,id).length)return{col:cvar('--faint'),op:.55,extra:' stroke-dasharray="7 6"'};
-  return{col:cvar('--todo'),op:.6,extra:''};
+  if(n.done)return{col,op:.9,extra:''};
+  if(children(m,id).length)return{col,op:.4,extra:' stroke-dasharray="7 6"'};
+  return{col,op:.6,extra:''};
 }
 function drawEdges(m,els){
   let d='';
@@ -702,7 +764,11 @@ function drawEdges(m,els){
     children(m,id).forEach(ch=>{
       if(!_pos[ch.id])return;
       const c=_pos[ch.id];
-      const x1=p.x+pw,y1=p.y,x2=c.x,y2=c.y,mx=x1+(x2-x1)*0.5;
+      const cw=els[ch.id]?els[ch.id].offsetWidth:0;
+      // lado esquerdo: sai da borda esquerda do pai e chega na borda direita do filho
+      const x1=c.side==='left'?p.x:p.x+pw;
+      const x2=c.side==='left'?c.x+cw:c.x;
+      const y1=p.y,y2=c.y,mx=x1+(x2-x1)*0.5;
       const s=edgeStyle(m,ch.id);
       d+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
@@ -720,7 +786,7 @@ function repositionAll(){
   world.style.width=dim.w+'px';world.style.height=dim.h+'px';
   edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
   edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
-  Object.keys(els).forEach(id=>{if(_pos[id]){els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';}});
+  applyPositions(m,els);
   drawEdges(m,els);
 }
 
@@ -901,6 +967,9 @@ document.addEventListener('keydown',e=>{
   if(editingId)return;
   const inField=/INPUT|TEXTAREA/.test(document.activeElement.tagName)||document.activeElement.isContentEditable;
   if(inField&&document.activeElement.id!=='mapTitle')return;
+  // desfazer/refazer funcionam mesmo sem nada selecionado
+  if((e.ctrlKey||e.metaKey)&&(e.key==='z'||e.key==='Z')){e.preventDefault();if(e.shiftKey)redo();else undo();return;}
+  if((e.ctrlKey||e.metaKey)&&(e.key==='y'||e.key==='Y')){e.preventDefault();redo();return;}
   const m=currentMap();
   if(!selectedId){if(e.key==='0'){fitView();}return;}
   const n=m.nodes[selectedId];if(!n)return;
@@ -1021,56 +1090,78 @@ function toast(msg){
    ============================================================ */
 let drag=null, suppressClick=false;
 
-function dropTarget(px,py,dragId){
+function dropTarget(px,py,dragIds){
   const m=currentMap();
-  const forb=new Set();(function rec(id){forb.add(id);children(m,id).forEach(c=>rec(c.id));})(dragId);
+  const forb=new Set();
+  dragIds.forEach(did=>{(function rec(id){forb.add(id);children(m,id).forEach(c=>rec(c.id));})(did);});
   // ponteiro sobre a caixa de um nó → soltar vira sub-tópico dele
   for(const id of Object.keys(_pos)){
     if(forb.has(id))continue;
     const el=nodesLayer.querySelector(`.node[data-id="${id}"]`);if(!el)continue;
     const p=_pos[id],w=el.offsetWidth,h=el.offsetHeight;
-    if(px>=p.x&&px<=p.x+w&&py>=p.y-h/2&&py<=p.y+h/2)return{mode:'child',ref:id};
+    if(px>=p.x&&px<=p.x+w&&py>=p.y-h/2&&py<=p.y+h/2){
+      if(id===m.rootId)return{mode:'child',ref:id,side:px<p.x+w/2?'left':'right'};
+      return{mode:'child',ref:id};
+    }
   }
-  // senão: coluna mais próxima → inserir entre os irmãos daquela altura
-  const livres=Object.keys(_pos).filter(id=>!forb.has(id)&&m.nodes[id].parentId&&!forb.has(m.nodes[id].parentId));
-  if(!livres.length)return null;
-  const depths=[...new Set(livres.map(id=>_pos[id].depth))];
-  let depth=Math.round(px/COL);
-  depth=depths.reduce((a,b)=>Math.abs(b-depth)<Math.abs(a-depth)?b:a);
-  const cands=livres.filter(id=>_pos[id].depth===depth);
+  // de que lado da ideia central o ponteiro está?
+  const rootP=_pos[m.rootId];
+  const rootEl=nodesLayer.querySelector(`.node[data-id="${m.rootId}"]`);
+  const axis=rootP.x+(rootEl?rootEl.offsetWidth/2:60);
+  const side=px<axis?'left':'right';
+  const livres=Object.keys(_pos).filter(id=>!forb.has(id)&&m.nodes[id].parentId
+    &&!forb.has(m.nodes[id].parentId)&&(_pos[id].side||'right')===side);
+  if(!livres.length)return{mode:'rootside',side}; // lado vazio: vira ramo de topo desse lado
   let best=null,bd=Infinity;
-  cands.forEach(id=>{const d=Math.abs(_pos[id].y-py);if(d<bd){bd=d;best=id;}});
-  if(!best)return null;
+  livres.forEach(id=>{
+    const p=_pos[id];
+    const el=nodesLayer.querySelector(`.node[data-id="${id}"]`);
+    const w=el?el.offsetWidth:100;
+    const dx=px<p.x?p.x-px:(px>p.x+w?px-(p.x+w):0);
+    const d=Math.abs(p.y-py)+dx*0.5;
+    if(d<bd){bd=d;best=id;}
+  });
   return{mode:py<_pos[best].y?'before':'after',ref:best};
 }
-function moveNode(id,newParent,index){
-  const m=currentMap(),n=m.nodes[id];
-  children(m,n.parentId).filter(c=>c.id!==id).forEach((c,i)=>c.ci=i);
-  n.parentId=newParent;
-  const sibs=children(m,newParent).filter(c=>c.id!==id);
-  index=Math.max(0,Math.min(index,sibs.length));
-  sibs.forEach((c,i)=>{c.ci=i>=index?i+1:i;});
-  n.ci=index;
+function moveNodes(ids,newParent,index){
+  const m=currentMap();
+  const set=new Set(ids);
+  const oldParents=[...new Set(ids.map(id=>m.nodes[id].parentId))];
+  ids.forEach(id=>{m.nodes[id].parentId=newParent;});
+  oldParents.filter(p=>p&&p!==newParent).forEach(p=>{children(m,p).forEach((c,i)=>c.ci=i);});
+  const others=children(m,newParent).filter(c=>!set.has(c.id));
+  index=Math.max(0,Math.min(index,others.length));
+  const lista=[...others.slice(0,index),...ids.map(id=>m.nodes[id]),...others.slice(index)];
+  lista.forEach((c,i)=>{c.ci=i;});
   if(m.nodes[newParent])m.nodes[newParent].collapsed=false;
   save();
 }
-function applyMove(id,t){
-  const m=currentMap(),n=m.nodes[id];
-  let newParent,index;
+function moveNode(id,newParent,index){moveNodes([id],newParent,index);}
+function applyMove(ids,t){
+  const m=currentMap();
+  let newParent,index,side=null;
   if(t.mode==='child'){
-    if(t.ref===n.parentId)return false; // já é filho dele
-    newParent=t.ref;index=children(m,t.ref).filter(c=>c.id!==id).length;
+    if(ids.length===1&&t.ref===m.nodes[ids[0]].parentId&&t.ref!==m.rootId)return false;
+    newParent=t.ref;index=children(m,t.ref).filter(c=>!ids.includes(c.id)).length;
+    if(t.ref===m.rootId)side=t.side||'right';
+  }else if(t.mode==='rootside'){
+    newParent=m.rootId;index=children(m,m.rootId).filter(c=>!ids.includes(c.id)).length;side=t.side;
   }else{
     newParent=m.nodes[t.ref].parentId;
-    const sibs=children(m,newParent).filter(c=>c.id!==id);
+    const sibs=children(m,newParent).filter(c=>!ids.includes(c.id));
     const i=sibs.findIndex(s=>s.id===t.ref);
     index=t.mode==='before'?i:i+1;
+    if(newParent===m.rootId)side=m.nodes[t.ref].side||'right';
   }
-  if(n.parentId===newParent){
-    const atual=children(m,newParent).filter(c=>c.id!==id&&(c.ci||0)<(n.ci||0)).length;
-    if(atual===index)return false; // já está nesse lugar
+  // já está exatamente assim? não mexe (evita re-layout à toa)
+  const first=m.nodes[ids[0]];
+  if(ids.every(id=>m.nodes[id].parentId===newParent)){
+    const antes=children(m,newParent).filter(c=>!ids.includes(c.id)&&(c.ci||0)<(first.ci||0)).length;
+    const mesmoLado=side===null||ids.every(id=>(m.nodes[id].side||'right')===side);
+    if(antes===index&&mesmoLado)return false;
   }
-  moveNode(id,newParent,index);
+  if(side!==null)ids.forEach(id=>{m.nodes[id].side=side;});
+  moveNodes(ids,newParent,index);
   return true;
 }
 nodesLayer.addEventListener('pointerdown',e=>{
@@ -1079,7 +1170,14 @@ nodesLayer.addEventListener('pointerdown',e=>{
   if(e.target.closest('button'))return;
   const m=currentMap(),id=nel.dataset.id;
   if(!id||id===m.rootId)return;
-  drag={id,startX:e.clientX,startY:e.clientY,active:false,ghost:null};
+  // se o nó pressionado está marcado junto com outros, todos vão juntos
+  let ids=[id];
+  if(multiSel.size>1&&multiSel.has(id)){
+    ids=[...multiSel].filter(x=>x!==m.rootId&&m.nodes[x]);
+    ids=ids.filter(x=>{let p=m.nodes[x].parentId;while(p){if(ids.includes(p))return false;p=m.nodes[p]&&m.nodes[p].parentId;}return true;});
+    ids.sort((a,b)=>((_pos[a]&&_pos[a].y)||0)-((_pos[b]&&_pos[b].y)||0));
+  }
+  drag={ids,pressed:id,startX:e.clientX,startY:e.clientY,active:false,ghost:null};
   window.addEventListener('pointermove',dragMove);
   window.addEventListener('pointerup',dragEnd);
 });
@@ -1087,14 +1185,15 @@ function dragMove(e){
   if(!drag)return;
   if(!drag.active){
     if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<7)return;
-    drag.active=true;
+    drag.active=true;histPause=true;
     nodesLayer.classList.add('dragging');
-    const src=nodesLayer.querySelector(`.node[data-id="${drag.id}"]`);
+    const src=nodesLayer.querySelector(`.node[data-id="${drag.pressed}"]`);
     if(src){
       const g=src.cloneNode(true);
       g.classList.add('drag-ghost');g.classList.remove('sel');
       const acts=g.querySelector('.node-actions');if(acts)acts.remove();
       g.style.left='0px';g.style.top='0px';g.style.width=src.offsetWidth+'px';
+      if(drag.ids.length>1){const c=document.createElement('span');c.className='ghost-count';c.textContent=drag.ids.length;g.appendChild(c);}
       document.body.appendChild(g);drag.ghost=g;
     }
   }
@@ -1102,18 +1201,18 @@ function dragMove(e){
   const rect=stage.getBoundingClientRect();
   const px=(e.clientX-rect.left-view.tx)/view.scale;
   const py=(e.clientY-rect.top-view.ty)/view.scale;
-  const t=dropTarget(px,py,drag.id);
-  if(t&&applyMove(drag.id,t))repositionAll();
+  const t=dropTarget(px,py,drag.ids);
+  if(t&&applyMove(drag.ids,t))repositionAll();
 }
 function dragEnd(){
   window.removeEventListener('pointermove',dragMove);
   window.removeEventListener('pointerup',dragEnd);
   if(drag&&drag.ghost)drag.ghost.remove();
-  const moved=drag&&drag.active,id=drag&&drag.id;
+  const moved=drag&&drag.active,id=drag&&drag.pressed;
   drag=null;nodesLayer.classList.remove('dragging');
   if(moved){
     suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
-    saveNow();selectedId=id;render();
+    histPause=false;saveNow();selectedId=id;render();
   }
 }
 
@@ -1281,7 +1380,7 @@ function renderMapList(){
 }
 function switchMap(id){
   if(!DB.maps[id])return;
-  DB.currentId=id;selectedId=null;closePanel();save();render();fitView();
+  DB.currentId=id;selectedId=null;closePanel();histInit();save();render();fitView();
   if(window.innerWidth<=720)$('#app').classList.remove('mobile-rail');
 }
 function delMap(id){
@@ -1289,7 +1388,7 @@ function delMap(id){
   if(!confirm('Excluir o mapa "'+DB.maps[id].name+'"? Isso não pode ser desfeito.'))return;
   delete DB.maps[id];DB.order=DB.order.filter(x=>x!==id);
   if(DB.currentId===id)DB.currentId=DB.order[0];
-  selectedId=null;closePanel();save();render();fitView();
+  selectedId=null;closePanel();histInit();save();render();fitView();
 }
 $('#newMapBtn').onclick=()=>{const name=prompt('Nome do novo mapa:','Novo mapa');if(name===null)return;newMap(name.trim()||'Novo mapa');selectedId=currentMap().rootId;render();fitView();openPanel();};
 $('#mapTitle').addEventListener('input',e=>{const m=currentMap();m.name=e.target.textContent.trim()||'Sem título';save();renderMapList();});
@@ -1447,6 +1546,7 @@ function seedDefault(){
    ============================================================ */
 initTheme();
 load();
+histInit();
 render();
 fitView();
 setTimeout(fitView,120);
