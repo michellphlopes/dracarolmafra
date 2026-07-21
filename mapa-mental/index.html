@@ -133,8 +133,8 @@ button{font-family:inherit;cursor:pointer}
   animation:pop .22s cubic-bezier(.2,.8,.3,1.2);
 }
 @keyframes pop{from{opacity:0;transform:translateY(-50%) scale(.9)}to{opacity:1;transform:translateY(-50%) scale(1)}}
-.node:hover{box-shadow:var(--shadow-md)}
-.node.sel{border-color:var(--bc,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--bc,var(--accent)) 28%,transparent),var(--shadow-md)}
+.node:hover{box-shadow:var(--shadow-md);z-index:10}
+.node.sel{border-color:var(--bc,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--bc,var(--accent)) 28%,transparent),var(--shadow-md);z-index:9}
 .node.done .label{text-decoration:line-through;color:var(--faint)}
 .node .label{outline:none;white-space:pre-wrap;overflow-wrap:break-word;flex:1;min-width:14px}
 .node .label[contenteditable="true"]{cursor:text;min-width:60px}
