@@ -917,11 +917,14 @@ function drawEdges(m,els){
       const x1=esq?p.x:p.x+pw;
       const x2=esq?c.x+cw:c.x;
       const y1=p.y,y2=c.y;
-      // curva sempre em "S": barriga horizontal mínima mesmo quando quase vertical
-      const k=Math.max(Math.abs(x2-x1)*0.5,50);
-      const c1=esq?x1-k:x1+k, c2=esq?x2+k:x2-k;
+      // curva "metrô": dobra LOGO depois da tag e chega na horizontal, na
+      // altura do filho — as linhas correm no corredor de cada altura, sem
+      // arcos largos espalhados nem passar atrás das outras tags
+      const sg=esq?-1:1, adx=Math.abs(x2-x1);
+      const a1=sg*Math.min(34,adx*0.3);
+      const a2=sg*Math.min(96,adx*0.65);
       const s=edgeStyle(m,ch.id);
-      d+=`<path d="M${x1},${y1} C${c1},${y1} ${c2},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
+      d+=`<path d="M${x1},${y1} C${x1+a1},${y1} ${x1+a2},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
   });
   edges.innerHTML=d;
