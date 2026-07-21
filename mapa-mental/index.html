@@ -909,22 +909,32 @@ function drawEdges(m,els){
     const node=m.nodes[id];if(!node||node.collapsed||!_pos[id])return;
     const pw=els[id].offsetWidth, p=_pos[id];
     children(m,id).forEach(ch=>{
-      if(!_pos[ch.id])return;
+      if(!_pos[ch.id]||!els[ch.id])return;
       const c=_pos[ch.id];
-      const cw=els[ch.id]?els[ch.id].offsetWidth:0;
-      // o lado vem da posição real: filho à esquerda liga borda esquerda↔direita
-      const esq=(c.x+cw/2)<(p.x+pw/2);
-      const x1=esq?p.x:p.x+pw;
-      const x2=esq?c.x+cw:c.x;
-      const y1=p.y,y2=c.y;
-      // curva "metrô": dobra LOGO depois da tag e chega na horizontal, na
-      // altura do filho — as linhas correm no corredor de cada altura, sem
-      // arcos largos espalhados nem passar atrás das outras tags
-      const sg=esq?-1:1, adx=Math.abs(x2-x1);
-      const a1=sg*Math.min(34,adx*0.3);
-      const a2=sg*Math.min(96,adx*0.65);
+      const cw=els[ch.id].offsetWidth, chh=els[ch.id].offsetHeight;
+      const ph=els[id].offsetHeight;
       const s=edgeStyle(m,ch.id);
-      d+=`<path d="M${x1},${y1} C${x1+a1},${y1} ${x1+a2},${y2} ${x2},${y2}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
+      let path;
+      if(c.x>=p.x+pw-6){
+        // filho à DIREITA: curva metrô — dobra logo após a tag, chega na horizontal
+        const x1=p.x+pw,x2=c.x,adx=x2-x1;
+        const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
+        path=`M${x1},${p.y} C${x1+a1},${p.y} ${x1+a2},${c.y} ${x2},${c.y}`;
+      }else if(c.x+cw<=p.x+6){
+        // filho à ESQUERDA: espelhado
+        const x1=p.x,x2=c.x+cw,adx=x1-x2;
+        const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
+        path=`M${x1},${p.y} C${x1-a1},${p.y} ${x1-a2},${c.y} ${x2},${c.y}`;
+      }else{
+        // filho EMPILHADO (quase na vertical): sai por baixo/cima da tag e
+        // entra pelo topo/fundo do filho — nunca embola nem faz laço
+        const baixo=c.y>=p.y;
+        const y1=p.y+(baixo?ph/2:-ph/2), y2=c.y+(baixo?-chh/2:chh/2);
+        const k=Math.max(14,Math.abs(y2-y1)*0.45);
+        const x1=p.x+pw/2, x2=c.x+cw/2;
+        path=`M${x1},${y1} C${x1},${y1+(baixo?k:-k)} ${x2},${y2+(baixo?-k:k)} ${x2},${y2}`;
+      }
+      d+=`<path d="${path}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
   });
   edges.innerHTML=d;
