@@ -317,8 +317,10 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
 /* recortado (Ctrl+X): esmaecido e tracejado até colar */
 .node.cut{opacity:.45;border-style:dashed}
 
-/* arrasto: vizinhos empurram com animação; fantasma segue o mouse */
+/* arrasto: a própria tag flutua no mouse; vizinhos empurram com animação */
 #nodes.dragging .node{transition:left .16s ease,top .16s ease}
+#nodes .node.drag-src{transition:none;z-index:30;box-shadow:var(--shadow-lg);
+  opacity:.93;cursor:grabbing;pointer-events:none}
 .drag-ghost{position:fixed;left:0;top:0;z-index:80;pointer-events:none;opacity:.8;
   transform-origin:top left;box-shadow:var(--shadow-lg);animation:none}
 .ghost-count{position:absolute;top:-9px;right:-9px;background:var(--accent);color:var(--accent-ink);
@@ -1164,7 +1166,7 @@ function applyMove(ids,t){
   moveNodes(ids,newParent,index);
   return true;
 }
-function killGhosts(){document.querySelectorAll('.drag-ghost').forEach(g=>g.remove());}
+function killGhosts(){document.querySelectorAll('.drag-ghost,.ghost-count').forEach(g=>g.remove());}
 nodesLayer.addEventListener('pointerdown',e=>{
   if(e.button!==0||editingId)return;
   if(drag)dragEnd(); // arrasto anterior não finalizou direito: limpa antes
@@ -1192,36 +1194,59 @@ function dragMove(e){
     if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<7)return;
     drag.active=true;histPause=true;
     nodesLayer.classList.add('dragging');
-    const src=nodesLayer.querySelector(`.node[data-id="${drag.pressed}"]`);
-    if(src){
-      const g=src.cloneNode(true);
-      g.classList.add('drag-ghost');g.classList.remove('sel');
-      const acts=g.querySelector('.node-actions');if(acts)acts.remove();
-      g.style.left='0px';g.style.top='0px';g.style.width=src.offsetWidth+'px';
-      if(drag.ids.length>1){const c=document.createElement('span');c.className='ghost-count';c.textContent=drag.ids.length;g.appendChild(c);}
-      document.body.appendChild(g);drag.ghost=g;
+    // guarda o ponto onde a mão "pegou" a tag (pra ela flutuar grudada no mouse)
+    const r0=stage.getBoundingClientRect();
+    const px0=(drag.startX-r0.left-view.tx)/view.scale;
+    const py0=(drag.startY-r0.top-view.ty)/view.scale;
+    const bp=_pos[drag.pressed];
+    drag.offX=px0-(bp?bp.x:0);drag.offY=py0-(bp?bp.y:0);
+    if(drag.ids.length>1){
+      const src=nodesLayer.querySelector(`.node[data-id="${drag.pressed}"]`);
+      if(src){const c=document.createElement('span');c.className='ghost-count';c.textContent=drag.ids.length;src.appendChild(c);}
     }
   }
-  if(drag.ghost)drag.ghost.style.transform=`translate(${e.clientX+12}px,${e.clientY+10}px) scale(${Math.min(view.scale,1)})`;
   const rect=stage.getBoundingClientRect();
   const px=(e.clientX-rect.left-view.tx)/view.scale;
   const py=(e.clientY-rect.top-view.ty)/view.scale;
-  try{ // um erro aqui não pode travar o gesto (senão o fantasma fica preso)
+  try{ // um erro aqui não pode travar o gesto
     const t=dropTarget(px,py,drag.ids);
     if(t&&applyMove(drag.ids,t))repositionAll();
   }catch(err){console.error('drag:',err);}
+  pinDragged(px,py); // a tag de verdade segue o mouse; linhas esticam junto
+}
+// pendura a(s) tag(s) arrastada(s) no cursor e redesenha as linhas esticando
+function pinDragged(px,py){
+  if(!drag||!drag.active)return;
+  const m=currentMap();
+  const base=_pos[drag.pressed];if(!base)return;
+  const dx=(px-drag.offX)-base.x, dy=(py-drag.offY)-base.y;
+  const grupo=new Set();
+  drag.ids.forEach(did=>{(function rec(id){if(_pos[id])grupo.add(id);children(m,id).forEach(c=>rec(c.id));})(did);});
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  grupo.forEach(id=>{
+    const p=_pos[id];p.x+=dx;p.y+=dy;
+    const el=els[id];
+    if(el){el.style.left=p.x+'px';el.style.top=p.y+'px';el.classList.add('drag-src');}
+  });
+  drawEdges(m,els);
 }
 function dragEnd(){
   window.removeEventListener('pointermove',dragMove);
   window.removeEventListener('pointerup',dragEnd);
   window.removeEventListener('pointercancel',dragEnd);
   window.removeEventListener('blur',dragEnd);
-  killGhosts(); // remove o fantasma (e qualquer órfão que tenha sobrado)
+  killGhosts();
   const moved=drag&&drag.active,id=drag&&drag.pressed;
-  drag=null;histPause=false;nodesLayer.classList.remove('dragging');
+  drag=null;histPause=false;
   if(moved){
     suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
-    saveNow();selectedId=id;render();
+    saveNow();selectedId=id;
+    // solta a tag flutuante: ela ASSENTA animada no lugar organizado
+    nodesLayer.querySelectorAll('.drag-src').forEach(el=>el.classList.remove('drag-src'));
+    repositionAll();
+    setTimeout(()=>{nodesLayer.classList.remove('dragging');render();},200);
+  }else{
+    nodesLayer.classList.remove('dragging');
   }
 }
 
