@@ -160,6 +160,14 @@ button{font-family:inherit;cursor:pointer}
   border-color:color-mix(in srgb,var(--muted) 28%,var(--line));border-left-color:var(--faint)}
 .node.part .tick{border-color:var(--line-strong);background:var(--surface-2);cursor:not-allowed}
 .node.part .tick:hover{color:transparent;transform:none}
+/* tag à esquerda do pai: espelha a barrinha de cor, o + da frente e o recolher */
+.node.flip{border-left-width:1.5px;border-right-width:4px}
+.node.flip.todo{border-left-color:color-mix(in srgb,var(--todo) 40%,var(--line));border-right-color:var(--todo)}
+.node.flip.done{border-left-color:color-mix(in srgb,var(--ok) 45%,var(--line));border-right-color:var(--ok)}
+.node.flip.part{border-left-color:color-mix(in srgb,var(--muted) 28%,var(--line));border-right-color:var(--faint)}
+.node.flip .hplus.right{right:auto;left:-10px}
+.node.flip.haskids .hplus.right{right:auto;left:-32px}
+.node.flip .toggle{right:auto;left:-11px}
 .node .badge{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
 
 /* + de hover: frente = sub-tópico, baixo = irmão */
@@ -674,14 +682,20 @@ function deleteNode(id){
   while(stack.length){const x=stack.pop();rm.push(x);children(m,x).forEach(c=>stack.push(c.id));}
   rm.forEach(x=>delete m.nodes[x]);save();
 }
+// cor por GRUPO: toda tag com filhos ganha cor própria (diferente do pai e
+// dos irmãos-grupo); folhas herdam a cor do grupo do pai — em todos os níveis
+function colorIdxOf(m,id){
+  const n=m.nodes[id];
+  if(!n||!n.parentId)return 0;
+  const sibs=children(m,n.parentId);
+  const i=Math.max(0,sibs.findIndex(s=>s.id===id));
+  if(n.parentId===m.rootId)return i%BRANCH_VARS.length;
+  if(children(m,id).length)return (colorIdxOf(m,n.parentId)+i+1)%BRANCH_VARS.length;
+  return colorIdxOf(m,n.parentId);
+}
 function branchColorVar(m,id){
-  let n=m.nodes[id];const path=[];
-  while(n&&n.parentId){path.unshift(n);n=m.nodes[n.parentId];}
-  if(!path.length)return '--accent';
-  const top=path[0];
-  const tops=children(m,m.rootId);
-  const idx=tops.findIndex(t=>t.id===top.id);
-  return BRANCH_VARS[((idx<0?0:idx))%BRANCH_VARS.length];
+  if(!m.nodes[id]||!m.nodes[id].parentId)return '--accent';
+  return BRANCH_VARS[colorIdxOf(m,id)];
 }
 function nodePath(m,id){
   const arr=[];let n=m.nodes[id];
@@ -822,6 +836,13 @@ function render(){
   _pos={};visible.forEach(id=>{_pos[id]={x:m.nodes[id].fx,y:m.nodes[id].fy};});
   settleCollisions(m,els,5,new Set()); // respeita o espaço: desfaz só sobreposições
   visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
+  // tag à esquerda do pai: espelha botões (+ na frente, recolher) e a barrinha de cor
+  visible.forEach(id=>{
+    const n=m.nodes[id];if(!n.parentId)return;
+    const pp=_pos[n.parentId],cp=_pos[id];
+    if(!pp||!cp||!els[n.parentId])return;
+    if(cp.x+els[id].offsetWidth/2 < pp.x+els[n.parentId].offsetWidth/2)els[id].classList.add('flip');
+  });
   const b=boundsOf(els);render._bounds=b;
   const W=Math.max(b.maxX+300,800),H2=Math.max(b.maxY+220,600);
   world.style.width=W+'px';world.style.height=H2+'px';
