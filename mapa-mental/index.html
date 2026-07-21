@@ -28,6 +28,7 @@
   --font-ui:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
   --font-display:"Fraunces","Iowan Old Style","Palatino Linotype","Georgia",serif;
   --b0:#6C4CE0; --b1:#2F7DF6; --b2:#12A594; --b3:#E0902A; --b4:#DB4E7A; --b5:#3FA34D; --b6:#8A5CF6; --b7:#C7522A;
+  --ok:#2FA35C; --todo:#E05252;
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -141,9 +142,17 @@ button{font-family:inherit;cursor:pointer}
 }
 .node.is-root .label{color:#fff}
 .node.is-root.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 40%,transparent),var(--shadow-md)}
-.node .tick{width:15px;height:15px;border-radius:5px;border:1.5px solid var(--line-strong);flex:none;display:none;align-items:center;justify-content:center;font-size:11px;color:#fff}
-.node.show-tick .tick{display:flex}
-.node.done .tick{background:var(--b5);border-color:var(--b5)}
+.node .tick{width:17px;height:17px;border-radius:50%;border:1.6px solid var(--todo);background:var(--surface);
+  color:transparent;font-size:10px;line-height:1;flex:none;display:flex;align-items:center;justify-content:center;
+  padding:0;cursor:pointer;transition:.13s}
+.node.todo .tick:hover{color:var(--todo);transform:scale(1.12)}
+.node.done .tick{background:var(--ok);border-color:var(--ok);color:#fff}
+.node.done .tick:hover{transform:scale(1.12)}
+/* status colore o quadro inteiro: pendente = vermelho, feito = verde */
+.node.todo{background:color-mix(in srgb,var(--todo) 9%,var(--surface));
+  border-color:color-mix(in srgb,var(--todo) 40%,var(--line));border-left-color:var(--todo)}
+.node.done{background:color-mix(in srgb,var(--ok) 11%,var(--surface));
+  border-color:color-mix(in srgb,var(--ok) 45%,var(--line));border-left-color:var(--ok)}
 .node .badge{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
 
 /* collapse toggle */
@@ -607,12 +616,17 @@ function makeNode(m,node){
   const el=document.createElement('div');
   const isRoot=node.id===m.rootId;
   const colVar=branchColorVar(m,node.id);
-  el.className='node'+(isRoot?' is-root':'')+(node.done?' done':'')+(node.id===selectedId?' sel':'');
+  el.className='node'+(isRoot?' is-root':(node.done?' done':' todo'))+(node.id===selectedId?' sel':'');
   el.style.setProperty('--bc',cvar(colVar));
   el.style.left=p.x+'px';el.style.top=p.y+'px';
   el.dataset.id=node.id;
 
-  if(node.done&&!isRoot){const t=document.createElement('span');t.className='tick';t.textContent='✓';el.classList.add('show-tick');el.appendChild(t);}
+  if(!isRoot){
+    const t=document.createElement('button');t.className='tick';t.textContent='✓';
+    t.title=node.done?'Feito — clique pra desmarcar':'Marcar como feito';
+    t.onclick=e=>{e.stopPropagation();node.done=!node.done;save();render();if(panel.classList.contains('open')&&selectedId===node.id)fillPanel();};
+    el.appendChild(t);
+  }
 
   const label=document.createElement('span');
   label.className='label';label.textContent=node.text;label.dataset.id=node.id;
