@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clareza · Mapa Mental com IA</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='8' cy='16' r='4' fill='%236C4CE0'/%3E%3Ccircle cx='24' cy='8' r='3' fill='%232F7DF6'/%3E%3Ccircle cx='24' cy='24' r='3' fill='%2312A594'/%3E%3Cpath d='M11 15 Q18 10 21 9 M11 17 Q18 22 21 23' stroke='%23888' fill='none' stroke-width='1.5'/%3E%3C/svg%3E">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#F1F0F6;
+  --canvas:#EDECF3;
+  --surface:#FFFFFF;
+  --surface-2:#F7F6FB;
+  --ink:#191A28;
+  --ink-soft:#3C3D52;
+  --muted:#6E6F84;
+  --faint:#9A9BB0;
+  --line:#E1E0EC;
+  --line-strong:#CFCEDD;
+  --accent:#6C4CE0;
+  --accent-ink:#FFFFFF;
+  --dot:rgba(90,86,130,.16);
+  --shadow-sm:0 1px 2px rgba(30,28,60,.06), 0 2px 8px rgba(30,28,60,.05);
+  --shadow-md:0 6px 20px rgba(30,28,60,.12), 0 2px 6px rgba(30,28,60,.08);
+  --shadow-lg:0 18px 50px rgba(30,28,60,.22);
+  --radius:14px;
+  --font-ui:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --font-display:"Fraunces","Iowan Old Style","Palatino Linotype","Georgia",serif;
+  --b0:#6C4CE0; --b1:#2F7DF6; --b2:#12A594; --b3:#E0902A; --b4:#DB4E7A; --b5:#3FA34D; --b6:#8A5CF6; --b7:#C7522A;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#111220; --canvas:#0D0E1A; --surface:#1B1D2E; --surface-2:#22243A;
+    --ink:#ECECF5; --ink-soft:#C7C8DC; --muted:#9EA0B8; --faint:#6E7089;
+    --line:#2C2E45; --line-strong:#3A3C58; --accent:#8B77F2; --accent-ink:#12122A;
+    --dot:rgba(150,150,200,.14);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+    --shadow-md:0 8px 24px rgba(0,0,0,.4);
+    --shadow-lg:0 20px 60px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F1F0F6; --canvas:#EDECF3; --surface:#FFFFFF; --surface-2:#F7F6FB;
+  --ink:#191A28; --ink-soft:#3C3D52; --muted:#6E6F84; --faint:#9A9BB0;
+  --line:#E1E0EC; --line-strong:#CFCEDD; --accent:#6C4CE0; --accent-ink:#FFFFFF;
+  --dot:rgba(90,86,130,.16);
+  --shadow-sm:0 1px 2px rgba(30,28,60,.06), 0 2px 8px rgba(30,28,60,.05);
+  --shadow-md:0 6px 20px rgba(30,28,60,.12), 0 2px 6px rgba(30,28,60,.08);
+  --shadow-lg:0 18px 50px rgba(30,28,60,.22);
+}
+:root[data-theme="dark"]{
+  --paper:#111220; --canvas:#0D0E1A; --surface:#1B1D2E; --surface-2:#22243A;
+  --ink:#ECECF5; --ink-soft:#C7C8DC; --muted:#9EA0B8; --faint:#6E7089;
+  --line:#2C2E45; --line-strong:#3A3C58; --accent:#8B77F2; --accent-ink:#12122A;
+  --dot:rgba(150,150,200,.14);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 8px 24px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.55);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:var(--font-ui);color:var(--ink);background:var(--paper);
+  overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* ============ APP SHELL ============ */
+#app{display:grid;grid-template-columns:var(--rail,264px) 1fr;height:100vh;transition:grid-template-columns .28s cubic-bezier(.4,0,.2,1)}
+#app.rail-collapsed{--rail:0px}
+
+/* ---- LEFT RAIL ---- */
+#rail{
+  background:var(--surface);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;min-width:0;overflow:hidden;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 20px 16px}
+.brand .mark{width:34px;height:34px;flex:none}
+.brand h1{font-family:var(--font-display);font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em;line-height:1}
+.brand .sub{font-size:11px;color:var(--faint);margin-top:3px;letter-spacing:.02em}
+.rail-scroll{flex:1;overflow-y:auto;padding:6px 12px 12px}
+.rail-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:10px 8px 6px;display:flex;justify-content:space-between;align-items:center}
+.map-item{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;
+  color:var(--ink-soft);font-size:14px;cursor:pointer;position:relative;border:1px solid transparent;
+}
+.map-item:hover{background:var(--surface-2)}
+.map-item.active{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:color-mix(in srgb,var(--accent) 26%,transparent);color:var(--ink)}
+.map-item .dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--accent)}
+.map-item .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.map-item .count{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+.map-item .del{opacity:0;border:none;background:none;color:var(--faint);padding:2px 4px;border-radius:6px;font-size:14px;line-height:1}
+.map-item:hover .del{opacity:1}
+.map-item .del:hover{color:var(--b4);background:var(--surface)}
+.rail-foot{padding:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+
+.btn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 12px;font-size:13.5px;font-weight:550;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:.14s}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.btn.primary:hover{filter:brightness(1.06);color:var(--accent-ink)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--ink)}
+.btn.wide{width:100%}
+.btn.sm{padding:6px 9px;font-size:12.5px;border-radius:8px}
+
+/* ---- CANVAS AREA ---- */
+#stage{position:relative;min-width:0;overflow:hidden;background:var(--canvas);
+  background-image:radial-gradient(var(--dot) 1.4px,transparent 1.4px);background-size:26px 26px;cursor:grab}
+#stage.panning{cursor:grabbing}
+#stage.panning *{cursor:grabbing !important}
+
+#viewport{position:absolute;inset:0;overflow:hidden}
+#world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+#edges{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+#edges path{fill:none;stroke-linecap:round}
+#nodes{position:absolute;left:0;top:0}
+
+/* ---- NODE ---- */
+.node{
+  position:absolute;transform:translateY(-50%);
+  max-width:210px;min-height:34px;display:flex;align-items:center;gap:8px;
+  padding:8px 13px;background:var(--surface);border:1.5px solid var(--line);
+  border-left:4px solid var(--bc,var(--accent));border-radius:11px;
+  font-size:13.5px;line-height:1.3;color:var(--ink);box-shadow:var(--shadow-sm);
+  cursor:pointer;user-select:none;transition:box-shadow .15s,border-color .15s,transform .12s;
+  animation:pop .22s cubic-bezier(.2,.8,.3,1.2);
+}
+@keyframes pop{from{opacity:0;transform:translateY(-50%) scale(.9)}to{opacity:1;transform:translateY(-50%) scale(1)}}
+.node:hover{box-shadow:var(--shadow-md)}
+.node.sel{border-color:var(--bc,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--bc,var(--accent)) 28%,transparent),var(--shadow-md)}
+.node.done .label{text-decoration:line-through;color:var(--faint)}
+.node .label{outline:none;white-space:pre-wrap;overflow-wrap:anywhere;flex:1;min-width:14px}
+.node .label[contenteditable="true"]{cursor:text;min-width:60px}
+.node.is-root{
+  background:linear-gradient(135deg,var(--ink),var(--ink-soft));color:#fff;border:none;
+  font-family:var(--font-display);font-size:16px;font-weight:600;padding:11px 18px;max-width:260px;
+  box-shadow:var(--shadow-md);
+}
+.node.is-root .label{color:#fff}
+.node.is-root.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 40%,transparent),var(--shadow-md)}
+.node .tick{width:15px;height:15px;border-radius:5px;border:1.5px solid var(--line-strong);flex:none;display:none;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.node.show-tick .tick{display:flex}
+.node.done .tick{background:var(--b5);border-color:var(--b5)}
+.node .badge{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+
+/* collapse toggle */
+.toggle{
+  position:absolute;right:-11px;top:50%;transform:translateY(-50%);
+  width:20px;height:20px;border-radius:50%;background:var(--surface);
+  border:1.5px solid var(--line-strong);color:var(--muted);font-size:12px;line-height:1;
+  display:flex;align-items:center;justify-content:center;z-index:3;padding:0;
+}
+.toggle:hover{border-color:var(--accent);color:var(--accent)}
+.toggle.collapsed{background:var(--bc,var(--accent));border-color:transparent;color:#fff;font-size:9px;font-weight:700;min-width:20px}
+
+/* node quick actions (on selected) */
+.node-actions{position:absolute;left:0;top:calc(100% + 7px);display:flex;gap:5px;z-index:4}
+.na{width:27px;height:27px;border-radius:8px;border:1px solid var(--line-strong);background:var(--surface);
+  color:var(--muted);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);transition:.13s}
+.na:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-1px)}
+.na.ai:hover{color:var(--b6);border-color:var(--b6)}
+.na svg{width:15px;height:15px}
+
+/* ---- TOP BAR ---- */
+#topbar{position:absolute;top:0;left:0;right:0;height:60px;display:flex;align-items:center;gap:12px;
+  padding:0 16px;pointer-events:none;z-index:20}
+#topbar>*{pointer-events:auto}
+.tb-title{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 15px;
+  box-shadow:var(--shadow-sm);font-size:15px;font-weight:600;color:var(--ink);max-width:min(46vw,420px);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;outline:none}
+.tb-title:focus{border-color:var(--accent)}
+.tb-spacer{flex:1}
+.iconbtn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--surface);
+  box-shadow:var(--shadow-sm);color:var(--ink-soft);display:flex;align-items:center;justify-content:center;transition:.14s}
+.iconbtn:hover{color:var(--accent);border-color:var(--accent)}
+.iconbtn svg{width:18px;height:18px}
+.zoomgroup{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow-sm);overflow:hidden}
+.zoomgroup button{width:36px;height:38px;border:none;background:none;color:var(--ink-soft);font-size:17px}
+.zoomgroup button:hover{background:var(--surface-2);color:var(--accent)}
+.zoomgroup .zlabel{min-width:46px;text-align:center;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+
+/* hint / api banner */
+#apibanner{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:15;
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-md);border-radius:12px;
+  padding:11px 15px;display:none;align-items:center;gap:12px;font-size:13px;color:var(--ink-soft);max-width:92vw}
+#apibanner.show{display:flex}
+#apibanner .k{color:var(--b6)}
+
+/* helper legend bottom-left */
+.hint{position:absolute;left:16px;bottom:16px;z-index:14;font-size:11.5px;color:var(--faint);
+  background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(6px);
+  border:1px solid var(--line);border-radius:9px;padding:7px 11px;line-height:1.7;max-width:260px}
+.hint b{color:var(--muted);font-weight:600}
+.hint kbd{font-family:var(--font-ui);background:var(--surface-2);border:1px solid var(--line-strong);
+  border-radius:5px;padding:0 5px;font-size:10.5px;color:var(--muted)}
+
+/* ============ RIGHT PANEL ============ */
+#panel{position:absolute;top:0;right:0;bottom:0;width:min(400px,92vw);background:var(--surface);
+  border-left:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:30;
+  transform:translateX(103%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+#panel.open{transform:none}
+.panel-head{padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.panel-head .crumb{font-size:11.5px;color:var(--faint);margin-bottom:8px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panel-head .crumb b{color:var(--muted)}
+.panel-title-row{display:flex;align-items:flex-start;gap:10px}
+.panel-title{flex:1;font-size:18px;font-weight:650;color:var(--ink);line-height:1.3;border:none;background:none;
+  outline:none;resize:none;font-family:inherit;padding:2px 0;overflow:hidden}
+.panel-title:focus{border-bottom:2px solid var(--accent)}
+.pclose{border:none;background:none;color:var(--faint);font-size:22px;line-height:1;padding:2px 6px;border-radius:8px}
+.pclose:hover{color:var(--ink);background:var(--surface-2)}
+.panel-meta{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.chip{font-size:12px;padding:5px 10px;border-radius:20px;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.chip.act{cursor:pointer}
+.chip.act:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:color-mix(in srgb,var(--b5) 15%,transparent);border-color:var(--b5);color:var(--b5)}
+.swatches{display:flex;gap:6px;margin-top:12px}
+.sw{width:20px;height:20px;border-radius:6px;border:2px solid transparent;cursor:pointer}
+.sw.on{border-color:var(--ink);transform:scale(1.12)}
+
+.panel-body{flex:1;overflow-y:auto;padding:16px 18px 20px;display:flex;flex-direction:column;gap:16px}
+.ai-head{display:flex;align-items:center;gap:9px}
+.ai-head .glow{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--b6),var(--b1));display:flex;align-items:center;justify-content:center}
+.ai-head .glow svg{width:15px;height:15px;color:#fff}
+.ai-head h3{margin:0;font-size:14.5px;font-weight:650}
+.ai-head p{margin:1px 0 0;font-size:11.5px;color:var(--faint)}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qa{border:1px solid var(--line);background:var(--surface-2);border-radius:11px;padding:11px 12px;text-align:left;display:flex;flex-direction:column;gap:3px;transition:.14s}
+.qa:hover{border-color:var(--b6);background:color-mix(in srgb,var(--b6) 7%,var(--surface))}
+.qa .t{font-size:13px;font-weight:600;color:var(--ink)}
+.qa .d{font-size:11px;color:var(--faint);line-height:1.35}
+.qa .ic{font-size:15px}
+
+.ai-out{display:flex;flex-direction:column;gap:9px}
+.ai-status{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px;padding:4px 0}
+.spinner{width:15px;height:15px;border:2px solid var(--line-strong);border-top-color:var(--b6);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sug{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);animation:pop .2s ease}
+.sug .txt{flex:1;font-size:13px;line-height:1.35}
+.sug .add{width:26px;height:26px;border-radius:7px;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--b6);font-size:16px;flex:none;display:flex;align-items:center;justify-content:center}
+.sug .add:hover{background:var(--b6);color:#fff;border-color:transparent}
+.sug.added{opacity:.5}
+.sug.added .add{background:var(--b5);color:#fff;border-color:transparent;pointer-events:none}
+.ai-reply{font-size:13.5px;line-height:1.6;color:var(--ink-soft);white-space:pre-wrap;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+.ai-reply p{margin:0 0 8px}.ai-reply p:last-child{margin:0}
+.addall{align-self:flex-start}
+.ai-err{font-size:12.5px;color:var(--b4);background:color-mix(in srgb,var(--b4) 10%,transparent);border:1px solid color-mix(in srgb,var(--b4) 30%,transparent);border-radius:10px;padding:10px 12px}
+.ai-err a{color:var(--b4);font-weight:600;cursor:pointer;text-decoration:underline}
+
+.note-wrap label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:6px}
+textarea.note{width:100%;min-height:64px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface-2);resize:vertical;outline:none}
+textarea.note:focus{border-color:var(--accent);background:var(--surface)}
+
+.ask-row{display:flex;gap:8px;margin-top:2px}
+.ask-row input{flex:1;border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:13px;background:var(--surface-2);color:var(--ink);outline:none}
+.ask-row input:focus{border-color:var(--b6);background:var(--surface)}
+.divider{height:1px;background:var(--line);margin:2px 0}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+
+/* ============ MODAL ============ */
+.overlay{position:fixed;inset:0;background:rgba(15,14,30,.5);backdrop-filter:blur(3px);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.show{display:flex;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);width:min(460px,100%);max-height:90vh;overflow-y:auto;animation:rise .24s cubic-bezier(.2,.8,.3,1)}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.modal-head{padding:20px 22px 6px}
+.modal-head h2{margin:0;font-family:var(--font-display);font-size:20px;font-weight:600}
+.modal-head p{margin:6px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.modal-body{padding:16px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.field label{font-size:12px;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:6px}
+.field input,.field select{width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:14px;background:var(--surface-2);color:var(--ink);outline:none}
+.field input:focus,.field select:focus{border-color:var(--accent);background:var(--surface)}
+.field .help{font-size:11.5px;color:var(--faint);margin-top:6px;line-height:1.5}
+.field .help a{color:var(--accent)}
+.modal-foot{display:flex;gap:10px;justify-content:flex-end;padding-top:4px}
+.seg{display:flex;gap:0;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden}
+.seg button{flex:1;border:none;background:var(--surface-2);color:var(--muted);padding:10px;font-size:13px;font-weight:550}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.tstat{font-size:12px;padding:3px 0}
+.tstat.ok{color:var(--b5)} .tstat.bad{color:var(--b4)}
+
+/* scrollbars */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:10px;border:2px solid var(--surface)}
+::-webkit-scrollbar-thumb:hover{background:var(--faint)}
+
+@media (max-width:720px){
+  #app{grid-template-columns:0 1fr}
+  #app.mobile-rail{grid-template-columns:100% 0}
+  #rail{position:absolute;z-index:40;width:280px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s !important;transition-duration:.001s !important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- LEFT RAIL -->
+  <aside id="rail">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="7.5" cy="16" r="4.5" fill="var(--accent)"/>
+        <circle cx="24" cy="7.5" r="3.2" fill="var(--b1)"/>
+        <circle cx="24.5" cy="24.5" r="3.2" fill="var(--b2)"/>
+        <circle cx="26" cy="16" r="2.4" fill="var(--b3)"/>
+        <path d="M11 14.5 Q18 9 21.2 8.2 M11.5 16 Q19 15.6 23.4 16 M11 17.6 Q18 23 21.6 23.8" stroke="var(--line-strong)" stroke-width="1.4" fill="none"/>
+      </svg>
+      <div>
+        <h1>Clareza</h1>
+        <div class="sub">Organize o pensamento · execute as ideias</div>
+      </div>
+    </div>
+    <div class="rail-scroll">
+      <div class="rail-label"><span>Meus mapas</span></div>
+      <div id="maplist"></div>
+    </div>
+    <div class="rail-foot">
+      <button class="btn primary wide" id="newMapBtn">＋ Novo mapa</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn ghost sm" id="settingsBtn" style="flex:1">⚙ IA & Chave</button>
+        <button class="btn ghost sm" id="themeBtn" style="flex:1">◐ Tema</button>
+      </div>
+      <button class="btn ghost sm" id="exportBtn" style="width:100%">⭳ Exportar / Importar</button>
+    </div>
+  </aside>
+
+  <!-- STAGE -->
+  <main id="stage">
+    <div id="topbar">
+      <button class="iconbtn" id="railToggle" title="Mostrar/ocultar lista">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="tb-title" id="mapTitle" contenteditable="true" spellcheck="false"></div>
+      <div class="tb-spacer"></div>
+      <button class="iconbtn" id="fitBtn" title="Centralizar (0)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+      <div class="zoomgroup">
+        <button id="zoomOut">−</button>
+        <div class="zlabel" id="zlabel">100%</div>
+        <button id="zoomIn">＋</button>
+      </div>
+    </div>
+
+    <div id="viewport">
+      <div id="world">
+        <svg id="edges"></svg>
+        <div id="nodes"></div>
+      </div>
+    </div>
+
+    <div class="hint" id="hint">
+      <b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher
+    </div>
+
+    <div id="apibanner">
+      <span>⚡ Conecte a <b class="k">IA</b> para o assistente sugerir e organizar seus tópicos automaticamente.</span>
+      <button class="btn primary sm" id="bannerConnect">Conectar</button>
+      <button class="btn ghost sm" id="bannerClose" style="padding:6px 8px">✕</button>
+    </div>
+  </main>
+</div>
+
+<!-- RIGHT PANEL -->
+<section id="panel">
+  <div class="panel-head">
+    <div class="crumb" id="pCrumb"></div>
+    <div class="panel-title-row">
+      <textarea class="panel-title" id="pTitle" rows="1" spellcheck="false"></textarea>
+      <button class="pclose" id="pClose">✕</button>
+    </div>
+    <div class="swatches" id="pSwatches"></div>
+    <div class="panel-meta">
+      <span class="chip act" id="pDone">○ Marcar como feito</span>
+      <span class="chip" id="pChildren">0 sub-tópicos</span>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="ai-head">
+      <div class="glow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z"/></svg></div>
+      <div>
+        <h3>Assistente de ideias</h3>
+        <p>Especialista em organizar pensamento e execução</p>
+      </div>
+    </div>
+
+    <div class="qa-grid" id="quickActions">
+      <button class="qa" data-act="subtopicos"><span class="ic">🌿</span><span class="t">Desdobrar</span><span class="d">Sugere sub-tópicos para este item</span></button>
+      <button class="qa" data-act="tarefas"><span class="ic">✅</span><span class="t">Virar tarefas</span><span class="d">Passos práticos e acionáveis</span></button>
+      <button class="qa" data-act="detalhar"><span class="ic">🔎</span><span class="t">Detalhar</span><span class="d">Aprofunda e explica o tópico</span></button>
+      <button class="qa" data-act="priorizar"><span class="ic">🎯</span><span class="t">Priorizar</span><span class="d">Ordena o que fazer primeiro</span></button>
+    </div>
+
+    <div class="ai-out" id="aiOut"></div>
+
+    <div>
+      <div class="ask-row">
+        <input id="askInput" placeholder="Pergunte algo sobre este tópico…" spellcheck="false">
+        <button class="btn primary sm" id="askSend" style="padding:0 14px">➤</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="note-wrap">
+      <label>Anotação</label>
+      <textarea class="note" id="pNote" placeholder="Escreva detalhes, links ou contexto deste tópico…" spellcheck="false"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS MODAL -->
+<div class="overlay" id="setOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Conectar a IA</h2>
+      <p>A chave fica salva só no seu navegador (localStorage) e é usada direto do seu computador. Nada passa por servidores nossos.</p>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Provedor</label>
+        <div class="seg" id="provSeg">
+          <button data-p="anthropic" class="on">Claude (Anthropic)</button>
+          <button data-p="openai">OpenAI</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Chave de API</label>
+        <input id="apiKey" type="password" placeholder="cole sua chave aqui" autocomplete="off">
+        <div class="help" id="keyHelp">Pegue em <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> → API Keys.</div>
+      </div>
+      <div class="field">
+        <label>Modelo</label>
+        <select id="modelSel"></select>
+      </div>
+      <div class="tstat" id="testStat"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" id="setTest">Testar</button>
+      <button class="btn ghost" id="setCancel">Fechar</button>
+      <button class="btn primary" id="setSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="overlay" id="expOverlay">
+  <div class="modal">
+    <div class="modal-head"><h2>Exportar / Importar</h2><p>Faça backup dos seus mapas ou traga de outro dispositivo.</p></div>
+    <div class="modal-body">
+      <button class="btn wide" id="expDownload">⭳ Baixar todos os mapas (.json)</button>
+      <button class="btn wide" id="expMd">⭳ Exportar mapa atual (.md · texto)</button>
+      <div class="divider"></div>
+      <div class="field"><label>Importar backup (.json)</label><input type="file" id="impFile" accept="application/json"></div>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" id="expClose">Fechar</button></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   CLAREZA · Mapa Mental com assistente de IA
+   ============================================================ */
+const $ = s=>document.querySelector(s);
+const uid = ()=>Math.random().toString(36).slice(2,9);
+const BRANCH_VARS=['--b0','--b1','--b2','--b3','--b4','--b5','--b6','--b7'];
+const cvar=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const ROW=48, COL=248, LS_DB='clareza.db.v1', LS_SET='clareza.set.v1';
+
+const MODELS={
+  anthropic:[['claude-sonnet-5','Sonnet 5 · equilíbrio (recomendado)'],['claude-opus-4-8','Opus 4.8 · máximo'],['claude-haiku-4-5-20251001','Haiku 4.5 · rápido/barato']],
+  openai:[['gpt-4o','GPT-4o'],['gpt-4o-mini','GPT-4o mini · rápido/barato'],['gpt-4.1','GPT-4.1']]
+};
+
+let DB={maps:{},order:[],currentId:null};
+let SET={provider:'anthropic',key:'',model:'claude-sonnet-5'};
+let view={scale:1,tx:0,ty:0};
+let selectedId=null, editingId=null;
+let saveTimer=null;
+
+/* ---------- persistence ---------- */
+function save(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>localStorage.setItem(LS_DB,JSON.stringify(DB)),250);}
+function saveNow(){localStorage.setItem(LS_DB,JSON.stringify(DB));}
+function saveSet(){localStorage.setItem(LS_SET,JSON.stringify(SET));}
+function load(){
+  try{const s=JSON.parse(localStorage.getItem(LS_SET));if(s)SET={...SET,...s};}catch(e){}
+  try{const d=JSON.parse(localStorage.getItem(LS_DB));if(d&&d.maps&&Object.keys(d.maps).length){DB=d;if(!DB.order)DB.order=Object.keys(d.maps);}}catch(e){}
+  if(!DB.currentId||!DB.maps[DB.currentId]){
+    seedDefault();
+  }
+}
+
+/* ---------- data model ---------- */
+function currentMap(){return DB.maps[DB.currentId];}
+function newMap(name){
+  const id=uid(), rootId=uid();
+  DB.maps[id]={id,name:name||'Novo mapa',rootId,nodes:{[rootId]:{id:rootId,text:name||'Ideia central',parentId:null,ci:0,note:'',done:false,collapsed:false}}};
+  DB.order.unshift(id); DB.currentId=id; save();
+  return id;
+}
+function addNode(parentId,text){
+  const m=currentMap(),p=m.nodes[parentId];if(!p)return null;
+  const id=uid();
+  const ci=Object.values(m.nodes).filter(n=>n.parentId===parentId).length;
+  m.nodes[id]={id,text:text||'Novo tópico',parentId,ci,note:'',done:false,collapsed:false};
+  if(p.collapsed)p.collapsed=false;
+  save();return id;
+}
+function children(m,id){return Object.values(m.nodes).filter(n=>n.parentId===id).sort((a,b)=>(a.ci||0)-(b.ci||0));}
+function deleteNode(id){
+  const m=currentMap();if(id===m.rootId)return;
+  const stack=[id],rm=[];
+  while(stack.length){const x=stack.pop();rm.push(x);children(m,x).forEach(c=>stack.push(c.id));}
+  rm.forEach(x=>delete m.nodes[x]);save();
+}
+function branchColorVar(m,id){
+  let n=m.nodes[id];const path=[];
+  while(n&&n.parentId){path.unshift(n);n=m.nodes[n.parentId];}
+  if(!path.length)return '--accent';
+  const top=path[0];
+  const tops=children(m,m.rootId);
+  const idx=tops.findIndex(t=>t.id===top.id);
+  return BRANCH_VARS[((idx<0?0:idx))%BRANCH_VARS.length];
+}
+function nodePath(m,id){
+  const arr=[];let n=m.nodes[id];
+  while(n){arr.unshift(n.text);n=n.parentId?m.nodes[n.parentId]:null;}
+  return arr;
+}
+
+/* ============================================================
+   LAYOUT (tidy horizontal tree)
+   ============================================================ */
+let _leaf=0,_maxDepth=0,_pos={};
+function layout(){
+  const m=currentMap();_leaf=0;_maxDepth=0;_pos={};
+  walk(m,m.rootId,0);
+  return {w:_maxDepth*COL+280, h:Math.max(_leaf,1)*ROW};
+}
+function walk(m,id,depth){
+  _maxDepth=Math.max(_maxDepth,depth);
+  const node=m.nodes[id];
+  const kids= node.collapsed?[]:children(m,id);
+  const p={x:depth*COL,depth};
+  if(!kids.length){p.y=(_leaf+0.5)*ROW;_leaf++;}
+  else{kids.forEach(k=>walk(m,k.id,depth+1));p.y=(_pos[kids[0].id].y+_pos[kids[kids.length-1].id].y)/2;}
+  _pos[id]=p;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const nodesLayer=$('#nodes'),edges=$('#edges'),world=$('#world');
+function render(){
+  const m=currentMap();
+  const dim=layout();
+  world.style.width=dim.w+'px';world.style.height=dim.h+'px';
+  edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
+  edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
+
+  nodesLayer.innerHTML='';
+  const els={};
+  const visible=Object.keys(_pos);
+  visible.forEach(id=>{els[id]=makeNode(m,m.nodes[id]);nodesLayer.appendChild(els[id]);});
+
+  // edges (measure widths)
+  let d='';
+  visible.forEach(id=>{
+    const node=m.nodes[id];if(node.collapsed)return;
+    const pw=els[id].offsetWidth, p=_pos[id];
+    children(m,id).forEach(ch=>{
+      if(!_pos[ch.id])return;
+      const c=_pos[ch.id];
+      const x1=p.x+pw,y1=p.y,x2=c.x,y2=c.y,mx=x1+(x2-x1)*0.5;
+      const col=cvar(branchColorVar(m,ch.id));
+      d+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" stroke="${col}" stroke-width="2.2" opacity="0.62"/>`;
+    });
+  });
+  edges.innerHTML=d;
+  applyTransform();
+  renderMapList();
+  $('#mapTitle').textContent=m.name;
+}
+
+function makeNode(m,node){
+  const p=_pos[node.id];
+  const el=document.createElement('div');
+  const isRoot=node.id===m.rootId;
+  const colVar=branchColorVar(m,node.id);
+  el.className='node'+(isRoot?' is-root':'')+(node.done?' done':'')+(node.id===selectedId?' sel':'');
+  el.style.setProperty('--bc',cvar(colVar));
+  el.style.left=p.x+'px';el.style.top=p.y+'px';
+  el.dataset.id=node.id;
+
+  if(node.done&&!isRoot){const t=document.createElement('span');t.className='tick';t.textContent='✓';el.classList.add('show-tick');el.appendChild(t);}
+
+  const label=document.createElement('span');
+  label.className='label';label.textContent=node.text;label.dataset.id=node.id;
+  el.appendChild(label);
+
+  const kids=children(m,node.id);
+  if(kids.length){
+    const tg=document.createElement('button');
+    tg.className='toggle'+(node.collapsed?' collapsed':'');
+    tg.textContent=node.collapsed?kids.length:'–';
+    tg.title=node.collapsed?'Expandir':'Recolher';
+    tg.onclick=e=>{e.stopPropagation();node.collapsed=!node.collapsed;save();render();};
+    el.appendChild(tg);
+  }
+
+  if(node.id===selectedId){
+    const bar=document.createElement('div');bar.className='node-actions';
+    bar.innerHTML=`
+      <button class="na add" title="Sub-tópico (Tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button class="na ai" title="Assistente de ideias"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.4 4.6L18 8l-4.6 1.4L12 14l-1.4-4.6L6 8l4.6-1.4L12 2z"/></svg></button>`;
+    bar.children[0].onclick=e=>{e.stopPropagation();const id=addNode(node.id);render();selectNode(id);setTimeout(()=>startEdit(id),30);};
+    bar.children[1].onclick=e=>{e.stopPropagation();selectNode(node.id);openPanel();};
+    el.appendChild(bar);
+  }
+
+  el.onclick=e=>{if(editingId)return;selectNode(node.id);};
+  el.ondblclick=e=>{e.stopPropagation();startEdit(node.id);};
+  label.addEventListener('blur',()=>commitEdit(node.id,label.textContent));
+  label.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){e.preventDefault();label.blur();}
+    if(e.key==='Escape'){label.textContent=node.text;label.blur();}
+  });
+  return el;
+}
+
+/* ---------- selection & editing ---------- */
+function selectNode(id){
+  selectedId=id;render();
+  if($('#panel').classList.contains('open'))fillPanel();
+}
+function startEdit(id){
+  editingId=id;
+  const label=nodesLayer.querySelector(`.label[data-id="${id}"]`);
+  if(!label)return;
+  label.contentEditable='true';label.focus();
+  const r=document.createRange();r.selectNodeContents(label);
+  const s=window.getSelection();s.removeAllRanges();s.addRange(r);
+}
+function commitEdit(id,text){
+  editingId=null;
+  const m=currentMap(),n=m.nodes[id];if(!n)return;
+  const t=(text||'').trim()||'(sem título)';
+  if(n.text!==t){n.text=t;save();}
+  const label=nodesLayer.querySelector(`.label[data-id="${id}"]`);
+  if(label)label.contentEditable='false';
+  if($('#panel').classList.contains('open'))fillPanel();
+  render();
+}
+
+/* ============================================================
+   PAN / ZOOM
+   ============================================================ */
+const stage=$('#stage'),viewport=$('#viewport');
+function applyTransform(){
+  world.style.transform=`translate(${view.tx}px,${view.ty}px) scale(${view.scale})`;
+  $('#zlabel').textContent=Math.round(view.scale*100)+'%';
+}
+function fitView(){
+  const dim={w:parseFloat(world.style.width),h:parseFloat(world.style.height)};
+  const vw=viewport.clientWidth,vh=viewport.clientHeight;
+  if(!vw||!vh){setTimeout(fitView,60);return;} // viewport ainda sem dimensões (boot)
+  const pad=90;
+  const s=Math.min((vw-pad*2)/dim.w,(vh-pad*2)/dim.h,1.1);
+  view.scale=Math.max(0.2,s);
+  view.tx=(vw-dim.w*view.scale)/2;
+  view.ty=(vh-dim.h*view.scale)/2;
+  applyTransform();
+}
+function zoomAt(factor,cx,cy){
+  const ns=Math.min(2.2,Math.max(0.18,view.scale*factor));
+  const k=ns/view.scale;
+  view.tx=cx-(cx-view.tx)*k;view.ty=cy-(cy-view.ty)*k;
+  view.scale=ns;applyTransform();
+}
+let panning=false,psx=0,psy=0,ptx=0,pty=0;
+stage.addEventListener('pointerdown',e=>{
+  if(e.target.closest('.node')||e.target.closest('#topbar')||e.target.closest('.hint')||e.target.closest('#apibanner'))return;
+  panning=true;stage.classList.add('panning');psx=e.clientX;psy=e.clientY;ptx=view.tx;pty=view.ty;
+  stage.setPointerCapture(e.pointerId);
+  if(!editingId){selectedId=null;render();}
+});
+stage.addEventListener('pointermove',e=>{if(!panning)return;view.tx=ptx+(e.clientX-psx);view.ty=pty+(e.clientY-psy);applyTransform();});
+stage.addEventListener('pointerup',e=>{panning=false;stage.classList.remove('panning');});
+stage.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const r=stage.getBoundingClientRect();
+  if(e.ctrlKey||Math.abs(e.deltaY)>0){zoomAt(e.deltaY<0?1.12:0.89,e.clientX-r.left,e.clientY-r.top);}
+},{passive:false});
+$('#zoomIn').onclick=()=>zoomAt(1.15,viewport.clientWidth/2,viewport.clientHeight/2);
+$('#zoomOut').onclick=()=>zoomAt(0.87,viewport.clientWidth/2,viewport.clientHeight/2);
+$('#fitBtn').onclick=fitView;
+
+/* ============================================================
+   KEYBOARD
+   ============================================================ */
+document.addEventListener('keydown',e=>{
+  if(editingId)return;
+  const inField=/INPUT|TEXTAREA/.test(document.activeElement.tagName)||document.activeElement.isContentEditable;
+  if(inField&&document.activeElement.id!=='mapTitle')return;
+  const m=currentMap();
+  if(!selectedId){if(e.key==='0'){fitView();}return;}
+  const n=m.nodes[selectedId];if(!n)return;
+  if(e.key==='Tab'){e.preventDefault();const id=addNode(selectedId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}
+  else if(e.key==='Enter'){e.preventDefault();if(n.parentId){const id=addNode(n.parentId);render();selectNode(id);setTimeout(()=>startEdit(id),30);}}
+  else if(e.key==='F2'){e.preventDefault();startEdit(selectedId);}
+  else if(e.key==='Delete'||e.key==='Backspace'){if(selectedId!==m.rootId){e.preventDefault();const pid=n.parentId;deleteNode(selectedId);selectedId=pid;render();if($('#panel').classList.contains('open'))fillPanel();}}
+  else if(e.key===' '){const k=children(m,selectedId);if(k.length){e.preventDefault();n.collapsed=!n.collapsed;save();render();}}
+  else if(e.key==='0'){fitView();}
+  else if(e.key==='Escape'){selectedId=null;render();closePanel();}
+});
+
+/* ============================================================
+   RIGHT PANEL
+   ============================================================ */
+const panel=$('#panel');
+function openPanel(){panel.classList.add('open');fillPanel();}
+function closePanel(){panel.classList.remove('open');$('#aiOut').innerHTML='';}
+$('#pClose').onclick=closePanel;
+function fillPanel(){
+  const m=currentMap(),n=m.nodes[selectedId];if(!n)return;
+  const path=nodePath(m,selectedId);
+  $('#pCrumb').innerHTML=path.slice(0,-1).map(x=>escapeHtml(x)).join(' <b>›</b> ')||'<b>raiz</b>';
+  $('#pTitle').value=n.text;autoGrow($('#pTitle'));
+  $('#pNote').value=n.note||'';
+  const kids=children(m,n.id);
+  $('#pChildren').textContent=kids.length+(kids.length===1?' sub-tópico':' sub-tópicos');
+  $('#pDone').className='chip act'+(n.done?' on':'');
+  $('#pDone').textContent=(n.done?'✓ Feito':'○ Marcar como feito');
+  // swatches
+  const sw=$('#pSwatches');sw.innerHTML='';
+  if(n.id===m.rootId){sw.style.display='none';}else{sw.style.display='flex';
+    BRANCH_VARS.forEach(v=>{const b=document.createElement('div');b.className='sw';b.style.background=cvar(v);
+      b.title='cor';b.onclick=()=>{/* color follows branch automatically */};sw.appendChild(b);});
+    sw.style.display='none'; // colors auto by branch; hide manual for simplicity
+  }
+}
+$('#pTitle').addEventListener('input',e=>{autoGrow(e.target);const m=currentMap(),n=m.nodes[selectedId];if(n){n.text=e.target.value.trim()||'(sem título)';save();render();}});
+$('#pNote').addEventListener('input',e=>{const m=currentMap(),n=m.nodes[selectedId];if(n){n.note=e.target.value;save();}});
+$('#pDone').onclick=()=>{const m=currentMap(),n=m.nodes[selectedId];if(n){n.done=!n.done;save();render();fillPanel();}};
+function autoGrow(t){t.style.height='auto';t.style.height=t.scrollHeight+'px';}
+
+/* ============================================================
+   AI ASSISTANT
+   ============================================================ */
+const SYSTEM=`Você é um estrategista especialista em organização de ideias, produtividade e execução de projetos. Você ajuda a transformar pensamentos soltos em estruturas claras, acionáveis e bem organizadas — como um mapa mental. Seja conciso, prático e direto. Pense em desdobramentos que realmente ajudem a pessoa a AGIR. Responda SEMPRE em português do Brasil.`;
+
+const ACTS={
+  subtopicos:p=>`Estou montando um mapa mental. Caminho atual: "${p}". Sugira de 4 a 6 sub-tópicos concisos (máximo 5 palavras cada) que desdobrem e detalhem esse item de forma útil e organizada. Responda APENAS com um array JSON de strings, sem nenhum texto extra.`,
+  tarefas:p=>`Estou montando um mapa mental. Caminho atual: "${p}". Liste de 4 a 6 tarefas práticas e acionáveis (começando com verbo, máximo 6 palavras cada) para executar esse item. Responda APENAS com um array JSON de strings, sem texto extra.`,
+  priorizar:p=>`Estou montando um mapa mental. Caminho atual: "${p}". Sugira de 3 a 5 itens ordenados por prioridade (do mais urgente/importante ao menos), cada um curto (máximo 6 palavras) e começando com um número de prioridade tipo "1. ...". Responda APENAS com um array JSON de strings.`,
+  detalhar:p=>`Estou montando um mapa mental. Caminho atual: "${p}". Explique de forma breve e prática (máximo 4 frases) o que é esse item, por que importa e um bom próximo passo. Texto corrido, sem listas.`
+};
+const isListAct=a=>a!=='detalhar';
+
+async function runAction(act){
+  const m=currentMap(),n=m.nodes[selectedId];if(!n)return;
+  const p=nodePath(m,selectedId).join(' > ');
+  const out=$('#aiOut');
+  if(!SET.key){renderAiError('Nenhuma chave de IA conectada.',true);return;}
+  out.innerHTML=`<div class="ai-status"><span class="spinner"></span> Pensando…</div>`;
+  try{
+    const txt=await callAI([{role:'user',content:ACTS[act](p)}]);
+    if(isListAct(act)){
+      const list=parseList(txt);
+      if(!list.length){renderReply(txt);return;}
+      renderSuggestions(list,n.id);
+    }else{renderReply(txt);}
+  }catch(err){renderAiError(err.message||'Falha ao chamar a IA.',err.needKey);}
+}
+function renderSuggestions(list,parentId){
+  const out=$('#aiOut');out.innerHTML='';
+  const head=document.createElement('div');head.className='ai-status';head.textContent='Sugestões — clique + para adicionar ao mapa:';out.appendChild(head);
+  list.forEach(txt=>{
+    const row=document.createElement('div');row.className='sug';
+    row.innerHTML=`<span class="txt">${escapeHtml(txt)}</span><button class="add">＋</button>`;
+    row.querySelector('.add').onclick=()=>{addNode(parentId,txt);row.classList.add('added');render();fillPanel();};
+    out.appendChild(row);
+  });
+  const all=document.createElement('button');all.className='btn primary sm addall';all.textContent='＋ Adicionar todas';
+  all.onclick=()=>{out.querySelectorAll('.sug:not(.added) .add').forEach(b=>b.click());};
+  out.appendChild(all);
+}
+function renderReply(txt){
+  const out=$('#aiOut');out.innerHTML='';
+  const d=document.createElement('div');d.className='ai-reply';
+  d.innerHTML=txt.split(/\n{2,}/).map(p=>`<p>${escapeHtml(p).replace(/\n/g,'<br>')}</p>`).join('');
+  out.appendChild(d);
+}
+function renderAiError(msg,needKey){
+  const out=$('#aiOut');out.innerHTML='';
+  const d=document.createElement('div');d.className='ai-err';
+  d.innerHTML=escapeHtml(msg)+(needKey?' <a id="errConnect">Conectar IA →</a>':'');
+  out.appendChild(d);
+  if(needKey)$('#errConnect').onclick=openSettings;
+}
+$('#quickActions').querySelectorAll('.qa').forEach(b=>b.onclick=()=>runAction(b.dataset.act));
+$('#askSend').onclick=sendAsk;
+$('#askInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendAsk();});
+async function sendAsk(){
+  const q=$('#askInput').value.trim();if(!q)return;
+  const m=currentMap(),n=m.nodes[selectedId];if(!n)return;
+  if(!SET.key){renderAiError('Nenhuma chave de IA conectada.',true);return;}
+  $('#askInput').value='';
+  const p=nodePath(m,selectedId).join(' > ');
+  const out=$('#aiOut');out.innerHTML=`<div class="ai-status"><span class="spinner"></span> Pensando…</div>`;
+  try{
+    const txt=await callAI([{role:'user',content:`Contexto do mapa mental — caminho: "${p}".\nPergunta: ${q}\n\nSe fizer sentido responder com uma lista de itens curtos para adicionar ao mapa, responda APENAS com um array JSON de strings. Caso contrário, responda em texto corrido e conciso.`}]);
+    const list=parseList(txt,true);
+    if(list&&list.length){renderSuggestions(list,n.id);}else{renderReply(txt);}
+  }catch(err){renderAiError(err.message||'Falha ao chamar a IA.',err.needKey);}
+}
+
+/* ---------- AI transport ---------- */
+async function callAI(messages){
+  if(!SET.key){const e=new Error('Conecte uma chave de IA para usar o assistente.');e.needKey=true;throw e;}
+  if(SET.provider==='anthropic'){
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'content-type':'application/json','x-api-key':SET.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:SET.model,max_tokens:1024,system:SYSTEM,messages})
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(mapErr(data?.error?.message||('Erro '+res.status)));
+    return (data.content||[]).map(c=>c.text||'').join('').trim();
+  }else{
+    const res=await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'content-type':'application/json','authorization':'Bearer '+SET.key},
+      body:JSON.stringify({model:SET.model,messages:[{role:'system',content:SYSTEM},...messages]})
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(mapErr(data?.error?.message||('Erro '+res.status)));
+    return (data.choices?.[0]?.message?.content||'').trim();
+  }
+}
+function mapErr(m){
+  if(/api key|x-api-key|invalid|authentication|401/i.test(m))return 'Chave de IA inválida ou expirada. Verifique em ⚙ IA & Chave.';
+  if(/quota|billing|credit|402|429/i.test(m))return 'Sem crédito/limite na conta da IA. '+m;
+  if(/cors|failed to fetch|networkerror/i.test(m))return 'Falha de rede ao chamar a IA (verifique conexão/chave).';
+  return m;
+}
+function parseList(text,soft){
+  const mt=text.match(/\[[\s\S]*\]/);
+  if(mt){try{const a=JSON.parse(mt[0]);if(Array.isArray(a))return a.map(x=>String(x).trim()).filter(Boolean);}catch(e){}}
+  if(soft)return null;
+  return text.split('\n').map(s=>s.replace(/^[\s\-*•\d.)]+/,'').trim()).filter(s=>s.length>1&&s.length<80).slice(0,8);
+}
+
+/* ============================================================
+   MAP LIST (rail)
+   ============================================================ */
+function renderMapList(){
+  const list=$('#maplist');list.innerHTML='';
+  DB.order.filter(id=>DB.maps[id]).forEach(id=>{
+    const m=DB.maps[id];
+    const count=Object.keys(m.nodes).length;
+    const el=document.createElement('div');
+    el.className='map-item'+(id===DB.currentId?' active':'');
+    el.innerHTML=`<span class="dot" style="background:${cvar('--b'+(DB.order.indexOf(id)%8))}"></span>
+      <span class="name">${escapeHtml(m.name)}</span><span class="count">${count}</span>
+      <button class="del" title="Excluir mapa">🗑</button>`;
+    el.querySelector('.name').onclick=el.querySelector('.dot').onclick=()=>switchMap(id);
+    el.onclick=e=>{if(e.target.closest('.del'))return;switchMap(id);};
+    el.querySelector('.del').onclick=e=>{e.stopPropagation();delMap(id);};
+    list.appendChild(el);
+  });
+}
+function switchMap(id){
+  if(!DB.maps[id])return;
+  DB.currentId=id;selectedId=null;closePanel();save();render();fitView();
+  if(window.innerWidth<=720)$('#app').classList.remove('mobile-rail');
+}
+function delMap(id){
+  if(Object.keys(DB.maps).length<=1){alert('Você precisa de pelo menos um mapa.');return;}
+  if(!confirm('Excluir o mapa "'+DB.maps[id].name+'"? Isso não pode ser desfeito.'))return;
+  delete DB.maps[id];DB.order=DB.order.filter(x=>x!==id);
+  if(DB.currentId===id)DB.currentId=DB.order[0];
+  selectedId=null;closePanel();save();render();fitView();
+}
+$('#newMapBtn').onclick=()=>{const name=prompt('Nome do novo mapa:','Novo mapa');if(name===null)return;newMap(name.trim()||'Novo mapa');selectedId=currentMap().rootId;render();fitView();openPanel();};
+$('#mapTitle').addEventListener('input',e=>{const m=currentMap();m.name=e.target.textContent.trim()||'Sem título';save();renderMapList();});
+$('#mapTitle').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
+
+/* rail toggle */
+$('#railToggle').onclick=()=>{
+  if(window.innerWidth<=720){$('#app').classList.toggle('mobile-rail');}
+  else{$('#app').classList.toggle('rail-collapsed');}
+};
+
+/* ============================================================
+   THEME
+   ============================================================ */
+function initTheme(){const t=localStorage.getItem('clareza.theme');if(t)document.documentElement.setAttribute('data-theme',t);}
+$('#themeBtn').onclick=()=>{
+  const cur=document.documentElement.getAttribute('data-theme');
+  const isDark=cur?cur==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+  const next=isDark?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);localStorage.setItem('clareza.theme',next);
+  render();
+};
+
+/* ============================================================
+   SETTINGS MODAL
+   ============================================================ */
+function openSettings(){
+  $('#setOverlay').classList.add('show');
+  $('#provSeg').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.p===SET.provider));
+  $('#apiKey').value=SET.key;$('#testStat').textContent='';$('#testStat').className='tstat';
+  fillModels(SET.provider);$('#modelSel').value=SET.model;updKeyHelp();
+}
+function closeSettings(){$('#setOverlay').classList.remove('show');}
+function fillModels(prov){const sel=$('#modelSel');sel.innerHTML='';MODELS[prov].forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;sel.appendChild(o);});}
+function updKeyHelp(){
+  const prov=$('#provSeg').querySelector('.on').dataset.p;
+  $('#keyHelp').innerHTML=prov==='anthropic'
+    ?'Pegue em <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> → API Keys.'
+    :'Pegue em <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a> → API keys.';
+}
+$('#settingsBtn').onclick=openSettings;
+$('#setCancel').onclick=closeSettings;
+$('#setOverlay').addEventListener('click',e=>{if(e.target.id==='setOverlay')closeSettings();});
+$('#provSeg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  $('#provSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  fillModels(b.dataset.p);$('#modelSel').value=MODELS[b.dataset.p][0][0];updKeyHelp();
+});
+$('#setSave').onclick=()=>{
+  SET.provider=$('#provSeg').querySelector('.on').dataset.p;
+  SET.key=$('#apiKey').value.trim();
+  SET.model=$('#modelSel').value;
+  saveSet();closeSettings();updateBanner();
+};
+$('#setTest').onclick=async()=>{
+  const st=$('#testStat');st.className='tstat';st.textContent='Testando…';
+  const prev={...SET};
+  SET.provider=$('#provSeg').querySelector('.on').dataset.p;SET.key=$('#apiKey').value.trim();SET.model=$('#modelSel').value;
+  try{const r=await callAI([{role:'user',content:'Responda apenas: ok'}]);st.className='tstat ok';st.textContent='✓ Conexão funcionando: '+r.slice(0,40);}
+  catch(e){st.className='tstat bad';st.textContent='✕ '+(e.message||'falhou');Object.assign(SET,prev);}
+};
+
+/* API banner */
+function updateBanner(){$('#apibanner').classList.toggle('show',!SET.key);}
+$('#bannerConnect').onclick=openSettings;
+$('#bannerClose').onclick=()=>$('#apibanner').classList.remove('show');
+
+/* ============================================================
+   EXPORT / IMPORT
+   ============================================================ */
+$('#exportBtn').onclick=()=>$('#expOverlay').classList.add('show');
+$('#expClose').onclick=()=>$('#expOverlay').classList.remove('show');
+$('#expOverlay').addEventListener('click',e=>{if(e.target.id==='expOverlay')e.currentTarget.classList.remove('show');});
+$('#expDownload').onclick=()=>download('clareza-mapas-'+Date.now()+'.json',JSON.stringify(DB,null,2));
+$('#expMd').onclick=()=>{const m=currentMap();download((m.name||'mapa')+'.md',mapToMd(m));};
+$('#impFile').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);
+    if(d.maps){Object.assign(DB.maps,d.maps);(d.order||Object.keys(d.maps)).forEach(id=>{if(!DB.order.includes(id))DB.order.unshift(id);});save();renderMapList();alert('Mapas importados com sucesso!');}
+    else alert('Arquivo inválido.');}catch(err){alert('Não consegui ler o arquivo: '+err.message);}};
+  r.readAsText(f);
+};
+function mapToMd(m){
+  let out='# '+m.name+'\n\n';
+  const rec=(id,d)=>{const n=m.nodes[id];if(id!==m.rootId)out+='  '.repeat(d-1)+'- '+(n.done?'~~'+n.text+'~~':n.text)+(n.note?' — '+n.note.replace(/\n/g,' '):'')+'\n';children(m,id).forEach(c=>rec(c.id,d+1));};
+  children(m,m.rootId).forEach(c=>rec(c.id,1));
+  return out;
+}
+function download(name,content){const b=new Blob([content],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();URL.revokeObjectURL(a.href);}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ============================================================
+   SEED — mapa da imagem "Ideias a Executar"
+   ============================================================ */
+function seedDefault(){
+  const id=uid(),rootId=uid();
+  const nodes={};
+  const N=(text,parentId,extra={})=>{const nid=uid();const ci=Object.values(nodes).filter(n=>n.parentId===parentId).length;nodes[nid]={id:nid,text,parentId,ci,note:'',done:false,collapsed:false,...extra};return nid;};
+  nodes[rootId]={id:rootId,text:'Ideias a Executar',parentId:null,ci:0,note:'',done:false,collapsed:false};
+  // Digital
+  const digital=N('Digital',rootId);
+    const carol=N('Dra Carol Mafra',digital);
+      const insta=N('Instagram',carol);
+        const roteiro=N('Roteiro Postagem',insta);
+          N('1 Reels / dia',roteiro);N('1 Carrossel / dia',roteiro);N('1 Foto pessoal',roteiro);N('10 Stories',roteiro);
+        N('Tráfego Atendimento Ipatinga',insta);
+        N('Captação de Cliente',insta);
+      N('Site',carol);
+    N('Sleep',digital);
+    N('BBQ Churras',digital);
+    N('Travesseiro',digital);
+    N('Produtos Kairogen',digital);
+    N('Tiktok Shopping',digital);
+    N('Macete Dragon Tiger',digital);
+    N('Flip Web',digital);
+  // Poker
+  const poker=N('Poker',rootId);
+    N('Flip Ipatinga',poker);
+    N('Home Game',poker);
+    N('Flip Teó',poker);
+    const eventos=N('Eventos',poker);
+      N('Porto Seguro',eventos);N('Manhuaçu',eventos);
+  DB.maps[id]={id,name:'Ideias a Executar',rootId,nodes};
+  DB.order=DB.order||[];if(!DB.order.includes(id))DB.order.unshift(id);
+  DB.currentId=id;saveNow();
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+initTheme();
+load();
+render();
+fitView();
+setTimeout(fitView,120);
+window.addEventListener('load',fitView);
+updateBanner();
+window.addEventListener('resize',()=>{applyTransform();});
+</script>
+</body>
+</html>
