@@ -499,7 +499,7 @@ const uid = ()=>Math.random().toString(36).slice(2,9);
 const BRANCH_VARS=['--b0','--b1','--b2','--b3','--b4','--b5','--b6','--b7'];
 const cvar=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const ROW=48, COL=248, LS_DB='clareza.db.v1', LS_SET='clareza.set.v1';
+const COL=248, VGAP=14, LS_DB='clareza.db.v1', LS_SET='clareza.set.v1';
 
 const MODELS={
   anthropic:[['claude-sonnet-5','Sonnet 5 · equilíbrio (recomendado)'],['claude-opus-4-8','Opus 4.8 · máximo'],['claude-haiku-4-5-20251001','Haiku 4.5 · rápido/barato']],
@@ -583,20 +583,31 @@ function nodePath(m,id){
 /* ============================================================
    LAYOUT (tidy horizontal tree)
    ============================================================ */
-let _leaf=0,_maxDepth=0,_pos={};
-function layout(){
-  const m=currentMap();_leaf=0;_maxDepth=0;_pos={};
-  walk(m,m.rootId,0);
-  return {w:_maxDepth*COL+280, h:Math.max(_leaf,1)*ROW};
-}
-function walk(m,id,depth){
-  _maxDepth=Math.max(_maxDepth,depth);
-  const node=m.nodes[id];
-  const kids= node.collapsed?[]:children(m,id);
-  const p={x:depth*COL,depth};
-  if(!kids.length){p.y=(_leaf+0.5)*ROW;_leaf++;}
-  else{kids.forEach(k=>walk(m,k.id,depth+1));p.y=(_pos[kids[0].id].y+_pos[kids[kids.length-1].id].y)/2;}
-  _pos[id]=p;
+let _maxDepth=0,_pos={};
+function layout(m,H){
+  // layout ciente da altura real de cada nó: cada subárvore ganha uma faixa
+  // vertical do tamanho que precisa, então nada sobrepõe nada
+  _pos={};_maxDepth=0;
+  const SH={};
+  const sh=id=>{
+    if(SH[id]!=null)return SH[id];
+    const n=m.nodes[id];
+    const own=(H[id]||34)+VGAP;
+    const kids=n.collapsed?[]:children(m,id);
+    let s=0;kids.forEach(k=>{s+=sh(k.id);});
+    return SH[id]=kids.length?Math.max(s,own):own;
+  };
+  (function place(id,top,depth){
+    _maxDepth=Math.max(_maxDepth,depth);
+    const n=m.nodes[id];const band=sh(id);
+    const kids=n.collapsed?[]:children(m,id);
+    if(!kids.length){_pos[id]={x:depth*COL,y:top+band/2,depth};return;}
+    let kidsSum=0;kids.forEach(k=>{kidsSum+=sh(k.id);});
+    let cur=top+(band-kidsSum)/2;
+    kids.forEach(k=>{place(k.id,cur,depth+1);cur+=sh(k.id);});
+    _pos[id]={x:depth*COL,y:(_pos[kids[0].id].y+_pos[kids[kids.length-1].id].y)/2,depth};
+  })(m.rootId,0,0);
+  return {w:_maxDepth*COL+280,h:Math.max(sh(m.rootId),40)};
 }
 
 /* ============================================================
@@ -605,15 +616,20 @@ function walk(m,id,depth){
 const nodesLayer=$('#nodes'),edges=$('#edges'),world=$('#world');
 function render(){
   const m=currentMap();
-  const dim=layout();
+  // 1ª passada: monta os nós numa área larga e mede as alturas reais
+  nodesLayer.innerHTML='';
+  world.style.width='20000px';world.style.height='20000px';
+  const els={},visible=[];
+  (function rec(id){visible.push(id);if(!m.nodes[id].collapsed)children(m,id).forEach(c=>rec(c.id));})(m.rootId);
+  visible.forEach(id=>{const el=makeNode(m,m.nodes[id]);el.style.left='0px';el.style.top='0px';els[id]=el;nodesLayer.appendChild(el);});
+  const Hs={};visible.forEach(id=>{Hs[id]=els[id].offsetHeight;});
+
+  // 2ª passada: layout com as alturas medidas e aplica posições
+  const dim=layout(m,Hs);
   world.style.width=dim.w+'px';world.style.height=dim.h+'px';
   edges.setAttribute('width',dim.w);edges.setAttribute('height',dim.h);
   edges.setAttribute('viewBox',`0 0 ${dim.w} ${dim.h}`);
-
-  nodesLayer.innerHTML='';
-  const els={};
-  const visible=Object.keys(_pos);
-  visible.forEach(id=>{els[id]=makeNode(m,m.nodes[id]);nodesLayer.appendChild(els[id]);});
+  visible.forEach(id=>{els[id].style.left=_pos[id].x+'px';els[id].style.top=_pos[id].y+'px';});
 
   // edges (measure widths)
   let d='';
@@ -635,13 +651,11 @@ function render(){
 }
 
 function makeNode(m,node){
-  const p=_pos[node.id];
   const el=document.createElement('div');
   const isRoot=node.id===m.rootId;
   const colVar=branchColorVar(m,node.id);
   el.className='node'+(isRoot?' is-root':(node.done?' done':' todo'))+(node.id===selectedId?' sel':'');
   el.style.setProperty('--bc',cvar(colVar));
-  el.style.left=p.x+'px';el.style.top=p.y+'px';
   el.dataset.id=node.id;
 
   if(!isRoot){
