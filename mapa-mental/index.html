@@ -986,14 +986,23 @@ function edgeBezier(m,els,pid,cid){
   if(!p||!c||!els[pid]||!els[cid])return null;
   const pw=els[pid].offsetWidth,cw=els[cid].offsetWidth;
   const ph=els[pid].offsetHeight,chh=els[cid].offsetHeight;
+  // cada filho desce por uma PISTA própria (mais perto = dobra mais cedo):
+  // linhas do mesmo feixe nunca se sobrepõem
+  const lane=(()=>{
+    const sibs=children(m,pid).filter(s=>_pos[s.id]);
+    const ordem=sibs.slice().sort((a,b)=>Math.abs(_pos[a.id].y-p.y)-Math.abs(_pos[b.id].y-p.y));
+    return Math.max(0,ordem.findIndex(s=>s.id===cid));
+  })();
   if(c.x>=p.x+pw-6){ // filho à DIREITA: curva metrô
     const x1=p.x+pw,x2=c.x,adx=x2-x1;
-    const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
+    const a2=Math.min(40+lane*26,adx*0.8);
+    const a1=Math.min(34,a2*0.6);
     return [[x1,p.y],[x1+a1,p.y],[x1+a2,c.y],[x2,c.y]];
   }
   if(c.x+cw<=p.x+6){ // filho à ESQUERDA: espelhado
     const x1=p.x,x2=c.x+cw,adx=x1-x2;
-    const a1=Math.min(34,adx*0.3),a2=Math.min(96,adx*0.65);
+    const a2=Math.min(40+lane*26,adx*0.8);
+    const a1=Math.min(34,a2*0.6);
     return [[x1,p.y],[x1-a1,p.y],[x1-a2,c.y],[x2,c.y]];
   }
   // transitório do arrasto: sai por baixo/cima com barriga — sempre curva
@@ -1004,14 +1013,56 @@ function edgeBezier(m,els,pid,cid){
   const bow=(x2>=x1?1:-1)*34;
   return [[x1,y1],[x1+bow,y1+(baixo?k:-k)],[x2+bow,y2+(baixo?-k:k)],[x2,y2]];
 }
+function bezXY(bz,u){
+  const v=1-u;
+  return [v*v*v*bz[0][0]+3*v*v*u*bz[1][0]+3*v*u*u*bz[2][0]+u*u*u*bz[3][0],
+          v*v*v*bz[0][1]+3*v*v*u*bz[1][1]+3*v*u*u*bz[2][1]+u*u*u*bz[3][1]];
+}
+// tag no caminho da linha? devolve a que mais atrapalha
+function firstObstacle(m,els,bz,pid,cid){
+  let best=null,bestCnt=0;
+  Object.keys(els).forEach(tid=>{
+    if(tid===pid||tid===cid||!_pos[tid])return;
+    const t=_pos[tid],w=els[tid].offsetWidth,h=els[tid].offsetHeight;
+    const x1=t.x-8,x2=t.x+w+8,y1=t.y-h/2-8,y2=t.y+h/2+8;
+    let cnt=0;
+    for(let s=1;s<16;s++){
+      const [bx,by]=bezXY(bz,s/16);
+      if(bx>x1&&bx<x2&&by>y1&&by<y2)cnt++;
+    }
+    if(cnt>bestCnt){bestCnt=cnt;best=tid;}
+  });
+  return best;
+}
+// caminho final da linha: se uma tag atrapalha, a linha faz uma NOVA CURVA
+// no meio, passando por cima ou por baixo dela (pelo lado que desvia menos)
+function edgePath(m,els,pid,cid){
+  const bz=edgeBezier(m,els,pid,cid);if(!bz)return null;
+  const reto=`M${bz[0][0]},${bz[0][1]} C${bz[1][0]},${bz[1][1]} ${bz[2][0]},${bz[2][1]} ${bz[3][0]},${bz[3][1]}`;
+  const hit=firstObstacle(m,els,bz,pid,cid);
+  if(!hit)return reto;
+  const t=_pos[hit],w=els[hit].offsetWidth,h=els[hit].offsetHeight;
+  const cima=t.y-h/2-26, baixo=t.y+h/2+26;
+  const refY=(bz[0][1]+bz[3][1])/2;
+  const Wy=Math.abs(cima-refY)<=Math.abs(baixo-refY)?cima:baixo;
+  const x1=bz[0][0],x2=bz[3][0],y1=bz[0][1],y2=bz[3][1];
+  const dir=Math.sign(x2-x1)||1;
+  // trecho RETO por cima/baixo da tag inteira: entra antes, atravessa, sai depois
+  const Wa=dir>0?t.x-14:t.x+w+14;       // borda de entrada
+  const Wb=dir>0?t.x+w+14:t.x-14;       // borda de saída
+  if(dir*(Wa-x1)<28||dir*(x2-Wb)<28)return reto; // sem espaço pro desvio
+  return `M${x1},${y1} C${x1+(Wa-x1)*0.35},${y1} ${x1+(Wa-x1)*0.75},${Wy} ${Wa},${Wy}`+
+         ` L${Wb},${Wy}`+
+         ` C${Wb+(x2-Wb)*0.25},${Wy} ${Wb+(x2-Wb)*0.65},${y2} ${x2},${y2}`;
+}
 function drawEdges(m,els){
   let d='';
   Object.keys(els).forEach(id=>{
     const node=m.nodes[id];if(!node||node.collapsed||!_pos[id])return;
     children(m,id).forEach(ch=>{
-      const bz=edgeBezier(m,els,id,ch.id);if(!bz)return;
+      const path=edgePath(m,els,id,ch.id);if(!path)return;
       const s=edgeStyle(m,ch.id);
-      d+=`<path d="M${bz[0][0]},${bz[0][1]} C${bz[1][0]},${bz[1][1]} ${bz[2][0]},${bz[2][1]} ${bz[3][0]},${bz[3][1]}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
+      d+=`<path d="${path}" stroke="${s.col}" stroke-width="2.2" opacity="${s.op}"${s.extra}/>`;
     });
   });
   edges.innerHTML=d;
