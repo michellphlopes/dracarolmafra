@@ -135,7 +135,6 @@ button{font-family:inherit;cursor:pointer}
 @keyframes pop{from{opacity:0;transform:translateY(-50%) scale(.9)}to{opacity:1;transform:translateY(-50%) scale(1)}}
 .node:hover{box-shadow:var(--shadow-md);z-index:10}
 .node.sel{border-color:var(--bc,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--bc,var(--accent)) 28%,transparent),var(--shadow-md);z-index:9}
-.node.done .label{text-decoration:line-through;color:var(--faint)}
 .node .label{outline:none;white-space:pre-wrap;overflow-wrap:break-word;flex:1;min-width:14px}
 .node .label[contenteditable="true"]{cursor:text;min-width:60px}
 .node.is-root{
@@ -387,7 +386,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
     </div>
 
     <div class="hint" id="hint">
-      <span id="hintBody"><b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Ctrl+C</kbd>/<kbd>Ctrl+V</kbd> copiar e colar</span>
+      <span id="hintBody"><b>Dica:</b> clique num nó e use <kbd>Tab</kbd> sub-tópico · <kbd>Shift+Tab</kbd> inserir entre · <kbd>Enter</kbd> irmão · <kbd>F2</kbd> renomear · <kbd>Del</kbd> excluir · <kbd>Espaço</kbd> recolher · <kbd>Ctrl+clique</kbd> marcar vários · <kbd>Shift+clique</kbd> marcar do 1º ao último · <kbd>Ctrl+C</kbd>/<kbd>Ctrl+V</kbd> copiar e colar</span>
       <button class="hint-x" id="hintToggle" title="Encurtar">–</button>
     </div>
 
@@ -728,6 +727,10 @@ function makeNode(m,node){
 
   el.onclick=e=>{
     if(editingId)return;
+    if(e.shiftKey&&selectedId&&selectedId!==node.id){ // Shift+clique: intervalo
+      rangeSelect(selectedId,node.id);
+      return;
+    }
     if(e.ctrlKey||e.metaKey){ // Ctrl+clique: marca/desmarca vários
       if(selectedId&&!multiSel.size)multiSel.add(selectedId);
       if(multiSel.has(node.id))multiSel.delete(node.id);else multiSel.add(node.id);
@@ -750,6 +753,21 @@ function selectNode(id){
   multiSel.clear();
   selectedId=id;render();
   if($('#panel').classList.contains('open'))fillPanel();
+}
+function rangeSelect(aId,bId){
+  // Shift+clique: marca do primeiro até o último — irmãos entre os dois
+  // (mesmo pai) ou toda a faixa vertical entre eles
+  const m=currentMap(),a=m.nodes[aId],b=m.nodes[bId];if(!a||!b)return;
+  multiSel.clear();
+  if(a.parentId&&a.parentId===b.parentId){
+    const sibs=children(m,a.parentId);
+    const i1=sibs.findIndex(s=>s.id===aId),i2=sibs.findIndex(s=>s.id===bId);
+    sibs.slice(Math.min(i1,i2),Math.max(i1,i2)+1).forEach(s=>multiSel.add(s.id));
+  }else{
+    const y1=Math.min(_pos[aId].y,_pos[bId].y),y2=Math.max(_pos[aId].y,_pos[bId].y);
+    Object.keys(_pos).forEach(id=>{if(id!==m.rootId&&_pos[id].y>=y1-1&&_pos[id].y<=y2+1)multiSel.add(id);});
+  }
+  selectedId=bId;render();
 }
 function startEdit(id){
   editingId=id;
