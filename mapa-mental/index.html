@@ -1164,8 +1164,11 @@ function applyMove(ids,t){
   moveNodes(ids,newParent,index);
   return true;
 }
+function killGhosts(){document.querySelectorAll('.drag-ghost').forEach(g=>g.remove());}
 nodesLayer.addEventListener('pointerdown',e=>{
   if(e.button!==0||editingId)return;
+  if(drag)dragEnd(); // arrasto anterior não finalizou direito: limpa antes
+  killGhosts();
   const nel=e.target.closest('.node');if(!nel)return;
   if(e.target.closest('button'))return;
   const m=currentMap(),id=nel.dataset.id;
@@ -1180,6 +1183,8 @@ nodesLayer.addEventListener('pointerdown',e=>{
   drag={ids,pressed:id,startX:e.clientX,startY:e.clientY,active:false,ghost:null};
   window.addEventListener('pointermove',dragMove);
   window.addEventListener('pointerup',dragEnd);
+  window.addEventListener('pointercancel',dragEnd); // navegador cancelou o gesto
+  window.addEventListener('blur',dragEnd);          // janela perdeu o foco no meio
 });
 function dragMove(e){
   if(!drag)return;
@@ -1201,18 +1206,22 @@ function dragMove(e){
   const rect=stage.getBoundingClientRect();
   const px=(e.clientX-rect.left-view.tx)/view.scale;
   const py=(e.clientY-rect.top-view.ty)/view.scale;
-  const t=dropTarget(px,py,drag.ids);
-  if(t&&applyMove(drag.ids,t))repositionAll();
+  try{ // um erro aqui não pode travar o gesto (senão o fantasma fica preso)
+    const t=dropTarget(px,py,drag.ids);
+    if(t&&applyMove(drag.ids,t))repositionAll();
+  }catch(err){console.error('drag:',err);}
 }
 function dragEnd(){
   window.removeEventListener('pointermove',dragMove);
   window.removeEventListener('pointerup',dragEnd);
-  if(drag&&drag.ghost)drag.ghost.remove();
+  window.removeEventListener('pointercancel',dragEnd);
+  window.removeEventListener('blur',dragEnd);
+  killGhosts(); // remove o fantasma (e qualquer órfão que tenha sobrado)
   const moved=drag&&drag.active,id=drag&&drag.pressed;
-  drag=null;nodesLayer.classList.remove('dragging');
+  drag=null;histPause=false;nodesLayer.classList.remove('dragging');
   if(moved){
     suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
-    histPause=false;saveNow();selectedId=id;render();
+    saveNow();selectedId=id;render();
   }
 }
 
