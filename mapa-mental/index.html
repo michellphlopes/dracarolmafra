@@ -1878,7 +1878,9 @@ async function callAI(messages){
 }
 function mapErr(m){
   if(/api key|x-api-key|invalid|authentication|401/i.test(m))return 'Chave de IA inválida ou expirada. Verifique em ⚙ IA & Chave.';
-  if(/quota|billing|credit|402|429/i.test(m))return 'Sem crédito/limite na conta da IA. '+m;
+  if(/quota|billing|credit|insufficient|402|429/i.test(m))return SET.provider==='openai'
+    ?'A chave CONECTOU, mas sua conta OpenAI está sem crédito de API — a assinatura do ChatGPT (Plus) não vale pra API. Resolva em platform.openai.com → Settings → Billing → "Add to credit balance" (a partir de US$ 5) e tente de novo em 2 minutos.'
+    :'A chave CONECTOU, mas sua conta Anthropic está sem crédito de API. Adicione crédito em console.anthropic.com → Billing e tente de novo.';
   if(/cors|failed to fetch|networkerror/i.test(m))return 'Falha de rede ao chamar a IA (verifique conexão/chave).';
   return m;
 }
