@@ -384,7 +384,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
         <button class="btn ghost sm" id="themeBtn" style="flex:1">◐ Tema</button>
       </div>
       <button class="btn ghost sm" id="exportBtn" style="width:100%">⭳ Exportar / Importar</button>
-      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v41 · motor por ramo</div>
+      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v43 · cresce pra frente</div>
     </div>
   </aside>
 
@@ -772,25 +772,60 @@ function applyPositionsTidy(m,els){
 const HGAP=56, SUBPAD=12, BRANCH_GAP=24;
 // arruma um ramo inteiro relativo à âncora do topo: filhos na frente,
 // bandas verticais pela altura real, ordem SEMPRE pela sequência (ci)
+// grupo de muitas FOLHAS vira grade de colunas (cresce pra frente, não pra
+// cima): nº de colunas cresce até a altura ficar <= COLMAX
+const COLMAX=6, COLW=150;
+function leafGrid(m,els,id){
+  const kids=children(m,id).filter(k=>els[k.id]);
+  const allLeaf=kids.length>COLMAX&&kids.every(k=>!children(m,k.id).length||m.nodes[k.id].collapsed);
+  if(!allLeaf)return null;
+  const cols=Math.ceil(kids.length/COLMAX);
+  const perCol=Math.ceil(kids.length/cols);
+  return {kids,cols,perCol};
+}
+// altura da sub-árvore (com grade de folhas quando aplicável)
+function subH(m,els,id){
+  const n=m.nodes[id];
+  const own=(els[id]?els[id].offsetHeight:34)+VGAP;
+  const kids=n.collapsed?[]:children(m,id).filter(k=>els[k.id]);
+  if(!kids.length)return own;
+  const g=leafGrid(m,els,id);
+  if(g){
+    let mx=0;for(let c=0;c<g.cols;c++){let s=0;for(let r=0;r<g.perCol;r++){const k=g.kids[c*g.perCol+r];if(k)s+=(els[k.id].offsetHeight)+VGAP;}mx=Math.max(mx,s);}
+    return Math.max(mx,own)+SUBPAD;
+  }
+  let s=0;kids.forEach(k=>{s+=subH(m,els,k.id);});
+  return Math.max(s,own)+SUBPAD;
+}
 function layoutBranch(m,els,topId,dir){
-  const SH={};
-  const sh=id=>{
-    if(SH[id]!=null)return SH[id];
-    const own=(els[id]?els[id].offsetHeight:34)+VGAP;
-    const n=m.nodes[id];
-    const kids=n.collapsed?[]:children(m,id);
-    let s=0;kids.forEach(k=>{s+=sh(k.id);});
-    return SH[id]=kids.length?Math.max(s,own)+SUBPAD:own;
-  };
   (function place(id){
     const n=m.nodes[id];
-    const kids=n.collapsed?[]:children(m,id);
+    const kids=n.collapsed?[]:children(m,id).filter(k=>els[k.id]);
     if(!kids.length)return;
     const p=_pos[id],pw=els[id]?els[id].offsetWidth:100;
-    let total=0;kids.forEach(k=>{total+=sh(k.id);});
+    const g=leafGrid(m,els,id);
+    if(g){ // grade: colunas pra frente, cada coluna empilha perCol folhas
+      const colHs=[];
+      for(let c=0;c<g.cols;c++){let s=0;for(let r=0;r<g.perCol;r++){const k=g.kids[c*g.perCol+r];if(k)s+=els[k.id].offsetHeight+VGAP;}colHs.push(s);}
+      const totalH=Math.max(...colHs);
+      let x=dir>0?p.x+pw+HGAP:p.x-HGAP-COLW;
+      for(let c=0;c<g.cols;c++){
+        let cur=p.y-colHs[c]/2;
+        for(let r=0;r<g.perCol;r++){
+          const k=g.kids[c*g.perCol+r];if(!k)continue;
+          const kh=els[k.id].offsetHeight;
+          _pos[k.id]={x:dir>0?x:x+COLW-els[k.id].offsetWidth,y:cur+kh/2};
+          cur+=kh+VGAP;
+          m.nodes[k.id].fx=_pos[k.id].x;m.nodes[k.id].fy=_pos[k.id].y;
+        }
+        x=dir>0?x+COLW:x-COLW;
+      }
+      return;
+    }
+    let total=0;kids.forEach(k=>{total+=subH(m,els,k.id);});
     let cur=p.y-total/2;
     kids.forEach(k=>{
-      const band=sh(k.id);
+      const band=subH(m,els,k.id);
       const w=els[k.id]?els[k.id].offsetWidth:100;
       _pos[k.id]={x:dir>0?p.x+pw+HGAP:p.x-HGAP-w,y:cur+band/2};
       cur+=band;
@@ -799,16 +834,7 @@ function layoutBranch(m,els,topId,dir){
     });
   })(topId);
 }
-function branchHeight(m,els,topId){
-  const rec=id=>{
-    const own=(els[id]?els[id].offsetHeight:34)+VGAP;
-    const n=m.nodes[id];
-    const kids=n.collapsed?[]:children(m,id);
-    let s=0;kids.forEach(k=>{s+=rec(k.id);});
-    return kids.length?Math.max(s,own)+SUBPAD:own;
-  };
-  return rec(topId);
-}
+function branchHeight(m,els,topId){return subH(m,els,topId);}
 function branchNodes(m,id){
   const out=[];
   (function rec(x){out.push(x);if(!m.nodes[x].collapsed)children(m,x).forEach(c=>rec(c.id));})(id);
