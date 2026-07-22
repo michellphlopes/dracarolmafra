@@ -384,7 +384,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
         <button class="btn ghost sm" id="themeBtn" style="flex:1">◐ Tema</button>
       </div>
       <button class="btn ghost sm" id="exportBtn" style="width:100%">⭳ Exportar / Importar</button>
-      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v43 · cresce pra frente</div>
+      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v45 · cresce pra frente</div>
     </div>
   </aside>
 
@@ -1415,66 +1415,82 @@ stage.addEventListener('wheel',e=>{
 $('#zoomIn').onclick=()=>zoomAt(1.15,viewport.clientWidth/2,viewport.clientHeight/2);
 $('#zoomOut').onclick=()=>zoomAt(0.87,viewport.clientWidth/2,viewport.clientHeight/2);
 $('#fitBtn').onclick=fitView;
-$('#arrangeBtn').onclick=()=>{render._tidy=true;render();fitView();toast('Mapa organizado automaticamente');};
-// Reorganizar: aproxima cada sub-árvore do pai (rigidamente), fecha vãos e
-// resolve sobreposições — SEM mudar lados, disposições nem ordem de nada
-function compactar(){
-  const m=currentMap();
-  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+// empilha as âncoras dos ramos coladas na raiz, por lado; `porOrdem`=true usa
+// a ordem lógica (ci) pro tidy limpo, senão preserva a ordem vertical atual
+function stackAnchors(m,els,porOrdem){
   const rEl=els[m.rootId],rp=_pos[m.rootId];
   if(!rEl||!rp)return;
   ['left','right'].forEach(side=>{
-    // empilha os ramos desse lado colados, na ORDEM VERTICAL atual
     const tops=children(m,m.rootId).filter(t=>els[t.id]&&(t.side||'right')===side)
-      .sort((a,b)=>(a.fy||0)-(b.fy||0));
+      .sort((a,b)=>porOrdem?((a.ci||0)-(b.ci||0)):((a.fy||0)-(b.fy||0)));
     if(!tops.length)return;
     const hs=tops.map(t=>branchHeight(m,els,t.id));
     const total=hs.reduce((a,b)=>a+b,0)+(tops.length-1)*24;
     let cur=rp.y-total/2;
     tops.forEach((t,i)=>{
       t.fy=cur+hs[i]/2;cur+=hs[i]+24;
-      t.fx=side==='right'
-        ?rp.x+rEl.offsetWidth+HGAP+34
-        :rp.x-HGAP-34-(els[t.id]?els[t.id].offsetWidth:100);
+      t.fx=side==='right'?rp.x+rEl.offsetWidth+HGAP+34
+                         :rp.x-HGAP-34-els[t.id].offsetWidth;
     });
   });
-  saveNow();render();
-  // GRAVIDADE: puxa cada ramo em passinhos na direção da raiz até quase
-  // encostar em outra tag — o mapa fica o mais junto possível na tela
-  const els2={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els2[el.dataset.id]=el;});
-  const m2=currentMap();
-  const rp2=_pos[m2.rootId],rEl2=els2[m2.rootId];
-  if(rp2&&rEl2){
-    const rcx=rp2.x+rEl2.offsetWidth/2,rcy=rp2.y;
-    const nb=id=>{const p=_pos[id];return{x1:p.x,y1:p.y-els2[id].offsetHeight/2,x2:p.x+els2[id].offsetWidth,y2:p.y+els2[id].offsetHeight/2};};
-    const colide=(meus,outros)=>{
-      for(const a of meus){const A=nb(a);
-        for(const b of outros){const B=nb(b);
-          if(Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1)+BRANCH_GAP>0&&
-             Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1)+BRANCH_GAP>0)return true;
-        }}
-      return false;
-    };
-    const tops2=children(m2,m2.rootId).filter(t=>els2[t.id]&&_pos[t.id]);
-    tops2.forEach(t=>{
-      const meus=branchNodes(m2,t.id).filter(id=>els2[id]&&_pos[id]);
-      const outros=[m2.rootId,...tops2.filter(o=>o.id!==t.id)
-        .flatMap(o=>branchNodes(m2,o.id))].filter(id=>els2[id]&&_pos[id]);
-      for(let s=0;s<70;s++){
-        const cx=_pos[t.id].x+els2[t.id].offsetWidth/2,cy=_pos[t.id].y;
-        let vx=rcx-cx,vy=rcy-cy;
-        const d=Math.hypot(vx,vy);
-        if(d<60)break;
-        vx=vx/d*16;vy=vy/d*16;
-        meus.forEach(id=>{_pos[id].x+=vx;_pos[id].y+=vy;});
-        if(colide(meus,outros)){meus.forEach(id=>{_pos[id].x-=vx;_pos[id].y-=vy;});break;}
-      }
-      meus.forEach(id=>{m2.nodes[id].fx=_pos[id].x;m2.nodes[id].fy=_pos[id].y;});
-    });
-  }
-  saveNow();render();fitView();
+}
+// GRAVIDADE: puxa cada ramo em passinhos na direção da raiz até quase
+// encostar em outra tag — o mapa fica o mais junto possível na tela
+function pullToRoot(){
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  const m=currentMap();
+  const rp=_pos[m.rootId],rEl=els[m.rootId];
+  if(!rp||!rEl)return;
+  const rcx=rp.x+rEl.offsetWidth/2,rcy=rp.y;
+  const nb=id=>{const p=_pos[id];return{x1:p.x,y1:p.y-els[id].offsetHeight/2,x2:p.x+els[id].offsetWidth,y2:p.y+els[id].offsetHeight/2};};
+  const colide=(meus,outros)=>{
+    for(const a of meus){const A=nb(a);for(const b of outros){const B=nb(b);
+      if(Math.min(A.x2,B.x2)-Math.max(A.x1,B.x1)+BRANCH_GAP>0&&
+         Math.min(A.y2,B.y2)-Math.max(A.y1,B.y1)+BRANCH_GAP>0)return true;}}
+    return false;
+  };
+  const tops=children(m,m.rootId).filter(t=>els[t.id]&&_pos[t.id]);
+  tops.forEach(t=>{
+    const meus=branchNodes(m,t.id).filter(id=>els[id]&&_pos[id]);
+    const outros=[m.rootId,...tops.filter(o=>o.id!==t.id).flatMap(o=>branchNodes(m,o.id))].filter(id=>els[id]&&_pos[id]);
+    for(let s=0;s<70;s++){
+      const cx=_pos[t.id].x+els[t.id].offsetWidth/2,cy=_pos[t.id].y;
+      let vx=rcx-cx,vy=rcy-cy;const d=Math.hypot(vx,vy);
+      if(d<60)break;
+      vx=vx/d*16;vy=vy/d*16;
+      meus.forEach(id=>{_pos[id].x+=vx;_pos[id].y+=vy;});
+      if(colide(meus,outros)){meus.forEach(id=>{_pos[id].x-=vx;_pos[id].y-=vy;});break;}
+    }
+    meus.forEach(id=>{m.nodes[id].fx=_pos[id].x;m.nodes[id].fy=_pos[id].y;});
+  });
+}
+// Organizar: tidy limpo — EQUILIBRA os ramos entre os dois lados (pra não
+// esticar tudo pra cima de um lado só) e compacta crescendo pra frente
+function organizar(){
+  const m=currentMap();
+  if(typeof m.nodes[m.rootId].fx!=='number'){render._tidy=true;render();}
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  const tops=children(m,m.rootId).filter(t=>els[t.id]);
+  const hs=new Map(tops.map(t=>[t.id,branchHeight(m,els,t.id)]));
+  // greedy: o ramo mais alto vai pro lado que estiver mais curto
+  let hl=0,hr=0;
+  [...tops].sort((a,b)=>hs.get(b.id)-hs.get(a.id)).forEach(t=>{
+    if(hr<=hl){t.side='right';hr+=hs.get(t.id)+24;}
+    else{t.side='left';hl+=hs.get(t.id)+24;}
+  });
+  stackAnchors(m,els,true);
+  saveNow();render();pullToRoot();saveNow();render();fitView();
+  toast('Organizado: equilibrado nos dois lados, crescendo pra frente');
+}
+// Reorganizar: compacta mantendo o arranjo atual (não muda ordem nem lados)
+function compactar(){
+  const m=currentMap();
+  const els={};[...nodesLayer.children].forEach(el=>{if(el.dataset.id)els[el.dataset.id]=el;});
+  stackAnchors(m,els,false);
+  saveNow();render();pullToRoot();saveNow();render();fitView();
   toast('Reorganizado: tudo aproximado ao máximo');
 }
+$('#arrangeBtn').onclick=organizar;
 $('#compactBtn').onclick=compactar;
 
 /* ============================================================
