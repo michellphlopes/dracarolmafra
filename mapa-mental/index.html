@@ -384,7 +384,7 @@ textarea.note:focus{border-color:var(--accent);background:var(--surface)}
         <button class="btn ghost sm" id="themeBtn" style="flex:1">◐ Tema</button>
       </div>
       <button class="btn ghost sm" id="exportBtn" style="width:100%">⭳ Exportar / Importar</button>
-      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v45 · cresce pra frente</div>
+      <div style="text-align:center;font-size:10px;color:var(--faint)">Clareza v46 · cresce pra frente</div>
     </div>
   </aside>
 
@@ -804,21 +804,30 @@ function layoutBranch(m,els,topId,dir){
     if(!kids.length)return;
     const p=_pos[id],pw=els[id]?els[id].offsetWidth:100;
     const g=leafGrid(m,els,id);
-    if(g){ // grade: colunas pra frente, cada coluna empilha perCol folhas
-      const colHs=[];
-      for(let c=0;c<g.cols;c++){let s=0;for(let r=0;r<g.perCol;r++){const k=g.kids[c*g.perCol+r];if(k)s+=els[k.id].offsetHeight+VGAP;}colHs.push(s);}
-      const totalH=Math.max(...colHs);
-      let x=dir>0?p.x+pw+HGAP:p.x-HGAP-COLW;
+    if(g){ // grade: cada coluna com a LARGURA REAL da maior tag + folga, pra
+      // uma coluna nunca encostar na outra
+      const COLGAP=26;
+      const colHs=[],colWs=[];
+      for(let c=0;c<g.cols;c++){
+        let s=0,w=0;
+        for(let r=0;r<g.perCol;r++){const k=g.kids[c*g.perCol+r];if(k){s+=els[k.id].offsetHeight+VGAP;w=Math.max(w,els[k.id].offsetWidth);}}
+        colHs.push(s);colWs.push(w);
+      }
+      // borda esquerda de cada coluna (à direita cresce pra frente; à esquerda espelha)
+      const colX=[];
+      if(dir>0){let x=p.x+pw+HGAP;for(let c=0;c<g.cols;c++){colX.push(x);x+=colWs[c]+COLGAP;}}
+      else{let x=p.x-HGAP;for(let c=0;c<g.cols;c++){x-=colWs[c];colX.push(x);x-=COLGAP;}}
       for(let c=0;c<g.cols;c++){
         let cur=p.y-colHs[c]/2;
         for(let r=0;r<g.perCol;r++){
           const k=g.kids[c*g.perCol+r];if(!k)continue;
           const kh=els[k.id].offsetHeight;
-          _pos[k.id]={x:dir>0?x:x+COLW-els[k.id].offsetWidth,y:cur+kh/2};
+          // à direita alinha pela esquerda da coluna; à esquerda, pela direita
+          const kx=dir>0?colX[c]:colX[c]+colWs[c]-els[k.id].offsetWidth;
+          _pos[k.id]={x:kx,y:cur+kh/2};
           cur+=kh+VGAP;
           m.nodes[k.id].fx=_pos[k.id].x;m.nodes[k.id].fy=_pos[k.id].y;
         }
-        x=dir>0?x+COLW:x-COLW;
       }
       return;
     }
